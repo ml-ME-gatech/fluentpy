@@ -1,0 +1,7 @@
+﻿# encoding: utf-8
+# Release 16.2
+SetScriptVersion(Version="16.2.176")
+fileReference1 = GetFileReference(Name="F306")
+fileReference1.Repair(FilePath="G:/Bailey/Fluent/ImportFiles/TestSectionShortAssembly.IGS")
+ClearMessages()
+Save(Overwrite=True)

@@ -1,0 +1,136 @@
+﻿# 
+# This file is written by the ANSYS DesignXplorer add-in and contains the parameter values of the Design Points successfully updated by ANSYS Workbench.
+# Project name: HEMJ-60deg-SA
+# Creation date: 3/2/2016 11:56:31 AM
+# 
+# 3/2/2016 11:56:31 AM
+# The parameters defined in the project are:
+# P1 - MFR [kg s^-1], P2 - Pin [Pa], P3 - Kin [J kg^-1], P4 - Epsin [m^2 s^-3], P5 - Tin [K], P6 - Pout [Pa], P7 - Kout [J kg^-1], P8 - Epsout [m^2 s^-3], P9 - Tout [K], P10 - SurfHeatflux [W m^-2], P11 - Massfluxin [kg m^-2 s^-1], P12 - Vturbin [m^2 s^-1], P13 - Vturbout [m^2 s^-1], P14 - Omega-in [s^-1], P15 - Omega-out [s^-1], P16 - max-temp [K], P17 - cs-htc [W m^-2 K^-1], P18 - p-out [Pa], P19 - p-in [Pa], P20 - cs-temp [K], P21 - MFR [kg s^-1], P22 - Pin [Pa], P23 - Kin [J kg^-1], P24 - Epsin [m^2 s^-3], P25 - Tin [K], P26 - Pout [Pa], P27 - Kout [J kg^-1], P28 - Epsout [m^2 s^-3], P29 - Tout [K], P30 - SurfHeatflux [W m^-2], P31 - Massfluxin [kg m^-2 s^-1], P32 - Vturbin [m^2 s^-1], P33 - Vturbout [m^2 s^-1], P34 - Omega-in [s^-1], P35 - Omega-out [s^-1], P36 - max-temp [K], P37 - cs-htc [W m^-2 K^-1], P38 - p-out [Pa], P39 - p-in [Pa], P40 - cs-temp [K], P41 - MFR [kg s^-1], P42 - Pin [Pa], P43 - Kin [J kg^-1], P44 - Epsin [m^2 s^-3], P45 - Tin [K], P46 - Pout [Pa], P47 - Kout [J kg^-1], P48 - Epsout [m^2 s^-3], P49 - Tout [K], P50 - SurfHeatflux [W m^-2], P51 - Massfluxin [kg m^-2 s^-1], P52 - Vturbin [m^2 s^-1], P53 - Vturbout [m^2 s^-1], P54 - Omega-in [s^-1], P55 - Omega-out [s^-1], P56 - max-temp [K], P57 - cs-htc [W m^-2 K^-1], P58 - p-out [Pa], P59 - p-in [Pa], P60 - cs-temp [K], P61 - MFR [kg s^-1], P62 - Pin [Pa], P63 - Kin [J kg^-1], P64 - Epsin [m^2 s^-3], P65 - Tin [K], P66 - Pout [Pa], P67 - Kout [J kg^-1], P68 - Epsout [m^2 s^-3], P69 - Tout [K], P70 - SurfHeatflux [W m^-2], P71 - Massfluxin [kg m^-2 s^-1], P72 - Vturbin [m^2 s^-1], P73 - Vturbout [m^2 s^-1], P74 - Omega-in [s^-1], P75 - Omega-out [s^-1], P76 - max-temp [K], P77 - cs-htc [W m^-2 K^-1], P78 - p-out [Pa], P79 - p-in [Pa], P80 - cs-temp [K], P81 - MFR [kg s^-1], P82 - Pin [Pa], P83 - Kin [J kg^-1], P84 - Epsin [m^2 s^-3], P85 - Tin [K], P86 - Pout [Pa], P87 - Kout [J kg^-1], P88 - Epsout [m^2 s^-3], P89 - Tout [K], P90 - SurfHeatflux [W m^-2], P91 - Massfluxin [kg m^-2 s^-1], P92 - Vturbin [m^2 s^-1], P93 - Vturbout [m^2 s^-1], P94 - Omega-in [s^-1], P95 - Omega-out [s^-1], P96 - max-temp [K], P97 - cs-htc [W m^-2 K^-1], P98 - p-out [Pa], P99 - p-in [Pa], P100 - cs-temp [K], P101 - MFR [kg s^-1], P102 - Pin [Pa], P103 - Kin [J kg^-1], P104 - Epsin [m^2 s^-3], P105 - Tin [K], P106 - Pout [Pa], P107 - Kout [J kg^-1], P108 - Epsout [m^2 s^-3], P109 - Tout [K], P110 - SurfHeatflux [W m^-2], P111 - Massfluxin [kg m^-2 s^-1], P112 - Vturbin [m^2 s^-1], P113 - Vturbout [m^2 s^-1], P114 - Omega-in [s^-1], P115 - Omega-out [s^-1], P116 - max-temp [K], P117 - cs-htc [W m^-2 K^-1], P118 - p-out [Pa], P119 - p-in [Pa], P120 - cs-temp [K], P121 - MFR [kg s^-1], P122 - Pin [Pa], P123 - Kin [J kg^-1], P124 - Epsin [m^2 s^-3], P125 - Tin [K], P126 - Pout [Pa], P127 - Kout [J kg^-1], P128 - Epsout [m^2 s^-3], P129 - Tout [K], P130 - SurfHeatflux [W m^-2], P131 - Massfluxin [kg m^-2 s^-1], P132 - Vturbin [m^2 s^-1], P133 - Vturbout [m^2 s^-1], P134 - Omega-in [s^-1], P135 - Omega-out [s^-1], P136 - max-temp [K], P137 - cs-htc [W m^-2 K^-1], P138 - p-out [Pa], P139 - p-in [Pa], P140 - cs-temp [K], P141 - MFR [kg s^-1], P142 - Pin [Pa], P143 - Kin [J kg^-1], P144 - Epsin [m^2 s^-3], P145 - Tin [K], P146 - Pout [Pa], P147 - Kout [J kg^-1], P148 - Epsout [m^2 s^-3], P149 - Tout [K], P150 - SurfHeatflux [W m^-2], P151 - Massfluxin [kg m^-2 s^-1], P152 - Vturbin [m^2 s^-1], P153 - Vturbout [m^2 s^-1], P154 - Omega-in [s^-1], P155 - Omega-out [s^-1], P156 - max-temp [K], P157 - cs-htc [W m^-2 K^-1], P158 - p-out [Pa], P159 - p-in [Pa], P160 - cs-temp [K], P161 - MFR [kg s^-1], P162 - Pin [Pa], P163 - Kin [J kg^-1], P164 - Epsin [m^2 s^-3], P165 - Tin [K], P166 - Pout [Pa], P167 - Kout [J kg^-1], P168 - Epsout [m^2 s^-3], P169 - Tout [K], P170 - SurfHeatflux [W m^-2], P171 - Massfluxin [kg m^-2 s^-1], P172 - Vturbin [m^2 s^-1], P173 - Vturbout [m^2 s^-1], P174 - Omega-in [s^-1], P175 - Omega-out [s^-1], P176 - max-temp [K], P177 - cs-htc [W m^-2 K^-1], P178 - p-out [Pa], P179 - p-in [Pa], P180 - cs-temp [K], P181 - MFR [kg s^-1], P182 - Pin [Pa], P183 - Kin [J kg^-1], P184 - Epsin [m^2 s^-3], P185 - Tin [K], P186 - Pout [Pa], P187 - Kout [J kg^-1], P188 - Epsout [m^2 s^-3], P189 - Tout [K], P190 - SurfHeatflux [W m^-2], P191 - Massfluxin [kg m^-2 s^-1], P192 - Vturbin [m^2 s^-1], P193 - Vturbout [m^2 s^-1], P194 - Omega-in [s^-1], P195 - Omega-out [s^-1], P196 - max-temp [K], P197 - cs-htc [W m^-2 K^-1], P198 - p-out [Pa], P199 - p-in [Pa], P200 - cs-temp [K], P201 - MFR [kg s^-1], P202 - Pin [Pa], P203 - Kin [J kg^-1], P204 - Epsin [m^2 s^-3], P205 - Tin [K], P206 - Pout [Pa], P207 - Kout [J kg^-1], P208 - Epsout [m^2 s^-3], P209 - Tout [K], P210 - SurfHeatflux [W m^-2], P211 - Massfluxin [kg m^-2 s^-1], P212 - Vturbin [m^2 s^-1], P213 - Vturbout [m^2 s^-1], P214 - Omega-in [s^-1], P215 - Omega-out [s^-1], P216 - max-temp [K], P217 - cs-htc [W m^-2 K^-1], P218 - p-out [Pa], P219 - p-in [Pa], P220 - cs-temp [K]
+# 
+# The following header line defines the name of the columns by reference to the parameters.
+Name, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20, P21, P22, P23, P24, P25, P26, P27, P28, P29, P30, P31, P32, P33, P34, P35, P36, P37, P38, P39, P40, P41, P42, P43, P44, P45, P46, P47, P48, P49, P50, P51, P52, P53, P54, P55, P56, P57, P58, P59, P60, P61, P62, P63, P64, P65, P66, P67, P68, P69, P70, P71, P72, P73, P74, P75, P76, P77, P78, P79, P80, P81, P82, P83, P84, P85, P86, P87, P88, P89, P90, P91, P92, P93, P94, P95, P96, P97, P98, P99, P100, P101, P102, P103, P104, P105, P106, P107, P108, P109, P110, P111, P112, P113, P114, P115, P116, P117, P118, P119, P120, P121, P122, P123, P124, P125, P126, P127, P128, P129, P130, P131, P132, P133, P134, P135, P136, P137, P138, P139, P140, P141, P142, P143, P144, P145, P146, P147, P148, P149, P150, P151, P152, P153, P154, P155, P156, P157, P158, P159, P160, P161, P162, P163, P164, P165, P166, P167, P168, P169, P170, P171, P172, P173, P174, P175, P176, P177, P178, P179, P180, P181, P182, P183, P184, P185, P186, P187, P188, P189, P190, P191, P192, P193, P194, P195, P196, P197, P198, P199, P200, P201, P202, P203, P204, P205, P206, P207, P208, P209, P210, P211, P212, P213, P214, P215, P216, P217, P218, P219, P220
+DP 0, 0.002935316, 9787252, 0.060060822, 3.62178254, 474.2439353, 9769703, 0.054442438, 6.197788859, 558.6238159, 5662963.253, 41.06465871, 0.0001637, 7.858E-05, 376.781, 711.306, 494.79852, 14129.102, 0, 9769703, 823.53723, 0.003922849, 9758430, 0.099390676, 7.709992101, 472.1283383, 9726567, 0.083537279, 11.78015257, 536.3940448, 5764043.165, 54.88010818, 0.0002105, 9.734E-05, 484.692, 881.106, 486.83023, 17666.996, 0, 9726567, 763.66968, 0.004872109, 9716507, 0.147344083, 13.91664403, 473.4051728, 9666781, 0.117735852, 19.71031341, 524.5664485, 5698985.601, 68.16012103, 0.0002563, 0.0001156, 590.146, 1046.026, 484.68961, 20680.33, 0, 9666781, 722.362, 0.005836948, 9695860, 0.202652366, 22.44724183, 473.0290248, 9624373, 0.156983033, 30.34656254, 515.6366529, 5686072.88, 81.65809088, 0.0003006, 0.0001334, 692.1, 1207.854, 481.93408, 23792.271, 0, 9624373, 691.90173, 0.006730485, 9667226, 0.26461529, 33.4932946, 475.5642488, 9571476, 0.197579623, 42.84929281, 508.4938806, 5067251.418, 94.15854444, 0.0003435, 0.0001497, 790.861, 1355.061, 482.13477, 26269.438, 0, 9571476, 651.51654, 0.00800688, 9615436, 0.357156918, 52.51992142, 472.3455075, 9481208, 0.260759948, 64.96684247, 497.9764826, 4692104.554, 112.015136, 0.0003991, 0.000172, 918.803, 1556.712, 477.29697, 30703.969, 0, 9481208, 616.30072, 0.004974142, 9934562, 0.220814816, 25.53158533, 572.4795423, 9873245, 0.165638001, 32.89049439, 615.5202687, 4895483.338, 69.58754506, 0.0003138, 0.0001371, 722.449, 1240.703, 581.80585, 14763.582, 0, 9873245, 777.16724, 0.00399767, 9960231, 0.150806372, 14.41003403, 574.1367711, 9920726, 0.117216107, 19.57994079, 628.7614627, 4993398.149, 55.92684265, 0.0002593, 0.0001153, 597.039, 1043.714, 586.55847, 13141.385, 0, 9920726, 816.36639, 0.003028022, 9959200, 0.092785054, 6.954285298, 574.1989552, 9936893, 0.076713985, 10.36674085, 647.9927214, 5109576.834, 42.36160578, 0.0002034, 9.328E-05, 468.308, 844.355, 592.04224, 11326.641, 0, 9936893, 873.90356, 0.00590695, 9876868, 0.299959426, 40.42306487, 570.8717015, 9787044, 0.222621685, 51.24855554, 609.1356667, 5168340.253, 82.63740206, 0.0003657, 0.0001589, 842.024, 1438.373, 578.89886, 16524.68, 0, 9787044, 763.36853, 0.006892674, 9838345, 0.39761457, 61.69200746, 571.9088209, 9716026, 0.291008349, 76.5929163, 604.4544129, 5129496.507, 96.42755137, 0.0004211, 0.0001817, 969.447, 1644.526, 578.35022, 17780.791, 0, 9716026, 743.43439
+# 
+# A non parametric change occurred and invalidated design point results.
+# 3/2/2016 12:10:46 PM
+# 
+# 
+# 3/2/2016 2:00:36 PM
+# Parameters have been added and/or removed. The parameters now defined in the project are:
+# P1 - MFR [kg s^-1], P2 - Pin [Pa], P3 - Kin [J kg^-1], P4 - Epsin [m^2 s^-3], P5 - Tin [K], P6 - Pout [Pa], P7 - Kout [J kg^-1], P8 - Epsout [m^2 s^-3], P9 - Tout [K], P10 - SurfHeatflux [W m^-2], P11 - Massfluxin [kg m^-2 s^-1], P12 - Vturbin [m^2 s^-1], P13 - Vturbout [m^2 s^-1], P14 - Omega-in [s^-1], P15 - Omega-out [s^-1], P23 - max-temp [K], P22 - cs-htc [W m^-2 K^-1], P21 - p-in [Pa], P20 - cs-temp [K]
+# 
+# The following header line defines the name of the columns by reference to the parameters.
+Name, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P23, P22, P21, P20
+DP 0, 0.002935316, 9787252, 0.060060822, 3.62178254, 474.2439353, 9769703, 0.054442438, 6.197788859, 558.6238159, 5662963.253, 41.06465871, 0.0001637, 7.858E-05, 376.781, 711.306, 1186.707, 14128.284, 9783551, 823.55725
+DP 1, 0.003922849, 9758430, 0.099390676, 7.709992101, 472.1283383, 9726567, 0.083537279, 11.78015257, 536.3940448, 5764043.165, 54.88010818, 0.0002105, 9.734E-05, 484.692, 881.106, 1124.0317, 17766.729, 9751265, 762.90692
+DP 2, 0.004872109, 9716507, 0.147344083, 13.91664403, 473.4051728, 9666781, 0.117735852, 19.71031341, 524.5664485, 5698985.601, 68.16012103, 0.0002563, 0.0001156, 590.146, 1046.026, 1071.6294, 20831.791, 9704780, 721.14209
+DP 4, 0.006730485, 9667226, 0.26461529, 33.4932946, 475.5642488, 9571476, 0.197579623, 42.84929281, 508.4938806, 5067251.418, 94.15854444, 0.0003435, 0.0001497, 790.861, 1355.061, 950.26343, 26437.656, 9645003, 650.75739
+DP 9, 0.00590695, 9876868, 0.299959426, 40.42306487, 570.8717015, 9787044, 0.222621685, 51.24855554, 609.1356667, 5168340.253, 82.63740206, 0.0003657, 0.0001589, 842.024, 1438.373, 1083.5389, 16649.768, 9853521, 762.03131
+DP 11, 0.007985655, 9815338, 0.519545312, 92.14475366, 573.2819602, 9651754, 0.377010918, 112.943521, 601.1456716, 5087948.265, 111.7181976, 0.0004813, 0.0002068, 1108.166, 1871.823, 1036.6351, 19114.23, 9775955, 725.4483
+DP 12, 0.004478349, 9902524, 0.074836598, 5.037400973, 377.3357711, 9868835, 0.061207703, 7.388215576, 423.3516816, 4711473.831, 62.65147482, 0.0001827, 8.332E-05, 420.581, 754.208, 870.26031, 33022.211, 9893907, 599.75305
+DP 13, 0.005295797, 9859453, 0.098777208, 7.638719951, 373.0850995, 9812527, 0.078273323, 10.68442344, 412.0095871, 4712865.817, 74.08745999, 0.0002099, 9.422E-05, 483.194, 852.894, 838.52148, 43158.828, 9847467, 571.63818
+DP 14, 0.006192431, 9820702, 0.130041694, 11.53876672, 371.9484306, 9756468, 0.099972222, 15.42231072, 404.388412, 4592780.268, 86.63124121, 0.0002408, 0.0001065, 554.414, 963.89, 801.22272, 58765.242, 9804315, 544.99091
+# 
+# A non parametric change occurred and invalidated design point results.
+# 3/19/2016 11:13:30 AM
+# 
+# 
+# A non parametric change occurred and invalidated design point results.
+# 3/19/2016 4:40:51 PM
+# 
+# 
+# A non parametric change occurred and invalidated design point results.
+# 3/21/2016 1:20:35 PM
+# 
+# 
+# A non parametric change occurred and invalidated design point results.
+# 3/26/2016 3:55:38 PM
+# 
+# 
+# A non parametric change occurred and invalidated design point results.
+# 3/29/2016 1:14:41 PM
+# 
+# 
+# A non parametric change occurred and invalidated design point results.
+# 3/29/2016 1:33:36 PM
+# 
+# 
+# A non parametric change occurred and invalidated design point results.
+# 3/29/2016 2:55:12 PM
+# 
+# 
+# A non parametric change occurred and invalidated design point results.
+# 4/26/2016 6:55:05 PM
+# 
+# 
+# A non parametric change occurred and invalidated design point results.
+# 4/27/2016 10:45:30 AM
+# 
+# 
+# A non parametric change occurred and invalidated design point results.
+# 5/9/2016 7:31:20 PM
+# 
+# 
+# A non parametric change occurred and invalidated design point results.
+# 02/22/2017 14:45:32
+# 
+# 
+# A non parametric change occurred and invalidated design point results.
+# 02/23/2017 09:49:18
+# 
+# 
+# A non parametric change occurred and invalidated design point results.
+# 02/26/2017 16:49:26
+# 
+# 
+# A non parametric change occurred and invalidated design point results.
+# 03/02/2017 09:05:51
+# 
+# 
+# A non parametric change occurred and invalidated design point results.
+# 05/15/2017 11:24:18
+# 
+# 
+# A non parametric change occurred and invalidated design point results.
+# 04/20/2021 20:04:15
+# 
+# 
+# A non parametric change occurred and invalidated design point results.
+# 04/22/2021 07:53:04
+# 
+# 
+# A non parametric change occurred and invalidated design point results.
+# 04/27/2021 15:59:06
+# 
+# 
+# A non parametric change occurred and invalidated design point results.
+# 04/28/2021 22:27:32
+# 
+# 
+# A non parametric change occurred and invalidated design point results.
+# 05/05/2021 09:49:20
+# 
+# 
+# A non parametric change occurred and invalidated design point results.
+# 05/07/2021 10:28:53
+# 
+# 
+# A non parametric change occurred and invalidated design point results.
+# 05/12/2021 08:40:44
+# 
+# 
+# A non parametric change occurred and invalidated design point results.
+# 05/12/2021 18:06:08
+# 
+# 
+# A non parametric change occurred and invalidated design point results.
+# 05/14/2021 07:39:33
+# 
+# 
+# A non parametric change occurred and invalidated design point results.
+# 05/18/2021 18:50:52
+# 
+# 
+# A non parametric change occurred and invalidated design point results.
+# 05/19/2021 19:46:54
+# 

@@ -1,0 +1,348 @@
+
+Build Time: Apr  9 2018 14:07:31 
+Executable Path: C:/PROGRA~1/ANSYSI~1/v191/fluent/ntbin/win64/fluent.exe
+
+-------------------------------------------------------------------------------
+ID    Hostname        Core  O.S.         PID    Vendor                    
+-------------------------------------------------------------------------------
+n3    ME03W0336LAB02  4/8  Windows-x64  24184  Intel(R) Core(TM) i7-4770 
+n2    ME03W0336LAB02  3/8  Windows-x64  18108  Intel(R) Core(TM) i7-4770 
+n1    ME03W0336LAB02  2/8  Windows-x64  15972  Intel(R) Core(TM) i7-4770 
+n0*   ME03W0336LAB02  1/8  Windows-x64  27096  Intel(R) Core(TM) i7-4770 
+host  ME03W0336LAB02       Windows-x64  15960  Intel(R) Core(TM) i7-4770 
+
+MPI Option Selected: ibmmpi
+Selected system interconnect: default
+-------------------------------------------------------------------------------
+Multicore SMT processors detected. Processor affinity set!
+Reading "D:\Michael\Fluent\HEMJ_60d-SKE\HEMJ-60deg-SKE_files\dp0\FFF\Fluent\HEMJ60deg-2.cas"...
+Buffering for file scan...
+
+
+Dropping old-style context pbns single-phase steady from the case file.
+Dropping old-style context pbns single-phase steady buoyant from the case file.
+Dropping old-style context pbns single-phase transient from the case file.
+Dropping old-style context dbns compressible steady from the case file.
+Dropping old-style context dbns incompressible steady from the case file.
+Dropping old-style context dbns compressible transient from the case file.
+Dropping old-style context dbns incompressible transient from the case file.
+Dropping old-style context eulerian multiphase from the case file.
+Dropping old-style context mixture multiphase from the case file.
+
+  843346 hexahedral cells, zone 25, binary.
+  930690 hexahedral cells, zone 26, binary.
+ 4348661 hexahedral cells, zone 27, binary.
+  843346 cell partition ids, zone 25, 4 partitions, binary.
+  930690 cell partition ids, zone 26, 4 partitions, binary.
+ 4348661 cell partition ids, zone 27, 4 partitions, binary.
+ 2491318 quadrilateral interior faces, zone 28, binary.
+ 2753640 quadrilateral interior faces, zone 29, binary.
+12920154 quadrilateral interior faces, zone 30, binary.
+    6680 quadrilateral wall faces, zone  4, binary.
+    7614 quadrilateral wall faces, zone  5, binary.
+    5643 quadrilateral wall faces, zone  6, binary.
+    2808 quadrilateral wall faces, zone  7, binary.
+    2376 quadrilateral wall faces, zone  8, binary.
+    3672 quadrilateral wall faces, zone  9, binary.
+    7533 quadrilateral wall faces, zone 39, binary.
+    6680 quadrilateral wall faces, zone 42, binary.
+    7614 quadrilateral wall faces, zone 43, binary.
+    5643 quadrilateral wall faces, zone 46, binary.
+    2808 quadrilateral wall faces, zone 47, binary.
+    2376 quadrilateral wall faces, zone 48, binary.
+    3672 quadrilateral wall faces, zone 49, binary.
+    3186 quadrilateral wall faces, zone 173, binary.
+    3132 quadrilateral wall faces, zone 244, binary.
+   31050 quadrilateral wall faces, zone 245, binary.
+    3132 quadrilateral wall faces, zone 249, binary.
+   31050 quadrilateral wall faces, zone 267, binary.
+   14850 quadrilateral wall faces, zone 303, binary.
+    6966 quadrilateral pressure-outlet faces, zone 293, binary.
+   18423 quadrilateral symmetry faces, zone 36, binary.
+   85202 quadrilateral symmetry faces, zone 37, binary.
+   14455 quadrilateral symmetry faces, zone 38, binary.
+   85202 quadrilateral symmetry faces, zone 261, binary.
+   14455 quadrilateral symmetry faces, zone 262, binary.
+   18423 quadrilateral symmetry faces, zone 263, binary.
+   11313 quadrilateral mass-flow-inlet faces, zone 292, binary.
+    6680 shadow face pairs, binary. 
+    7614 shadow face pairs, binary. 
+    5643 shadow face pairs, binary. 
+    2808 shadow face pairs, binary. 
+    2376 shadow face pairs, binary. 
+    3672 shadow face pairs, binary. 
+    3132 shadow face pairs, binary. 
+   31050 shadow face pairs, binary. 
+ 6324416 nodes, binary.
+6324416 node flags, binary.
+
+Building...
+     mesh
+	distributing mesh
+		pairs....,
+		parts....,
+		faces....,
+		nodes....,
+		shadow nodes....,
+		cells....,
+        bandwidth reduction using Reverse Cuthill-McKee: 1277326/7752 = 164.774
+     materials,
+     interface,
+     domains,
+	mixture
+     zones,
+	thimble-walls
+	thimble-inner
+	jet-surf2
+	jet
+	jet-surf1
+	cool-surf4
+	cool-surf3
+	cool-surf2
+	cool-surf1
+	jet-bottom
+	pressure-outlet
+	mass-flow-inlet
+	symmetry2-thimble
+	symmetry2-fluid
+	symmetry2-jet
+	symmetry1-jet
+	symmetry1-fluid
+	symmetry1-thimble
+	heated-surf
+	int_thimble_matpoint
+	int_jet_matpoint
+	int_fluid_matpoint
+	cool-surf1-shadow
+	cool-surf2-shadow
+	cool-surf3-shadow
+	cool-surf4-shadow
+	jet-surf1-shadow
+	jet-shadow
+	jet-surf2-shadow
+	thimble-inner-shadow
+	fluid_matpoint
+	thimble_matpoint
+	jet_matpointSetting jet_matpoint (mixture) ... Done.
+Setting thimble_matpoint (mixture) ... Done.
+Setting fluid_matpoint (mixture) ... Done.
+ Setting zone id of jet_matpoint to 25.
+ Setting zone id of thimble_matpoint to 26.
+ Setting zone id of fluid_matpoint to 27.
+ Setting zone id of thimble-inner-shadow to 244.
+ Setting zone id of jet-surf2-shadow to 5.
+ Setting zone id of jet-shadow to 245.
+ Setting zone id of jet-surf1-shadow to 4.
+ Setting zone id of cool-surf4-shadow to 9.
+ Setting zone id of cool-surf3-shadow to 8.
+ Setting zone id of cool-surf2-shadow to 7.
+ Setting zone id of cool-surf1-shadow to 6.
+ Setting zone id of int_fluid_matpoint to 30.
+ Setting zone id of int_jet_matpoint to 28.
+ Setting zone id of int_thimble_matpoint to 29.
+ Setting zone id of heated-surf to 39.
+ Setting zone id of symmetry1-thimble to 263.
+ Setting zone id of symmetry1-fluid to 261.
+ Setting zone id of symmetry1-jet to 262.
+ Setting zone id of symmetry2-jet to 38.
+ Setting zone id of symmetry2-fluid to 37.
+ Setting zone id of symmetry2-thimble to 36.
+ Setting zone id of mass-flow-inlet to 292.
+ Setting zone id of pressure-outlet to 293.
+ Setting zone id of jet-bottom to 173.
+ Setting zone id of cool-surf1 to 46.
+ Setting zone id of cool-surf2 to 47.
+ Setting zone id of cool-surf3 to 48.
+ Setting zone id of cool-surf4 to 49.
+ Setting zone id of jet-surf1 to 42.
+ Setting zone id of jet to 267.
+ Setting zone id of jet-surf2 to 43.
+ Setting zone id of thimble-inner to 249.
+ Setting zone id of thimble-walls to 303.
+Done.
+Setting jet_matpoint (mixture) ... Done.
+Setting thimble_matpoint (mixture) ... Done.
+Setting fluid_matpoint (mixture) ... Done.
+Setting thimble-inner-shadow (mixture) ... Done.
+Setting jet-surf2-shadow (mixture) ... Done.
+Setting jet-shadow (mixture) ... Done.
+Setting jet-surf1-shadow (mixture) ... Done.
+Setting cool-surf4-shadow (mixture) ... Done.
+Setting cool-surf3-shadow (mixture) ... Done.
+Setting cool-surf2-shadow (mixture) ... Done.
+Setting cool-surf1-shadow (mixture) ... Done.
+Setting int_fluid_matpoint (mixture) ... Done.
+Setting int_jet_matpoint (mixture) ... Done.
+Setting int_thimble_matpoint (mixture) ... Done.
+Setting heated-surf (mixture) ... Done.
+Setting symmetry1-thimble (mixture) ... Done.
+Setting symmetry1-fluid (mixture) ... Done.
+Setting symmetry1-jet (mixture) ... Done.
+Setting symmetry2-jet (mixture) ... Done.
+Setting symmetry2-fluid (mixture) ... Done.
+Setting symmetry2-thimble (mixture) ... Done.
+Setting mass-flow-inlet (mixture) ... Done.
+Setting pressure-outlet (mixture) ... Done.
+Setting jet-bottom (mixture) ... Done.
+Setting cool-surf1 (mixture) ... Done.
+Setting cool-surf2 (mixture) ... Done.
+Setting cool-surf3 (mixture) ... Done.
+Setting cool-surf4 (mixture) ... Done.
+Setting jet-surf1 (mixture) ... Done.
+Setting jet (mixture) ... Done.
+Setting jet-surf2 (mixture) ... Done.
+Setting thimble-inner (mixture) ... Done.
+Setting thimble-walls (mixture) ... Done.
+
+     parallel,
+Done.
+
+Setting Post Processing and Surfaces information ...	 Done.
+WB->Fluent:Parameter name:MFR, value:0.002935316
+WB->Fluent:Parameter name:Pin, value:9787252
+WB->Fluent:Parameter name:Kin, value:0.06006082
+WB->Fluent:Parameter name:Epsin, value:3.621783
+WB->Fluent:Parameter name:Tin, value:474.2439
+WB->Fluent:Parameter name:Pout, value:9769703
+WB->Fluent:Parameter name:Kout, value:0.05444244
+WB->Fluent:Parameter name:Epsout, value:6.197789
+WB->Fluent:Parameter name:Tout, value:558.6238
+WB->Fluent:Parameter name:SurfHeatflux, value:5662963
+WB->Fluent:Parameter name:Massfluxin, value:41.06466
+WB->Fluent:Parameter name:Vturbin, value:0.0001637
+WB->Fluent:Parameter name:Vturbout, value:7.858e-05
+WB->Fluent:Parameter name:Omega-in, value:376.781
+WB->Fluent:Parameter name:Omega-out, value:711.306
+Reading "\"| gunzip -c \\"D:\Michael\Fluent\HEMJ_60d-SKE\HEMJ-60deg-SKE_files\dp0\FFF\Fluent\HEMJ60deg-2-6-00040.dat.gz\\"\""...
+
+
+Parallel variables...
+Done.
+WB->Fluent:Parameter name:MFR, value:0.002935316
+WB->Fluent:Parameter name:Pin, value:9787252
+WB->Fluent:Parameter name:Kin, value:0.06006082
+WB->Fluent:Parameter name:Epsin, value:3.621783
+WB->Fluent:Parameter name:Tin, value:474.2439
+WB->Fluent:Parameter name:Pout, value:9769703
+WB->Fluent:Parameter name:Kout, value:0.05444244
+WB->Fluent:Parameter name:Epsout, value:6.197789
+WB->Fluent:Parameter name:Tout, value:558.6238
+WB->Fluent:Parameter name:SurfHeatflux, value:5662963
+WB->Fluent:Parameter name:Massfluxin, value:41.06466
+WB->Fluent:Parameter name:Vturbin, value:0.0001637
+WB->Fluent:Parameter name:Vturbout, value:7.858e-05
+WB->Fluent:Parameter name:Omega-in, value:376.781
+WB->Fluent:Parameter name:Omega-out, value:711.306
+
+Error: GENERAL-CAR-CDR: invalid argument [1]: improper list
+Error Object: #f
+
+  iter  continuity  x-velocity  y-velocity  z-velocity      energy           k     epsilon     time/iter
+    40  5.7752e-02  7.1014e-05  6.9174e-05  9.2290e-05  3.0671e-07  4.3857e-03  1.1484e-02  0:00:00 1000
+    41  5.4866e-02  6.7181e-05  6.4469e-05  8.7333e-05  2.8817e-07  4.1835e-03  1.0861e-02 13:35:51  999
+    42  5.1541e-02  6.4168e-05  5.9988e-05  8.3604e-05  2.7300e-07  3.9888e-03  1.0285e-02 12:35:09  998
+    43  4.8438e-02  6.1701e-05  5.6772e-05  7.9668e-05  2.5555e-07  3.8049e-03  9.7560e-03 11:49:52  997
+    44  4.6046e-02  5.8598e-05  5.4120e-05  7.6114e-05  2.4067e-07  3.6348e-03  9.2826e-03 11:13:34  996
+    45  4.3999e-02  5.5863e-05  5.1547e-05  7.3873e-05  2.2480e-07  3.4814e-03  8.8437e-03 10:51:04  995
+    46  4.2145e-02  5.3738e-05  4.9207e-05  7.0873e-05  2.1523e-07  3.3420e-03  8.4307e-03 10:32:59  994
+    47  4.0224e-02  5.0718e-05  4.6660e-05  6.6989e-05  2.0380e-07  3.2079e-03  8.0633e-03 10:11:48  993
+    48  3.8056e-02  4.7534e-05  4.3993e-05  6.3912e-05  1.9746e-07  3.0784e-03  7.7260e-03  9:54:46  992
+    49  3.6081e-02  4.5305e-05  4.1734e-05  6.1018e-05  1.8882e-07  2.9587e-03  7.4173e-03  9:41:02  991
+    50  3.4543e-02  4.3036e-05  4.0037e-05  5.7299e-05  1.7634e-07  2.8482e-03  7.1417e-03  9:29:58  990
+
+  iter  continuity  x-velocity  y-velocity  z-velocity      energy           k     epsilon     time/iter
+    51  3.2819e-02  4.0052e-05  3.7583e-05  5.3987e-05  1.6298e-07  2.7444e-03  6.8925e-03  9:21:00  989
+    52  3.0941e-02  3.7042e-05  3.4742e-05  5.1137e-05  1.5076e-07  2.6442e-03  6.6433e-03  9:13:44  988
+    53  2.8828e-02  3.4396e-05  3.2371e-05  4.8030e-05  1.4135e-07  2.5454e-03  6.3928e-03  9:07:49  987
+    54  2.6750e-02  3.1971e-05  3.0315e-05  4.4781e-05  1.3670e-07  2.4495e-03  6.1565e-03  9:02:59  986
+    55  2.4854e-02  2.9617e-05  2.8287e-05  4.2164e-05  1.2939e-07  2.3595e-03  5.9408e-03  8:55:44  985
+    56  2.3308e-02  2.7785e-05  2.6611e-05  3.9545e-05  1.1870e-07  2.2761e-03  5.7468e-03  8:53:07  984
+    57  2.1964e-02  2.6163e-05  2.4920e-05  3.6807e-05  1.0861e-07  2.1973e-03  5.5648e-03  8:50:54  983
+    58  2.0554e-02  2.4380e-05  2.3052e-05  3.4668e-05  1.0025e-07  2.1224e-03  5.3880e-03  8:49:02  982
+    59  1.9251e-02  2.2942e-05  2.1384e-05  3.2508e-05  9.3502e-08  2.0507e-03  5.2132e-03  8:47:26  981
+    60  1.8093e-02  2.1687e-05  2.0204e-05  3.0207e-05  8.9746e-08  1.9822e-03  5.0441e-03  8:46:03  980
+    61  1.6915e-02  2.0468e-05  1.9117e-05  2.8314e-05  8.7203e-08  1.9172e-03  4.8849e-03  8:44:51  979
+
+  iter  continuity  x-velocity  y-velocity  z-velocity      energy           k     epsilon     time/iter
+    62  1.5844e-02  1.9350e-05  1.8173e-05  2.6868e-05  8.3027e-08  1.8559e-03  4.7353e-03  8:43:46  978
+    63  1.4975e-02  1.8402e-05  1.7562e-05  2.5227e-05  7.8127e-08  1.7975e-03  4.5911e-03  8:42:48  977
+    64  1.4205e-02  1.7358e-05  1.6769e-05  2.3694e-05  7.3427e-08  1.7415e-03  4.4504e-03  8:41:55  976
+    65  1.3544e-02  1.6218e-05  1.5794e-05  2.2428e-05  6.8962e-08  1.6882e-03  4.3120e-03  8:41:06  975
+    66  1.2910e-02  1.5302e-05  1.4941e-05  2.1208e-05  6.6104e-08  1.6371e-03  4.1765e-03  8:40:21  974
+    67  1.2313e-02  1.4561e-05  1.4236e-05  2.0053e-05  6.4689e-08  1.5881e-03  4.0453e-03  8:39:38  973
+    68  1.1705e-02  1.3791e-05  1.3514e-05  1.9270e-05  6.2416e-08  1.5409e-03  3.9191e-03  8:38:58  972
+    69  1.1139e-02  1.3175e-05  1.2934e-05  1.8459e-05  5.9063e-08  1.4955e-03  3.7983e-03  8:38:19  971
+    70  1.0663e-02  1.2571e-05  1.2411e-05  1.7492e-05  5.5415e-08  1.4520e-03  3.6830e-03  8:34:28  970
+    71  1.0201e-02  1.1814e-05  1.1720e-05  1.6647e-05  5.1744e-08  1.4102e-03  3.5720e-03  8:34:30  969
+    72  9.7281e-03  1.1122e-05  1.0955e-05  1.5823e-05  4.8553e-08  1.3702e-03  3.4649e-03  8:34:26  968
+
+  iter  continuity  x-velocity  y-velocity  z-velocity      energy           k     epsilon     time/iter
+    73  9.2549e-03  1.0530e-05  1.0305e-05  1.4974e-05  4.6495e-08  1.3318e-03  3.3612e-03  8:34:16  967
+    74  8.7503e-03  9.9713e-06  9.6743e-06  1.4266e-05  4.5005e-08  1.2947e-03  3.2599e-03  8:34:02  966
+    75  8.2724e-03  9.4473e-06  9.1240e-06  1.3755e-05  4.3116e-08  1.2590e-03  3.1615e-03  8:33:44  965
+    76  7.8637e-03  9.0474e-06  8.7266e-06  1.3207e-05  4.1156e-08  1.2245e-03  3.0663e-03  8:33:23  964
+    77  7.5385e-03  8.6440e-06  8.3436e-06  1.2648e-05  3.9132e-08  1.1915e-03  2.9750e-03  8:29:48  963
+    78  7.2151e-03  8.2435e-06  7.9431e-06  1.2149e-05  3.7311e-08  1.1598e-03  2.8889e-03  8:30:01  962
+    79  6.9134e-03  7.9292e-06  7.6054e-06  1.1653e-05  3.5891e-08  1.1292e-03  2.8062e-03  8:30:06  961
+    80  6.6146e-03  7.6737e-06  7.3135e-06  1.1220e-05  3.4966e-08  1.0998e-03  2.7267e-03  8:30:03  960
+    81  6.3401e-03  7.4177e-06  7.0281e-06  1.0935e-05  3.4152e-08  1.0724e-03  2.6538e-03  8:26:43  959
+    82  6.0755e-03  7.1677e-06  6.7892e-06  1.0673e-05  3.3279e-08  1.0458e-03  2.5846e-03  8:27:08  958
+    83  5.8552e-03  6.9301e-06  6.5901e-06  1.0297e-05  3.2303e-08  1.0199e-03  2.5169e-03  8:27:22  957
+
+  iter  continuity  x-velocity  y-velocity  z-velocity      energy           k     epsilon     time/iter
+    84  5.6418e-03  6.7147e-06  6.4027e-06  9.9444e-06  3.1318e-08  9.9495e-04  2.4507e-03  8:27:27  956
+    85  5.4806e-03  6.5378e-06  6.2203e-06  9.6326e-06  3.0442e-08  9.7078e-04  2.3863e-03  8:27:24  955
+    86  5.3295e-03  6.3934e-06  6.0728e-06  9.3522e-06  2.9724e-08  9.4739e-04  2.3236e-03  8:24:04  954
+    87  5.1946e-03  6.2563e-06  5.9186e-06  9.1152e-06  2.9111e-08  9.2475e-04  2.2629e-03  8:27:40  953
+    88  5.0797e-03  6.1155e-06  5.7711e-06  8.9436e-06  2.8514e-08  9.0292e-04  2.2045e-03  8:24:05  952
+    89  4.9597e-03  5.9754e-06  5.6345e-06  8.7490e-06  2.7884e-08  8.8176e-04  2.1483e-03  8:24:17  951
+    90  4.8449e-03  5.8449e-06  5.5073e-06  8.5487e-06  2.7291e-08  8.6125e-04  2.0936e-03  8:24:20  950
+    91  4.7421e-03  5.7209e-06  5.3858e-06  8.3421e-06  2.6715e-08  8.4138e-04  2.0409e-03  8:24:16  949
+    92  4.6321e-03  5.6057e-06  5.2763e-06  8.1468e-06  2.6176e-08  8.2217e-04  1.9899e-03  8:24:07  948
+    93  4.5213e-03  5.4995e-06  5.1679e-06  7.9442e-06  2.5705e-08  8.0355e-04  1.9408e-03  8:23:53  947
+    94  4.4251e-03  5.3959e-06  5.0582e-06  7.7740e-06  2.5241e-08  7.8550e-04  1.8933e-03  8:20:26  946
+
+  iter  continuity  x-velocity  y-velocity  z-velocity      energy           k     epsilon     time/iter
+    95  4.3338e-03  5.2906e-06  4.9507e-06  7.6151e-06  2.4759e-08  7.6800e-04  1.8474e-03  8:23:52  945
+    96  4.2474e-03  5.1869e-06  4.8463e-06  7.4631e-06  2.4289e-08  7.5105e-04  1.8031e-03  8:20:13  944
+    97  4.1692e-03  5.0859e-06  4.7482e-06  7.3134e-06  2.3830e-08  7.3460e-04  1.7604e-03  8:20:20  943
+    98  4.0846e-03  4.9844e-06  4.6533e-06  7.1494e-06  2.3366e-08  7.1863e-04  1.7190e-03  8:20:19  942
+    99  4.0034e-03  4.8881e-06  4.5629e-06  6.9962e-06  2.2910e-08  7.0312e-04  1.6787e-03  8:17:04  941
+   100  3.9252e-03  4.7935e-06  4.4723e-06  6.8567e-06  2.2477e-08  6.8805e-04  1.6395e-03  8:17:30  940
+   101  3.8521e-03  4.6974e-06  4.3804e-06  6.7165e-06  2.2032e-08  6.7342e-04  1.6015e-03  8:17:44  939
+   102  3.7666e-03  4.6005e-06  4.2882e-06  6.5796e-06  2.1613e-08  6.5931e-04  1.5649e-03  8:17:49  938
+   103  3.6901e-03  4.5046e-06  4.1954e-06  6.4530e-06  2.1206e-08  6.4564e-04  1.5298e-03  8:14:39  937
+   104  3.6120e-03  4.4002e-06  4.1003e-06  6.3091e-06  2.0763e-08  6.3229e-04  1.4957e-03  8:15:08  936
+   105  3.5309e-03  4.3064e-06  4.0103e-06  6.1738e-06  2.0338e-08  6.1927e-04  1.4621e-03  8:15:25  935
+
+  iter  continuity  x-velocity  y-velocity  z-velocity      energy           k     epsilon     time/iter
+   106  3.4542e-03  4.2145e-06  3.9219e-06  6.0448e-06  1.9911e-08  6.0658e-04  1.4293e-03  8:15:32  934
+   107  3.3785e-03  4.1275e-06  3.8373e-06  5.9226e-06  1.9498e-08  5.9418e-04  1.3973e-03  8:12:25  933
+   108  3.2973e-03  4.0422e-06  3.7557e-06  5.8054e-06  1.9107e-08  5.8222e-04  1.3664e-03  8:12:56  932
+   109  3.2193e-03  3.9590e-06  3.6768e-06  5.6955e-06  1.8737e-08  5.7050e-04  1.3365e-03  8:10:07  931
+   110  3.1570e-03  3.8767e-06  3.5991e-06  5.5870e-06  1.8372e-08  5.5905e-04  1.3070e-03  8:10:53  930
+   111  3.0974e-03  3.8003e-06  3.5253e-06  5.4757e-06  1.8009e-08  5.4786e-04  1.2779e-03  8:08:16  929
+   112  3.0339e-03  3.7290e-06  3.4557e-06  5.3783e-06  1.7660e-08  5.3696e-04  1.2497e-03  8:09:11  928
+   113  2.9688e-03  3.6576e-06  3.3889e-06  5.2745e-06  1.7330e-08  5.2630e-04  1.2220e-03  8:09:48  927
+   114  2.9049e-03  3.5870e-06  3.3227e-06  5.1709e-06  1.6999e-08  5.1594e-04  1.1951e-03  8:10:12  926
+   115  2.8365e-03  3.5166e-06  3.2578e-06  5.0680e-06  1.6669e-08  5.0581e-04  1.1688e-03  8:10:24  925
+   116  2.7745e-03  3.4484e-06  3.1949e-06  4.9721e-06  1.6363e-08  4.9600e-04  1.1434e-03  8:07:23  924
+
+  iter  continuity  x-velocity  y-velocity  z-velocity      energy           k     epsilon     time/iter
+   117  2.7180e-03  3.3838e-06  3.1362e-06  4.8897e-06  1.6081e-08  4.8640e-04  1.1187e-03  8:07:56  923
+   118  2.6735e-03  3.3140e-06  3.0728e-06  4.7908e-06  1.5777e-08  4.7701e-04  1.0942e-03  8:08:16  922
+   119  2.6170e-03  3.2514e-06  3.0136e-06  4.6941e-06  1.5475e-08  4.6783e-04  1.0703e-03  8:05:22  921
+   120  2.5616e-03  3.1930e-06  2.9572e-06  4.6158e-06  1.5188e-08  4.5885e-04  1.0468e-03  8:06:00  920
+   121  2.5134e-03  3.1341e-06  2.9018e-06  4.5308e-06  1.4911e-08  4.5007e-04  1.0238e-03  8:06:24  919
+   122  2.4613e-03  3.0756e-06  2.8472e-06  4.4431e-06  1.4634e-08  4.4150e-04  1.0011e-03  8:06:37  918
+   123  2.4005e-03  3.0185e-06  2.7948e-06  4.3593e-06  1.4378e-08  4.3315e-04  9.7919e-04  8:03:38  917
+   124  2.3619e-03  2.9659e-06  2.7457e-06  4.2876e-06  1.4138e-08  4.2500e-04  9.5771e-04  8:04:11  916
+   125  2.3315e-03  2.9082e-06  2.6942e-06  4.2033e-06  1.3894e-08  4.1703e-04  9.3683e-04  8:04:32  915
+   126  2.2880e-03  2.8561e-06  2.6462e-06  4.1256e-06  1.3650e-08  4.0924e-04  9.1625e-04  8:04:42  914
+   127  2.2412e-03  2.8029e-06  2.5982e-06  4.0500e-06  1.3411e-08  4.0164e-04  8.9620e-04  8:01:40  913
+
+  iter  continuity  x-velocity  y-velocity  z-velocity      energy           k     epsilon     time/iter
+   128  2.2099e-03  2.7542e-06  2.5521e-06  3.9849e-06  1.3180e-08  3.9420e-04  8.7646e-04  8:02:12  912
+   129  2.1758e-03  2.7042e-06  2.5064e-06  3.9104e-06  1.2950e-08  3.8698e-04  8.5739e-04  8:02:30  911
+   130  2.1236e-03  2.6516e-06  2.4591e-06  3.8290e-06  1.2717e-08  3.7992e-04  8.3878e-04  7:59:37  910
+   131  2.0776e-03  2.6016e-06  2.4129e-06  3.7639e-06  1.2492e-08  3.7302e-04  8.2062e-04  8:03:16  909

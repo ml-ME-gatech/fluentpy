@@ -1,0 +1,5159 @@
+﻿# encoding: utf-8
+# Release 17.1
+SetScriptVersion(Version="17.1.127")
+system1 = GetSystem(Name="FFF 33")
+results1 = system1.GetContainer(ComponentName="Results")
+results1.Edit()
+results1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.00635, 0.00549927, 0.0181737
+    Scale = 62.6876
+    Pan = 0, 0
+    Rotation Quaternion = -0.16449, -0.330263, 0.450299, 0.813074
+    
+  END
+
+END
+
+> update
+> autolegend plot=/ISO CLIP:Iso Clip 1, view=VIEW:View 1""")
+results1.SendCommand(Command="> delete /ISO CLIP:Iso Clip 1/ISO CLIP LIMITER:Iso Clip Limiter 1")
+results1.SendCommand(Command="""ISO CLIP:Iso Clip 1
+Apply Instancing Transform = On
+Apply Texture = Off
+Blend Texture = On
+Colour = 0.75, 0.75, 0.75
+Colour Map = Default Colour Map
+Colour Mode = Constant
+Colour Scale = Linear
+Colour Variable = Pressure
+Colour Variable Boundary Values = Conservative
+Culling Mode = No Culling
+Domain List = /DOMAIN GROUP:All Domains
+Draw Faces = On
+Draw Lines = Off
+Instancing Transform = /DEFAULT INSTANCE TRANSFORM:Default Transform
+Iso Clip Geometry = Lines Only
+Iso Line Width = 2
+Lighting = On
+Line Colour = 0, 0, 0
+Line Colour Mode = Default
+Line Width = 1
+Location List = heated surf
+Max = 0.0
+Min = 0.0
+Range = Global
+Render Edge Angle = 0 [degree]
+Specular Lighting = On
+Surface Drawing = Smooth Shading
+Texture Angle = 0
+Texture Direction = 0 , 1 , 0 
+Texture File =  
+Texture Material = Metal
+Texture Position = 0 , 0 
+Texture Scale = 1
+Texture Type = Predefined
+Tile Texture = Off
+Transform Texture = Off
+Transparency = 0.0
+  ISO CLIP LIMITER:Iso Clip Limiter 1
+  Limiter Operation = Equal To
+  Value = 0 [mm]
+  Variable = Y
+  Variable Boundary Values = Conservative
+  END
+  OBJECT VIEW TRANSFORM:
+    Apply Reflection = Off
+    Apply Rotation = Off
+    Apply Scale = Off
+    Apply Translation = Off
+    Principal Axis = Z
+    Reflection Plane Option = XY Plane
+    Rotation Angle = 0.0 [degree]
+    Rotation Axis From = 0 [mm], 0 [mm], 0 [mm]
+    Rotation Axis To = 0 [mm], 0 [mm], 0 [mm]
+    Rotation Axis Type = Principal Axis
+    Scale Vector = 1 , 1 , 1 
+    Translation Vector = 0 [mm], 0 [mm], 0 [mm]
+    X = 0.0 [mm]
+    Y = 0.0 [mm]
+    Z = 0.0 [mm]
+  END
+END
+> delete /ISO CLIP:Iso Clip 1/ISO CLIP:Iso Clip 1/ISO CLIP LIMITER:Iso Clip Limiter 1""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /ISO CLIP:Iso Clip 1, view=/VIEW:View 1""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>hide /CONTOUR:Thimble, view=/VIEW:View 1""")
+results1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.00635, 0.00549927, 0.0181737
+    Scale = 62.6876
+    Pan = 0, 0
+    Rotation Quaternion = -0.271962, -0.517791, 0.397966, 0.706782
+    
+  END
+
+END
+
+> update
+# Sending visibility action from ViewUtilities
+>hide /WIREFRAME:Wireframe, view=/VIEW:View 1""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>hide /POLYLINE:Polyline 1, view=/VIEW:View 1""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /POLYLINE:Polyline 1, view=/VIEW:View 1""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>hide /POLYLINE:Polyline 1, view=/VIEW:View 1""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>hide /ISO CLIP:Iso Clip 1, view=/VIEW:View 1""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /ISO CLIP:Iso Clip 1, view=/VIEW:View 1""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>hide /ISO CLIP:Iso Clip 1, view=/VIEW:View 1""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /ISO CLIP:Iso Clip 1, view=/VIEW:View 1""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /WIREFRAME:Wireframe, view=/VIEW:View 1""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>hide /WIREFRAME:Wireframe, view=/VIEW:View 1""")
+results1.SendCommand(Command="> delete /ISO CLIP:Iso Clip 1")
+results1.SendCommand(Command="> autolegend plot=/POLYLINE:Polyline 1, view=VIEW:View 1")
+results1.SendCommand(Command="> autolegend plot=/POLYLINE:Polyline 2, view=VIEW:View 1")
+results1.SendCommand(Command="""POLYLINE:Polyline 2
+Apply Instancing Transform = On
+Boundary List = heated surf
+Colour = 0, 1, 0
+Colour Map = Default Colour Map
+Colour Mode = Constant
+Colour Scale = Linear
+Colour Variable = Pressure
+Colour Variable Boundary Values = Conservative
+Contour Level = 1
+Domain List = /DOMAIN GROUP:All Domains
+Input File =  
+Instancing Transform = /DEFAULT INSTANCE TRANSFORM:Default Transform
+Line Width = 2
+Location = symmetry1 thimble
+Max = 0.0
+Min = 0.0
+Option = Boundary Intersection
+Range = Global
+  OBJECT VIEW TRANSFORM:
+  Apply Reflection = Off
+  Apply Rotation = Off
+  Apply Scale = Off
+  Apply Translation = Off
+  Principal Axis = Z
+  Reflection Plane Option = XY Plane
+  Rotation Angle = 0.0 [degree]
+  Rotation Axis From = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis To = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis Type = Principal Axis
+  Scale Vector = 1 , 1 , 1 
+  Translation Vector = 0 [mm], 0 [mm], 0 [mm]
+  X = 0.0 [mm]
+  Y = 0.0 [mm]
+  Z = 0.0 [mm]
+  END
+END""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /POLYLINE:Polyline 2, view=/VIEW:View 1""")
+results1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.00635, 0.00549927, 0.0181737
+    Scale = 62.6876
+    Pan = 0, 0
+    Rotation Quaternion = -0.116068, -0.498595, 0.372398, 0.774105
+    
+  END
+
+END
+
+> update
+EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/439-SKE-heatflux-F2.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /POLYLINE:Polyline 2
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Heat Flux
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.00635, 0.00549927, 0.0181737
+    Scale = 62.6876
+    Pan = 0, 0
+    Rotation Quaternion = -0.291959, -0.540719, 0.421488, 0.666875
+    
+  END
+
+END
+
+> update
+# Sending visibility action from ViewUtilities
+>show /CONTOUR:Thimble, view=/VIEW:View 1""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>hide /CONTOUR:Thimble, view=/VIEW:View 1""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /CONTOUR:Thimble, view=/VIEW:View 1""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>hide /CONTOUR:Thimble, view=/VIEW:View 1""")
+results1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.00635, 0.00549927, 0.0181737
+    Scale = 62.6876
+    Pan = 0, 0
+    Rotation Quaternion = -0.115077, -0.237766, 0.509736, 0.818771
+    
+  END
+
+END
+
+> update
+# Sending visibility action from ViewUtilities
+>show /CONTOUR:Thimble, view=/VIEW:View 1""")
+results1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.00635, 0.00549927, 0.0181737
+    Scale = 47.1009
+    Pan = 0, 0
+    Rotation Quaternion = -0.0394785, -0.415639, 0.364265, 0.83246
+    
+  END
+
+END
+
+> update
+> undo""")
+results1.SendCommand(Command="> redo")
+results1.SendCommand(Command="> undo")
+results1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.00635, 0.00549927, 0.0181737
+    Scale = 47.1009
+    Pan = 0, 0
+    Rotation Quaternion = -0.0860116, -0.500195, 0.358515, 0.783497
+    
+  END
+
+END
+
+> update
+> autolegend plot=/POLYLINE:Polyline 2, view=VIEW:View 1""")
+results1.SendCommand(Command="""POLYLINE:Polyline 2
+Apply Instancing Transform = On
+Boundary List = heated surf
+Colour = 0, 1, 0
+Colour Map = Default Colour Map
+Colour Mode = Constant
+Colour Scale = Linear
+Colour Variable = Pressure
+Colour Variable Boundary Values = Conservative
+Contour Level = 1
+Domain List = /DOMAIN GROUP:All Domains
+Input File =  
+Instancing Transform = /DEFAULT INSTANCE TRANSFORM:Default Transform
+Line Width = 2
+Location = symmetry2 thimble
+Max = 0.0 [Pa]
+Min = 0.0 [Pa]
+Option = Boundary Intersection
+Range = Global
+  OBJECT VIEW TRANSFORM:
+  Apply Reflection = Off
+  Apply Rotation = Off
+  Apply Scale = Off
+  Apply Translation = Off
+  Principal Axis = Z
+  Reflection Plane Option = XY Plane
+  Rotation Angle = 0.0 [degree]
+  Rotation Axis From = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis To = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis Type = Principal Axis
+  Scale Vector = 1 , 1 , 1 
+  Translation Vector = 0 [mm], 0 [mm], 0 [mm]
+  X = 0.0 [mm]
+  Y = 0.0 [mm]
+  Z = 0.0 [mm]
+  END
+END""")
+results1.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/439-SKE-heatflux-F2.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /POLYLINE:Polyline 2
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Heat Flux
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results1.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/439-SKE-heatflux-F2.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = heated surf
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Heat Flux
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results1.SendCommand(Command="> autolegend plot=/POLYLINE:Polyline 2, view=VIEW:View 1")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /CONTOUR:Thimble, view=/VIEW:View 1""")
+results1.SendCommand(Command="> delete /POLYLINE:Polyline 2")
+results1.Exit()
+system2 = GetSystem(Name="FFF 34")
+results2 = system2.GetContainer(ComponentName="Results")
+results2.Edit()
+results2.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.00635, 0.00549927, 0.0181737
+    Scale = 62.6876
+    Pan = 0, 0
+    Rotation Quaternion = -0.0970945, -0.381971, 0.44036, 0.806686
+    
+  END
+
+END
+
+> update
+EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/439-SKE-heatflux-F3.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = heated surf
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Heat Flux
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results2.Exit()
+system3 = GetSystem(Name="FFF 35")
+results3 = system3.GetContainer(ComponentName="Results")
+results3.Edit()
+results3.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/439-SKE-heatflux-F4.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = heated surf
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Heat Flux
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results3.Exit()
+system4 = GetSystem(Name="FFF 17")
+results4 = system4.GetContainer(ComponentName="Results")
+results4.Edit()
+results4.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/New Folder/439-Tcs-SKE.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /SURFACE GROUP:CS
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results4.Exit()
+system5 = GetSystem(Name="FFF 29")
+results5 = system5.GetContainer(ComponentName="Results")
+results5.Edit()
+results5.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/New Folder/439-Tcs-RNG.csv
+Export Geometry = Off
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /SURFACE GROUP:CS
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results5.Exit()
+system6 = GetSystem(Name="FFF 30")
+results6 = system6.GetContainer(ComponentName="Results")
+results6.Edit()
+results6.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/New Folder/439-Tcs-RKE.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /SURFACE GROUP:CS
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results6.Exit()
+system7 = GetSystem(Name="FFF 31")
+results7 = system7.GetContainer(ComponentName="Results")
+results7.Edit()
+results7.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/New Folder/439-Tcs-SST.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /SURFACE GROUP:CS
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results7.Exit()
+system8 = GetSystem(Name="FFF 36")
+results8 = system8.GetContainer(ComponentName="Results")
+results8.Edit()
+results8.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/New Folder/439-Tcs-SKO.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /SURFACE GROUP:CS
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results8.Exit()
+system9 = GetSystem(Name="FFF 37")
+results9 = system9.GetContainer(ComponentName="Results")
+results9.Edit()
+results9.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/New Folder/439-Tcs-SA.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /SURFACE GROUP:CS
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results9.Exit()
+results5.Edit()
+results5.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/New Folder/439-Tcs-RNG.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /SURFACE GROUP:CS
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results5.Exit()
+results1.Edit()
+results1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.00635, 0.00549927, 0.0181737
+    Scale = 47.1009
+    Pan = 0, 0
+    Rotation Quaternion = -0.181358, -0.490586, 0.36802, 0.768759
+    
+  END
+
+END
+
+> update
+EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/439-SKE-Tcs-F2.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /SURFACE GROUP:CS
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results1.Exit()
+results4.Edit()
+results4.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/439-Tcs-SKE.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /SURFACE GROUP:CS
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results4.Exit()
+system10 = GetSystem(Name="FFF")
+system11 = system10.Duplicate(RelativeTo=system10)
+system11.DisplayText = "439, H=0.9, SKE"
+system11.DisplayText = "439, H=0.9, SKE, 4M"
+system12 = system11.Duplicate(RelativeTo=system11)
+system12.DisplayText = "439, H=0.9, SKE, 8M"
+designPoint1 = Parameters.GetDesignPoint(Name="0")
+parameter1 = Parameters.GetParameter(Name="P785")
+designPoint1.SetParameterExpression(
+    Parameter=parameter1,
+    Expression="0.00348 [kg s^-1]")
+parameter2 = Parameters.GetParameter(Name="P786")
+designPoint1.SetParameterExpression(
+    Parameter=parameter2,
+    Expression="9809762 [Pa]")
+parameter3 = Parameters.GetParameter(Name="P787")
+designPoint1.SetParameterExpression(
+    Parameter=parameter3,
+    Expression="0.04798 [J kg^-1]")
+parameter4 = Parameters.GetParameter(Name="P788")
+designPoint1.SetParameterExpression(
+    Parameter=parameter4,
+    Expression="2.585992 [m^2 s^-3]")
+parameter5 = Parameters.GetParameter(Name="P789")
+designPoint1.SetParameterExpression(
+    Parameter=parameter5,
+    Expression="373.502 [K]")
+parameter6 = Parameters.GetParameter(Name="P790")
+designPoint1.SetParameterExpression(
+    Parameter=parameter6,
+    Expression="9789546 [Pa]")
+parameter7 = Parameters.GetParameter(Name="P791")
+designPoint1.SetParameterExpression(
+    Parameter=parameter7,
+    Expression="0.040971 [J kg^-1]")
+parameter8 = Parameters.GetParameter(Name="P792")
+designPoint1.SetParameterExpression(
+    Parameter=parameter8,
+    Expression="4.046215 [m^2 s^-3]")
+parameter9 = Parameters.GetParameter(Name="P793")
+designPoint1.SetParameterExpression(
+    Parameter=parameter9,
+    Expression="427.996 [K]")
+parameter10 = Parameters.GetParameter(Name="P794")
+designPoint1.SetParameterExpression(
+    Parameter=parameter10,
+    Expression="4336162.043 [W m^-2]")
+parameter11 = Parameters.GetParameter(Name="P795")
+designPoint1.SetParameterExpression(
+    Parameter=parameter11,
+    Expression="48.6899 [kg m^-2 s^-1]")
+parameter12 = Parameters.GetParameter(Name="P796")
+designPoint1.SetParameterExpression(
+    Parameter=parameter12,
+    Expression="0.00014628 [m^2 s^-1]")
+parameter13 = Parameters.GetParameter(Name="P797")
+designPoint1.SetParameterExpression(
+    Parameter=parameter13,
+    Expression="6.817E-05 [m^2 s^-1]")
+parameter14 = Parameters.GetParameter(Name="P798")
+designPoint1.SetParameterExpression(
+    Parameter=parameter14,
+    Expression="336.76 [s^-1]")
+parameter15 = Parameters.GetParameter(Name="P799")
+designPoint1.SetParameterExpression(
+    Parameter=parameter15,
+    Expression="617.06 [s^-1]")
+parameter16 = Parameters.GetParameter(Name="P804")
+designPoint1.SetParameterExpression(
+    Parameter=parameter16,
+    Expression="0.00348 [kg s^-1]")
+parameter17 = Parameters.GetParameter(Name="P805")
+designPoint1.SetParameterExpression(
+    Parameter=parameter17,
+    Expression="9809762 [Pa]")
+parameter18 = Parameters.GetParameter(Name="P806")
+designPoint1.SetParameterExpression(
+    Parameter=parameter18,
+    Expression="0.04798 [J kg^-1]")
+parameter19 = Parameters.GetParameter(Name="P807")
+designPoint1.SetParameterExpression(
+    Parameter=parameter19,
+    Expression="2.585992 [m^2 s^-3]")
+parameter20 = Parameters.GetParameter(Name="P808")
+designPoint1.SetParameterExpression(
+    Parameter=parameter20,
+    Expression="373.502 [K]")
+parameter21 = Parameters.GetParameter(Name="P809")
+designPoint1.SetParameterExpression(
+    Parameter=parameter21,
+    Expression="9789546 [Pa]")
+parameter22 = Parameters.GetParameter(Name="P810")
+designPoint1.SetParameterExpression(
+    Parameter=parameter22,
+    Expression="0.040971 [J kg^-1]")
+parameter23 = Parameters.GetParameter(Name="P811")
+designPoint1.SetParameterExpression(
+    Parameter=parameter23,
+    Expression="4.046215 [m^2 s^-3]")
+parameter24 = Parameters.GetParameter(Name="P812")
+designPoint1.SetParameterExpression(
+    Parameter=parameter24,
+    Expression="427.996 [K]")
+parameter25 = Parameters.GetParameter(Name="P813")
+designPoint1.SetParameterExpression(
+    Parameter=parameter25,
+    Expression="4336162.043 [W m^-2]")
+parameter26 = Parameters.GetParameter(Name="P814")
+designPoint1.SetParameterExpression(
+    Parameter=parameter26,
+    Expression="48.6899 [kg m^-2 s^-1]")
+parameter27 = Parameters.GetParameter(Name="P815")
+designPoint1.SetParameterExpression(
+    Parameter=parameter27,
+    Expression="0.00014628 [m^2 s^-1]")
+parameter28 = Parameters.GetParameter(Name="P816")
+designPoint1.SetParameterExpression(
+    Parameter=parameter28,
+    Expression="6.817E-05 [m^2 s^-1]")
+parameter29 = Parameters.GetParameter(Name="P817")
+designPoint1.SetParameterExpression(
+    Parameter=parameter29,
+    Expression="336.76 [s^-1]")
+parameter30 = Parameters.GetParameter(Name="P818")
+designPoint1.SetParameterExpression(
+    Parameter=parameter30,
+    Expression="617.06 [s^-1]")
+setupComponent1 = system11.GetComponent(Name="Setup")
+setupComponent1.Refresh()
+setupComponent2 = system12.GetComponent(Name="Setup")
+setupComponent2.Refresh()
+setup1 = system11.GetContainer(ComponentName="Setup")
+fluentLauncherSettings1 = setup1.GetFluentLauncherSettings()
+fluentLauncherSettings1.SetEntityProperties(Properties=Set(EnvPath={}))
+setup1.Edit()
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Ribbon*Frame1*Frame2(Setting Up Domain)*Table1*Table2(Zones)*PushButton8(Replace Mesh)")(cx-gui-do cx-activate-item "Question*OK")')
+setup1.SendCommand(Command="(cx-gui-do cx-activate-item \"MenuBar*ImportSubMenu*Mesh...\")(cx-gui-do cx-activate-item \"Question*OK\")(cx-gui-do cx-set-toggle-button2 \"Read Mesh Options*Table1(Options)*ToggleBox1*Replace mesh\" #t)(cx-gui-do cx-activate-item \"Read Mesh Options*Table1(Options)*ToggleBox1*Replace mesh\")(cx-gui-do cx-activate-item \"Read Mesh Options*PanelButtons*PushButton1(OK)\")(cx-gui-do cx-set-file-dialog-entries \"Select File\" '( \"G:/Bailey/Fluent/ImportFiles/H-0.90 60 Deg Files/HEMJ-60deg-4M-no-lip.msh\") \"Mesh Files (*.msh* *.MSH* )\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Information*OK")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton1(Scale)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Scale Mesh*Table1*Table2(Scaling)*DropDownList2(Mesh Was Created In)\" '( 3))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*Table1*Table2(Scaling)*DropDownList2(Mesh Was Created In)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*Table1*Table2(Scaling)*PushButton4(Scale)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*PanelButtons*PushButton1(Close)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton3(Check)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Models\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Boundary Conditions\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Materials\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Cell Zone Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 0))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Fluid*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 1))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Solid*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 2))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Solid*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Boundary Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 19))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 20))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 27))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 22))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 21))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 26))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 0))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 6))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 8))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 12))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 27))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 29))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 28))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Reference Values\"))(cx-gui-do cx-set-list-selections \"Reference Values*DropDownList1(Compute from)\" '( 15))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Reference Values*DropDownList1(Compute from)")')
+setup1.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Methods"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Initialization"))')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Solution Initialization*Table1*ButtonBox10*PushButton2(Initialize)")')
+setup1.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Run Calculation"))')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+ClearMessages()
+setup2 = system12.GetContainer(ComponentName="Setup")
+fluentLauncherSettings2 = setup2.GetFluentLauncherSettings()
+fluentLauncherSettings2.SetEntityProperties(Properties=Set(EnvPath={}))
+setup2.Edit()
+setup2.SendCommand(Command="(cx-gui-do cx-activate-item \"MenuBar*ImportSubMenu*Mesh...\")(cx-gui-do cx-activate-item \"Question*OK\")(cx-gui-do cx-set-toggle-button2 \"Read Mesh Options*Table1(Options)*ToggleBox1*Replace mesh\" #t)(cx-gui-do cx-activate-item \"Read Mesh Options*Table1(Options)*ToggleBox1*Replace mesh\")(cx-gui-do cx-activate-item \"Read Mesh Options*PanelButtons*PushButton1(OK)\")(cx-gui-do cx-set-file-dialog-entries \"Select File\" '( \"G:/Bailey/Fluent/ImportFiles/H-0.90 60 Deg Files/HEMJ-60deg-8M-no-lip.msh\") \"Mesh Files (*.msh* *.MSH* )\")")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Information*OK")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton1(Scale)")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Scale Mesh*Table1*Table2(Scaling)*DropDownList2(Mesh Was Created In)\" '( 3))")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*Table1*Table2(Scaling)*DropDownList2(Mesh Was Created In)")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*Table1*Table2(Scaling)*PushButton4(Scale)")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*PanelButtons*PushButton1(Close)")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton3(Check)")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Cell Zone Conditions\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Boundary Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 19))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*PanelButtons*PushButton2(Cancel)")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Solution\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Reference Values\"))(cx-gui-do cx-set-list-selections \"Reference Values*DropDownList1(Compute from)\" '( 15))")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Reference Values*DropDownList1(Compute from)")')
+setup2.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Methods"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Initialization"))')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Solution Initialization*Table1*ButtonBox10*PushButton2(Initialize)")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+ClearMessages()
+results1.Edit()
+results1.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/439-SKE-Tcs-F2.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /SURFACE GROUP:CS
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results1.Exit()
+results2.Edit()
+results2.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/439-SKE-Tcs-F3.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /SURFACE GROUP:CS
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results2.Exit()
+results3.Edit()
+results3.SendCommand(Command="""VIEW:View 1
+  Light Angle = 50, 110
+END
+
+VIEW:View 2
+  Light Angle = 50, 110
+END
+
+VIEW:View 3
+  Light Angle = 50, 110
+END
+
+VIEW:View 4
+  Light Angle = 50, 110
+END
+
+> update
+CALCULATOR:CALCULATOR
+  Axis =  
+  Case Name = Case Non uniform 439 H 0 9 SKE F 4
+  Expression = Temperature
+  Fluid = All Fluids
+  Function = areaAve
+  Location = /SURFACE GROUP:CS
+END
+> calculate""")
+results3.SendCommand(Command="""CALCULATOR:CALCULATOR
+  Axis =  
+  Case Name = Case Non uniform 439 H 0 9 SKE F 4
+  Expression = Temperature
+  Fluid = All Fluids
+  Function = areaAve
+  Location = /SURFACE GROUP:CS
+END""")
+results3.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/439-SKE-Tcs-F4.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /SURFACE GROUP:CS
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results3.Exit()
+results2.Edit()
+results2.SendCommand(Command="""CALCULATOR:CALCULATOR
+  Axis =  
+  Case Name = Case Non uniform 439 H 0 9 SKE F 3
+  Expression = Temperature
+  Fluid = All Fluids
+  Function = areaAve
+  Location = /SURFACE GROUP:CS
+END
+> calculate""")
+results2.SendCommand(Command="""CALCULATOR:CALCULATOR
+  Axis =  
+  Case Name = Case Non uniform 439 H 0 9 SKE F 3
+  Expression = Temperature
+  Fluid = All Fluids
+  Function = areaAve
+  Location = /SURFACE GROUP:CS
+END""")
+results2.Exit()
+results1.Edit()
+results1.SendCommand(Command="""CALCULATOR:CALCULATOR
+  Axis =  
+  Case Name = Case Non uniform 439 H 0 9 SKE F 2
+  Expression = Temperature
+  Fluid = All Fluids
+  Function = areaAve
+  Location = /SURFACE GROUP:CS
+END
+> calculate""")
+results1.SendCommand(Command="""CALCULATOR:CALCULATOR
+  Axis =  
+  Case Name = Case Non uniform 439 H 0 9 SKE F 2
+  Expression = Temperature
+  Fluid = All Fluids
+  Function = areaAve
+  Location = /SURFACE GROUP:CS
+END""")
+results1.Exit()
+Save(Overwrite=True)
+Update()
+ClearMessages()
+solution1 = system11.GetContainer(ComponentName="Solution")
+solution1.Edit()
+setup1.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list ))(cx-gui-do cx-activate-item "Ribbon*Frame1*Frame6(Postprocessing)*Table1*Table2(Plots)*PushButton3(Residuals)")(cx-gui-do cx-activate-item "Residual Monitors*PanelButtons*PushButton5(Plot)")(cx-gui-do cx-activate-item "Residual Monitors*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Run Calculation*Table1*PushButton22(Calculate)")(cx-gui-do cx-activate-item "Error*OK")(cx-gui-do cx-activate-item "Information*OK")(cx-gui-do cx-set-integer-entry "Run Calculation*Table1*IntegerEntry10(Number of Iterations)" 1)(cx-gui-do cx-activate-item "Run Calculation*Table1*IntegerEntry10(Number of Iterations)")(cx-gui-do cx-activate-item "Run Calculation*Table1*PushButton22(Calculate)")(cx-gui-do cx-activate-item "Settings have changed!*PanelButtons*PushButton1(OK)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Error*OK")(cx-gui-do cx-activate-item "Information*OK")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+ClearMessages()
+resultsComponent1 = system11.GetComponent(Name="Results")
+resultsComponent1.Update(AllDependencies=True)
+ClearMessages()
+results4.Edit()
+results4.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.00635, 0.00549927, 0.0181737
+    Scale = 62.6876
+    Pan = 0, 0
+    Rotation Quaternion = -0.269368, -0.519969, 0.391921, 0.709546
+    
+  END
+
+END
+
+> update
+> autolegend plot=/CONTOUR:Thimble, view=VIEW:View 1""")
+results4.SendCommand(Command="""CONTOUR:Thimble
+Apply Instancing Transform = On
+Clip Contour = Off
+Colour Map = Default Colour Map
+Colour Scale = Linear
+Colour Variable = Temperature
+Colour Variable Boundary Values = Conservative
+Constant Contour Colour = Off
+Contour Range = Local
+Culling Mode = No Culling
+Domain List = /DOMAIN GROUP:All Domains
+Draw Contours = On
+Font = Sans Serif
+Fringe Fill = On
+Instancing Transform = /DEFAULT INSTANCE TRANSFORM:Default Transform
+Lighting = On
+Line Colour = 0, 0, 0
+Line Colour Mode = Default
+Line Width = 1
+Location List = symmetry1 thimble
+Max = 0.0 [K]
+Min = 0.0 [K]
+Number of Contours = 50
+Show Numbers = Off
+Specular Lighting = On
+Surface Drawing = Smooth Shading
+Text Colour = 0, 0, 0
+Text Colour Mode = Default
+Text Height = 0.024
+Transparency = 0.0
+Use Face Values = Off
+Value List = 0 [K],1 [K]
+  OBJECT VIEW TRANSFORM:
+  Apply Reflection = Off
+  Apply Rotation = Off
+  Apply Scale = Off
+  Apply Translation = Off
+  Principal Axis = Z
+  Reflection Plane Option = XY Plane
+  Rotation Angle = 0.0 [degree]
+  Rotation Axis From = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis To = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis Type = Principal Axis
+  Scale Vector = 1 , 1 , 1 
+  Translation Vector = 0 [mm], 0 [mm], 0 [mm]
+  X = 0.0 [mm]
+  Y = 0.0 [mm]
+  Z = 0.0 [mm]
+  END
+END""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Apply Instancing Transform = On
+Colour = 0.5, 0.5, 0.5
+Colour Map = Default Colour Map
+Colour Mode = Constant
+Colour Scale = Linear
+Colour Variable = Pressure
+Colour Variable Boundary Values = Hybrid
+Culling Mode = No Culling
+Domain List = All Domains
+Draw Faces = On
+Draw Lines = Off
+Instancing Transform = Default Transform
+Lighting = true
+Line Colour = 0, 0, 0
+Line Width = 2
+Location = 
+Max = 
+Min = 
+Node Number = 0
+Normalized = Off
+Option = XYZ
+Point = 0 [mm], 0 [mm], 0 [mm]
+Point Symbol = Point2D
+Range = Global
+Specular Lighting = On
+Surface Drawing = Smooth Shading
+Symbol Size = 9
+Symbol Size Mode = Absolute
+Transparency = 0.0
+Variable = 
+Variable Boundary Values = Hybrid
+Visibility = true
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Pressure
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 3.9355 [mm], -0.0462304 [mm], 30.1994 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0 [mm], -0.0462304 [mm], 30.1994 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0 [mm], 0 [mm], 30.1994 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0 [mm], 0 [mm], 30.099 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0 [mm], 0 [mm], 30.099 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0 [mm], 0 [mm], 30.099 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0 [mm], 0 [mm], 30.099 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 2.0955 [mm], 0 [mm], 30.099 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 2.0955 [mm], 0 [mm], 30.099 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 2.0955 [mm], 0 [mm], 29.9974 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 2.0955 [mm], 0 [mm], 29.9974 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 2.0955 [mm], 0 [mm], 29.9974 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 4.28 [mm], 0 [mm], 29.9974 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 4.28 [mm], 0 [mm], 29.9974 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 4.28 [mm], 0 [mm], 29.464 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 4.28 [mm], 0 [mm], 29.464 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 4.28 [mm], 0 [mm], 29.464 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 6.4135 [mm], 0 [mm], 29.464 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 6.4135 [mm], 0 [mm], 29.464 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 6.4135 [mm], 0 [mm], 28.0924 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 6.4135 [mm], 0 [mm], 28.0924 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 6.4135 [mm], 0 [mm], 28.0924 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 28.0924 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 28.0924 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 28.0924 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 26.2732 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 26.2732 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 23.0722 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 23.0722 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 23.0722 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 19.8705 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 19.8705 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 16.67 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 16.67 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.SendCommand(Command=">delete /INTERNAL POINT:Probe Point")
+results4.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 16.67 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results4.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results4.Exit()
+results5.Edit()
+results5.SendCommand(Command="> autolegend plot=/CONTOUR:Thimble, view=VIEW:View 1")
+results5.SendCommand(Command="""CONTOUR:Thimble
+Apply Instancing Transform = On
+Clip Contour = Off
+Colour Map = Default Colour Map
+Colour Scale = Linear
+Colour Variable = Temperature
+Colour Variable Boundary Values = Conservative
+Constant Contour Colour = Off
+Contour Range = Local
+Culling Mode = No Culling
+Domain List = /DOMAIN GROUP:All Domains
+Draw Contours = On
+Font = Sans Serif
+Fringe Fill = On
+Instancing Transform = /DEFAULT INSTANCE TRANSFORM:Default Transform
+Lighting = On
+Line Colour = 0, 0, 0
+Line Colour Mode = Default
+Line Width = 1
+Location List = symmetry1 thimble
+Max = 0.0 [K]
+Min = 0.0 [K]
+Number of Contours = 50
+Show Numbers = Off
+Specular Lighting = On
+Surface Drawing = Smooth Shading
+Text Colour = 0, 0, 0
+Text Colour Mode = Default
+Text Height = 0.024
+Transparency = 0.0
+Use Face Values = Off
+Value List = 0 [K],1 [K]
+  OBJECT VIEW TRANSFORM:
+  Apply Reflection = Off
+  Apply Rotation = Off
+  Apply Scale = Off
+  Apply Translation = Off
+  Principal Axis = Z
+  Reflection Plane Option = XY Plane
+  Rotation Angle = 0.0 [degree]
+  Rotation Axis From = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis To = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis Type = Principal Axis
+  Scale Vector = 1 , 1 , 1 
+  Translation Vector = 0 [mm], 0 [mm], 0 [mm]
+  X = 0.0 [mm]
+  Y = 0.0 [mm]
+  Z = 0.0 [mm]
+  END
+END""")
+results5.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.00635, 0.00549927, 0.0181737
+    Scale = 61.1586
+    Pan = 0, 0
+    Rotation Quaternion = -0.311679, -0.556574, 0.428911, 0.63961
+    
+  END
+
+END
+
+> update
+INTERNAL POINT:Probe Point
+Apply Instancing Transform = On
+Colour = 0.5, 0.5, 0.5
+Colour Map = Default Colour Map
+Colour Mode = Constant
+Colour Scale = Linear
+Colour Variable = Pressure
+Colour Variable Boundary Values = Hybrid
+Culling Mode = No Culling
+Domain List = All Domains
+Draw Faces = On
+Draw Lines = Off
+Instancing Transform = Default Transform
+Lighting = true
+Line Colour = 0, 0, 0
+Line Width = 2
+Location = 
+Max = 
+Min = 
+Node Number = 0
+Normalized = Off
+Option = XYZ
+Point = 0 [mm], 0 [mm], 0 [mm]
+Point Symbol = Point2D
+Range = Global
+Specular Lighting = On
+Surface Drawing = Smooth Shading
+Symbol Size = 9
+Symbol Size Mode = Absolute
+Transparency = 0.0
+Variable = 
+Variable Boundary Values = Hybrid
+Visibility = true
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Pressure
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0.249956 [mm], -0.0387568 [mm], 31.0547 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0 [mm], -0.0387568 [mm], 31.0547 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0 [mm], 0 [mm], 31.0547 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0 [mm], 0 [mm], 30.099 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0 [mm], 0 [mm], 30.099 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0 [mm], 0 [mm], 30.099 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 2.0955 [mm], 0 [mm], 30.099 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 2.0955 [mm], 0 [mm], 30.099 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 2.0955 [mm], 0 [mm], 29.9974 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 2.0955 [mm], 0 [mm], 29.9974 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 2.0955 [mm], 0 [mm], 29.9974 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 4.28 [mm], 0 [mm], 29.9974 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 4.28 [mm], 0 [mm], 29.9974 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 4.28 [mm], 0 [mm], 29.464 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 4.28 [mm], 0 [mm], 29.464 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 4.28 [mm], 0 [mm], 29.464 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 6.4135 [mm], 0 [mm], 29.464 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 6.4135 [mm], 0 [mm], 29.464 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 6.4135 [mm], 0 [mm], 28.0924 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 6.4135 [mm], 0 [mm], 28.0924 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 6.4135 [mm], 0 [mm], 28.0924 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+  Axis =  
+  Case Name = Case H 0 9 RNG
+  Expression = Temperature
+  Fluid = All Fluids
+  Function = areaAve
+  Location = /SURFACE GROUP:CS
+END
+> calculate""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+  Axis =  
+  Case Name = Case H 0 9 RNG
+  Expression = Temperature
+  Fluid = All Fluids
+  Function = areaAve
+  Location = /SURFACE GROUP:CS
+END""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 28.0924 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 28.0924 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 26.2732 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 26.2732 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 26.2732 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 23.0722 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 23.0722 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 23.0722 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 19.8705 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 19.8705 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 19.8705 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 16.67 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 16.67 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.SendCommand(Command=">delete /INTERNAL POINT:Probe Point")
+results5.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 16.67 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results5.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RNG
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results5.Exit()
+results6.Edit()
+results6.SendCommand(Command="> autolegend plot=/CONTOUR:Thimble, view=VIEW:View 1")
+results6.SendCommand(Command="""CONTOUR:Thimble
+Apply Instancing Transform = On
+Clip Contour = Off
+Colour Map = Default Colour Map
+Colour Scale = Linear
+Colour Variable = Temperature
+Colour Variable Boundary Values = Conservative
+Constant Contour Colour = Off
+Contour Range = Local
+Culling Mode = No Culling
+Domain List = /DOMAIN GROUP:All Domains
+Draw Contours = On
+Font = Sans Serif
+Fringe Fill = On
+Instancing Transform = /DEFAULT INSTANCE TRANSFORM:Default Transform
+Lighting = On
+Line Colour = 0, 0, 0
+Line Colour Mode = Default
+Line Width = 1
+Location List = symmetry1 thimble
+Max = 0.0 [K]
+Min = 0.0 [K]
+Number of Contours = 50
+Show Numbers = Off
+Specular Lighting = On
+Surface Drawing = Smooth Shading
+Text Colour = 0, 0, 0
+Text Colour Mode = Default
+Text Height = 0.024
+Transparency = 0.0
+Use Face Values = Off
+Value List = 0 [K],1 [K]
+  OBJECT VIEW TRANSFORM:
+  Apply Reflection = Off
+  Apply Rotation = Off
+  Apply Scale = Off
+  Apply Translation = Off
+  Principal Axis = Z
+  Reflection Plane Option = XY Plane
+  Rotation Angle = 0.0 [degree]
+  Rotation Axis From = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis To = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis Type = Principal Axis
+  Scale Vector = 1 , 1 , 1 
+  Translation Vector = 0 [mm], 0 [mm], 0 [mm]
+  X = 0.0 [mm]
+  Y = 0.0 [mm]
+  Z = 0.0 [mm]
+  END
+END""")
+results6.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.00635, 0.00549927, 0.0181737
+    Scale = 62.6876
+    Pan = 0, 0
+    Rotation Quaternion = -0.359187, -0.586633, 0.379176, 0.618914
+    
+  END
+
+END
+
+> update
+INTERNAL POINT:Probe Point
+Apply Instancing Transform = On
+Colour = 0.5, 0.5, 0.5
+Colour Map = Default Colour Map
+Colour Mode = Constant
+Colour Scale = Linear
+Colour Variable = Pressure
+Colour Variable Boundary Values = Hybrid
+Culling Mode = No Culling
+Domain List = All Domains
+Draw Faces = On
+Draw Lines = Off
+Instancing Transform = Default Transform
+Lighting = true
+Line Colour = 0, 0, 0
+Line Width = 2
+Location = 
+Max = 
+Min = 
+Node Number = 0
+Normalized = Off
+Option = XYZ
+Point = 0 [mm], 0 [mm], 0 [mm]
+Point Symbol = Point2D
+Range = Global
+Specular Lighting = On
+Surface Drawing = Smooth Shading
+Symbol Size = 9
+Symbol Size Mode = Absolute
+Transparency = 0.0
+Variable = 
+Variable Boundary Values = Hybrid
+Visibility = true
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Pressure
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0.267351 [mm], -0.0313441 [mm], 32.5049 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0 [mm], -0.0313441 [mm], 32.5049 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0 [mm], 0 [mm], 32.5049 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0 [mm], 0 [mm], 30.099 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0 [mm], 0 [mm], 30.099 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0 [mm], 0 [mm], 30.099 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 2.0955 [mm], 0 [mm], 30.099 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 2.0955 [mm], 0 [mm], 30.099 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 2.0955 [mm], 0 [mm], 29.9974 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 2.0955 [mm], 0 [mm], 29.9974 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 2.0955 [mm], 0 [mm], 29.9974 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 4.28 [mm], 0 [mm], 29.9974 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 4.28 [mm], 0 [mm], 29.9974 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 4.28 [mm], 0 [mm], 29.464 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 4.28 [mm], 0 [mm], 29.464 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 4.28 [mm], 0 [mm], 29.464 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 6.4135 [mm], 0 [mm], 29.464 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 6.4135 [mm], 0 [mm], 29.464 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 6.4135 [mm], 0 [mm], 28.0924 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 6.4135 [mm], 0 [mm], 28.0924 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 28.0924 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 28.0924 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 28.0924 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+  Axis =  
+  Case Name = Case H 0 9 RKE
+  Expression = Temperature
+  Fluid = All Fluids
+  Function = areaAve
+  Location = /SURFACE GROUP:CS
+END
+> calculate""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+  Axis =  
+  Case Name = Case H 0 9 RKE
+  Expression = Temperature
+  Fluid = All Fluids
+  Function = areaAve
+  Location = /SURFACE GROUP:CS
+END""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 26.2732 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 26.2732 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 26.2732 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 23.0722 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 23.0722 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 23.0722 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 19.8705 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 19.8705 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 16.67 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 16.67 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.SendCommand(Command=">delete /INTERNAL POINT:Probe Point")
+results6.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 16.67 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results6.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 RKE
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results6.Exit()
+results7.Edit()
+results7.SendCommand(Command="> autolegend plot=/CONTOUR:Thimble, view=VIEW:View 1")
+results7.SendCommand(Command="""CONTOUR:Thimble
+Apply Instancing Transform = On
+Clip Contour = Off
+Colour Map = Default Colour Map
+Colour Scale = Linear
+Colour Variable = Temperature
+Colour Variable Boundary Values = Conservative
+Constant Contour Colour = Off
+Contour Range = Local
+Culling Mode = No Culling
+Domain List = /DOMAIN GROUP:All Domains
+Draw Contours = On
+Font = Sans Serif
+Fringe Fill = On
+Instancing Transform = /DEFAULT INSTANCE TRANSFORM:Default Transform
+Lighting = On
+Line Colour = 0, 0, 0
+Line Colour Mode = Default
+Line Width = 1
+Location List = symmetry1 thimble
+Max = 0.0 [K]
+Min = 0.0 [K]
+Number of Contours = 50
+Show Numbers = Off
+Specular Lighting = On
+Surface Drawing = Smooth Shading
+Text Colour = 0, 0, 0
+Text Colour Mode = Default
+Text Height = 0.024
+Transparency = 0.0
+Use Face Values = Off
+Value List = 0 [K],1 [K]
+  OBJECT VIEW TRANSFORM:
+  Apply Reflection = Off
+  Apply Rotation = Off
+  Apply Scale = Off
+  Apply Translation = Off
+  Principal Axis = Z
+  Reflection Plane Option = XY Plane
+  Rotation Angle = 0.0 [degree]
+  Rotation Axis From = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis To = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis Type = Principal Axis
+  Scale Vector = 1 , 1 , 1 
+  Translation Vector = 0 [mm], 0 [mm], 0 [mm]
+  X = 0.0 [mm]
+  Y = 0.0 [mm]
+  Z = 0.0 [mm]
+  END
+END""")
+results7.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.00635, 0.00549927, 0.0181737
+    Scale = 62.6876
+    Pan = 0, 0
+    Rotation Quaternion = -0.360762, -0.570484, 0.402325, 0.618479
+    
+  END
+
+END
+
+> update
+INTERNAL POINT:Probe Point
+Apply Instancing Transform = On
+Colour = 0.5, 0.5, 0.5
+Colour Map = Default Colour Map
+Colour Mode = Constant
+Colour Scale = Linear
+Colour Variable = Pressure
+Colour Variable Boundary Values = Hybrid
+Culling Mode = No Culling
+Domain List = All Domains
+Draw Faces = On
+Draw Lines = Off
+Instancing Transform = Default Transform
+Lighting = true
+Line Colour = 0, 0, 0
+Line Width = 2
+Location = 
+Max = 
+Min = 
+Node Number = 0
+Normalized = Off
+Option = XYZ
+Point = 0 [mm], 0 [mm], 0 [mm]
+Point Symbol = Point2D
+Range = Global
+Specular Lighting = On
+Surface Drawing = Smooth Shading
+Symbol Size = 9
+Symbol Size Mode = Absolute
+Transparency = 0.0
+Variable = 
+Variable Boundary Values = Hybrid
+Visibility = true
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Pressure
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0.197871 [mm], -0.031759 [mm], 31.5341 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0 [mm], -0.031759 [mm], 31.5341 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0 [mm], 0 [mm], 31.5341 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0 [mm], 0 [mm], 30.099 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0 [mm], 0 [mm], 30.099 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0 [mm], 0 [mm], 30.099 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 2.0955 [mm], 0 [mm], 30.099 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 2.0955 [mm], 0 [mm], 30.099 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 2.0955 [mm], 0 [mm], 29.9974 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 2.0955 [mm], 0 [mm], 29.9974 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 2.0955 [mm], 0 [mm], 29.9974 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 4.28 [mm], 0 [mm], 29.9974 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 4.28 [mm], 0 [mm], 29.9974 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 4.28 [mm], 0 [mm], 29.464 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 4.28 [mm], 0 [mm], 29.464 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 4.28 [mm], 0 [mm], 29.464 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 6.4135 [mm], 0 [mm], 29.464 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 6.4135 [mm], 0 [mm], 29.464 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 6.4135 [mm], 0 [mm], 28.0924 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 6.4135 [mm], 0 [mm], 28.0924 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 6.4135 [mm], 0 [mm], 28.0924 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 6.4135 [mm], 0 [mm], 28.0924 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+  Axis =  
+  Case Name = Case H 0 9 SST
+  Expression = Temperature
+  Fluid = All Fluids
+  Function = areaAve
+  Location = /SURFACE GROUP:CS
+END
+> calculate""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+  Axis =  
+  Case Name = Case H 0 9 SST
+  Expression = Temperature
+  Fluid = All Fluids
+  Function = areaAve
+  Location = /SURFACE GROUP:CS
+END""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 28.0924 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 28.0924 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 26.2732 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 26.2732 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 26.2732 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 23.0722 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 23.0722 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 23.0722 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 23.0722 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 23.0722 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 19.8705 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 19.8705 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 19.8705 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 16.67 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 16.67 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.SendCommand(Command=">delete /INTERNAL POINT:Probe Point")
+results7.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 16.67 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results7.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SST
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results7.Exit()
+results8.Edit()
+results8.SendCommand(Command="""CALCULATOR:CALCULATOR
+  Axis =  
+  Case Name = Case H 0 9 SKO
+  Expression = Temperature
+  Fluid = All Fluids
+  Function = areaAve
+  Location = /SURFACE GROUP:CS
+END
+> calculate""")
+results8.SendCommand(Command="""CALCULATOR:CALCULATOR
+  Axis =  
+  Case Name = Case H 0 9 SKO
+  Expression = Temperature
+  Fluid = All Fluids
+  Function = areaAve
+  Location = /SURFACE GROUP:CS
+END""")
+results8.Exit()
+ClearMessages()
+results9.Edit()
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+  Axis =  
+  Case Name = Case H 0 9 SA
+  Expression = Temperature
+  Fluid = All Fluids
+  Function = areaAve
+  Location = /SURFACE GROUP:CS
+END
+> calculate""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+  Axis =  
+  Case Name = Case H 0 9 SA
+  Expression = Temperature
+  Fluid = All Fluids
+  Function = areaAve
+  Location = /SURFACE GROUP:CS
+END""")
+results9.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.00635, 0.00549927, 0.0181737
+    Scale = 62.6876
+    Pan = 0, 0
+    Rotation Quaternion = -0.241136, -0.603492, 0.357039, 0.670937
+    
+  END
+
+END
+
+> update
+> autolegend plot=/CONTOUR:Thimble, view=VIEW:View 1""")
+results9.SendCommand(Command="""CONTOUR:Thimble
+Apply Instancing Transform = On
+Clip Contour = Off
+Colour Map = Default Colour Map
+Colour Scale = Linear
+Colour Variable = Temperature
+Colour Variable Boundary Values = Conservative
+Constant Contour Colour = Off
+Contour Range = Local
+Culling Mode = No Culling
+Domain List = /DOMAIN GROUP:All Domains
+Draw Contours = On
+Font = Sans Serif
+Fringe Fill = On
+Instancing Transform = /DEFAULT INSTANCE TRANSFORM:Default Transform
+Lighting = On
+Line Colour = 0, 0, 0
+Line Colour Mode = Default
+Line Width = 1
+Location List = symmetry1 thimble
+Max = 0.0 [K]
+Min = 0.0 [K]
+Number of Contours = 50
+Show Numbers = Off
+Specular Lighting = On
+Surface Drawing = Smooth Shading
+Text Colour = 0, 0, 0
+Text Colour Mode = Default
+Text Height = 0.024
+Transparency = 0.0
+Use Face Values = Off
+Value List = 0 [K],1 [K]
+  OBJECT VIEW TRANSFORM:
+  Apply Reflection = Off
+  Apply Rotation = Off
+  Apply Scale = Off
+  Apply Translation = Off
+  Principal Axis = Z
+  Reflection Plane Option = XY Plane
+  Rotation Angle = 0.0 [degree]
+  Rotation Axis From = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis To = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis Type = Principal Axis
+  Scale Vector = 1 , 1 , 1 
+  Translation Vector = 0 [mm], 0 [mm], 0 [mm]
+  X = 0.0 [mm]
+  Y = 0.0 [mm]
+  Z = 0.0 [mm]
+  END
+END""")
+results9.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.00635, 0.00549927, 0.0181737
+    Scale = 62.6876
+    Pan = 0, 0
+    Rotation Quaternion = -0.266726, -0.440836, 0.458352, 0.724167
+    
+  END
+
+END
+
+> update
+INTERNAL POINT:Probe Point
+Apply Instancing Transform = On
+Colour = 0.5, 0.5, 0.5
+Colour Map = Default Colour Map
+Colour Mode = Constant
+Colour Scale = Linear
+Colour Variable = Pressure
+Colour Variable Boundary Values = Hybrid
+Culling Mode = No Culling
+Domain List = All Domains
+Draw Faces = On
+Draw Lines = Off
+Instancing Transform = Default Transform
+Lighting = true
+Line Colour = 0, 0, 0
+Line Width = 2
+Location = 
+Max = 
+Min = 
+Node Number = 0
+Normalized = Off
+Option = XYZ
+Point = 0 [mm], 0 [mm], 0 [mm]
+Point Symbol = Point2D
+Range = Global
+Specular Lighting = On
+Surface Drawing = Smooth Shading
+Symbol Size = 9
+Symbol Size Mode = Absolute
+Transparency = 0.0
+Variable = 
+Variable Boundary Values = Hybrid
+Visibility = true
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Pressure
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0.434146 [mm], -0.0480441 [mm], 32.4851 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0 [mm], -0.0480441 [mm], 32.4851 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0 [mm], 0 [mm], 32.4851 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0 [mm], 0 [mm], 30.099 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0 [mm], 0 [mm], 30.099 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 0 [mm], 0 [mm], 30.099 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 2.0955 [mm], 0 [mm], 30.099 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 2.0955 [mm], 0 [mm], 30.099 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 2.0955 [mm], 0 [mm], 29.9974 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 2.0955 [mm], 0 [mm], 29.9974 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 2.0955 [mm], 0 [mm], 29.9974 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 4.28 [mm], 0 [mm], 29.9974 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 4.28 [mm], 0 [mm], 29.9974 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 4.28 [mm], 0 [mm], 29.464 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 4.28 [mm], 0 [mm], 29.464 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 4.28 [mm], 0 [mm], 29.464 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 6.4135 [mm], 0 [mm], 29.464 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 6.4135 [mm], 0 [mm], 29.464 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 6.4135 [mm], 0 [mm], 28.0924 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 6.4135 [mm], 0 [mm], 28.0924 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 6.4135 [mm], 0 [mm], 28.0924 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 28.0924 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 28.0924 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 26.2732 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 26.2732 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 26.2732 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 23.0722 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 23.0722 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 23.0722 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 19.8705 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 19.8705 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 19.8705 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 16.67 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 16.67 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.SendCommand(Command=">delete /INTERNAL POINT:Probe Point")
+results9.SendCommand(Command="""INTERNAL POINT:Probe Point
+Colour = 0.5, 0.5, 0.5
+Colour Mode = Constant
+Colour Variable = Temperature
+Option = XYZ
+Point = 7.5 [mm], 0 [mm], 16.67 [mm]
+Point Symbol = Point2D
+Symbol Size = 9
+END""")
+results9.SendCommand(Command="""CALCULATOR:CALCULATOR
+Expression = Temperature
+Function = probe
+Location = Probe Point
+Case Name = Case H 0 9 SA
+END
+>calculate
+>show /INTERNAL POINT:Probe Point""")
+results9.Exit()
+solution2 = system8.GetContainer(ComponentName="Solution")
+solution2.Edit()
+setup3 = system8.GetContainer(ComponentName="Setup")
+setup3.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list ))')
+setup3.SendCommand(Command="(cx-gui-do cx-activate-item \"MenuBar*ImportSubMenu*Mesh...\")(cx-gui-do cx-activate-item \"Question*OK\")(cx-gui-do cx-set-toggle-button2 \"Read Mesh Options*Table1(Options)*ToggleBox1*Replace mesh\" #t)(cx-gui-do cx-activate-item \"Read Mesh Options*Table1(Options)*ToggleBox1*Replace mesh\")(cx-gui-do cx-activate-item \"Read Mesh Options*PanelButtons*PushButton1(OK)\")(cx-gui-do cx-set-file-dialog-entries \"Select File\" '( \"G:/Bailey/Fluent/ImportFiles/H-0.90 60 Deg Files/HEMJ-60Deg-no-lip.msh\") \"Mesh Files (*.msh* *.MSH* )\")")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Information*OK")(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Setup|General"))')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton1(Scale)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Scale Mesh*Table1*Table2(Scaling)*DropDownList2(Mesh Was Created In)\" '( 3))")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*Table1*Table2(Scaling)*DropDownList2(Mesh Was Created In)")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*Table1*Table2(Scaling)*PushButton4(Scale)")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*PanelButtons*PushButton1(Close)")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton3(Check)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Materials\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Cell Zone Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 1))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 2))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Boundary Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 0))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 8))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 12))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 19))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table8*DropDownList1\" '( 2))")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table8*DropDownList1")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table11*DropDownList1\" '( 2))")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table11*DropDownList1")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*DropDownList12(Direction Specification Method)\" '( 1))")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*DropDownList12(Direction Specification Method)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*DropDownList1(Specification Method)\" '( 0))")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*DropDownList1(Specification Method)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table5*DropDownList1\" '( 2))")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table5*DropDownList1")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table7*DropDownList1\" '( 2))")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table7*DropDownList1")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame2(Thermal)*Table1*Table1*DropDownList1\" '( 0))")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame2(Thermal)*Table1*Table1*DropDownList1")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame2(Thermal)*Table1*Table1*DropDownList1\" '( 2))")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame2(Thermal)*Table1*Table1*DropDownList1")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*PanelButtons*PushButton1(OK)")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*DropDownList7(Mass Flow Specification Method)\" '( 1))")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*DropDownList7(Mass Flow Specification Method)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table9*DropDownList1\" '( 2))")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table9*DropDownList1")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*PanelButtons*PushButton1(OK)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 20))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table6*DropDownList1\" '( 3))")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table6*DropDownList1")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*DropDownList1(Specification Method)\" '( 0))")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*DropDownList1(Specification Method)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table5*DropDownList1\" '( 3))")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table5*DropDownList1")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table7*DropDownList1\" '( 3))")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table7*DropDownList1")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Pressure Outlet*Frame3*Frame2(Thermal)*Table1*Table1*DropDownList1\" '( 3))")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*Frame3*Frame2(Thermal)*Table1*Table1*DropDownList1")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*PanelButtons*PushButton1(OK)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 19))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*PanelButtons*PushButton1(OK)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 21))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 20))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*PanelButtons*PushButton2(Cancel)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 28))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 27))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 29))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Wall*Frame3*Frame2(Thermal)*Frame1*Frame1(Thermal Conditions)*Table2*DropDownList1(Material Name)\" '( 3))")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*Frame3*Frame2(Thermal)*Frame1*Frame1(Thermal Conditions)*Table2*DropDownList1(Material Name)")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton1(OK)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 27))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 8))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Solution\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Reference Values\"))(cx-gui-do cx-set-list-selections \"Reference Values*DropDownList1(Compute from)\" '( 13))")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Reference Values*DropDownList1(Compute from)")')
+setup3.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Methods"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Initialization"))')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Solution Initialization*Table1*ButtonBox10*PushButton2(Initialize)")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+ClearMessages()
+solutionComponent1 = system12.GetComponent(Name="Solution")
+solutionComponent1.Refresh()
+solution3 = system12.GetContainer(ComponentName="Solution")
+solution3.Edit()
+solutionComponent1.Refresh()
+setup2.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list ))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Initialization"))')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Solution Initialization*Table1*ButtonBox10*PushButton2(Initialize)")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+Save(Overwrite=True)
+Update()
+ClearMessages()
+solutionComponent2 = system8.GetComponent(Name="Solution")
+solutionComponent2.Refresh()
+solution2.Edit()
+solutionComponent2.Refresh()
+setup3.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list ))')
+setup3.SendCommand(Command="(cx-gui-do cx-activate-item \"Ribbon*Frame1*Frame2(Setting Up Domain)*Table1*Table2(Zones)*PushButton8(Replace Mesh)\")(cx-gui-do cx-activate-item \"Question*OK\")(cx-gui-do cx-set-file-dialog-entries \"Select File\" '( \"G:/Bailey/Fluent/ImportFiles/H-0.90 60 Deg Files/HEMJ-60Deg-no-lip.msh\") \"Mesh Files (*.msh *.gz )\")")
+solutionComponent2.Refresh()
+solution2.Edit()
+solutionComponent2.Refresh()
+setup3.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list ))')
+setup3.SendCommand(Command="(cx-gui-do cx-activate-item \"MenuBar*ImportSubMenu*Mesh...\")(cx-gui-do cx-activate-item \"Question*OK\")(cx-gui-do cx-set-toggle-button2 \"Read Mesh Options*Table1(Options)*ToggleBox1*Replace mesh\" #t)(cx-gui-do cx-activate-item \"Read Mesh Options*Table1(Options)*ToggleBox1*Replace mesh\")(cx-gui-do cx-activate-item \"Read Mesh Options*PanelButtons*PushButton1(OK)\")(cx-gui-do cx-set-file-dialog-entries \"Select File\" '( \"G:/Bailey/Fluent/ImportFiles/H-0.90 60 Deg Files/HEMJ-60Deg-no-lip.msh\") \"Mesh Files (*.msh* *.MSH* )\")")
+setup3.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Setup|Models"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Setup|Models"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Setup|General"))')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton1(Scale)")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*PanelButtons*PushButton1(Close)")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton3(Check)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Models\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Materials\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Cell Zone Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 0))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Fluid*PanelButtons*PushButton2(Cancel)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 1))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Solid*PanelButtons*PushButton2(Cancel)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 2))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Solid*PanelButtons*PushButton2(Cancel)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Boundary Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 20))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 19))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*PanelButtons*PushButton2(Cancel)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 20))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*PanelButtons*PushButton2(Cancel)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 24))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Reference Values\"))(cx-gui-do cx-set-list-selections \"Reference Values*DropDownList1(Compute from)\" '( 13))")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Reference Values*DropDownList1(Compute from)")')
+setup3.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Methods"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Initialization"))')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Solution Initialization*Table1*ButtonBox10*PushButton2(Initialize)")')
+setup3.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Setup|General"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Run Calculation"))')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Run Calculation*Table1*PushButton22(Calculate)")(cx-gui-do cx-activate-item "Error*OK")(cx-gui-do cx-activate-item "Error*Cancel")(cx-gui-do cx-activate-item "Error*OK")(cx-gui-do cx-activate-item "Error*Cancel")(cx-use-window-id 4)(cx-use-window-id 4)(cx-gui-do cx-activate-item "Error*OK")(cx-gui-do cx-activate-item "Error*OK")(cx-use-window-id 4)(cx-gui-do cx-activate-item "Error*OK")(cx-gui-do cx-activate-item "Error*OK")(cx-use-window-id 4)(cx-use-window-id 4)(cx-use-window-id 4)(cx-use-window-id 4)(cx-use-window-id 4)(cx-use-window-id 4)')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Information*OK")')
+setup3.SendCommand(Command="(cx-gui-do cx-activate-item \"Ribbon*Frame1*Frame2(Setting Up Domain)*Table1*Table2(Zones)*PushButton8(Replace Mesh)\")(cx-gui-do cx-activate-item \"Question*OK\")(cx-gui-do cx-set-file-dialog-entries \"Select File\" '( \"G:/Bailey/Fluent/ImportFiles/H-0.90 60 Deg Files/HEMJ-60Deg-no-lip.msh\") \"Mesh Files (*.msh *.gz )\")(cx-gui-do cx-activate-item \"Error*OK\")")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Ribbon*Frame1*Frame2(Setting Up Domain)*Table1*Table2(Zones)*PushButton8(Replace Mesh)")')
+system8.Delete()
+system13 = system9.Duplicate(RelativeTo=system9)
+system13.DisplayText = "439, H=0.9, SKO"
+ClearMessages()
+setup4 = system13.GetContainer(ComponentName="Setup")
+fluentLauncherSettings3 = setup4.GetFluentLauncherSettings()
+fluentLauncherSettings3.SetEntityProperties(Properties=Set(EnvPath={}))
+setup4.Edit()
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton1(Scale)")')
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*PanelButtons*PushButton1(Close)")')
+setup4.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Models\"))(cx-gui-do cx-set-list-selections \"Models*Table1*List1(Models)\" '( 2))(cx-gui-do cx-activate-item \"Models*Table1*List1(Models)\")")
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "Models*Table1*PushButton2(Edit)")')
+setup4.SendCommand(Command='(cx-gui-do cx-set-toggle-button2 "Viscous Model*Table1*ToggleBox1(Model)*k-omega (2 eqn)" #t)(cx-gui-do cx-activate-item "Viscous Model*Table1*ToggleBox1(Model)*k-omega (2 eqn)")(cx-gui-do cx-activate-item "Viscous Model*PanelButtons*PushButton1(OK)")')
+setup4.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Materials\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Boundary Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 19))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*PanelButtons*PushButton1(OK)")')
+setup4.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 21))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 20))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup4.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table5*DropDownList1\" '( 3))")
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table5*DropDownList1")')
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*PanelButtons*PushButton1(OK)")')
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*Table2*PushButton2(Operating Conditions)")')
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "Operating Conditions*PanelButtons*PushButton2(Cancel)")')
+setup4.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Solution\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Reference Values\"))(cx-gui-do cx-set-list-selections \"Reference Values*DropDownList1(Compute from)\" '( 21))")
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "Reference Values*DropDownList1(Compute from)")')
+setup4.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Methods"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Initialization"))')
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "Solution Initialization*Table1*ButtonBox10*PushButton2(Initialize)")')
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+solutionComponent1.Clean()
+ClearMessages()
+solutionComponent1.Refresh()
+solution3.Edit()
+solutionComponent1.Refresh()
+setup2.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list ))')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+Save(Overwrite=True)
+Update()
+ClearMessages()
+Save(Overwrite=True)
+solution3.Edit()
+setup2.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list ))')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Ribbon*Frame1*Frame6(Postprocessing)*Table1*Table2(Plots)*PushButton3(Residuals)")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Residual Monitors*PanelButtons*PushButton5(Plot)")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Residual Monitors*PanelButtons*PushButton2(Cancel)")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+results10 = system12.GetContainer(ComponentName="Results")
+results10.Edit()
+results10.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/439-SKE-8M.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /SURFACE GROUP:CS
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results10.SendCommand(Command="""CALCULATOR:CALCULATOR
+  Axis =  
+  Case Name = Case H 0 9 SKE 8M
+  Expression = Temperature
+  Fluid = All Fluids
+  Function = areaAve
+  Location = /SURFACE GROUP:CS
+END
+> calculate""")
+results10.SendCommand(Command="""CALCULATOR:CALCULATOR
+  Axis =  
+  Case Name = Case H 0 9 SKE 8M
+  Expression = Temperature
+  Fluid = All Fluids
+  Function = areaAve
+  Location = /SURFACE GROUP:CS
+END""")
+results10.Exit()
+ClearMessages()
+Save(Overwrite=True)
+results11 = system11.GetContainer(ComponentName="Results")
+results11.Edit()
+results11.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/439-SKE-4M.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /SURFACE GROUP:CS
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results11.SendCommand(Command="""CALCULATOR:CALCULATOR
+  Axis =  
+  Case Name = Case H 0 9 SKE 4M
+  Expression = Temperature
+  Fluid = All Fluids
+  Function = areaAve
+  Location = /SURFACE GROUP:CS
+END
+> calculate""")
+results11.SendCommand(Command="""CALCULATOR:CALCULATOR
+  Axis =  
+  Case Name = Case H 0 9 SKE 4M
+  Expression = Temperature
+  Fluid = All Fluids
+  Function = areaAve
+  Location = /SURFACE GROUP:CS
+END""")
+results11.Exit()
+ClearMessages()
+Save(Overwrite=True)

@@ -1,0 +1,34 @@
+[default]                               #Default settings for program
+name = "default"                        #name of environment
+safe = true                             #run everything safely - this is reccomended. Will perform tasks such as safety-caching modified files to ensure no loss of data
+print = true                            #print reports to console. Useful for debugging & also to keep track of things
+checkfolder = true                      #check folder structures to ensure appropriate format
+
+[performance]                           #performance settings. Prioritize speed and program execuction time over safety
+name = "performance"                    #name of environment
+safe = false                            #do not perform tasks safely - no caching of files
+print = false                           #do not print reports to console. Will still be logged in reports
+checkfolder = false                     #do not check folder structures to ensure formatting
+
+[messages]
+name = "messages"                       #messages environment (relative) paths
+folder = "__messages"
+warning_folder = "warnings"
+error_folder = "errors"
+report_folder = "reports"
+
+[fluent-default]                        #folders and file extensions in fluent folders - the default to make room for another later on
+name = "fluent-default"
+dirs = ["Fluent","Post"]
+fluent_files_folder = "Fluent"
+files = [".cst",".set"]
+foldertag = "FFF"
+report_file_ext = ".out"
+solution_file_ext = ".trn"
+console_name = "console_ouput"
+progress_file_folder = "progress_files"
+
+[cache]                                 #folder and file names relavent to cache
+name = "cache"                          
+tempfolder = '__iotemp__'               #temp folder - where files may be temporarily stored
+manifestfile = 'file_manifest.txt'      #the manifest file for temporary files storage (name in temporary storage, original location & name)

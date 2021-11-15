@@ -1,0 +1,2075 @@
+# State file created:  2016/03/20 02:04:58
+# CFX-15.0 build 2013.10.10-08.49-130242
+
+COMMENT:User Data
+  Comment Exists = True
+  Comment Heading = User Data
+  Heading Level = 1
+END
+CONTOUR:Cooled Surface
+  Apply Instancing Transform = On
+  Clip Contour = Off
+  Colour Map = Default Colour Map
+  Colour Scale = Linear
+  Colour Variable = Temperature
+  Colour Variable Boundary Values = Conservative
+  Constant Contour Colour = Off
+  Contour Range = Local
+  Culling Mode = No Culling
+  Domain List = /DOMAIN GROUP:All Domains
+  Draw Contours = On
+  Font = Sans Serif
+  Fringe Fill = On
+  Instancing Transform = /DEFAULT INSTANCE TRANSFORM:Default Transform
+  Lighting = On
+  Line Colour = 0, 0, 0
+  Line Colour Mode = Default
+  Line Width = 1
+  Location List = CS
+  Max = 0.0 [K]
+  Min = 0.0 [K]
+  Number of Contours = 50
+  Show Numbers = Off
+  Specular Lighting = On
+  Surface Drawing = Smooth Shading
+  Text Colour = 0, 0, 0
+  Text Colour Mode = Default
+  Text Height = 0.024
+  Transparency = 0.0
+  Value List = 0 [K],1 [K]
+  Visibility = true
+  OBJECT VIEW TRANSFORM:
+    Apply Reflection = Off
+    Apply Rotation = Off
+    Apply Scale = Off
+    Apply Translation = Off
+    Principal Axis = Z
+    Reflection Plane Option = XY Plane
+    Rotation Angle = 0.0 [degree]
+    Rotation Axis From = 0 [mm], 0 [mm], 0 [mm]
+    Rotation Axis To = 0 [mm], 0 [mm], 0 [mm]
+    Rotation Axis Type = Principal Axis
+    Scale Vector = 1 , 1 , 1
+    Translation Vector = 0 [mm], 0 [mm], 0 [mm]
+    X = 0.0 [mm]
+    Y = 0.0 [mm]
+    Z = 0.0 [mm]
+  END
+END
+CONTOUR:He Velocity
+  Apply Instancing Transform = On
+  Clip Contour = Off
+  Colour Map = Default Colour Map
+  Colour Scale = Linear
+  Colour Variable = Velocity
+  Colour Variable Boundary Values = Conservative
+  Constant Contour Colour = Off
+  Contour Range = Local
+  Culling Mode = No Culling
+  Domain List = /DOMAIN GROUP:All Domains
+  Draw Contours = On
+  Font = Sans Serif
+  Fringe Fill = On
+  Instancing Transform = /DEFAULT INSTANCE TRANSFORM:Default Transform
+  Lighting = On
+  Line Colour = 0, 0, 0
+  Line Colour Mode = Default
+  Line Width = 1
+  Location List = symmetry2 fluid
+  Max = 0.0 [m s^-1]
+  Min = 0.0 [m s^-1]
+  Number of Contours = 50
+  Show Numbers = Off
+  Specular Lighting = On
+  Surface Drawing = Smooth Shading
+  Text Colour = 0, 0, 0
+  Text Colour Mode = Default
+  Text Height = 0.024
+  Transparency = 0.0
+  Value List = 0 [m s^-1],1 [m s^-1]
+  Visibility = true
+  OBJECT VIEW TRANSFORM:
+    Apply Reflection = Off
+    Apply Rotation = Off
+    Apply Scale = Off
+    Apply Translation = Off
+    Principal Axis = Z
+    Reflection Plane Option = XY Plane
+    Rotation Angle = 0.0 [degree]
+    Rotation Axis From = 0 [mm], 0 [mm], 0 [mm]
+    Rotation Axis To = 0 [mm], 0 [mm], 0 [mm]
+    Rotation Axis Type = Principal Axis
+    Scale Vector = 1 , 1 , 1
+    Translation Vector = 0 [mm], 0 [mm], 0 [mm]
+    X = 0.0 [mm]
+    Y = 0.0 [mm]
+    Z = 0.0 [mm]
+  END
+END
+CONTOUR:Thimble
+  Apply Instancing Transform = On
+  Clip Contour = Off
+  Colour Map = Default Colour Map
+  Colour Scale = Linear
+  Colour Variable = Temperature
+  Colour Variable Boundary Values = Conservative
+  Constant Contour Colour = Off
+  Contour Range = Local
+  Culling Mode = No Culling
+  Domain List = /DOMAIN GROUP:All Domains
+  Draw Contours = On
+  Font = Sans Serif
+  Fringe Fill = On
+  Instancing Transform = /DEFAULT INSTANCE TRANSFORM:Default Transform
+  Lighting = On
+  Line Colour = 0, 0, 0
+  Line Colour Mode = Default
+  Line Width = 1
+  Location List = symmetry2 thimble,thimble walls
+  Max = 0.0 [K]
+  Min = 0.0 [K]
+  Number of Contours = 50
+  Show Numbers = Off
+  Specular Lighting = On
+  Surface Drawing = Smooth Shading
+  Text Colour = 0, 0, 0
+  Text Colour Mode = Default
+  Text Height = 0.024
+  Transparency = 0.0
+  Value List = 0 [K],1 [K]
+  Visibility = true
+  OBJECT VIEW TRANSFORM:
+    Apply Reflection = Off
+    Apply Rotation = Off
+    Apply Scale = Off
+    Apply Translation = Off
+    Principal Axis = Z
+    Reflection Plane Option = XY Plane
+    Rotation Angle = 0.0 [degree]
+    Rotation Axis From = 0 [mm], 0 [mm], 0 [mm]
+    Rotation Axis To = 0 [mm], 0 [mm], 0 [mm]
+    Rotation Axis Type = Principal Axis
+    Scale Vector = 1 , 1 , 1
+    Translation Vector = 0 [mm], 0 [mm], 0 [mm]
+    X = 0.0 [mm]
+    Y = 0.0 [mm]
+    Z = 0.0 [mm]
+  END
+END
+DATA READER:
+  Active Case Name = Case H 0 9 SKE
+  Append Results = false
+  Apply X Offset = false
+  Apply Y Offset = false
+  Apply Z Offset = false
+  Clear All Objects = false
+  Current Case List = Case H 0 9 SKE
+  Current Case Name = G:\Bailey\Fluent\HEMJ-60deg-SKE\HEMJ-60deg-SKE_files\dp0\\
+FFF-6\Fluent\HEMJ60deg-2-1-00150.dat.gz
+  Current Results File = G:\Bailey\Fluent\HEMJ-60deg-SKE\HEMJ-60deg-SKE_files\\
+dp0\FFF-6\Fluent\HEMJ60deg-2-1-00150.dat.gz
+  Current Timestep = -1
+  Current Timevalue = 0
+  Edit Case Names = false
+  File Angle Units = rad
+  File Chemical Amount Units = kmol
+  File Current Units = A
+  File Length Units = m
+  File Light Units = cd
+  File Mass Units = kg
+  File Solid Angle Units = sr
+  File Temperature Units = K
+  File Time Units = s
+  Force File Reload = false
+  Keep Camera Position = true
+  Load Particle Tracks = true
+  Multi Configuration File Load Option = Single Case
+  Open in New View = True
+  Open to Compare = false
+  Reference Acoustic Pressure = 2.0e-5 [Pa]
+  Reference Length = 1.0 [m]
+  Reference Velocity = 1.0 [m s^-1]
+  Timestep Match Criterion = Same Step
+  Timestep Sync Mode = By Time Value
+  Timevalue Match Criterion = Same Value
+  CASE:Case H 0 9 SKE
+    Current Case Name = G:\Bailey\Fluent\HEMJ-60deg-SKE\HEMJ-60deg-SKE_files\\
+dp0\FFF-6\Fluent\HEMJ60deg-2-1-00150.dat.gz
+    Current Results File = G:\Bailey\Fluent\HEMJ-60deg-SKE\HEMJ-60deg-\
+SKE_files\dp0\FFF-6\Fluent\HEMJ60deg-2-1-00150.dat.gz
+    Current Timestep = -1
+    Current Timevalue = 0
+    File Angle Units = rad
+    File Chemical Amount Units = kmol
+    File Current Units = A
+    File Length Units = m
+    File Light Units = cd
+    File Mass Units = kg
+    File Solid Angle Units = sr
+    File Temperature Units = K
+    File Time Units = s
+    Multi Configuration File Load Option = Single Case
+    Workbench ID = 1
+    BOUNDARY:cool surf1
+      Apply Instancing Transform = On
+      Apply Texture = Off
+      Blend Texture = On
+      Colour = 0.2, 0.5, 1
+      Colour Map = Default Colour Map
+      Colour Mode = Constant
+      Colour Scale = Linear
+      Colour Variable Boundary Values = Hybrid
+      Culling Mode = No Culling
+      Draw Faces = On
+      Draw Lines = Off
+      Instancing Transform = Default Transform
+      Lighting = true
+      Line Colour = 0, 0, 0
+      Line Colour Mode = Default
+      Line Width = 1
+      Range = Global
+      Render Edge Angle = 0 [degree]
+      Specular Lighting = On
+      Surface Drawing = Smooth Shading
+      Texture Angle = 0
+      Texture Direction = 0.0, 1.0, 0.0
+      Texture Material = Metal
+      Texture Position = 0.0, 0.0
+      Texture Scale = 1.0
+      Texture Type = Predefined
+      Tile Texture = Off
+      Transform Texture = Off
+      Transparency = 0.0
+      Visibility = false
+    END
+    BOUNDARY:cool surf1 shadow
+      Apply Instancing Transform = On
+      Apply Texture = Off
+      Blend Texture = On
+      Colour = 0.2, 0.5, 1
+      Colour Map = Default Colour Map
+      Colour Mode = Constant
+      Colour Scale = Linear
+      Colour Variable Boundary Values = Hybrid
+      Culling Mode = No Culling
+      Draw Faces = On
+      Draw Lines = Off
+      Instancing Transform = Default Transform
+      Lighting = true
+      Line Colour = 0, 0, 0
+      Line Colour Mode = Default
+      Line Width = 1
+      Range = Global
+      Render Edge Angle = 0 [degree]
+      Specular Lighting = On
+      Surface Drawing = Smooth Shading
+      Texture Angle = 0
+      Texture Direction = 0.0, 1.0, 0.0
+      Texture Material = Metal
+      Texture Position = 0.0, 0.0
+      Texture Scale = 1.0
+      Texture Type = Predefined
+      Tile Texture = Off
+      Transform Texture = Off
+      Transparency = 0.0
+      Visibility = false
+    END
+    BOUNDARY:cool surf2
+      Apply Instancing Transform = On
+      Apply Texture = Off
+      Blend Texture = On
+      Colour = 0.2, 0.5, 1
+      Colour Map = Default Colour Map
+      Colour Mode = Constant
+      Colour Scale = Linear
+      Colour Variable Boundary Values = Hybrid
+      Culling Mode = No Culling
+      Draw Faces = On
+      Draw Lines = Off
+      Instancing Transform = Default Transform
+      Lighting = true
+      Line Colour = 0, 0, 0
+      Line Colour Mode = Default
+      Line Width = 1
+      Range = Global
+      Render Edge Angle = 0 [degree]
+      Specular Lighting = On
+      Surface Drawing = Smooth Shading
+      Texture Angle = 0
+      Texture Direction = 0.0, 1.0, 0.0
+      Texture Material = Metal
+      Texture Position = 0.0, 0.0
+      Texture Scale = 1.0
+      Texture Type = Predefined
+      Tile Texture = Off
+      Transform Texture = Off
+      Transparency = 0.0
+      Visibility = false
+    END
+    BOUNDARY:cool surf2 shadow
+      Apply Instancing Transform = On
+      Apply Texture = Off
+      Blend Texture = On
+      Colour = 0.2, 0.5, 1
+      Colour Map = Default Colour Map
+      Colour Mode = Constant
+      Colour Scale = Linear
+      Colour Variable Boundary Values = Hybrid
+      Culling Mode = No Culling
+      Draw Faces = On
+      Draw Lines = Off
+      Instancing Transform = Default Transform
+      Lighting = true
+      Line Colour = 0, 0, 0
+      Line Colour Mode = Default
+      Line Width = 1
+      Range = Global
+      Render Edge Angle = 0 [degree]
+      Specular Lighting = On
+      Surface Drawing = Smooth Shading
+      Texture Angle = 0
+      Texture Direction = 0.0, 1.0, 0.0
+      Texture Material = Metal
+      Texture Position = 0.0, 0.0
+      Texture Scale = 1.0
+      Texture Type = Predefined
+      Tile Texture = Off
+      Transform Texture = Off
+      Transparency = 0.0
+      Visibility = false
+    END
+    BOUNDARY:cool surf3
+      Apply Instancing Transform = On
+      Apply Texture = Off
+      Blend Texture = On
+      Colour = 0.2, 0.5, 1
+      Colour Map = Default Colour Map
+      Colour Mode = Constant
+      Colour Scale = Linear
+      Colour Variable Boundary Values = Hybrid
+      Culling Mode = No Culling
+      Draw Faces = On
+      Draw Lines = Off
+      Instancing Transform = Default Transform
+      Lighting = true
+      Line Colour = 0, 0, 0
+      Line Colour Mode = Default
+      Line Width = 1
+      Range = Global
+      Render Edge Angle = 0 [degree]
+      Specular Lighting = On
+      Surface Drawing = Smooth Shading
+      Texture Angle = 0
+      Texture Direction = 0.0, 1.0, 0.0
+      Texture Material = Metal
+      Texture Position = 0.0, 0.0
+      Texture Scale = 1.0
+      Texture Type = Predefined
+      Tile Texture = Off
+      Transform Texture = Off
+      Transparency = 0.0
+      Visibility = false
+    END
+    BOUNDARY:cool surf3 shadow
+      Apply Instancing Transform = On
+      Apply Texture = Off
+      Blend Texture = On
+      Colour = 0.2, 0.5, 1
+      Colour Map = Default Colour Map
+      Colour Mode = Constant
+      Colour Scale = Linear
+      Colour Variable Boundary Values = Hybrid
+      Culling Mode = No Culling
+      Draw Faces = On
+      Draw Lines = Off
+      Instancing Transform = Default Transform
+      Lighting = true
+      Line Colour = 0, 0, 0
+      Line Colour Mode = Default
+      Line Width = 1
+      Range = Global
+      Render Edge Angle = 0 [degree]
+      Specular Lighting = On
+      Surface Drawing = Smooth Shading
+      Texture Angle = 0
+      Texture Direction = 0.0, 1.0, 0.0
+      Texture Material = Metal
+      Texture Position = 0.0, 0.0
+      Texture Scale = 1.0
+      Texture Type = Predefined
+      Tile Texture = Off
+      Transform Texture = Off
+      Transparency = 0.0
+      Visibility = false
+    END
+    BOUNDARY:cool surf4
+      Apply Instancing Transform = On
+      Apply Texture = Off
+      Blend Texture = On
+      Colour = 0.2, 0.5, 1
+      Colour Map = Default Colour Map
+      Colour Mode = Constant
+      Colour Scale = Linear
+      Colour Variable Boundary Values = Hybrid
+      Culling Mode = No Culling
+      Draw Faces = On
+      Draw Lines = Off
+      Instancing Transform = Default Transform
+      Lighting = true
+      Line Colour = 0, 0, 0
+      Line Colour Mode = Default
+      Line Width = 1
+      Range = Global
+      Render Edge Angle = 0 [degree]
+      Specular Lighting = On
+      Surface Drawing = Smooth Shading
+      Texture Angle = 0
+      Texture Direction = 0.0, 1.0, 0.0
+      Texture Material = Metal
+      Texture Position = 0.0, 0.0
+      Texture Scale = 1.0
+      Texture Type = Predefined
+      Tile Texture = Off
+      Transform Texture = Off
+      Transparency = 0.0
+      Visibility = false
+    END
+    BOUNDARY:cool surf4 shadow
+      Apply Instancing Transform = On
+      Apply Texture = Off
+      Blend Texture = On
+      Colour = 0.2, 0.5, 1
+      Colour Map = Default Colour Map
+      Colour Mode = Constant
+      Colour Scale = Linear
+      Colour Variable Boundary Values = Hybrid
+      Culling Mode = No Culling
+      Draw Faces = On
+      Draw Lines = Off
+      Instancing Transform = Default Transform
+      Lighting = true
+      Line Colour = 0, 0, 0
+      Line Colour Mode = Default
+      Line Width = 1
+      Range = Global
+      Render Edge Angle = 0 [degree]
+      Specular Lighting = On
+      Surface Drawing = Smooth Shading
+      Texture Angle = 0
+      Texture Direction = 0.0, 1.0, 0.0
+      Texture Material = Metal
+      Texture Position = 0.0, 0.0
+      Texture Scale = 1.0
+      Texture Type = Predefined
+      Tile Texture = Off
+      Transform Texture = Off
+      Transparency = 0.0
+      Visibility = false
+    END
+    BOUNDARY:heated surf
+      Apply Instancing Transform = On
+      Apply Texture = Off
+      Blend Texture = On
+      Colour = 0.2, 0.5, 1
+      Colour Map = Default Colour Map
+      Colour Mode = Constant
+      Colour Scale = Linear
+      Colour Variable Boundary Values = Hybrid
+      Culling Mode = No Culling
+      Draw Faces = On
+      Draw Lines = Off
+      Instancing Transform = Default Transform
+      Lighting = true
+      Line Colour = 0, 0, 0
+      Line Colour Mode = Default
+      Line Width = 1
+      Range = Global
+      Render Edge Angle = 0 [degree]
+      Specular Lighting = On
+      Surface Drawing = Smooth Shading
+      Texture Angle = 0
+      Texture Direction = 0.0, 1.0, 0.0
+      Texture Material = Metal
+      Texture Position = 0.0, 0.0
+      Texture Scale = 1.0
+      Texture Type = Predefined
+      Tile Texture = Off
+      Transform Texture = Off
+      Transparency = 0.0
+      Visibility = false
+    END
+    BOUNDARY:jet
+      Apply Instancing Transform = On
+      Apply Texture = Off
+      Blend Texture = On
+      Colour = 0.2, 0.5, 1
+      Colour Map = Default Colour Map
+      Colour Mode = Constant
+      Colour Scale = Linear
+      Colour Variable Boundary Values = Hybrid
+      Culling Mode = No Culling
+      Draw Faces = On
+      Draw Lines = Off
+      Instancing Transform = Default Transform
+      Lighting = true
+      Line Colour = 0, 0, 0
+      Line Colour Mode = Default
+      Line Width = 1
+      Range = Global
+      Render Edge Angle = 0 [degree]
+      Specular Lighting = On
+      Surface Drawing = Smooth Shading
+      Texture Angle = 0
+      Texture Direction = 0.0, 1.0, 0.0
+      Texture Material = Metal
+      Texture Position = 0.0, 0.0
+      Texture Scale = 1.0
+      Texture Type = Predefined
+      Tile Texture = Off
+      Transform Texture = Off
+      Transparency = 0.0
+      Visibility = false
+    END
+    BOUNDARY:jet bottom
+      Apply Instancing Transform = On
+      Apply Texture = Off
+      Blend Texture = On
+      Colour = 0.2, 0.5, 1
+      Colour Map = Default Colour Map
+      Colour Mode = Constant
+      Colour Scale = Linear
+      Colour Variable Boundary Values = Hybrid
+      Culling Mode = No Culling
+      Draw Faces = On
+      Draw Lines = Off
+      Instancing Transform = Default Transform
+      Lighting = true
+      Line Colour = 0, 0, 0
+      Line Colour Mode = Default
+      Line Width = 1
+      Range = Global
+      Render Edge Angle = 0 [degree]
+      Specular Lighting = On
+      Surface Drawing = Smooth Shading
+      Texture Angle = 0
+      Texture Direction = 0.0, 1.0, 0.0
+      Texture Material = Metal
+      Texture Position = 0.0, 0.0
+      Texture Scale = 1.0
+      Texture Type = Predefined
+      Tile Texture = Off
+      Transform Texture = Off
+      Transparency = 0.0
+      Visibility = false
+    END
+    BOUNDARY:jet shadow
+      Apply Instancing Transform = On
+      Apply Texture = Off
+      Blend Texture = On
+      Colour = 0.2, 0.5, 1
+      Colour Map = Default Colour Map
+      Colour Mode = Constant
+      Colour Scale = Linear
+      Colour Variable Boundary Values = Hybrid
+      Culling Mode = No Culling
+      Draw Faces = On
+      Draw Lines = Off
+      Instancing Transform = Default Transform
+      Lighting = true
+      Line Colour = 0, 0, 0
+      Line Colour Mode = Default
+      Line Width = 1
+      Range = Global
+      Render Edge Angle = 0 [degree]
+      Specular Lighting = On
+      Surface Drawing = Smooth Shading
+      Texture Angle = 0
+      Texture Direction = 0.0, 1.0, 0.0
+      Texture Material = Metal
+      Texture Position = 0.0, 0.0
+      Texture Scale = 1.0
+      Texture Type = Predefined
+      Tile Texture = Off
+      Transform Texture = Off
+      Transparency = 0.0
+      Visibility = false
+    END
+    BOUNDARY:jet surf1
+      Apply Instancing Transform = On
+      Apply Texture = Off
+      Blend Texture = On
+      Colour = 0.2, 0.5, 1
+      Colour Map = Default Colour Map
+      Colour Mode = Constant
+      Colour Scale = Linear
+      Colour Variable Boundary Values = Hybrid
+      Culling Mode = No Culling
+      Draw Faces = On
+      Draw Lines = Off
+      Instancing Transform = Default Transform
+      Lighting = true
+      Line Colour = 0, 0, 0
+      Line Colour Mode = Default
+      Line Width = 1
+      Range = Global
+      Render Edge Angle = 0 [degree]
+      Specular Lighting = On
+      Surface Drawing = Smooth Shading
+      Texture Angle = 0
+      Texture Direction = 0.0, 1.0, 0.0
+      Texture Material = Metal
+      Texture Position = 0.0, 0.0
+      Texture Scale = 1.0
+      Texture Type = Predefined
+      Tile Texture = Off
+      Transform Texture = Off
+      Transparency = 0.0
+      Visibility = false
+    END
+    BOUNDARY:jet surf1 shadow
+      Apply Instancing Transform = On
+      Apply Texture = Off
+      Blend Texture = On
+      Colour = 0.2, 0.5, 1
+      Colour Map = Default Colour Map
+      Colour Mode = Constant
+      Colour Scale = Linear
+      Colour Variable Boundary Values = Hybrid
+      Culling Mode = No Culling
+      Draw Faces = On
+      Draw Lines = Off
+      Instancing Transform = Default Transform
+      Lighting = true
+      Line Colour = 0, 0, 0
+      Line Colour Mode = Default
+      Line Width = 1
+      Range = Global
+      Render Edge Angle = 0 [degree]
+      Specular Lighting = On
+      Surface Drawing = Smooth Shading
+      Texture Angle = 0
+      Texture Direction = 0.0, 1.0, 0.0
+      Texture Material = Metal
+      Texture Position = 0.0, 0.0
+      Texture Scale = 1.0
+      Texture Type = Predefined
+      Tile Texture = Off
+      Transform Texture = Off
+      Transparency = 0.0
+      Visibility = false
+    END
+    BOUNDARY:jet surf2
+      Apply Instancing Transform = On
+      Apply Texture = Off
+      Blend Texture = On
+      Colour = 0.2, 0.5, 1
+      Colour Map = Default Colour Map
+      Colour Mode = Constant
+      Colour Scale = Linear
+      Colour Variable Boundary Values = Hybrid
+      Culling Mode = No Culling
+      Draw Faces = On
+      Draw Lines = Off
+      Instancing Transform = Default Transform
+      Lighting = true
+      Line Colour = 0, 0, 0
+      Line Colour Mode = Default
+      Line Width = 1
+      Range = Global
+      Render Edge Angle = 0 [degree]
+      Specular Lighting = On
+      Surface Drawing = Smooth Shading
+      Texture Angle = 0
+      Texture Direction = 0.0, 1.0, 0.0
+      Texture Material = Metal
+      Texture Position = 0.0, 0.0
+      Texture Scale = 1.0
+      Texture Type = Predefined
+      Tile Texture = Off
+      Transform Texture = Off
+      Transparency = 0.0
+      Visibility = false
+    END
+    BOUNDARY:jet surf2 shadow
+      Apply Instancing Transform = On
+      Apply Texture = Off
+      Blend Texture = On
+      Colour = 0.2, 0.5, 1
+      Colour Map = Default Colour Map
+      Colour Mode = Constant
+      Colour Scale = Linear
+      Colour Variable Boundary Values = Hybrid
+      Culling Mode = No Culling
+      Draw Faces = On
+      Draw Lines = Off
+      Instancing Transform = Default Transform
+      Lighting = true
+      Line Colour = 0, 0, 0
+      Line Colour Mode = Default
+      Line Width = 1
+      Range = Global
+      Render Edge Angle = 0 [degree]
+      Specular Lighting = On
+      Surface Drawing = Smooth Shading
+      Texture Angle = 0
+      Texture Direction = 0.0, 1.0, 0.0
+      Texture Material = Metal
+      Texture Position = 0.0, 0.0
+      Texture Scale = 1.0
+      Texture Type = Predefined
+      Tile Texture = Off
+      Transform Texture = Off
+      Transparency = 0.0
+      Visibility = false
+    END
+    BOUNDARY:mass flow inlet
+      Apply Instancing Transform = On
+      Apply Texture = Off
+      Blend Texture = On
+      Colour = 0.2, 0.5, 1
+      Colour Map = Default Colour Map
+      Colour Mode = Constant
+      Colour Scale = Linear
+      Colour Variable Boundary Values = Hybrid
+      Culling Mode = No Culling
+      Draw Faces = On
+      Draw Lines = Off
+      Instancing Transform = Default Transform
+      Lighting = true
+      Line Colour = 0, 0, 0
+      Line Colour Mode = Default
+      Line Width = 1
+      Range = Global
+      Render Edge Angle = 0 [degree]
+      Specular Lighting = On
+      Surface Drawing = Smooth Shading
+      Texture Angle = 0
+      Texture Direction = 0.0, 1.0, 0.0
+      Texture Material = Metal
+      Texture Position = 0.0, 0.0
+      Texture Scale = 1.0
+      Texture Type = Predefined
+      Tile Texture = Off
+      Transform Texture = Off
+      Transparency = 0.0
+      Visibility = false
+    END
+    BOUNDARY:pressure outlet
+      Apply Instancing Transform = On
+      Apply Texture = Off
+      Blend Texture = On
+      Colour = 0.2, 0.5, 1
+      Colour Map = Default Colour Map
+      Colour Mode = Constant
+      Colour Scale = Linear
+      Colour Variable Boundary Values = Hybrid
+      Culling Mode = No Culling
+      Draw Faces = On
+      Draw Lines = Off
+      Instancing Transform = Default Transform
+      Lighting = true
+      Line Colour = 0, 0, 0
+      Line Colour Mode = Default
+      Line Width = 1
+      Range = Global
+      Render Edge Angle = 0 [degree]
+      Specular Lighting = On
+      Surface Drawing = Smooth Shading
+      Texture Angle = 0
+      Texture Direction = 0.0, 1.0, 0.0
+      Texture Material = Metal
+      Texture Position = 0.0, 0.0
+      Texture Scale = 1.0
+      Texture Type = Predefined
+      Tile Texture = Off
+      Transform Texture = Off
+      Transparency = 0.0
+      Visibility = false
+    END
+    BOUNDARY:symmetry1 fluid
+      Apply Instancing Transform = On
+      Apply Texture = Off
+      Blend Texture = On
+      Colour = 0.2, 0.5, 1
+      Colour Map = Default Colour Map
+      Colour Mode = Constant
+      Colour Scale = Linear
+      Colour Variable Boundary Values = Hybrid
+      Culling Mode = No Culling
+      Draw Faces = On
+      Draw Lines = Off
+      Instancing Transform = Default Transform
+      Lighting = true
+      Line Colour = 0, 0, 0
+      Line Colour Mode = Default
+      Line Width = 1
+      Range = Global
+      Render Edge Angle = 0 [degree]
+      Specular Lighting = On
+      Surface Drawing = Smooth Shading
+      Texture Angle = 0
+      Texture Direction = 0.0, 1.0, 0.0
+      Texture Material = Metal
+      Texture Position = 0.0, 0.0
+      Texture Scale = 1.0
+      Texture Type = Predefined
+      Tile Texture = Off
+      Transform Texture = Off
+      Transparency = 0.0
+      Visibility = false
+    END
+    BOUNDARY:symmetry1 jet
+      Apply Instancing Transform = On
+      Apply Texture = Off
+      Blend Texture = On
+      Colour = 0.2, 0.5, 1
+      Colour Map = Default Colour Map
+      Colour Mode = Constant
+      Colour Scale = Linear
+      Colour Variable Boundary Values = Hybrid
+      Culling Mode = No Culling
+      Draw Faces = On
+      Draw Lines = Off
+      Instancing Transform = Default Transform
+      Lighting = true
+      Line Colour = 0, 0, 0
+      Line Colour Mode = Default
+      Line Width = 1
+      Range = Global
+      Render Edge Angle = 0 [degree]
+      Specular Lighting = On
+      Surface Drawing = Smooth Shading
+      Texture Angle = 0
+      Texture Direction = 0.0, 1.0, 0.0
+      Texture Material = Metal
+      Texture Position = 0.0, 0.0
+      Texture Scale = 1.0
+      Texture Type = Predefined
+      Tile Texture = Off
+      Transform Texture = Off
+      Transparency = 0.0
+      Visibility = false
+    END
+    BOUNDARY:symmetry1 thimble
+      Apply Instancing Transform = On
+      Apply Texture = Off
+      Blend Texture = On
+      Colour = 0.2, 0.5, 1
+      Colour Map = Default Colour Map
+      Colour Mode = Constant
+      Colour Scale = Linear
+      Colour Variable Boundary Values = Hybrid
+      Culling Mode = No Culling
+      Draw Faces = On
+      Draw Lines = Off
+      Instancing Transform = Default Transform
+      Lighting = true
+      Line Colour = 0, 0, 0
+      Line Colour Mode = Default
+      Line Width = 1
+      Range = Global
+      Render Edge Angle = 0 [degree]
+      Specular Lighting = On
+      Surface Drawing = Smooth Shading
+      Texture Angle = 0
+      Texture Direction = 0.0, 1.0, 0.0
+      Texture Material = Metal
+      Texture Position = 0.0, 0.0
+      Texture Scale = 1.0
+      Texture Type = Predefined
+      Tile Texture = Off
+      Transform Texture = Off
+      Transparency = 0.0
+      Visibility = false
+    END
+    BOUNDARY:symmetry2 fluid
+      Apply Instancing Transform = On
+      Apply Texture = Off
+      Blend Texture = On
+      Colour = 0.2, 0.5, 1
+      Colour Map = Default Colour Map
+      Colour Mode = Constant
+      Colour Scale = Linear
+      Colour Variable Boundary Values = Hybrid
+      Culling Mode = No Culling
+      Draw Faces = On
+      Draw Lines = Off
+      Instancing Transform = Default Transform
+      Lighting = true
+      Line Colour = 0, 0, 0
+      Line Colour Mode = Default
+      Line Width = 1
+      Range = Global
+      Render Edge Angle = 0 [degree]
+      Specular Lighting = On
+      Surface Drawing = Smooth Shading
+      Texture Angle = 0
+      Texture Direction = 0.0, 1.0, 0.0
+      Texture Material = Metal
+      Texture Position = 0.0, 0.0
+      Texture Scale = 1.0
+      Texture Type = Predefined
+      Tile Texture = Off
+      Transform Texture = Off
+      Transparency = 0.0
+      Visibility = false
+    END
+    BOUNDARY:symmetry2 jet
+      Apply Instancing Transform = On
+      Apply Texture = Off
+      Blend Texture = On
+      Colour = 0.2, 0.5, 1
+      Colour Map = Default Colour Map
+      Colour Mode = Constant
+      Colour Scale = Linear
+      Colour Variable Boundary Values = Hybrid
+      Culling Mode = No Culling
+      Draw Faces = On
+      Draw Lines = Off
+      Instancing Transform = Default Transform
+      Lighting = true
+      Line Colour = 0, 0, 0
+      Line Colour Mode = Default
+      Line Width = 1
+      Range = Global
+      Render Edge Angle = 0 [degree]
+      Specular Lighting = On
+      Surface Drawing = Smooth Shading
+      Texture Angle = 0
+      Texture Direction = 0.0, 1.0, 0.0
+      Texture Material = Metal
+      Texture Position = 0.0, 0.0
+      Texture Scale = 1.0
+      Texture Type = Predefined
+      Tile Texture = Off
+      Transform Texture = Off
+      Transparency = 0.0
+      Visibility = false
+    END
+    BOUNDARY:symmetry2 thimble
+      Apply Instancing Transform = On
+      Apply Texture = Off
+      Blend Texture = On
+      Colour = 0.2, 0.5, 1
+      Colour Map = Default Colour Map
+      Colour Mode = Constant
+      Colour Scale = Linear
+      Colour Variable Boundary Values = Hybrid
+      Culling Mode = No Culling
+      Draw Faces = On
+      Draw Lines = Off
+      Instancing Transform = Default Transform
+      Lighting = true
+      Line Colour = 0, 0, 0
+      Line Colour Mode = Default
+      Line Width = 1
+      Range = Global
+      Render Edge Angle = 0 [degree]
+      Specular Lighting = On
+      Surface Drawing = Smooth Shading
+      Texture Angle = 0
+      Texture Direction = 0.0, 1.0, 0.0
+      Texture Material = Metal
+      Texture Position = 0.0, 0.0
+      Texture Scale = 1.0
+      Texture Type = Predefined
+      Tile Texture = Off
+      Transform Texture = Off
+      Transparency = 0.0
+      Visibility = false
+    END
+    BOUNDARY:thimble inner
+      Apply Instancing Transform = On
+      Apply Texture = Off
+      Blend Texture = On
+      Colour = 0.2, 0.5, 1
+      Colour Map = Default Colour Map
+      Colour Mode = Constant
+      Colour Scale = Linear
+      Colour Variable Boundary Values = Hybrid
+      Culling Mode = No Culling
+      Draw Faces = On
+      Draw Lines = Off
+      Instancing Transform = Default Transform
+      Lighting = true
+      Line Colour = 0, 0, 0
+      Line Colour Mode = Default
+      Line Width = 1
+      Range = Global
+      Render Edge Angle = 0 [degree]
+      Specular Lighting = On
+      Surface Drawing = Smooth Shading
+      Texture Angle = 0
+      Texture Direction = 0.0, 1.0, 0.0
+      Texture Material = Metal
+      Texture Position = 0.0, 0.0
+      Texture Scale = 1.0
+      Texture Type = Predefined
+      Tile Texture = Off
+      Transform Texture = Off
+      Transparency = 0.0
+      Visibility = false
+    END
+    BOUNDARY:thimble inner shadow
+      Apply Instancing Transform = On
+      Apply Texture = Off
+      Blend Texture = On
+      Colour = 0.2, 0.5, 1
+      Colour Map = Default Colour Map
+      Colour Mode = Constant
+      Colour Scale = Linear
+      Colour Variable Boundary Values = Hybrid
+      Culling Mode = No Culling
+      Draw Faces = On
+      Draw Lines = Off
+      Instancing Transform = Default Transform
+      Lighting = true
+      Line Colour = 0, 0, 0
+      Line Colour Mode = Default
+      Line Width = 1
+      Range = Global
+      Render Edge Angle = 0 [degree]
+      Specular Lighting = On
+      Surface Drawing = Smooth Shading
+      Texture Angle = 0
+      Texture Direction = 0.0, 1.0, 0.0
+      Texture Material = Metal
+      Texture Position = 0.0, 0.0
+      Texture Scale = 1.0
+      Texture Type = Predefined
+      Tile Texture = Off
+      Transform Texture = Off
+      Transparency = 0.0
+      Visibility = false
+    END
+    BOUNDARY:thimble walls
+      Apply Instancing Transform = On
+      Apply Texture = Off
+      Blend Texture = On
+      Colour = 0.2, 0.5, 1
+      Colour Map = Default Colour Map
+      Colour Mode = Constant
+      Colour Scale = Linear
+      Colour Variable Boundary Values = Hybrid
+      Culling Mode = No Culling
+      Draw Faces = On
+      Draw Lines = Off
+      Instancing Transform = Default Transform
+      Lighting = true
+      Line Colour = 0, 0, 0
+      Line Colour Mode = Default
+      Line Width = 1
+      Range = Global
+      Render Edge Angle = 0 [degree]
+      Specular Lighting = On
+      Surface Drawing = Smooth Shading
+      Texture Angle = 0
+      Texture Direction = 0.0, 1.0, 0.0
+      Texture Material = Metal
+      Texture Position = 0.0, 0.0
+      Texture Scale = 1.0
+      Texture Type = Predefined
+      Tile Texture = Off
+      Transform Texture = Off
+      Transparency = 0.0
+      Visibility = false
+    END
+    DOMAIN:fluid_matpoint
+      Angle Definition Method = Instances in 360
+      Apply Reflection = false
+      Apply Rotation = true
+      Apply Translation = false
+      Axis From File = Custom
+      Background Mesh Density = 2000
+      Background Mesh Generation Method = Quasi Orthogonal
+      Blade Aligned Variable Available = false
+      Create Additional Turbo Variables = false
+      Do Cylindrical Initialization = false
+      Domain Type = Normal
+      Full Circle = Off
+      Hub Curve Mode = From Turbo Region
+      Inlet Curve Mode = From Turbo Region
+      Inlet Region = mass flow inlet
+      Instance Definition = From File
+      Linear Blade Aligned Variable Available = false
+      Number of Components in 360 = 1
+      Number of Copies = 1
+      Number of Data Instances = 1
+      Number of Passages in 360 = 1
+      Number of Passages in Component = 1
+      Outlet Curve Mode = From Turbo Region
+      Outlet Region = pressure outlet
+      Principal Axis = Z
+      Reflection Plane Option = From Plane
+      Rotation Angle = 0 [degree]
+      Rotation Axis From = 0.0, 0.0, 0.0
+      Rotation Axis To = 1.0, 0.0, 0.0
+      Rotation Axis Type = Coordinate Frame
+      Shroud Curve Mode = From Turbo Region
+      TBR User Theta Correction = 0.0
+      Translation Vector = 0.0, 0.0, 0.0
+      Turbo 360 Case without Periodics = false
+      X = 0.0
+      Y = 0.0
+      Z = 0.0
+    END
+    DOMAIN:jet_matpoint
+      Angle Definition Method = Instances in 360
+      Apply Reflection = false
+      Apply Rotation = true
+      Apply Translation = false
+      Axis From File = Custom
+      Background Mesh Density = 2000
+      Background Mesh Generation Method = Quasi Orthogonal
+      Blade Aligned Variable Available = false
+      Create Additional Turbo Variables = false
+      Do Cylindrical Initialization = false
+      Domain Type = Normal
+      Full Circle = Off
+      Hub Curve Mode = From Turbo Region
+      Inlet Curve Mode = From Turbo Region
+      Instance Definition = From File
+      Linear Blade Aligned Variable Available = false
+      Number of Components in 360 = 1
+      Number of Copies = 1
+      Number of Data Instances = 1
+      Number of Passages in 360 = 1
+      Number of Passages in Component = 1
+      Outlet Curve Mode = From Turbo Region
+      Principal Axis = Z
+      Reflection Plane Option = From Plane
+      Rotation Angle = 0 [degree]
+      Rotation Axis From = 0.0, 0.0, 0.0
+      Rotation Axis To = 1.0, 0.0, 0.0
+      Rotation Axis Type = Coordinate Frame
+      Shroud Curve Mode = From Turbo Region
+      TBR User Theta Correction = 0.0
+      Translation Vector = 0.0, 0.0, 0.0
+      Turbo 360 Case without Periodics = false
+      X = 0.0
+      Y = 0.0
+      Z = 0.0
+    END
+    DOMAIN:thimble_matpoint
+      Angle Definition Method = Instances in 360
+      Apply Reflection = false
+      Apply Rotation = true
+      Apply Translation = false
+      Axis From File = Custom
+      Background Mesh Density = 2000
+      Background Mesh Generation Method = Quasi Orthogonal
+      Blade Aligned Variable Available = false
+      Create Additional Turbo Variables = false
+      Do Cylindrical Initialization = false
+      Domain Type = Normal
+      Full Circle = Off
+      Hub Curve Mode = From Turbo Region
+      Inlet Curve Mode = From Turbo Region
+      Instance Definition = From File
+      Linear Blade Aligned Variable Available = false
+      Number of Components in 360 = 1
+      Number of Copies = 1
+      Number of Data Instances = 1
+      Number of Passages in 360 = 1
+      Number of Passages in Component = 1
+      Outlet Curve Mode = From Turbo Region
+      Principal Axis = Z
+      Reflection Plane Option = From Plane
+      Rotation Angle = 0 [degree]
+      Rotation Axis From = 0.0, 0.0, 0.0
+      Rotation Axis To = 1.0, 0.0, 0.0
+      Rotation Axis Type = Coordinate Frame
+      Shroud Curve Mode = From Turbo Region
+      TBR User Theta Correction = 0.0
+      Translation Vector = 0.0, 0.0, 0.0
+      Turbo 360 Case without Periodics = false
+      X = 0.0
+      Y = 0.0
+      Z = 0.0
+    END
+  END
+END
+DEFAULT INSTANCE TRANSFORM:Default Transform
+  Angle Definition Method = Instances in 360
+  Apply Reflection = false
+  Apply Rotation = true
+  Apply Translation = false
+  Full Circle = Off
+  Instancing Info From Domain = true
+  Number of Components in 360 = 12
+  Number of Copies = 1
+  Number of Passages in 360 = 12
+  Number of Passages in Component = 1
+  Principal Axis = Z
+  Reflection Plane Option = From Plane
+  Rotation Angle = 0 [degree]
+  Rotation Axis From = 0.0, 0.0, 0.0
+  Rotation Axis To = 1.0, 0.0, 0.0
+  Rotation Axis Type = Coordinate Frame
+  Translation Vector = 0.0, 0.0, 0.0
+  X = 0.0
+  Y = 0.0
+  Z = 0.0
+END
+DEFAULT LEGEND:Default Legend View 1
+  Colour = 0, 0, 0
+  Font = Sans Serif
+  Legend Aspect = 0.07
+  Legend Format = %10.3e
+  Legend Orientation = Vertical
+  Legend Position = 0.02, 0.15
+  Legend Resolution = 256
+  Legend Shading = Smooth
+  Legend Size = 0.6
+  Legend Ticks = 5
+  Legend Title = Legend
+  Legend Title Mode = Variable and Location
+  Legend X Justification = Left
+  Legend Y Justification = Top
+  Related Object = View 1
+  Show Legend Units = On
+  Text Colour Mode = Default
+  Text Height = 0.024
+  Text Rotation = 0
+  Visibility = true
+END
+DEFAULT LEGEND:Default Legend View 2
+  Colour = 0, 0, 0
+  Font = Sans Serif
+  Legend Aspect = 0.07
+  Legend Format = %10.3e
+  Legend Orientation = Vertical
+  Legend Position = 0.02, 0.15
+  Legend Resolution = 256
+  Legend Shading = Smooth
+  Legend Size = 0.6
+  Legend Ticks = 5
+  Legend Title = Legend
+  Legend Title Mode = Variable and Location
+  Legend X Justification = Left
+  Legend Y Justification = Top
+  Related Object = View 2
+  Show Legend Units = On
+  Text Colour Mode = Default
+  Text Height = 0.024
+  Text Rotation = 0
+  Visibility = true
+END
+DEFAULT LEGEND:Default Legend View 3
+  Colour = 0, 0, 0
+  Font = Sans Serif
+  Legend Aspect = 0.07
+  Legend Format = %10.3e
+  Legend Orientation = Vertical
+  Legend Position = 0.02, 0.15
+  Legend Resolution = 256
+  Legend Shading = Smooth
+  Legend Size = 0.6
+  Legend Ticks = 5
+  Legend Title = Legend
+  Legend Title Mode = Variable and Location
+  Legend X Justification = Left
+  Legend Y Justification = Top
+  Related Object = View 3
+  Show Legend Units = On
+  Text Colour Mode = Default
+  Text Height = 0.024
+  Text Rotation = 0
+  Visibility = true
+END
+DEFAULT LEGEND:Default Legend View 4
+  Colour = 0, 0, 0
+  Font = Sans Serif
+  Legend Aspect = 0.07
+  Legend Format = %10.3e
+  Legend Orientation = Vertical
+  Legend Position = 0.02, 0.15
+  Legend Resolution = 256
+  Legend Shading = Smooth
+  Legend Size = 0.6
+  Legend Ticks = 5
+  Legend Title = Legend
+  Legend Title Mode = Variable and Location
+  Legend X Justification = Left
+  Legend Y Justification = Top
+  Related Object = View 4
+  Show Legend Units = On
+  Text Colour Mode = Default
+  Text Height = 0.024
+  Text Rotation = 0
+  Visibility = true
+END
+DEFORMATION INFO:
+  Deformation Scale = 1
+END
+FILE PROCESSING:
+  Path Stack = .
+  Processing Mode = None
+  Supress File Replacement Warnings = false
+END
+LEGEND:Legend 1
+  Colour = 0, 0, 0
+  Font = Sans Serif
+  Legend Aspect = 0.05
+  Legend Format = %5.2f
+  Legend Orientation = Vertical
+  Legend Plot = Cooled Surface
+  Legend Position = 0.02 , 0.15
+  Legend Resolution = 256
+  Legend Shading = Smooth
+  Legend Size = 0.5
+  Legend Ticks = 5
+  Legend Title = Legend
+  Legend Title Mode = Variable and Location
+  Legend X Justification = Left
+  Legend Y Justification = Top
+  Show Legend Units = On
+  Text Colour Mode = Default
+  Text Height = 0.02
+  Text Rotation = 0
+  Visibility = true
+END
+LEGEND:Legend 2
+  Colour = 0, 0, 0
+  Font = Sans Serif
+  Legend Aspect = 0.05
+  Legend Format = %5.2f
+  Legend Orientation = Vertical
+  Legend Plot = Thimble
+  Legend Position = 0.095 , 0.15
+  Legend Resolution = 256
+  Legend Shading = Smooth
+  Legend Size = 0.5
+  Legend Ticks = 5
+  Legend Title = Legend
+  Legend Title Mode = Variable and Location
+  Legend X Justification = None
+  Legend Y Justification = Top
+  Show Legend Units = On
+  Text Colour Mode = Default
+  Text Height = 0.02
+  Text Rotation = 0
+  Visibility = true
+END
+LEGEND:Legend 3
+  Colour = 0, 0, 0
+  Font = Sans Serif
+  Legend Aspect = 0.05
+  Legend Format = %5.2f
+  Legend Orientation = Vertical
+  Legend Plot = He Velocity
+  Legend Position = 0.19 , 0.15
+  Legend Resolution = 256
+  Legend Shading = Smooth
+  Legend Size = 0.5
+  Legend Ticks = 5
+  Legend Title = Legend
+  Legend Title Mode = Variable and Location
+  Legend X Justification = None
+  Legend Y Justification = Top
+  Show Legend Units = On
+  Text Colour Mode = Default
+  Text Height = 0.02
+  Text Rotation = 0
+  Visibility = true
+END
+LIBRARY:
+  CEL:
+    EXPRESSIONS:
+      Accumulated Time Step = -1
+      Angular Velocity = 0 [rad s^-1]
+      Current Time Step = -1
+      Reference Pressure = 9.78725e+006 [Pa]
+      Sequence Step = -1
+      Time = 0 [s]
+      atstep = Accumulated Time Step
+      ctstep = Current Time Step
+      omega = Angular Velocity
+      sstep = Sequence Step
+      t = Time
+    END
+  END
+END
+REPORT:
+  Report Items = /TITLE PAGE,/REPORT/FILE INFORMATION OPTIONS,/REPORT/MESH \
+STATISTICS OPTIONS,/REPORT/PHYSICS SUMMARY OPTIONS,/REPORT/SOLUTION SUMMARY \
+OPTIONS,/COMMENT:User Data
+  FILE INFORMATION OPTIONS:
+    Include In Report = true
+    This Exists = true
+  END
+  MESH STATISTICS OPTIONS:
+    Include In Report = true
+    Show Connectivity Number = false
+    Show Edge Length Ratio = false
+    Show Element Volume Ratio = false
+    Show Max Face Angle = false
+    Show Min Face Angle = false
+    Show Number of Elements = true
+    Show Number of Hexahedra = false
+    Show Number of Nodes = true
+    Show Number of Polyhedra = false
+    Show Number of Pyramids = false
+    Show Number of Tetrahedra = false
+    Show Number of Wedges = false
+    This Exists = true
+  END
+  PHYSICS SUMMARY OPTIONS:
+    Include In Report = true
+    Show Boundary Physics = true
+    Show Domain Physics = true
+    This Exists = true
+  END
+  PREVIEW:
+    This Exists = true
+    OUTPUT SETTINGS:
+      Chart Image Type = png
+      Chart Size = Same As Figure
+      Custom Chart Size Height = 384
+      Custom Chart Size Width = 512
+      Custom Figure Size Height = 384
+      Custom Figure Size Width = 512
+      Figure Image Type = png
+      Figure Size = 512 x 384
+      Fit Views = false
+      This Exists = true
+    END
+  END
+  PUBLISH:
+    Default Report Name = Report
+    Generate CVF = false
+    Report Format = HTML
+    Report Path = ./Report.htm
+    Save Images In Separate Folder = true
+    This Exists = true
+    OUTPUT SETTINGS:
+      Chart Image Type = png
+      Chart Size = Same As Figure
+      Custom Chart Size Height = 384
+      Custom Chart Size Width = 512
+      Custom Figure Size Height = 384
+      Custom Figure Size Width = 512
+      Figure Image Type = png
+      Figure Size = 512 x 384
+      Fit Views = false
+      This Exists = true
+    END
+  END
+  SOLUTION SUMMARY OPTIONS:
+    Include In Report = false
+    Show Boundary Flow Summary = true
+    Show Force and Torque Summary = false
+    Show Forces = true
+    Show Torques = true
+    This Exists = true
+  END
+END
+SCALAR VARIABLE:Area
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Boundary Heat Flux Sensible
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Connectivity Number
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Density
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Density All
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Eddy Viscosity
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Eddy Viscosity Ratio
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Edge Length Ratio
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Element Volume Inverse
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Element Volume Ratio
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Force X
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Force Y
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Force Z
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Heat Flux
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Inner Wall Temperature
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Length
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Mass Flow
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Maximum Face Angle
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Minimum Face Angle
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Normal X
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Normal Y
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Normal Z
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Pressure
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Surface Heat Transfer Coefficient
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Surface Nusselt Number
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Temperature
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Thermal Conductivity
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Total Pressure
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Total Pressure in Stn Frame
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Turbulence Eddy Dissipation
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Turbulence Kinetic Energy
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Turbulent Dissipation Rate Epsilon
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Turbulent Kinetic Energy K
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity in Stn Frame u
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity in Stn Frame v
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity in Stn Frame w
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity u
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity u.Gradient X
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity u.Gradient Y
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity u.Gradient Z
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity v
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity v.Gradient X
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity v.Gradient Y
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity v.Gradient Z
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity w
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity w.Gradient X
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity w.Gradient Y
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity w.Gradient Z
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity.Absolute Helicity
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity.Curl X
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity.Curl Y
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity.Curl Z
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity.Divergence
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity.Helicity
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity.Invariant Q
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity.Lambda 2
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity.Normal Eigen Helicity
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity.Real Eigen Helicity
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity.Real Eigenvalue
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity.Stretched Swirling Strength
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity.Swirling Discriminant
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity.Swirling Normal X
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity.Swirling Normal Y
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity.Swirling Normal Z
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity.Swirling Strength
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity.Swirling Vector X
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity.Swirling Vector Y
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Velocity.Swirling Vector Z
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Volume
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Wall Adjacent Temperature
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Wall Heat Flux
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Wall Heat Transfer Coefficient
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Wall Radiative Heat Flux
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Wall Shear
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:X
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Y
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Yplus
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Ystar
+  Boundary Values = Conservative
+END
+SCALAR VARIABLE:Z
+  Boundary Values = Conservative
+END
+SURFACE GROUP:CS
+  Apply Instancing Transform = On
+  Apply Texture = Off
+  Blend Texture = On
+  Colour = 0.75, 0.75, 0.75
+  Colour Map = Default Colour Map
+  Colour Mode = Constant
+  Colour Scale = Linear
+  Colour Variable = Pressure
+  Colour Variable Boundary Values = Conservative
+  Culling Mode = No Culling
+  Domain List = /DOMAIN GROUP:All Domains
+  Draw Faces = On
+  Draw Lines = Off
+  Instancing Transform = /DEFAULT INSTANCE TRANSFORM:Default Transform
+  Lighting = On
+  Line Colour = 0, 0, 0
+  Line Colour Mode = Default
+  Line Width = 1
+  Location List = cool surf1,cool surf2
+  Max = 0.0 [Pa]
+  Min = 0.0 [Pa]
+  Range = Global
+  Render Edge Angle = 0 [degree]
+  Specular Lighting = On
+  Surface Drawing = Smooth Shading
+  Texture Angle = 0
+  Texture Direction = 0 , 1 , 0
+  Texture Material = Metal
+  Texture Position = 0 , 0
+  Texture Scale = 1
+  Texture Type = Predefined
+  Tile Texture = Off
+  Transform Texture = Off
+  Transparency = 0.0
+  Visibility = true
+  OBJECT VIEW TRANSFORM:
+    Apply Reflection = Off
+    Apply Rotation = Off
+    Apply Scale = Off
+    Apply Translation = Off
+    Principal Axis = Z
+    Reflection Plane Option = XY Plane
+    Rotation Angle = 0.0 [degree]
+    Rotation Axis From = 0 [mm], 0 [mm], 0 [mm]
+    Rotation Axis To = 0 [mm], 0 [mm], 0 [mm]
+    Rotation Axis Type = Principal Axis
+    Scale Vector = 1 , 1 , 1
+    Translation Vector = 0 [mm], 0 [mm], 0 [mm]
+    X = 0.0 [mm]
+    Y = 0.0 [mm]
+    Z = 0.0 [mm]
+  END
+END
+SYMBOL CONTROL:
+  Symbol Size = 1
+END
+SYSTEM COLOUR MAP:Blue to White
+  Colour Map Colours = 0, 0, 0, 1, 1, 1, 1, 1, 1, 1
+  Colour Map Divisions = 2
+  Colour Map Storage Type = System
+  Colour Map Type = Gradient
+END
+SYSTEM COLOUR MAP:FLUENT Rainbow
+  Colour Map Colours = 0, 0, 0, 1, 1, 0.278, 0, 1, 1, 1, 0.389, 0, 1, 0.5, 1, \
+0.444, 0, 1, 0, 1, 0.667, 1, 1, 0, 1, 1, 1, 0, 0, 1
+  Colour Map Divisions = 2
+  Colour Map Storage Type = System
+  Colour Map Type = Gradient
+END
+SYSTEM COLOUR MAP:Greyscale
+  Colour Map Colours = 0, 0.01, 0.01, 0.01, 1, 1, 0.99, 0.99, 0.99, 1
+  Colour Map Divisions = 2
+  Colour Map Storage Type = System
+  Colour Map Type = Gradient
+END
+SYSTEM COLOUR MAP:Inverse Greyscale
+  Colour Map Colours = 0, 0.99, 0.99, 0.99, 1, 1, 0.01, 0.01, 0.01, 1
+  Colour Map Divisions = 2
+  Colour Map Storage Type = System
+  Colour Map Type = Gradient
+END
+SYSTEM COLOUR MAP:Inverse Rainbow
+  Colour Map Colours = 0, 1, 0, 0, 1, 0.10, 1, 0.5, 0, 1, 0.25, 1, 1, 0, 1, \
+0.43, 0.5, 1, 0, 1, 0.50, 0, 1, 0, 1, 0.56, 0, 1, 0.5, 1, 0.75, 0, 1, 1, 1, 0.90,\
+ 0, 0.5, 1, 1, 1, 0, 0, 1, 1
+  Colour Map Divisions = 2
+  Colour Map Storage Type = System
+  Colour Map Type = Gradient
+END
+SYSTEM COLOUR MAP:Inverse Rainbow 6
+  Colour Map Colours = 0, 1, 0, 1, 1, 0.1, 1, 0, 0.5, 1, 0.2, 1, 0, 0, 1, 0.28,\
+ 1, 0.5, 0, 1, 0.4, 1, 1, 0, 1, 0.55, 0.5, 1, 0, 1, 0.6, 0, 1, 0, 1, 0.65, 0, 1, \
+0.5, 1, 0.8, 0, 1, 1, 1, 0.92, 0, 0.5, 1, 1, 1, 0, 0, 1, 1
+  Colour Map Divisions = 2
+  Colour Map Storage Type = System
+  Colour Map Type = Gradient
+END
+SYSTEM COLOUR MAP:Minimal Map
+  Colour Map Colours = 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0
+  Colour Map Divisions = 2
+  Colour Map Storage Type = System
+  Colour Map Type = Gradient
+END
+SYSTEM COLOUR MAP:Rainbow
+  Colour Map Colours = 0, 0, 0, 1, 1, 0.10, 0, 0.5, 1, 1, 0.25, 0, 1, 1, 1, \
+0.44, 0, 1, 0.5, 1, 0.50, 0, 1, 0, 1, 0.57, 0.5, 1, 0, 1, 0.75, 1, 1, 0, 1, 0.90,\
+ 1, 0.5, 0, 1, 1, 1, 0, 0, 1
+  Colour Map Divisions = 2
+  Colour Map Storage Type = System
+  Colour Map Type = Gradient
+END
+SYSTEM COLOUR MAP:Rainbow 6
+  Colour Map Colours = 0, 0, 0, 1, 1, 0.08, 0, 0.5, 1, 1, 0.2, 0, 1, 1, 1, \
+0.35, 0, 1, 0.5, 1, 0.4, 0, 1, 0, 1, 0.45, 0.5, 1, 0, 1, 0.6, 1, 1, 0, 1, 0.72, \
+1, 0.5, 0, 1, 0.8, 1, 0, 0, 1, 0.9, 1, 0, 0.5, 1, 1, 1, 0, 1, 1
+  Colour Map Divisions = 2
+  Colour Map Storage Type = System
+  Colour Map Type = Gradient
+END
+SYSTEM COLOUR MAP:Transparency
+  Colour Map Colours = 0, 1, 1, 1, 0, 1, 1, 1, 1, 1
+  Colour Map Divisions = 2
+  Colour Map Storage Type = System
+  Colour Map Type = Gradient
+END
+SYSTEM COLOUR MAP:White to Blue
+  Colour Map Colours = 0, 1, 1, 1, 1, 1, 0, 0, 1, 1
+  Colour Map Divisions = 2
+  Colour Map Storage Type = System
+  Colour Map Type = Gradient
+END
+SYSTEM COLOUR MAP:Zebra
+  Colour Map Colours = 0, 1, 1, 1, 1, 1.0, 0, 0, 0, 1
+  Colour Map Divisions = 5
+  Colour Map Storage Type = System
+  Colour Map Type = Zebra
+END
+TITLE PAGE:
+  Include ANSYS Logo = true
+  Include Custom Logo = false
+  Include Date = true
+  Include TOC = true
+  Show Captions in TOC = true
+  Title Page Exists = true
+END
+UNIT SYSTEM:
+  Custom Units Setting = Angle,degree,Force,N,Length,mm,Mass,kg,Pressure,Pa,\
+Temperature,K,Time,s,Velocity,m s^-1,Acceleration,m s^-2,Angular Velocity,radian \
+s^-1,Angular Acceleration,radian s^-2,Area,m^2,Chemical Amount,mol,\
+Compressibility,Pa^-1,Concentration,m^-3,Contact Resistance,m^2 s kg^-1,Current,\
+A,Decay Constant,s^-1,Density,kg m^-3,Density Derivative wrt Pressure,m^-2 s^2,\
+Density Derivative wrt Temperature,kg m^-3 K^-1,Dielectric Contact Resistance,\
+F^-1 m^2,Dynamic Viscosity,Pa s,Electric Charge,A s,Electric Charge Density,A s \
+m^-3,Electric Charge Transfer Coefficient,F m^-2,Electric Current Density,A m^-2,\
+Electric Current Transfer Coefficient,A m^-2 V^-1,Electric Current Source,A m^-3,\
+Electric Field,V m^-1,Electrical Conductivity,S m^-1,Electrical Contact \
+Resistance,ohm m^2,Electrical Permittivity,A s V^-1 m^-1,Electrical Resistivity,\
+ohm m,Energy,J,Energy Source,W m^-3,Energy Source Coefficient,W m^-3 K^-1,\
+Enthalpy Variance,m^4 s^-4,Epsilon,m^2 s^-3,Epsilon Flux,W m^-2 s^-1,Epsilon \
+Flux Coefficient,kg m^-2 s^-2,Epsilon Source,W m^-3 s^-1,Epsilon Source \
+Coefficient,kg m^-3 s^-2,Flame Surface Density Source,m^-1 s^-1,Fracture Energy,\
+J m^-2,Frequency,Hz,Heat Flux in,W m^-2,Heat Transfer Coefficient,W m^-2 K^-1,\
+Interphase Transfer Coefficient,kg m^-2 s^-1,Inverse Angle,radian^-1,Inverse \
+Area,m^-2,Inverse Length,m^-1,k,m^2 s^-2,k Flux,W m^-2,k Flux Coefficient,kg \
+m^-2 s^-1,k Source,W m^-3,k Source Coefficient,kg m^-3 s^-1,Kinematic \
+Diffusivity,m^2 s^-1,Luminance,cd,Magnetic Field,A m^-1,Magnetic Flux,Wb,\
+Magnetic Flux Density,T,Magnetic Induction,T,Magnetic Potential,T m,Magnetic \
+Permeability,H m^-1,Mass Concentration,kg m^-3,Mass Concentration Rate,kg m^-3 \
+s^-1,Mass Flow,kg s^-1,Mass Flow in,kg s^-1,Mass Flux,kg s^-1 m^-2,Mass Flux \
+Coefficient,kg s^-1 m^-2,Mass Flux Pressure Coefficient,kg s^-1 m^-2 Pa^-1,Mass \
+Fraction,kg kg^-1,Mass Moment of Inertia,kg m^2,Mass Source,kg s^-1 m^-3,Mass \
+Source Coefficient,kg s^-1 m^-3,Mass Source Pressure Coefficient,kg s^-1 m^-3 \
+Pa^-1,Total Mass Source Pressure Coefficient,kg s^-1 Pa^-1,Molar Concentration,\
+mol m^-3,Molar Concentration Henry Coefficient,Pa m^3 mol^-1,Molar Concentration \
+Rate,mol m^-3 s^-1,Molar Energy,J mol^-1,Molar Entropy,J mol^-1 K^-1,Molar \
+Fraction,mol mol^-1,Molar Mass,kg kmol^-1,Molar Volume,m^3 mol^-1,Moment,N m,\
+Momentum Source,kg m^-2 s^-2,Momentum Source Lin Coeff,kg m^-3 s^-1,Momentum \
+Source Quad Coeff,kg m^-4,Money,GBP,Omega Source,kg m^-3 s^-2,Per Mass,kg^-1,Per \
+Mass Flow,s kg^-1,Per Time,s^-1,Pressure Derivative wrt Temperature,Pa K^-1,\
+Pressure Derivative wrt Volume,Pa kg m^-3,Power,W,Shear Strain Rate,s^-1,Shock \
+Velocity,s m^-1,Solid Angle,sr,Soot Cross Coefficient,m^3 mol^-1 s^-1,Soot PX \
+Factor,mol^1 kg^-1 s^-1,Specific,kg kg^-1,Specific Concentration,mol kg^-1,\
+Specific Energy,J kg^-1,Specific Enthalpy,J kg^-1,Specific Entropy,J kg^-1 K^-1,\
+Specific Flame Surface Density,m^2 kg^-1,Specific Heat Capacity,J kg^-1 K^-1,\
+Specific Volume,kg^-1 m^3,Surface Charge Density,A s m^-2,Surface Tension,N m^-1,\
+InvTemp1,K^-1,InvTemp2,K^-2,InvTemp3,K^-3,InvTemp4,K^-4,Temperature Variance,K^2,\
+Temperature Variance Source,kg m^-3 s^-1 K^2,Thermal Conductivity,W m^-1 K^-1,\
+Thermal Contact Resistance,W^-1 m^2 K,Thermal Expansivity,K^-1,Torque,N m,\
+Torsional Spring Constant,N m radian^-1,Total Radiative Intensity,W m^-2 sr^-1,\
+Turbulent Heat Flux,m^3 s^-3,Voltage,V,Volume,m^3,Volumetric,kg m^-3,Volumetric \
+Flow,m^3 s^-1,Volumetric Flow in,m^3 s^-1,Number Source,m^-3 s^-1
+  Preferred Units System = Custom
+  Update Units to Preferred = Off
+END
+VECTOR VARIABLE:Force
+  Boundary Values = Conservative
+END
+VECTOR VARIABLE:Normal
+  Boundary Values = Conservative
+END
+VECTOR VARIABLE:Velocity
+  Boundary Values = Conservative
+END
+VECTOR VARIABLE:Velocity in Stn Frame
+  Boundary Values = Conservative
+END
+VECTOR VARIABLE:Velocity u.Gradient
+  Boundary Values = Conservative
+END
+VECTOR VARIABLE:Velocity v.Gradient
+  Boundary Values = Conservative
+END
+VECTOR VARIABLE:Velocity w.Gradient
+  Boundary Values = Conservative
+END
+VECTOR VARIABLE:Velocity.Curl
+  Boundary Values = Conservative
+END
+VECTOR VARIABLE:Velocity.Swirling Normal
+  Boundary Values = Conservative
+END
+VECTOR VARIABLE:Velocity.Swirling Vector
+  Boundary Values = Conservative
+END
+VIEW:View 1
+  Angular Coord Shift = 0.0
+  Auto Center = false
+  Axis Visibility = On
+  Border Visibility = false
+  Camera Mode = User Specified
+  Clip Scene = false
+  Coord Transform = Cartesian
+  Hide Difference Case = false
+  Highlight Type = Surface Mesh
+  Is A Figure = false
+  Light Angle = 50, 110
+  Object Visibility List = /CONTOUR:Cooled Surface,/CONTOUR:He Velocity,/\
+CONTOUR:Thimble,/DATA READER/CASE:Case H 0 9 SKE/BOUNDARY:cool surf3,/DATA \
+READER/CASE:Case H 0 9 SKE/BOUNDARY:cool surf4,/DATA READER/CASE:Case H 0 9 SKE/\
+BOUNDARY:jet bottom,/DATA READER/CASE:Case H 0 9 SKE/BOUNDARY:jet shadow,/DATA \
+READER/CASE:Case H 0 9 SKE/BOUNDARY:jet surf1 shadow,/DATA READER/CASE:Case H 0 \
+9 SKE/BOUNDARY:jet surf2 shadow,/DATA READER/CASE:Case H 0 9 SKE/\
+BOUNDARY:symmetry1 jet,/DATA READER/CASE:Case H 0 9 SKE/BOUNDARY:thimble inner \
+shadow,/LEGEND:Legend 1,/LEGEND:Legend 2,/LEGEND:Legend 3,/WIREFRAME:Wireframe
+  Projection = Orthographic
+  Ruler Visibility = On
+  Standard View = Isometric Y
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pan = 0,0
+    Pivot Point = 0.00635,0.00549927,0.0181737
+    Rotation = -90, 0, 0
+    Rotation Quaternion = -0.148857,-0.445349,0.397953,0.788113
+    Scale = 62.6876
+    Send To Viewer = True
+  END
+END
+VIEW:View 2
+  Angular Coord Shift = 0.0
+  Auto Center = false
+  Axis Visibility = On
+  Border Visibility = false
+  Camera Mode = User Specified
+  Clip Scene = false
+  Coord Transform = Cartesian
+  Hide Difference Case = false
+  Highlight Type = Surface Mesh
+  Is A Figure = false
+  Light Angle = 50, 110
+  Object Visibility List = /DEFAULT LEGEND:Default Legend View 2,/\
+WIREFRAME:Wireframe
+  Projection = Orthographic
+  Ruler Visibility = On
+  Standard View = Isometric Y
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pan = 0,0
+    Pivot Point = 0,0,0
+    Rotation = -90, 0, 0
+    Rotation Quaternion = 0.279848,-0.364705,-0.115917,0.880476
+    Scale = 1
+    Send To Viewer = True
+  END
+END
+VIEW:View 3
+  Angular Coord Shift = 0.0
+  Auto Center = false
+  Axis Visibility = On
+  Border Visibility = false
+  Camera Mode = User Specified
+  Clip Scene = false
+  Coord Transform = Cartesian
+  Hide Difference Case = false
+  Highlight Type = Surface Mesh
+  Is A Figure = false
+  Light Angle = 50, 110
+  Object Visibility List = /DEFAULT LEGEND:Default Legend View 3,/\
+WIREFRAME:Wireframe
+  Projection = Orthographic
+  Ruler Visibility = On
+  Standard View = Isometric Y
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pan = 0,0
+    Pivot Point = 0,0,0
+    Rotation = -90, 0, 0
+    Rotation Quaternion = 0.279848,-0.364705,-0.115917,0.880476
+    Scale = 1
+    Send To Viewer = True
+  END
+END
+VIEW:View 4
+  Angular Coord Shift = 0.0
+  Auto Center = false
+  Axis Visibility = On
+  Border Visibility = false
+  Camera Mode = User Specified
+  Clip Scene = false
+  Coord Transform = Cartesian
+  Hide Difference Case = false
+  Highlight Type = Surface Mesh
+  Is A Figure = false
+  Light Angle = 50, 110
+  Object Visibility List = /DEFAULT LEGEND:Default Legend View 4,/\
+WIREFRAME:Wireframe
+  Projection = Orthographic
+  Ruler Visibility = On
+  Standard View = Isometric Y
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pan = 0,0
+    Pivot Point = 0,0,0
+    Rotation = -90, 0, 0
+    Rotation Quaternion = 0.279848,-0.364705,-0.115917,0.880476
+    Scale = 1
+    Send To Viewer = True
+  END
+END
+VIEWPORT MANAGER:
+  Background Colour = 0.42, 0.55, 0.871
+  Background Colour 2 = 1, 1, 1
+  Background Colour Type = Top-Bottom Gradient
+  Background Image = Mountains
+  Background Image Mapping = Flat
+  Background Image Type = Predefined
+  Background Type = Colour
+  Global Edge Colour = 0, 0, 0
+  Global Text Colour = 0, 0, 0
+  Maximized Viewport = -1
+  Synchronize Camera = false
+  Synchronize Visibility = true
+  View Length Units = mm
+  Viewport 1 View = View 1
+  Viewport 2 View = View 2
+  Viewport 3 View = View 3
+  Viewport 4 View = View 4
+  Viewport Layout = No Split
+  X Split = 0.5
+  Y Split = 0.5
+END
+WIREFRAME:Wireframe
+  Apply Instancing Transform = On
+  Colour = 0, 0, 0
+  Domain List = All Domains
+  Edge Angle = 30 [degree]
+  Instancing Transform = Default Transform
+  Line Colour Mode = Default
+  Line Width = 1
+  Show Surface Mesh = Off
+  Visibility = On
+END

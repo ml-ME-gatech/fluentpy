@@ -1,0 +1,3 @@
+[fluentfolder]                          #folders and file extensions in fluent folders
+dirs = ["DM","Fluent","Post"]
+files = [".cst",".set",".xml"]

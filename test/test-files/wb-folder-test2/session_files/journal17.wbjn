@@ -1,0 +1,54 @@
+﻿# encoding: utf-8
+# Release 17.1
+SetScriptVersion(Version="17.1.127")
+system1 = GetSystem(Name="FFF 36")
+system2 = system1.Duplicate(RelativeTo=system1)
+system2.DisplayText = "439, H=0.9, SKO, fixed omega"
+designPoint1 = Parameters.GetDesignPoint(Name="0")
+parameter1 = Parameters.GetParameter(Name="P880")
+designPoint1.SetParameterExpression(
+    Parameter=parameter1,
+    Expression="0.00348 [kg s^-1]")
+parameter2 = Parameters.GetParameter(Name="P882")
+designPoint1.SetParameterExpression(
+    Parameter=parameter2,
+    Expression="0.04798 [J kg^-1]")
+parameter3 = Parameters.GetParameter(Name="P884")
+designPoint1.SetParameterExpression(
+    Parameter=parameter3,
+    Expression="373.502 [K]")
+parameter4 = Parameters.GetParameter(Name="P886")
+designPoint1.SetParameterExpression(
+    Parameter=parameter4,
+    Expression="0.040971 [J kg^-1]")
+parameter5 = Parameters.GetParameter(Name="P888")
+designPoint1.SetParameterExpression(
+    Parameter=parameter5,
+    Expression="427.996 [K]")
+parameter6 = Parameters.GetParameter(Name="P889")
+designPoint1.SetParameterExpression(
+    Parameter=parameter6,
+    Expression="4336162.043 [W m^-2]")
+parameter7 = Parameters.GetParameter(Name="P890")
+designPoint1.SetParameterExpression(
+    Parameter=parameter7,
+    Expression="48.6899 [kg m^-2 s^-1]")
+parameter8 = Parameters.GetParameter(Name="P891")
+designPoint1.SetParameterExpression(
+    Parameter=parameter8,
+    Expression="0.00014628 [m^2 s^-1]")
+parameter9 = Parameters.GetParameter(Name="P892")
+designPoint1.SetParameterExpression(
+    Parameter=parameter9,
+    Expression="6.817E-05 [m^2 s^-1]")
+parameter10 = Parameters.GetParameter(Name="P893")
+designPoint1.SetParameterExpression(
+    Parameter=parameter10,
+    Expression="598.86 [s^-1]")
+parameter11 = Parameters.GetParameter(Name="P894")
+designPoint1.SetParameterExpression(
+    Parameter=parameter11,
+    Expression="1097.305 [s^-1]")
+system2.Update(AllDependencies=True)
+ClearMessages()
+Save(Overwrite=True)

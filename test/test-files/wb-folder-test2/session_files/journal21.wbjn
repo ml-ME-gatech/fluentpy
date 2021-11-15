@@ -1,0 +1,8 @@
+﻿# encoding: utf-8
+# Release 17.1
+SetScriptVersion(Version="17.1.127")
+fileReference1 = GetFileReference(Name="F395")
+fileReference1.Repair(FilePath="G:/PFCTHTF/Fluent/ImportFiles/H-0.90 60 Deg Files/HEMJ_60Deg6M.msh")
+fileReference2 = GetFileReference(Name="F400")
+fileReference2.Repair(FilePath="G:/PFCTHTF/Fluent/ImportFiles/H-0.90 60 Deg Files/HEMJ_60Deg8M.msh")
+Save(Overwrite=True)

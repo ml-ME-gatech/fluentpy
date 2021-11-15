@@ -1,0 +1,243 @@
+﻿# encoding: utf-8
+# Release 17.1
+SetScriptVersion(Version="17.1.127")
+designPoint1 = Parameters.GetDesignPoint(Name="0")
+parameter1 = Parameters.GetParameter(Name="P842")
+designPoint1.SetParameterExpression(
+    Parameter=parameter1,
+    Expression="0.003543 [kg s^-1]")
+parameter2 = Parameters.GetParameter(Name="P843")
+designPoint1.SetParameterExpression(
+    Parameter=parameter2,
+    Expression="9954854 [Pa]")
+parameter3 = Parameters.GetParameter(Name="P844")
+designPoint1.SetParameterExpression(
+    Parameter=parameter3,
+    Expression="0.048651 [J kg^-1]")
+parameter4 = Parameters.GetParameter(Name="P845")
+designPoint1.SetParameterExpression(
+    Parameter=parameter4,
+    Expression="2.640439 [m^2 s^-3]")
+parameter5 = Parameters.GetParameter(Name="P846")
+designPoint1.SetParameterExpression(
+    Parameter=parameter5,
+    Expression="375.567 [K]")
+parameter6 = Parameters.GetParameter(Name="P847")
+designPoint1.SetParameterExpression(
+    Parameter=parameter6,
+    Expression="9935372 [Pa]")
+parameter7 = Parameters.GetParameter(Name="P848")
+designPoint1.SetParameterExpression(
+    Parameter=parameter7,
+    Expression="0.039485 [J kg^-1]")
+parameter8 = Parameters.GetParameter(Name="P849")
+designPoint1.SetParameterExpression(
+    Parameter=parameter8,
+    Expression="3.82806 [m^2 s^-3]")
+parameter9 = Parameters.GetParameter(Name="P850")
+designPoint1.SetParameterExpression(
+    Parameter=parameter9,
+    Expression="420.431 [K]")
+parameter10 = Parameters.GetParameter(Name="P851")
+designPoint1.SetParameterExpression(
+    Parameter=parameter10,
+    Expression="4656999.818 [W m^-2]")
+parameter11 = Parameters.GetParameter(Name="P852")
+designPoint1.SetParameterExpression(
+    Parameter=parameter11,
+    Expression="49.5687 [kg m^-2 s^-1]")
+parameter12 = Parameters.GetParameter(Name="P853")
+designPoint1.SetParameterExpression(
+    Parameter=parameter12,
+    Expression="0.0001473 [m^2 s^-1]")
+parameter13 = Parameters.GetParameter(Name="P854")
+designPoint1.SetParameterExpression(
+    Parameter=parameter13,
+    Expression="6.6922E-05 [m^2 s^-1]")
+parameter14 = Parameters.GetParameter(Name="P855")
+designPoint1.SetParameterExpression(
+    Parameter=parameter14,
+    Expression="339.11 [s^-1]")
+parameter15 = Parameters.GetParameter(Name="P856")
+designPoint1.SetParameterExpression(
+    Parameter=parameter15,
+    Expression="605.765 [s^-1]")
+parameter16 = Parameters.GetParameter(Name="P861")
+designPoint1.SetParameterExpression(
+    Parameter=parameter16,
+    Expression="0.003543 [kg s^-1]")
+parameter17 = Parameters.GetParameter(Name="P862")
+designPoint1.SetParameterExpression(
+    Parameter=parameter17,
+    Expression="9954854 [Pa]")
+parameter18 = Parameters.GetParameter(Name="P863")
+designPoint1.SetParameterExpression(
+    Parameter=parameter18,
+    Expression="0.048651 [J kg^-1]")
+parameter19 = Parameters.GetParameter(Name="P864")
+designPoint1.SetParameterExpression(
+    Parameter=parameter19,
+    Expression="2.640439 [m^2 s^-3]")
+parameter20 = Parameters.GetParameter(Name="P865")
+designPoint1.SetParameterExpression(
+    Parameter=parameter20,
+    Expression="375.567 [K]")
+parameter21 = Parameters.GetParameter(Name="P866")
+designPoint1.SetParameterExpression(
+    Parameter=parameter21,
+    Expression="9935372 [Pa]")
+parameter22 = Parameters.GetParameter(Name="P867")
+designPoint1.SetParameterExpression(
+    Parameter=parameter22,
+    Expression="0.039485 [J kg^-1]")
+parameter23 = Parameters.GetParameter(Name="P868")
+designPoint1.SetParameterExpression(
+    Parameter=parameter23,
+    Expression="3.82806 [m^2 s^-3]")
+parameter24 = Parameters.GetParameter(Name="P869")
+designPoint1.SetParameterExpression(
+    Parameter=parameter24,
+    Expression="420.431 [K]")
+parameter25 = Parameters.GetParameter(Name="P870")
+designPoint1.SetParameterExpression(
+    Parameter=parameter25,
+    Expression="4656999.818 [W m^-2]")
+parameter26 = Parameters.GetParameter(Name="P871")
+designPoint1.SetParameterExpression(
+    Parameter=parameter26,
+    Expression="49.5687 [kg m^-2 s^-1]")
+parameter27 = Parameters.GetParameter(Name="P872")
+designPoint1.SetParameterExpression(
+    Parameter=parameter27,
+    Expression="0.0001473 [m^2 s^-1]")
+parameter28 = Parameters.GetParameter(Name="P873")
+designPoint1.SetParameterExpression(
+    Parameter=parameter28,
+    Expression="6.6922E-05 [m^2 s^-1]")
+parameter29 = Parameters.GetParameter(Name="P874")
+designPoint1.SetParameterExpression(
+    Parameter=parameter29,
+    Expression="339.11 [s^-1]")
+parameter30 = Parameters.GetParameter(Name="P875")
+designPoint1.SetParameterExpression(
+    Parameter=parameter30,
+    Expression="605.765 [s^-1]")
+Refresh()
+system1 = GetSystem(Name="FFF 39")
+solutionComponent1 = system1.GetComponent(Name="Solution")
+solutionComponent1.Clean()
+system2 = GetSystem(Name="FFF 40")
+solutionComponent2 = system2.GetComponent(Name="Solution")
+solutionComponent2.Clean()
+setup1 = system1.GetContainer(ComponentName="Setup")
+fluentLauncherSettings1 = setup1.GetFluentLauncherSettings()
+fluentLauncherSettings1.SetEntityProperties(Properties=Set(EnvPath={}))
+setup1.Edit()
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton1(Scale)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*PanelButtons*PushButton1(Close)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Cell Zone Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 1))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 2))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 1))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Boundary Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 20))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 9))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Reference Values\"))(cx-gui-do cx-set-list-selections \"Reference Values*DropDownList1(Compute from)\" '( 3))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Reference Values*DropDownList1(Compute from)")')
+setup1.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Methods"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Initialization"))')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Solution Initialization*Table1*ButtonBox10*PushButton2(Initialize)")')
+setup1.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Run Calculation"))')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+setup2 = system2.GetContainer(ComponentName="Setup")
+fluentLauncherSettings2 = setup2.GetFluentLauncherSettings()
+fluentLauncherSettings2.SetEntityProperties(Properties=Set(EnvPath={}))
+setup2.Edit()
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton1(Scale)")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*PanelButtons*PushButton1(Close)")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Boundary Conditions\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Cell Zone Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 2))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Solid*PanelButtons*PushButton2(Cancel)")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Boundary Conditions\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Reference Values\"))(cx-gui-do cx-set-list-selections \"Reference Values*DropDownList1(Compute from)\" '( 3))")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Reference Values*DropDownList1(Compute from)")')
+setup2.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Methods"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Initialization"))')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Solution Initialization*Table1*ButtonBox10*PushButton2(Initialize)")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+Update()
+system3 = GetSystem(Name="FFF 38")
+system3.DisplayText = "366, H=0.9, SKE, 4M"
+system1.DisplayText = "366, H=0.9, SKE, 6M"
+system2.DisplayText = "366, H=0.9, SKE, 8M"
+ClearMessages()
+results1 = system1.GetContainer(ComponentName="Results")
+results1.Edit()
+results1.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/366-SKE-6M.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /SURFACE GROUP:CS
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results1.Exit()
+results2 = system2.GetContainer(ComponentName="Results")
+results2.Edit()
+results2.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/366-SKE-8M.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /SURFACE GROUP:CS
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results2.Exit()
+Save(Overwrite=True)
+Save(Overwrite=True)

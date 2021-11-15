@@ -1,0 +1,4 @@
+cs-temp
+cs-htc
+p-in
+max-temp

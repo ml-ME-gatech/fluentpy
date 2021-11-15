@@ -1,0 +1,403 @@
+﻿# encoding: utf-8
+# Release 17.1
+SetScriptVersion(Version="17.1.127")
+system1 = GetSystem(Name="FFF 33")
+results1 = system1.GetContainer(ComponentName="Results")
+results1.Edit()
+results1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.00635, 0.00549927, 0.0181737
+    Scale = 47.1009
+    Pan = 0, 0
+    Rotation Quaternion = -0.144745, -0.485779, 0.379045, 0.7742
+    
+  END
+
+END
+
+> update
+> autolegend plot=/POLYLINE:Polyline 1, view=VIEW:View 1""")
+results1.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/439-polyline1-F2.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /POLYLINE:Polyline 1
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results1.Exit()
+system2 = GetSystem(Name="FFF 34")
+results2 = system2.GetContainer(ComponentName="Results")
+results2.Edit()
+results2.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/439-polyline1-F3.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /POLYLINE:Polyline 1
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results2.Exit()
+system3 = GetSystem(Name="FFF 35")
+results3 = system3.GetContainer(ComponentName="Results")
+results3.Edit()
+results3.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/439-SKE-Tcs-F4.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /POLYLINE:Polyline 1
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results1.Edit()
+results1.SendCommand(Command="> undo")
+results1.SendCommand(Command="> autolegend plot=/POLYLINE:Polyline 2, view=VIEW:View 1")
+results1.SendCommand(Command="""POLYLINE:Polyline 2
+Apply Instancing Transform = On
+Boundary List = cool surf1 shadow,cool surf2 shadow
+Colour = 0, 1, 0
+Colour Map = Default Colour Map
+Colour Mode = Constant
+Colour Scale = Linear
+Colour Variable = Pressure
+Colour Variable Boundary Values = Conservative
+Contour Level = 1
+Domain List = /DOMAIN GROUP:All Domains
+Input File =  
+Instancing Transform = /DEFAULT INSTANCE TRANSFORM:Default Transform
+Line Width = 2
+Location = symmetry2 thimble
+Max = 0.0
+Min = 0.0
+Option = Boundary Intersection
+Range = Global
+  OBJECT VIEW TRANSFORM:
+  Apply Reflection = Off
+  Apply Rotation = Off
+  Apply Scale = Off
+  Apply Translation = Off
+  Principal Axis = Z
+  Reflection Plane Option = XY Plane
+  Rotation Angle = 0.0 [degree]
+  Rotation Axis From = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis To = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis Type = Principal Axis
+  Scale Vector = 1 , 1 , 1 
+  Translation Vector = 0 [mm], 0 [mm], 0 [mm]
+  X = 0.0 [mm]
+  Y = 0.0 [mm]
+  Z = 0.0 [mm]
+  END
+END""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /POLYLINE:Polyline 2, view=/VIEW:View 1""")
+results1.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = G:/Bailey/Fluent/HEMJ-60deg-SKE/HEMJ-60deg-SKE_files/user_files/439-polyline2-F2.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /POLYLINE:Polyline 2
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results1.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/439-polyline2-F2.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /POLYLINE:Polyline 2
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results1.Exit()
+results2.Edit()
+results2.SendCommand(Command="> autolegend plot=/POLYLINE:Polyline 2, view=VIEW:View 1")
+results2.SendCommand(Command="""POLYLINE:Polyline 2
+Apply Instancing Transform = On
+Boundary List = cool surf1 shadow,cool surf2 shadow
+Colour = 0, 1, 0
+Colour Map = Default Colour Map
+Colour Mode = Constant
+Colour Scale = Linear
+Colour Variable = Pressure
+Colour Variable Boundary Values = Conservative
+Contour Level = 1
+Domain List = /DOMAIN GROUP:All Domains
+Input File =  
+Instancing Transform = /DEFAULT INSTANCE TRANSFORM:Default Transform
+Line Width = 2
+Location = symmetry2 thimble
+Max = 0.0
+Min = 0.0
+Option = Boundary Intersection
+Range = Global
+  OBJECT VIEW TRANSFORM:
+  Apply Reflection = Off
+  Apply Rotation = Off
+  Apply Scale = Off
+  Apply Translation = Off
+  Principal Axis = Z
+  Reflection Plane Option = XY Plane
+  Rotation Angle = 0.0 [degree]
+  Rotation Axis From = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis To = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis Type = Principal Axis
+  Scale Vector = 1 , 1 , 1 
+  Translation Vector = 0 [mm], 0 [mm], 0 [mm]
+  X = 0.0 [mm]
+  Y = 0.0 [mm]
+  Z = 0.0 [mm]
+  END
+END""")
+results2.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /POLYLINE:Polyline 2, view=/VIEW:View 1""")
+results2.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/439-polyline2-F3.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /POLYLINE:Polyline 2
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results2.Exit()
+results3.Edit()
+results3.SendCommand(Command="> autolegend plot=/POLYLINE:Polyline 2, view=VIEW:View 1")
+results3.SendCommand(Command="""POLYLINE:Polyline 2
+Apply Instancing Transform = On
+Boundary List = cool surf1 shadow,cool surf2 shadow
+Colour = 0, 1, 0
+Colour Map = Default Colour Map
+Colour Mode = Constant
+Colour Scale = Linear
+Colour Variable = Pressure
+Colour Variable Boundary Values = Conservative
+Contour Level = 1
+Domain List = /DOMAIN GROUP:All Domains
+Input File =  
+Instancing Transform = /DEFAULT INSTANCE TRANSFORM:Default Transform
+Line Width = 2
+Location = symmetry2 thimble
+Max = 0.0
+Min = 0.0
+Option = Boundary Intersection
+Range = Global
+  OBJECT VIEW TRANSFORM:
+  Apply Reflection = Off
+  Apply Rotation = Off
+  Apply Scale = Off
+  Apply Translation = Off
+  Principal Axis = Z
+  Reflection Plane Option = XY Plane
+  Rotation Angle = 0.0 [degree]
+  Rotation Axis From = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis To = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis Type = Principal Axis
+  Scale Vector = 1 , 1 , 1 
+  Translation Vector = 0 [mm], 0 [mm], 0 [mm]
+  X = 0.0 [mm]
+  Y = 0.0 [mm]
+  Z = 0.0 [mm]
+  END
+END""")
+results3.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /POLYLINE:Polyline 2, view=/VIEW:View 1""")
+results3.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/439-SKE-Tcs-F4.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /POLYLINE:Polyline 2
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results3.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.0011853, -0.000153031, 0.0272096
+    Scale = 4776.08
+    Pan = 0, 0
+    Rotation Quaternion = -0.272275, -0.578432, 0.351734, 0.683777
+    
+  END
+
+END
+
+> update
+>centerview 1""")
+results3.Exit()
+Save(Overwrite=True)

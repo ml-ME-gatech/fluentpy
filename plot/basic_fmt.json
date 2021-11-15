@@ -1,0 +1,10 @@
+{
+    "FONT_NAME":"Times New Roman",
+    "AXIS_FONT_SIZE": 16,
+    "LEGEND_FONT_SIZE":14,
+    "TICK_LABEL_SIZE":12,
+    "LINE_WIDTH":2,
+    "PLOT_COLORS":["blue","red","green","orange","maroon","cyan"],
+    "PLOT_STYLES":["-",":","--","-."],
+    "MARKER_SYMBOLS":["o","^","s"]
+}

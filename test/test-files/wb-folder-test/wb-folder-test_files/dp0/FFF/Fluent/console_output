@@ -1,0 +1,61 @@
+
+Build Time: Apr  9 2018 14:07:31 
+Executable Path: C:/PROGRA~1/ANSYSI~1/v191/fluent/ntbin/win64/fluent.exe
+
+-------------------------------------------------------------------------------
+ID    Hostname        Core  O.S.         PID    Vendor                    
+-------------------------------------------------------------------------------
+n3    ME03W0336LAB02  4/8  Windows-x64  27840  Intel(R) Core(TM) i7-4770 
+n2    ME03W0336LAB02  3/8  Windows-x64  20996  Intel(R) Core(TM) i7-4770 
+n1    ME03W0336LAB02  2/8  Windows-x64  16728  Intel(R) Core(TM) i7-4770 
+n0*   ME03W0336LAB02  1/8  Windows-x64  10596  Intel(R) Core(TM) i7-4770 
+host  ME03W0336LAB02       Windows-x64  14056  Intel(R) Core(TM) i7-4770 
+
+MPI Option Selected: ibmmpi
+Selected system interconnect: default
+-------------------------------------------------------------------------------
+(cx-gui-do cx-activate-item "MenuBar*FileMenu*Solution Files...")
+(cx-gui-do cx-activate-item "Solution Files*PanelButtons*PushButton2(Cancel)")
+(cx-use-window-id 1)
+(cx-set-camera-relative '(0 0 0) '(0 0 0) '(0 0 0) 0 0)
+(cx-use-window-id 1)
+(handle-key "control s")
+(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")
+
+Writing Settings file "D:\Michael\Fluent\HEMJ_60d-SKE\HEMJ-60deg-SKE_files\dp0\FFF\Fluent\HEMJ60deg-2.set"...
+	writing rp variables ... Done.
+	writing domain variables ... Done.
+	writing jet_matpoint (type solid) (mixture) ... Done.
+	writing thimble_matpoint (type solid) (mixture) ... Done.
+	writing fluid_matpoint (type fluid) (mixture) ... Done.
+	writing thimble-inner-shadow (type wall) (mixture) ... Done.
+	writing jet-surf2-shadow (type wall) (mixture) ... Done.
+	writing jet-shadow (type wall) (mixture) ... Done.
+	writing jet-surf1-shadow (type wall) (mixture) ... Done.
+	writing cool-surf4-shadow (type wall) (mixture) ... Done.
+	writing cool-surf3-shadow (type wall) (mixture) ... Done.
+	writing cool-surf2-shadow (type wall) (mixture) ... Done.
+	writing cool-surf1-shadow (type wall) (mixture) ... Done.
+	writing int_fluid_matpoint (type interior) (mixture) ... Done.
+	writing int_jet_matpoint (type interior) (mixture) ... Done.
+	writing int_thimble_matpoint (type interior) (mixture) ... Done.
+	writing heated-surf (type wall) (mixture) ... Done.
+	writing symmetry1-thimble (type symmetry) (mixture) ... Done.
+	writing symmetry1-fluid (type symmetry) (mixture) ... Done.
+	writing symmetry1-jet (type symmetry) (mixture) ... Done.
+	writing symmetry2-jet (type symmetry) (mixture) ... Done.
+	writing symmetry2-fluid (type symmetry) (mixture) ... Done.
+	writing symmetry2-thimble (type symmetry) (mixture) ... Done.
+	writing mass-flow-inlet (type mass-flow-inlet) (mixture) ... Done.
+	writing pressure-outlet (type pressure-outlet) (mixture) ... Done.
+	writing jet-bottom (type wall) (mixture) ... Done.
+	writing cool-surf1 (type wall) (mixture) ... Done.
+	writing cool-surf2 (type wall) (mixture) ... Done.
+	writing cool-surf3 (type wall) (mixture) ... Done.
+	writing cool-surf4 (type wall) (mixture) ... Done.
+	writing jet-surf1 (type wall) (mixture) ... Done.
+	writing jet (type wall) (mixture) ... Done.
+	writing jet-surf2 (type wall) (mixture) ... Done.
+	writing thimble-inner (type wall) (mixture) ... Done.
+	writing thimble-walls (type wall) (mixture) ... Done.
+	writing zones map name-id ... Done.

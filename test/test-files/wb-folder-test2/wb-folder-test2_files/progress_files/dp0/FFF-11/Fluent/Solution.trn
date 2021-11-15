@@ -1,0 +1,713 @@
+
+Build Time: Oct 24 2013 12:39:08  Build Id: 10399 
+Executable Path: C:/PROGRA~1/ANSYSI~1/v150/fluent/ntbin/win64/fluent.exe
+
+------------------------------------------------------------------------------------
+ID     Comm.   Hostname              O.S.        PID     Mach ID HW ID   Name        
+------------------------------------------------------------------------------------
+host   net     ME00534               Windows-x64 3056    0       492     Fluent Host 
+n3     pcmpi   ME00534               Windows-x64 1128    0       3       Fluent Node 
+n2     pcmpi   ME00534               Windows-x64 8244    0       2       Fluent Node 
+n1     pcmpi   ME00534               Windows-x64 4000    0       1       Fluent Node 
+n0*    pcmpi   ME00534               Windows-x64 7296    0       0       Fluent Node 
+
+Selected system interconnect: default
+------------------------------------------------------------------------------------
+Reading Settings file G:BaileyFluentHEMJ-60deg-SKEHEMJ-60deg-SKE_filesdp0FFF-11FluentHEMJ60deg-2.set...
+
+ME00534 is already loaded (14.3945%).                       Process affinity not being set.
+Reading "G:BaileyFluentHEMJ-60deg-SKEHEMJ-60deg-SKE_filesdp0FFFFluentHEMJ60deg-2.cas"...
+Buffering for file scan...
+
+  843346 hexahedral cells, zone 25, binary.
+  930690 hexahedral cells, zone 26, binary.
+ 4348661 hexahedral cells, zone 27, binary.
+  843346 cell partition ids, zone 25, 4 partitions, binary.
+  930690 cell partition ids, zone 26, 4 partitions, binary.
+ 4348661 cell partition ids, zone 27, 4 partitions, binary.
+ 2491318 quadrilateral interior faces, zone 28, binary.
+ 2753640 quadrilateral interior faces, zone 29, binary.
+12920154 quadrilateral interior faces, zone 30, binary.
+    6680 quadrilateral wall faces, zone  4, binary.
+    7614 quadrilateral wall faces, zone  5, binary.
+    5643 quadrilateral wall faces, zone  6, binary.
+    2808 quadrilateral wall faces, zone  7, binary.
+    2376 quadrilateral wall faces, zone  8, binary.
+    3672 quadrilateral wall faces, zone  9, binary.
+    7533 quadrilateral wall faces, zone 39, binary.
+    6680 quadrilateral wall faces, zone 42, binary.
+    7614 quadrilateral wall faces, zone 43, binary.
+    5643 quadrilateral wall faces, zone 46, binary.
+    2808 quadrilateral wall faces, zone 47, binary.
+    2376 quadrilateral wall faces, zone 48, binary.
+    3672 quadrilateral wall faces, zone 49, binary.
+    3186 quadrilateral wall faces, zone 173, binary.
+    3132 quadrilateral wall faces, zone 244, binary.
+   31050 quadrilateral wall faces, zone 245, binary.
+    3132 quadrilateral wall faces, zone 249, binary.
+   31050 quadrilateral wall faces, zone 267, binary.
+   14850 quadrilateral wall faces, zone 303, binary.
+    6966 quadrilateral pressure-outlet faces, zone 293, binary.
+   18423 quadrilateral symmetry faces, zone 36, binary.
+   85202 quadrilateral symmetry faces, zone 37, binary.
+   14455 quadrilateral symmetry faces, zone 38, binary.
+   85202 quadrilateral symmetry faces, zone 261, binary.
+   14455 quadrilateral symmetry faces, zone 262, binary.
+   18423 quadrilateral symmetry faces, zone 263, binary.
+   11313 quadrilateral mass-flow-inlet faces, zone 292, binary.
+    6680 shadow face pairs, binary. 
+    7614 shadow face pairs, binary. 
+    5643 shadow face pairs, binary. 
+    2808 shadow face pairs, binary. 
+    2376 shadow face pairs, binary. 
+    3672 shadow face pairs, binary. 
+    3132 shadow face pairs, binary. 
+   31050 shadow face pairs, binary. 
+ 6324416 nodes, binary.
+ 6324416 node flags, binary.
+
+Building...
+     mesh
+	distributing mesh
+		pairs....,
+		parts....,
+		faces....,
+		nodes....,
+		shadow nodes....,
+		cells....,
+     materials,
+     interface,
+     domains,
+	mixture
+     zones,
+	thimble-walls
+	thimble-inner
+	jet-surf2
+	jet
+	jet-surf1
+	cool-surf4
+	cool-surf3
+	cool-surf2
+	cool-surf1
+	jet-bottom
+	pressure-outlet
+	mass-flow-inlet
+	symmetry2-thimble
+	symmetry2-fluid
+	symmetry2-jet
+	symmetry1-jet
+	symmetry1-fluid
+	symmetry1-thimble
+	heated-surf
+	int_thimble_matpoint
+	int_jet_matpoint
+	int_fluid_matpoint
+	cool-surf1-shadow
+	cool-surf2-shadow
+	cool-surf3-shadow
+	cool-surf4-shadow
+	jet-surf1-shadow
+	jet-shadow
+	jet-surf2-shadow
+	thimble-inner-shadow
+	fluid_matpoint
+	thimble_matpoint
+	jet_matpointSetting jet_matpoint (mixture) ... Done.
+Setting thimble_matpoint (mixture) ... Done.
+Setting fluid_matpoint (mixture) ... Done.
+ Setting zone id of jet_matpoint to 25.
+ Setting zone id of thimble_matpoint to 26.
+ Setting zone id of fluid_matpoint to 27.
+ Setting zone id of thimble-inner-shadow to 244.
+ Setting zone id of jet-surf2-shadow to 5.
+ Setting zone id of jet-shadow to 245.
+ Setting zone id of jet-surf1-shadow to 4.
+ Setting zone id of cool-surf4-shadow to 9.
+ Setting zone id of cool-surf3-shadow to 8.
+ Setting zone id of cool-surf2-shadow to 7.
+ Setting zone id of cool-surf1-shadow to 6.
+ Setting zone id of int_fluid_matpoint to 30.
+ Setting zone id of int_jet_matpoint to 28.
+ Setting zone id of int_thimble_matpoint to 29.
+ Setting zone id of heated-surf to 39.
+ Setting zone id of symmetry1-thimble to 263.
+ Setting zone id of symmetry1-fluid to 261.
+ Setting zone id of symmetry1-jet to 262.
+ Setting zone id of symmetry2-jet to 38.
+ Setting zone id of symmetry2-fluid to 37.
+ Setting zone id of symmetry2-thimble to 36.
+ Setting zone id of mass-flow-inlet to 292.
+ Setting zone id of pressure-outlet to 293.
+ Setting zone id of jet-bottom to 173.
+ Setting zone id of cool-surf1 to 46.
+ Setting zone id of cool-surf2 to 47.
+ Setting zone id of cool-surf3 to 48.
+ Setting zone id of cool-surf4 to 49.
+ Setting zone id of jet-surf1 to 42.
+ Setting zone id of jet to 267.
+ Setting zone id of jet-surf2 to 43.
+ Setting zone id of thimble-inner to 249.
+ Setting zone id of thimble-walls to 303.
+Done.
+Setting jet_matpoint (mixture) ... Done.
+Setting thimble_matpoint (mixture) ... Done.
+Setting fluid_matpoint (mixture) ... Done.
+Setting thimble-inner-shadow (mixture) ... Done.
+Setting jet-surf2-shadow (mixture) ... Done.
+Setting jet-shadow (mixture) ... Done.
+Setting jet-surf1-shadow (mixture) ... Done.
+Setting cool-surf4-shadow (mixture) ... Done.
+Setting cool-surf3-shadow (mixture) ... Done.
+Setting cool-surf2-shadow (mixture) ... Done.
+Setting cool-surf1-shadow (mixture) ... Done.
+Setting int_fluid_matpoint (mixture) ... Done.
+Setting int_jet_matpoint (mixture) ... Done.
+Setting int_thimble_matpoint (mixture) ... Done.
+Setting heated-surf (mixture) ... Done.
+Setting symmetry1-thimble (mixture) ... Done.
+Setting symmetry1-fluid (mixture) ... Done.
+Setting symmetry1-jet (mixture) ... Done.
+Setting symmetry2-jet (mixture) ... Done.
+Setting symmetry2-fluid (mixture) ... Done.
+Setting symmetry2-thimble (mixture) ... Done.
+Setting mass-flow-inlet (mixture) ... Done.
+Setting pressure-outlet (mixture) ... Done.
+Setting jet-bottom (mixture) ... Done.
+Setting cool-surf1 (mixture) ... Done.
+Setting cool-surf2 (mixture) ... Done.
+Setting cool-surf3 (mixture) ... Done.
+Setting cool-surf4 (mixture) ... Done.
+Setting jet-surf1 (mixture) ... Done.
+Setting jet (mixture) ... Done.
+Setting jet-surf2 (mixture) ... Done.
+Setting thimble-inner (mixture) ... Done.
+Setting thimble-walls (mixture) ... Done.
+
+     parallel,
+Done.
+
+Setting Post Processing and Surfaces information ...	 Done.
+WB->Fluent:Parameter name:MFR, value:0.007985655
+WB->Fluent:Parameter name:Pin, value:9815338
+WB->Fluent:Parameter name:Kin, value:0.5195453
+WB->Fluent:Parameter name:Epsin, value:92.14475
+WB->Fluent:Parameter name:Tin, value:573.282
+WB->Fluent:Parameter name:Pout, value:9651754
+WB->Fluent:Parameter name:Kout, value:0.3770109
+WB->Fluent:Parameter name:Epsout, value:112.9435
+WB->Fluent:Parameter name:Tout, value:601.1457
+WB->Fluent:Parameter name:SurfHeatflux, value:5087948
+WB->Fluent:Parameter name:Massfluxin, value:111.7182
+WB->Fluent:Parameter name:Vturbin, value:0.0004813
+WB->Fluent:Parameter name:Vturbout, value:0.0002068
+WB->Fluent:Parameter name:Omega-in, value:1108.166
+WB->Fluent:Parameter name:Omega-out, value:1871.823
+"Updating Setup cell..."
+WB->Fluent:Parameter name:MFR, value:0.007985655
+WB->Fluent:Parameter name:Pin, value:9815338
+WB->Fluent:Parameter name:Kin, value:0.5195453
+WB->Fluent:Parameter name:Epsin, value:92.14475
+WB->Fluent:Parameter name:Tin, value:573.282
+WB->Fluent:Parameter name:Pout, value:9651754
+WB->Fluent:Parameter name:Kout, value:0.3770109
+WB->Fluent:Parameter name:Epsout, value:112.9435
+WB->Fluent:Parameter name:Tout, value:601.1457
+WB->Fluent:Parameter name:SurfHeatflux, value:5087948
+WB->Fluent:Parameter name:Massfluxin, value:111.7182
+WB->Fluent:Parameter name:Vturbin, value:0.0004813
+WB->Fluent:Parameter name:Vturbout, value:0.0002068
+WB->Fluent:Parameter name:Omega-in, value:1108.166
+WB->Fluent:Parameter name:Omega-out, value:1871.823
+"Updating Solution cell..."
+Initialization based on settings...
+
+Initialize using the hybrid initialization method.
+
+Checking case topology... 
+-This case has both inlets & outlets 
+-Pressure information is not available at the boundaries.
+ Case will be initialized with constant pressure
+
+	iter		scalar-0
+
+	1		1.000000e+00
+	2		7.433203e-07
+	3		2.490069e-07
+	4		1.396412e-07
+	5		7.845505e-08
+	6		5.747951e-08
+	7		4.590258e-08
+	8		3.884496e-08
+	9		3.508167e-08
+	10		3.265744e-08
+hybrid initialization is done.
+  iter  continuity  x-velocity  y-velocity  z-velocity      energy           k     epsilon     cs-temp        p-in     time/iter
+     1  1.0000e+00  4.5234e-03  3.7779e-03  9.5574e-03  2.4287e-06  2.0415e-01  7.1559e+02  6.3059e+02  9.6578e+06  2:14:06  149
+     2  1.0000e+00  1.4368e-03  1.2511e-03  3.2109e-03  8.1399e-06  1.8652e-01  6.9554e-01  6.9365e+02  9.6782e+06  2:12:42  148
+
+ reversed flow in 16 faces on pressure-outlet 293. 
+     3  8.8863e-01  1.8964e-03  1.7645e-03  2.9337e-03  1.0474e-05  1.2135e-01  7.5390e-01  7.6301e+02  9.6877e+06  2:07:00  147
+
+ reversed flow in 23 faces on pressure-outlet 293. 
+     4  9.0741e-01  1.6862e-03  1.6211e-03  2.4560e-03  1.2540e-05  1.2797e-01  8.2774e-01  7.6878e+02  9.6986e+06  2:04:46  146
+
+ reversed flow in 8 faces on pressure-outlet 293. 
+     5  8.6866e-01  1.6525e-03  1.5983e-03  2.0829e-03  1.4163e-05  1.1873e-01  4.0192e-01  7.7354e+02  9.7088e+06  2:01:51  145
+     6  7.5893e-01  1.5421e-03  1.5009e-03  1.9260e-03  1.2175e-05  1.0989e-01  3.9265e-01  7.7265e+02  9.7309e+06  1:55:31  144
+     7  6.9520e-01  1.5468e-03  1.5173e-03  2.0503e-03  8.8295e-06  9.3545e-02  3.5777e-01  7.7504e+02  9.7366e+06  1:48:28  143
+     8  6.6855e-01  1.4032e-03  1.3881e-03  1.7510e-03  7.3980e-06  7.8010e-02  3.0907e-01  7.7070e+02  9.7481e+06  1:39:53  142
+     9  6.2590e-01  1.3037e-03  1.3077e-03  1.6489e-03  6.3693e-06  6.4639e-02  2.6290e-01  7.6766e+02  9.7506e+06  1:32:59  141
+    10  5.9221e-01  1.1748e-03  1.1724e-03  1.3949e-03  5.5424e-06  5.3250e-02  2.2059e-01  7.6358e+02  9.7525e+06  1:27:51  140
+    11  5.3644e-01  1.0465e-03  1.0460e-03  1.2646e-03  4.7922e-06  4.3728e-02  1.7879e-01  7.5906e+02  9.7544e+06  1:23:13  139
+
+ reversed flow in 101 faces on pressure-outlet 293. 
+  iter  continuity  x-velocity  y-velocity  z-velocity      energy           k     epsilon     cs-temp        p-in     time/iter
+    12  4.9027e-01  9.6430e-04  9.6176e-04  1.1563e-03  4.1066e-06  3.6334e-02  1.3743e-01  7.5493e+02  9.7560e+06  1:19:54  138
+
+ reversed flow in 156 faces on pressure-outlet 293. 
+    13  4.6480e-01  8.7073e-04  8.8338e-04  1.0485e-03  3.5311e-06  3.0915e-02  1.0622e-01  7.4977e+02  9.7580e+06  1:17:37  137
+
+ reversed flow in 195 faces on pressure-outlet 293. 
+    14  4.4090e-01  8.2509e-04  8.3041e-04  9.8205e-04  2.9871e-06  2.6772e-02  8.9029e-02  7.4535e+02  9.7610e+06  1:16:08  136
+
+ reversed flow in 211 faces on pressure-outlet 293. 
+    15  4.2284e-01  7.8300e-04  7.6499e-04  9.1840e-04  2.6457e-06  2.3642e-02  7.5532e-02  7.4220e+02  9.7621e+06  1:14:52  135
+
+ reversed flow in 178 faces on pressure-outlet 293. 
+    16  4.0725e-01  7.1262e-04  6.8368e-04  8.6703e-04  2.3996e-06  2.1024e-02  6.3449e-02  7.3938e+02  9.7632e+06  1:11:57  134
+
+ reversed flow in 87 faces on pressure-outlet 293. 
+    17  3.8367e-01  6.5845e-04  6.3602e-04  8.3372e-04  2.1529e-06  1.8664e-02  5.4378e-02  7.3713e+02  9.7640e+06  1:09:59  133
+
+ reversed flow in 24 faces on pressure-outlet 293. 
+    18  3.6294e-01  6.1142e-04  5.9140e-04  7.5956e-04  1.9102e-06  1.6671e-02  4.6518e-02  7.3564e+02  9.7643e+06  1:07:54  132
+    19  3.4426e-01  5.7440e-04  5.3797e-04  6.8418e-04  1.7319e-06  1.5070e-02  4.0037e-02  7.3442e+02  9.7650e+06  1:05:42  131
+    20  3.2963e-01  5.4429e-04  4.9837e-04  6.5680e-04  1.6135e-06  1.3769e-02  3.5521e-02  7.3348e+02  9.7662e+06  1:03:25  130
+    21  3.1838e-01  5.2048e-04  4.7913e-04  6.4890e-04  1.5719e-06  1.2732e-02  3.1948e-02  7.3259e+02  9.7667e+06  1:01:32  129
+
+ reversed flow in 1 faces on pressure-outlet 293. 
+    22  3.0995e-01  5.0858e-04  4.7141e-04  6.2916e-04  1.5108e-06  1.1789e-02  2.8725e-02  7.3211e+02  9.7670e+06  1:00:22  128
+
+ reversed flow in 5 faces on pressure-outlet 293. 
+  iter  continuity  x-velocity  y-velocity  z-velocity      energy           k     epsilon     cs-temp        p-in     time/iter
+    23  3.0181e-01  4.9010e-04  4.6829e-04  6.0187e-04  1.4864e-06  1.0877e-02  2.6241e-02  7.3171e+02  9.7673e+06  0:59:20  127
+
+ reversed flow in 8 faces on pressure-outlet 293. 
+    24  2.9364e-01  4.7028e-04  4.5720e-04  6.1283e-04  1.4921e-06  1.0055e-02  2.4427e-02  7.3142e+02  9.7681e+06  0:58:51  126
+
+ reversed flow in 11 faces on pressure-outlet 293. 
+    25  2.8782e-01  4.9992e-04  4.5160e-04  6.2659e-04  1.4683e-06  9.2939e-03  2.1801e-02  7.3124e+02  9.7686e+06  0:58:23  125
+
+ reversed flow in 14 faces on pressure-outlet 293. 
+    26  2.8190e-01  5.1472e-04  4.5663e-04  5.9299e-04  1.4308e-06  8.5960e-03  1.9669e-02  7.3113e+02  9.7687e+06  0:57:54  124
+
+ reversed flow in 18 faces on pressure-outlet 293. 
+    27  2.6545e-01  4.9171e-04  4.4533e-04  5.8493e-04  1.4016e-06  7.9923e-03  1.7840e-02  7.3097e+02  9.7691e+06  0:57:26  123
+
+ reversed flow in 19 faces on pressure-outlet 293. 
+    28  2.5526e-01  4.7027e-04  4.4499e-04  5.9643e-04  1.3771e-06  7.5010e-03  1.6222e-02  7.3077e+02  9.7694e+06  0:57:22  122
+
+ reversed flow in 25 faces on pressure-outlet 293. 
+    29  2.4942e-01  4.4951e-04  4.4797e-04  5.5223e-04  1.3494e-06  7.0920e-03  1.4986e-02  7.3066e+02  9.7696e+06  0:57:13  121
+
+ reversed flow in 30 faces on pressure-outlet 293. 
+    30  2.3891e-01  4.2525e-04  4.2361e-04  5.3240e-04  1.3478e-06  6.7706e-03  1.4056e-02  7.3060e+02  9.7700e+06  0:56:35  120
+
+ reversed flow in 32 faces on pressure-outlet 293. 
+    31  2.3460e-01  4.1975e-04  4.0297e-04  5.5200e-04  1.4021e-06  6.4466e-03  1.3274e-02  7.3062e+02  9.7702e+06  0:56:00  119
+
+ reversed flow in 40 faces on pressure-outlet 293. 
+    32  2.3225e-01  4.4605e-04  4.1131e-04  5.4697e-04  1.3683e-06  6.1108e-03  1.2582e-02  7.3064e+02  9.7703e+06  0:55:03  118
+
+ reversed flow in 44 faces on pressure-outlet 293. 
+    33  2.2993e-01  4.4472e-04  4.0955e-04  5.1997e-04  1.3465e-06  5.8292e-03  1.2019e-02  7.3060e+02  9.7705e+06  0:54:35  117
+
+ reversed flow in 48 faces on pressure-outlet 293. 
+  iter  continuity  x-velocity  y-velocity  z-velocity      energy           k     epsilon     cs-temp        p-in     time/iter
+    34  2.3066e-01  4.3811e-04  4.0078e-04  5.1843e-04  1.3479e-06  5.5715e-03  1.1544e-02  7.3066e+02  9.7707e+06  0:54:07  116
+
+ reversed flow in 50 faces on pressure-outlet 293. 
+    35  2.2740e-01  4.3517e-04  4.0627e-04  5.2772e-04  1.3296e-06  5.3375e-03  1.1120e-02  7.3076e+02  9.7708e+06  0:54:02  115
+
+ reversed flow in 51 faces on pressure-outlet 293. 
+    36  2.2175e-01  4.1447e-04  3.9311e-04  5.0936e-04  1.2579e-06  5.1499e-03  1.0746e-02  7.3081e+02  9.7709e+06  0:53:30  114
+
+ reversed flow in 53 faces on pressure-outlet 293. 
+    37  2.1313e-01  3.9722e-04  3.6832e-04  4.8694e-04  1.1814e-06  4.9231e-03  1.0232e-02  7.3092e+02  9.7710e+06  0:53:21  113
+
+ reversed flow in 52 faces on pressure-outlet 293. 
+    38  2.0864e-01  3.7207e-04  3.5734e-04  4.6271e-04  1.1269e-06  4.6531e-03  9.4960e-03  7.3105e+02  9.7710e+06  0:52:45  112
+
+ reversed flow in 53 faces on pressure-outlet 293. 
+    39  2.0228e-01  3.5264e-04  3.3093e-04  4.5786e-04  1.0924e-06  4.4551e-03  9.1215e-03  7.3119e+02  9.7711e+06  0:51:49  111
+
+ reversed flow in 55 faces on pressure-outlet 293. 
+    40  1.9035e-01  3.4486e-04  3.1942e-04  4.3714e-04  1.0871e-06  4.3076e-03  8.6873e-03  7.3131e+02  9.7711e+06  0:51:21  110
+
+ reversed flow in 49 faces on pressure-outlet 293. 
+    41  1.8420e-01  3.4467e-04  3.1881e-04  4.1000e-04  1.0862e-06  4.1331e-03  8.2142e-03  7.3139e+02  9.7711e+06  0:50:53  109
+
+ reversed flow in 45 faces on pressure-outlet 293. 
+    42  1.7331e-01  3.3760e-04  3.0829e-04  4.1176e-04  1.0695e-06  3.9488e-03  7.7923e-03  7.3133e+02  9.7711e+06  0:50:24  108
+
+ reversed flow in 37 faces on pressure-outlet 293. 
+    43  1.6911e-01  3.3425e-04  3.0854e-04  4.0003e-04  9.9714e-07  3.8135e-03  7.4647e-03  7.3132e+02  9.7711e+06  0:50:18  107
+
+ reversed flow in 30 faces on pressure-outlet 293. 
+    44  1.6905e-01  3.1408e-04  3.0489e-04  3.8202e-04  9.9345e-07  3.6961e-03  7.2424e-03  7.3144e+02  9.7712e+06  0:49:45  106
+
+ reversed flow in 21 faces on pressure-outlet 293. 
+  iter  continuity  x-velocity  y-velocity  z-velocity      energy           k     epsilon     cs-temp        p-in     time/iter
+    45  1.6036e-01  3.0056e-04  2.8656e-04  3.9150e-04  9.9276e-07  3.5902e-03  6.9892e-03  7.3155e+02  9.7711e+06  0:48:53  105
+
+ reversed flow in 14 faces on pressure-outlet 293. 
+    46  1.5497e-01  2.9924e-04  2.8111e-04  3.7831e-04  9.7621e-07  3.4753e-03  6.7319e-03  7.3165e+02  9.7711e+06  0:48:26  104
+
+ reversed flow in 6 faces on pressure-outlet 293. 
+    47  1.5534e-01  2.8785e-04  2.7426e-04  3.5567e-04  9.5048e-07  3.3393e-03  6.4283e-03  7.3174e+02  9.7711e+06  0:48:20  103
+
+ reversed flow in 2 faces on pressure-outlet 293. 
+    48  1.4912e-01  2.7639e-04  2.6636e-04  3.5160e-04  9.3590e-07  3.2049e-03  6.2013e-03  7.3182e+02  9.7711e+06  0:48:09  102
+    49  1.4595e-01  2.8053e-04  2.6482e-04  3.4091e-04  8.9250e-07  3.1220e-03  6.0912e-03  7.3194e+02  9.7710e+06  0:47:34  101
+    50  1.4397e-01  2.6981e-04  2.6017e-04  3.2077e-04  8.7126e-07  3.0493e-03  6.1054e-03  7.3208e+02  9.7711e+06  0:47:01  100
+    51  1.3650e-01  2.5330e-04  2.4552e-04  3.1451e-04  8.3330e-07  2.9622e-03  5.9639e-03  7.3222e+02  9.7711e+06  0:46:09   99
+    52  1.3465e-01  2.4352e-04  2.3581e-04  3.0918e-04  8.1180e-07  2.8589e-03  5.6575e-03  7.3236e+02  9.7711e+06  0:45:02   98
+    53  1.3135e-01  2.3868e-04  2.3189e-04  2.9977e-04  8.1186e-07  2.7513e-03  5.4425e-03  7.3248e+02  9.7710e+06  0:44:04   97
+    54  1.2595e-01  2.3528e-04  2.2440e-04  2.8779e-04  7.9967e-07  2.6572e-03  5.1973e-03  7.3258e+02  9.7710e+06  0:43:32   96
+    55  1.2296e-01  2.3239e-04  2.1923e-04  2.7287e-04  7.5115e-07  2.5778e-03  4.9910e-03  7.3271e+02  9.7711e+06  0:43:01   95
+  iter  continuity  x-velocity  y-velocity  z-velocity      energy           k     epsilon     cs-temp        p-in     time/iter
+    56  1.2266e-01  2.1725e-04  2.1338e-04  2.6585e-04  7.3691e-07  2.4885e-03  4.8034e-03  7.3287e+02  9.7712e+06  0:42:12   94
+    57  1.1696e-01  2.1051e-04  2.0321e-04  2.7023e-04  7.1996e-07  2.4151e-03  4.6519e-03  7.3304e+02  9.7712e+06  0:41:46   93
+    58  1.1457e-01  2.0903e-04  2.0025e-04  2.6260e-04  7.0737e-07  2.3515e-03  4.5269e-03  7.3319e+02  9.7712e+06  0:41:02   92
+    59  1.1187e-01  2.0331e-04  1.9687e-04  2.4987e-04  6.9506e-07  2.2870e-03  4.4032e-03  7.3336e+02  9.7712e+06  0:40:39   91
+    60  1.1002e-01  2.0040e-04  1.8917e-04  2.4488e-04  6.8079e-07  2.2201e-03  4.2356e-03  7.3348e+02  9.7712e+06  0:40:16   90
+    61  1.0742e-01  2.0237e-04  1.8483e-04  2.3787e-04  6.4636e-07  2.1641e-03  4.1203e-03  7.3360e+02  9.7713e+06  0:39:34   89
+
+ reversed flow in 2 faces on pressure-outlet 293. 
+    62  1.0545e-01  1.9037e-04  1.8035e-04  2.2338e-04  6.3901e-07  2.1063e-03  4.0080e-03  7.3374e+02  9.7714e+06  0:39:13   88
+
+ reversed flow in 5 faces on pressure-outlet 293. 
+    63  9.9503e-02  1.7929e-04  1.7579e-04  2.2171e-04  6.3784e-07  2.0511e-03  3.8861e-03  7.3390e+02  9.7714e+06  0:39:08   87
+
+ reversed flow in 9 faces on pressure-outlet 293. 
+    64  9.7033e-02  1.7947e-04  1.7391e-04  2.2497e-04  6.3018e-07  2.0030e-03  3.7969e-03  7.3405e+02  9.7714e+06  0:38:59   86
+
+ reversed flow in 13 faces on pressure-outlet 293. 
+    65  9.5391e-02  1.7553e-04  1.7132e-04  2.1580e-04  6.1144e-07  1.9487e-03  3.7354e-03  7.3419e+02  9.7714e+06  0:39:02   85
+
+ reversed flow in 16 faces on pressure-outlet 293. 
+    66  9.3451e-02  1.6990e-04  1.6412e-04  2.0558e-04  5.9094e-07  1.8933e-03  3.6637e-03  7.3429e+02  9.7715e+06  0:38:42   84
+
+ reversed flow in 18 faces on pressure-outlet 293. 
+  iter  continuity  x-velocity  y-velocity  z-velocity      energy           k     epsilon     cs-temp        p-in     time/iter
+    67  8.9802e-02  1.6804e-04  1.5718e-04  1.9690e-04  5.5723e-07  1.8456e-03  3.5736e-03  7.3440e+02  9.7715e+06  0:38:20   83
+
+ reversed flow in 15 faces on pressure-outlet 293. 
+    68  8.6980e-02  1.5806e-04  1.5176e-04  1.8496e-04  5.3279e-07  1.8014e-03  3.4702e-03  7.3452e+02  9.7716e+06  0:38:14   82
+
+ reversed flow in 16 faces on pressure-outlet 293. 
+    69  8.3931e-02  1.4955e-04  1.4610e-04  1.8173e-04  5.2621e-07  1.7587e-03  3.3873e-03  7.3465e+02  9.7716e+06  0:37:46   81
+
+ reversed flow in 17 faces on pressure-outlet 293. 
+    70  8.0442e-02  1.4669e-04  1.4291e-04  1.7812e-04  5.0442e-07  1.7185e-03  3.3049e-03  7.3477e+02  9.7716e+06  0:37:19   80
+
+ reversed flow in 16 faces on pressure-outlet 293. 
+    71  7.7997e-02  1.4000e-04  1.3836e-04  1.6932e-04  4.9112e-07  1.6738e-03  3.2144e-03  7.3488e+02  9.7716e+06  0:36:51   79
+
+ reversed flow in 17 faces on pressure-outlet 293. 
+    72  7.6340e-02  1.3445e-04  1.3245e-04  1.6405e-04  4.7569e-07  1.6312e-03  3.1366e-03  7.3498e+02  9.7717e+06  0:36:39   78
+
+ reversed flow in 15 faces on pressure-outlet 293. 
+    73  7.4275e-02  1.3607e-04  1.2834e-04  1.5826e-04  4.6117e-07  1.5895e-03  3.0646e-03  7.3506e+02  9.7717e+06  0:36:08   77
+
+ reversed flow in 17 faces on pressure-outlet 293. 
+    74  7.2417e-02  1.3226e-04  1.2499e-04  1.5007e-04  4.4534e-07  1.5567e-03  3.0080e-03  7.3516e+02  9.7717e+06  0:35:52   76
+
+ reversed flow in 16 faces on pressure-outlet 293. 
+    75  7.1637e-02  1.2348e-04  1.2141e-04  1.4935e-04  4.4749e-07  1.5270e-03  2.9569e-03  7.3526e+02  9.7718e+06  0:35:19   75
+
+ reversed flow in 18 faces on pressure-outlet 293. 
+    76  6.9423e-02  1.2221e-04  1.1905e-04  1.5039e-04  4.3842e-07  1.4972e-03  2.9213e-03  7.3536e+02  9.7719e+06  0:34:47   74
+
+ reversed flow in 18 faces on pressure-outlet 293. 
+    77  6.8163e-02  1.2082e-04  1.1781e-04  1.4434e-04  4.3394e-07  1.4611e-03  2.8679e-03  7.3544e+02  9.7719e+06  0:34:16   73
+
+ reversed flow in 19 faces on pressure-outlet 293. 
+  iter  continuity  x-velocity  y-velocity  z-velocity      energy           k     epsilon     cs-temp        p-in     time/iter
+    78  6.6380e-02  1.1427e-04  1.1345e-04  1.3637e-04  4.1374e-07  1.4245e-03  2.8041e-03  7.3553e+02  9.7719e+06  0:33:45   72
+
+ reversed flow in 21 faces on pressure-outlet 293. 
+    79  6.4920e-02  1.1136e-04  1.0803e-04  1.3068e-04  3.8910e-07  1.3891e-03  2.7329e-03  7.3560e+02  9.7719e+06  0:33:15   71
+
+ reversed flow in 22 faces on pressure-outlet 293. 
+    80  6.2115e-02  1.0891e-04  1.0307e-04  1.2390e-04  3.6610e-07  1.3584e-03  2.6708e-03  7.3569e+02  9.7720e+06  0:33:00   70
+
+ reversed flow in 23 faces on pressure-outlet 293. 
+    81  5.9658e-02  1.0092e-04  9.8418e-05  1.1857e-04  3.5873e-07  1.3299e-03  2.6177e-03  7.3578e+02  9.7720e+06  0:32:41   69
+
+ reversed flow in 25 faces on pressure-outlet 293. 
+    82  5.6935e-02  9.6235e-05  9.5441e-05  1.1595e-04  3.5500e-07  1.3025e-03  2.5623e-03  7.3587e+02  9.7720e+06  0:32:07   68
+
+ reversed flow in 26 faces on pressure-outlet 293. 
+    83  5.4567e-02  9.4644e-05  9.3608e-05  1.1211e-04  3.4630e-07  1.2737e-03  2.4893e-03  7.3595e+02  9.7721e+06  0:31:21   67
+
+ reversed flow in 27 faces on pressure-outlet 293. 
+    84  5.3174e-02  8.9498e-05  9.0901e-05  1.0787e-04  3.3174e-07  1.2447e-03  2.4337e-03  7.3602e+02  9.7721e+06  0:30:52   66
+
+ reversed flow in 27 faces on pressure-outlet 293. 
+    85  5.2308e-02  8.6536e-05  8.6425e-05  1.0462e-04  3.1060e-07  1.2168e-03  2.3972e-03  7.3608e+02  9.7721e+06  0:30:36   65
+
+ reversed flow in 30 faces on pressure-outlet 293. 
+    86  5.0316e-02  8.6403e-05  8.1214e-05  1.0008e-04  2.9439e-07  1.1914e-03  2.3482e-03  7.3615e+02  9.7721e+06  0:30:05   64
+
+ reversed flow in 30 faces on pressure-outlet 293. 
+    87  4.8207e-02  8.1121e-05  7.6930e-05  9.4313e-05  2.8452e-07  1.1681e-03  2.2917e-03  7.3623e+02  9.7721e+06  0:29:47   63
+
+ reversed flow in 31 faces on pressure-outlet 293. 
+    88  4.6523e-02  7.5506e-05  7.4185e-05  9.1704e-05  2.7849e-07  1.1445e-03  2.2348e-03  7.3630e+02  9.7722e+06  0:29:14   62
+
+ reversed flow in 33 faces on pressure-outlet 293. 
+  iter  continuity  x-velocity  y-velocity  z-velocity      energy           k     epsilon     cs-temp        p-in     time/iter
+    89  4.4807e-02  7.3852e-05  7.1950e-05  8.7855e-05  2.6624e-07  1.1210e-03  2.2070e-03  7.3637e+02  9.7722e+06  0:28:42   61
+
+ reversed flow in 33 faces on pressure-outlet 293. 
+    90  4.3379e-02  6.9429e-05  6.9224e-05  8.2335e-05  2.5704e-07  1.0947e-03  2.1871e-03  7.3644e+02  9.7722e+06  0:28:11   60
+
+ reversed flow in 33 faces on pressure-outlet 293. 
+    91  4.1490e-02  6.4730e-05  6.5479e-05  7.9038e-05  2.4360e-07  1.0685e-03  2.1299e-03  7.3649e+02  9.7722e+06  0:27:41   59
+
+ reversed flow in 37 faces on pressure-outlet 293. 
+    92  3.9680e-02  6.4159e-05  6.1742e-05  7.5759e-05  2.2833e-07  1.0452e-03  2.0795e-03  7.3655e+02  9.7722e+06  0:27:11   58
+
+ reversed flow in 37 faces on pressure-outlet 293. 
+    93  3.7690e-02  6.1847e-05  5.8373e-05  7.1208e-05  2.1244e-07  1.0250e-03  2.0267e-03  7.3661e+02  9.7723e+06  0:26:53   57
+
+ reversed flow in 37 faces on pressure-outlet 293. 
+    94  3.6239e-02  5.6339e-05  5.5571e-05  6.7975e-05  2.0009e-07  1.0044e-03  1.9738e-03  7.3668e+02  9.7723e+06  0:26:21   56
+
+ reversed flow in 41 faces on pressure-outlet 293. 
+    95  3.4407e-02  5.3303e-05  5.2689e-05  6.4532e-05  1.9212e-07  9.8353e-04  1.9204e-03  7.3674e+02  9.7723e+06  0:25:50   55
+
+ reversed flow in 41 faces on pressure-outlet 293. 
+    96  3.2111e-02  5.0592e-05  4.9837e-05  6.0649e-05  1.8684e-07  9.6201e-04  1.8781e-03  7.3679e+02  9.7723e+06  0:25:20   54
+
+ reversed flow in 41 faces on pressure-outlet 293. 
+    97  3.0518e-02  4.6478e-05  4.7318e-05  5.7597e-05  1.7910e-07  9.4072e-04  1.8346e-03  7.3685e+02  9.7723e+06  0:25:01   53
+
+ reversed flow in 43 faces on pressure-outlet 293. 
+    98  2.9328e-02  4.4661e-05  4.4353e-05  5.4934e-05  1.6604e-07  9.2033e-04  1.7800e-03  7.3690e+02  9.7723e+06  0:24:29   52
+
+ reversed flow in 43 faces on pressure-outlet 293. 
+    99  2.7936e-02  4.3507e-05  4.1345e-05  5.1536e-05  1.5136e-07  9.0178e-04  1.7641e-03  7.3695e+02  9.7723e+06  0:24:09   51
+
+ reversed flow in 43 faces on pressure-outlet 293. 
+  iter  continuity  x-velocity  y-velocity  z-velocity      energy           k     epsilon     cs-temp        p-in     time/iter
+   100  2.6648e-02  3.9834e-05  3.8643e-05  4.7995e-05  1.4043e-07  8.8391e-04  1.7364e-03  7.3700e+02  9.7724e+06  0:23:36   50
+
+ reversed flow in 43 faces on pressure-outlet 293. 
+   101  2.5187e-02  3.6567e-05  3.6162e-05  4.5208e-05  1.3337e-07  8.6633e-04  1.7068e-03  7.3705e+02  9.7724e+06  0:23:15   49
+
+ reversed flow in 44 faces on pressure-outlet 293. 
+   102  2.3351e-02  3.4900e-05  3.4277e-05  4.2418e-05  1.2615e-07  8.4892e-04  1.6865e-03  7.3711e+02  9.7724e+06  0:22:32   48
+
+ reversed flow in 43 faces on pressure-outlet 293. 
+   103  2.2007e-02  3.2132e-05  3.2559e-05  4.0039e-05  1.1965e-07  8.3209e-04  1.6820e-03  7.3715e+02  9.7724e+06  0:22:12   47
+
+ reversed flow in 42 faces on pressure-outlet 293. 
+   104  2.1039e-02  2.9843e-05  3.0483e-05  3.8391e-05  1.1096e-07  8.1514e-04  1.6605e-03  7.3720e+02  9.7724e+06  0:21:49   46
+
+ reversed flow in 42 faces on pressure-outlet 293. 
+   105  1.9979e-02  2.9061e-05  2.8081e-05  3.6247e-05  1.0280e-07  7.9848e-04  1.5990e-03  7.3724e+02  9.7724e+06  0:21:17   45
+
+ reversed flow in 42 faces on pressure-outlet 293. 
+   106  1.8694e-02  2.7305e-05  2.5980e-05  3.3484e-05  9.5475e-08  7.8258e-04  1.5605e-03  7.3728e+02  9.7725e+06  0:20:54   44
+
+ reversed flow in 42 faces on pressure-outlet 293. 
+   107  1.7649e-02  2.4738e-05  2.4197e-05  3.1059e-05  8.8063e-08  7.6704e-04  1.5104e-03  7.3733e+02  9.7725e+06  0:20:21   43
+
+ reversed flow in 40 faces on pressure-outlet 293. 
+   108  1.6599e-02  2.3165e-05  2.2523e-05  2.8730e-05  8.2270e-08  7.5193e-04  1.4769e-03  7.3737e+02  9.7725e+06  0:19:41   42
+
+ reversed flow in 39 faces on pressure-outlet 293. 
+   109  1.5593e-02  2.1437e-05  2.1010e-05  2.6836e-05  7.7559e-08  7.3749e-04  1.4543e-03  7.3741e+02  9.7725e+06  0:19:20   41
+
+ reversed flow in 39 faces on pressure-outlet 293. 
+   110  1.4785e-02  1.9514e-05  1.9591e-05  2.5488e-05  7.3124e-08  7.2337e-04  1.4298e-03  7.3745e+02  9.7725e+06  0:18:49   40
+
+ reversed flow in 39 faces on pressure-outlet 293. 
+  iter  continuity  x-velocity  y-velocity  z-velocity      energy           k     epsilon     cs-temp        p-in     time/iter
+   111  1.4100e-02  1.8554e-05  1.8213e-05  2.4220e-05  6.8557e-08  7.0949e-04  1.4101e-03  7.3749e+02  9.7726e+06  0:18:19   39
+
+ reversed flow in 39 faces on pressure-outlet 293. 
+   112  1.3410e-02  1.7887e-05  1.7004e-05  2.2732e-05  6.2744e-08  6.9609e-04  1.3825e-03  7.3753e+02  9.7726e+06  0:17:50   38
+
+ reversed flow in 39 faces on pressure-outlet 293. 
+   113  1.2674e-02  1.6607e-05  1.6017e-05  2.1283e-05  5.6264e-08  6.8308e-04  1.3425e-03  7.3756e+02  9.7726e+06  0:17:28   37
+
+ reversed flow in 38 faces on pressure-outlet 293. 
+   114  1.2050e-02  1.5399e-05  1.4907e-05  1.9927e-05  5.1563e-08  6.7053e-04  1.3304e-03  7.3760e+02  9.7726e+06  0:16:57   36
+
+ reversed flow in 37 faces on pressure-outlet 293. 
+   115  1.1312e-02  1.4412e-05  1.3860e-05  1.8676e-05  4.9322e-08  6.5834e-04  1.3205e-03  7.3764e+02  9.7726e+06  0:16:27   35
+
+ reversed flow in 35 faces on pressure-outlet 293. 
+   116  1.0576e-02  1.3182e-05  1.2968e-05  1.7705e-05  4.7981e-08  6.4676e-04  1.3241e-03  7.3767e+02  9.7726e+06  0:15:58   34
+
+ reversed flow in 34 faces on pressure-outlet 293. 
+   117  1.0053e-02  1.2174e-05  1.2161e-05  1.6935e-05  4.5926e-08  6.3535e-04  1.3074e-03  7.3770e+02  9.7727e+06  0:15:28   33
+
+ reversed flow in 34 faces on pressure-outlet 293. 
+   118  9.6578e-03  1.1707e-05  1.1412e-05  1.6093e-05  4.2486e-08  6.2404e-04  1.2947e-03  7.3774e+02  9.7727e+06  0:15:06   32
+
+ reversed flow in 34 faces on pressure-outlet 293. 
+   119  9.2633e-03  1.1150e-05  1.0702e-05  1.5122e-05  3.8429e-08  6.1261e-04  1.2521e-03  7.3777e+02  9.7727e+06  0:14:36   31
+
+ reversed flow in 34 faces on pressure-outlet 293. 
+   120  8.8382e-03  1.0474e-05  1.0126e-05  1.4215e-05  3.5181e-08  6.0143e-04  1.2280e-03  7.3780e+02  9.7727e+06  0:14:12   30
+
+ reversed flow in 33 faces on pressure-outlet 293. 
+   121  8.3817e-03  9.9246e-06  9.5740e-06  1.3440e-05  3.3338e-08  5.9056e-04  1.2028e-03  7.3783e+02  9.7727e+06  0:13:41   29
+
+ reversed flow in 31 faces on pressure-outlet 293. 
+  iter  continuity  x-velocity  y-velocity  z-velocity      energy           k     epsilon     cs-temp        p-in     time/iter
+   122  7.8856e-03  9.3776e-06  9.1444e-06  1.2919e-05  3.2158e-08  5.8011e-04  1.1645e-03  7.3786e+02  9.7727e+06  0:13:11   28
+
+ reversed flow in 29 faces on pressure-outlet 293. 
+   123  7.5542e-03  8.8566e-06  8.7415e-06  1.2586e-05  3.1003e-08  5.6999e-04  1.1458e-03  7.3789e+02  9.7727e+06  0:12:41   27
+
+ reversed flow in 29 faces on pressure-outlet 293. 
+   124  7.2991e-03  8.5302e-06  8.3550e-06  1.2238e-05  2.9579e-08  5.6002e-04  1.1314e-03  7.3792e+02  9.7727e+06  0:12:17   26
+
+ reversed flow in 28 faces on pressure-outlet 293. 
+   125  7.0628e-03  8.2888e-06  7.9582e-06  1.1694e-05  2.8114e-08  5.5028e-04  1.1190e-03  7.3795e+02  9.7728e+06  0:11:47   25
+
+ reversed flow in 28 faces on pressure-outlet 293. 
+   126  6.7649e-03  8.0075e-06  7.6514e-06  1.1111e-05  2.6623e-08  5.4081e-04  1.1158e-03  7.3797e+02  9.7728e+06  0:11:22   24
+
+ reversed flow in 27 faces on pressure-outlet 293. 
+   127  6.5251e-03  7.7364e-06  7.3490e-06  1.0603e-05  2.5384e-08  5.3146e-04  1.1135e-03  7.3800e+02  9.7728e+06  0:10:52   23
+
+ reversed flow in 27 faces on pressure-outlet 293. 
+   128  6.2904e-03  7.4677e-06  7.0632e-06  1.0230e-05  2.4745e-08  5.2237e-04  1.1066e-03  7.3802e+02  9.7728e+06  0:10:26   22
+
+ reversed flow in 26 faces on pressure-outlet 293. 
+   129  6.0883e-03  7.1884e-06  6.8118e-06  1.0014e-05  2.4290e-08  5.1314e-04  1.0703e-03  7.3805e+02  9.7728e+06  0:09:56   21
+
+ reversed flow in 26 faces on pressure-outlet 293. 
+   130  5.9764e-03  6.9783e-06  6.6031e-06  9.8897e-06  2.3709e-08  5.0419e-04  1.0195e-03  7.3807e+02  9.7728e+06  0:09:30   20
+
+ reversed flow in 26 faces on pressure-outlet 293. 
+   131  5.9205e-03  6.8951e-06  6.4520e-06  9.7154e-06  2.2841e-08  4.9547e-04  1.0003e-03  7.3810e+02  9.7728e+06  0:09:03   19
+
+ reversed flow in 26 faces on pressure-outlet 293. 
+   132  5.8141e-03  6.7532e-06  6.2600e-06  9.3744e-06  2.1379e-08  4.8455e-04  9.7340e-04  7.3812e+02  9.7728e+06  0:08:36   18
+
+ reversed flow in 26 faces on pressure-outlet 293. 
+  iter  continuity  x-velocity  y-velocity  z-velocity      energy           k     epsilon     cs-temp        p-in     time/iter
+   133  5.6995e-03  6.6431e-06  6.1585e-06  9.1604e-06  2.0726e-08  4.7664e-04  9.5642e-04  7.3815e+02  9.7728e+06  0:08:05   17
+
+ reversed flow in 24 faces on pressure-outlet 293. 
+   134  5.5547e-03  6.4737e-06  5.9969e-06  8.8450e-06  1.9941e-08  4.6663e-04  9.3201e-04  7.3817e+02  9.7728e+06  0:07:35   16
+
+ reversed flow in 24 faces on pressure-outlet 293. 
+   135  5.3854e-03  6.3171e-06  5.8911e-06  8.6893e-06  1.9975e-08  4.5943e-04  9.2785e-04  7.3819e+02  9.7728e+06  0:07:08   15
+
+ reversed flow in 24 faces on pressure-outlet 293. 
+   136  5.2189e-03  6.1489e-06  5.7713e-06  8.5303e-06  1.9586e-08  4.5235e-04  9.3229e-04  7.3821e+02  9.7729e+06  0:06:41   14
+
+ reversed flow in 23 faces on pressure-outlet 293. 
+   137  5.1077e-03  5.9911e-06  5.6528e-06  8.3435e-06  1.9222e-08  4.4528e-04  9.3037e-04  7.3823e+02  9.7729e+06  0:06:11   13
+
+ reversed flow in 22 faces on pressure-outlet 293. 
+   138  5.0095e-03  5.8549e-06  5.5405e-06  8.1413e-06  1.9063e-08  4.3808e-04  9.1109e-04  7.3825e+02  9.7729e+06  0:05:43   12
+
+ reversed flow in 22 faces on pressure-outlet 293. 
+   139  4.9086e-03  5.7369e-06  5.4371e-06  7.9467e-06  1.8284e-08  4.3091e-04  8.8130e-04  7.3827e+02  9.7729e+06  0:05:13   11
+
+ reversed flow in 22 faces on pressure-outlet 293. 
+   140  4.8080e-03  5.6401e-06  5.3484e-06  7.8014e-06  1.7749e-08  4.2383e-04  8.6457e-04  7.3829e+02  9.7729e+06  0:04:46   10
+
+ reversed flow in 22 faces on pressure-outlet 293. 
+   141  4.6967e-03  5.5407e-06  5.2549e-06  7.6671e-06  1.7306e-08  4.1693e-04  8.4993e-04  7.3831e+02  9.7729e+06  0:04:16    9
+
+ reversed flow in 22 faces on pressure-outlet 293. 
+   142  4.6151e-03  5.4484e-06  5.1765e-06  7.5637e-06  1.6932e-08  4.1020e-04  8.3478e-04  7.3832e+02  9.7729e+06  0:03:49    8
+
+ reversed flow in 21 faces on pressure-outlet 293. 
+   143  4.5319e-03  5.3640e-06  5.0970e-06  7.4577e-06  1.6610e-08  4.0343e-04  8.0931e-04  7.3834e+02  9.7729e+06  0:03:21    7
+
+ reversed flow in 21 faces on pressure-outlet 293. 
+  iter  continuity  x-velocity  y-velocity  z-velocity      energy           k     epsilon     cs-temp        p-in     time/iter
+   144  4.4412e-03  5.2323e-06  4.9547e-06  7.2417e-06  1.6219e-08  3.9498e-04  7.7220e-04  7.3835e+02  9.7729e+06  0:02:52    6
+
+ reversed flow in 20 faces on pressure-outlet 293. 
+   145  4.3302e-03  5.1268e-06  4.8265e-06  7.0335e-06  1.6069e-08  3.8714e-04  7.6191e-04  7.3837e+02  9.7729e+06  0:02:23    5
+
+ reversed flow in 20 faces on pressure-outlet 293. 
+   146  4.2228e-03  4.9953e-06  4.6848e-06  6.8357e-06  1.5494e-08  3.7977e-04  7.6925e-04  7.3838e+02  9.7729e+06  0:01:54    4
+
+ reversed flow in 20 faces on pressure-outlet 293. 
+   147  4.1368e-03  4.9016e-06  4.5879e-06  6.7279e-06  1.5461e-08  3.7438e-04  7.6853e-04  7.3839e+02  9.7729e+06  0:01:25    3
+
+ reversed flow in 20 faces on pressure-outlet 293. 
+   148  4.0423e-03  4.8176e-06  4.4971e-06  6.6276e-06  1.5283e-08  3.6894e-04  7.6073e-04  7.3841e+02  9.7729e+06  0:00:57    2
+
+ reversed flow in 20 faces on pressure-outlet 293. 
+   149  3.9441e-03  4.7502e-06  4.4238e-06  6.5523e-06  1.5025e-08  3.6358e-04  7.5804e-04  7.3842e+02  9.7730e+06  0:00:28    1
+
+ reversed flow in 20 faces on pressure-outlet 293. 
+   150  3.8867e-03  4.6861e-06  4.3562e-06  6.4826e-06  1.4481e-08  3.5828e-04  7.5980e-04  7.3843e+02  9.7730e+06  0:00:00    0
+Writing "| gzip -2cf > HEMJ60deg-2-1.cas.gz"...
+Writing temporary file C:\Users\Bailey\AppData\Local\Temp\flntgz-30562 ...
+  843346 hexahedral cells, zone 25, binary.
+  930690 hexahedral cells, zone 26, binary.
+ 4348661 hexahedral cells, zone 27, binary.
+  843346 cell partition ids, zone 25, 4 partitions, binary.
+  930690 cell partition ids, zone 26, 4 partitions, binary.
+ 4348661 cell partition ids, zone 27, 4 partitions, binary.
+ 2491318 quadrilateral interior faces, zone 28, binary.
+ 2753640 quadrilateral interior faces, zone 29, binary.
+12920154 quadrilateral interior faces, zone 30, binary.
+    6680 quadrilateral wall faces, zone  4, binary.
+    7614 quadrilateral wall faces, zone  5, binary.
+    5643 quadrilateral wall faces, zone  6, binary.
+    2808 quadrilateral wall faces, zone  7, binary.
+    2376 quadrilateral wall faces, zone  8, binary.
+    3672 quadrilateral wall faces, zone  9, binary.
+    7533 quadrilateral wall faces, zone 39, binary.
+    6680 quadrilateral wall faces, zone 42, binary.
+    7614 quadrilateral wall faces, zone 43, binary.
+    5643 quadrilateral wall faces, zone 46, binary.
+    2808 quadrilateral wall faces, zone 47, binary.
+    2376 quadrilateral wall faces, zone 48, binary.
+    3672 quadrilateral wall faces, zone 49, binary.
+    3186 quadrilateral wall faces, zone 173, binary.
+    3132 quadrilateral wall faces, zone 244, binary.
+   31050 quadrilateral wall faces, zone 245, binary.
+    3132 quadrilateral wall faces, zone 249, binary.
+   31050 quadrilateral wall faces, zone 267, binary.
+   14850 quadrilateral wall faces, zone 303, binary.
+    6966 quadrilateral pressure-outlet faces, zone 293, binary.
+   18423 quadrilateral symmetry faces, zone 36, binary.
+   85202 quadrilateral symmetry faces, zone 37, binary.
+   14455 quadrilateral symmetry faces, zone 38, binary.
+   85202 quadrilateral symmetry faces, zone 261, binary.
+   14455 quadrilateral symmetry faces, zone 262, binary.
+   18423 quadrilateral symmetry faces, zone 263, binary.
+   11313 quadrilateral mass-flow-inlet faces, zone 292, binary.
+    6680 shadow face pairs, binary.
+    7614 shadow face pairs, binary.
+    5643 shadow face pairs, binary.
+    2808 shadow face pairs, binary.
+    2376 shadow face pairs, binary.
+    3672 shadow face pairs, binary.
+    3132 shadow face pairs, binary.
+   31050 shadow face pairs, binary.
+ 6324416 nodes, binary.
+ 6324416 node flags, binary.
+Done.
+
+Writing "| gzip -2cf > HEMJ60deg-2-1-00150.dat.gz"...
+Writing temporary file C:\Users\Bailey\AppData\Local\Temp\flntgz-30563 ...
+Done.
+

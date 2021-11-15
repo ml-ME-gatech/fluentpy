@@ -1,0 +1,15 @@
+WB->Fluent:Parameter name:MFR, value:0.004872109
+WB->Fluent:Parameter name:Pin, value:9716507
+WB->Fluent:Parameter name:Kin, value:0.1473441
+WB->Fluent:Parameter name:Epsin, value:13.91664
+WB->Fluent:Parameter name:Tin, value:473.4052
+WB->Fluent:Parameter name:Pout, value:9666781
+WB->Fluent:Parameter name:Kout, value:0.1177359
+WB->Fluent:Parameter name:Epsout, value:19.71031
+WB->Fluent:Parameter name:Tout, value:524.5664
+WB->Fluent:Parameter name:SurfHeatflux, value:5698986
+WB->Fluent:Parameter name:Massfluxin, value:68.16012000000001
+WB->Fluent:Parameter name:Vturbin, value:0.0002563
+WB->Fluent:Parameter name:Vturbout, value:0.0001156
+WB->Fluent:Parameter name:Omega-in, value:590.146
+WB->Fluent:Parameter name:Omega-out, value:1046.026

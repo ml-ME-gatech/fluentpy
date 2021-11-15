@@ -1,0 +1,552 @@
+﻿# encoding: utf-8
+# Release 17.1
+SetScriptVersion(Version="17.1.127")
+system1 = GetSystem(Name="FFF 32")
+results1 = system1.GetContainer(ComponentName="Results")
+results1.Edit()
+results1.SendCommand(Command="> autolegend plot=/PLANE:Plane 1, view=VIEW:View 1")
+results1.SendCommand(Command="""PLANE:Plane 1
+Apply Instancing Transform = On
+Apply Texture = Off
+Blend Texture = On
+Bound Radius = 0.5 [m]
+Colour = 0.75, 0.75, 0.75
+Colour Map = Default Colour Map
+Colour Mode = Constant
+Colour Scale = Linear
+Colour Variable = Pressure
+Colour Variable Boundary Values = Conservative
+Culling Mode = No Culling
+Direction 1 Bound = 1.0 [m]
+Direction 1 Orientation = 0 [degree]
+Direction 1 Points = 10
+Direction 2 Bound = 1.0 [m]
+Direction 2 Points = 10
+Domain List = /DOMAIN GROUP:All Domains
+Draw Faces = On
+Draw Lines = Off
+Instancing Transform = /DEFAULT INSTANCE TRANSFORM:Default Transform
+Invert Plane Bound = Off
+Lighting = On
+Line Colour = 0, 0, 0
+Line Colour Mode = Default
+Line Width = 1
+Max = 0.0
+Min = 0.0
+Normal = 1 , 0 , 0 
+Option = ZX Plane
+Plane Bound = None
+Plane Type = Slice
+Point = 0 [mm], 0 [mm], 0 [mm]
+Point 1 = 0 [mm], 0 [mm], 0 [mm]
+Point 2 = 1 [mm], 0 [mm], 0 [mm]
+Point 3 = 0 [mm], 1 [mm], 0 [mm]
+Range = Global
+Render Edge Angle = 0 [degree]
+Specular Lighting = On
+Surface Drawing = Smooth Shading
+Texture Angle = 0
+Texture Direction = 0 , 1 , 0 
+Texture File =  
+Texture Material = Metal
+Texture Position = 0 , 0 
+Texture Scale = 1
+Texture Type = Predefined
+Tile Texture = Off
+Transform Texture = Off
+Transparency = 0.0
+X = 0.0 [mm]
+Y = 0.0 [mm]
+Z = 0.0 [mm]
+  OBJECT VIEW TRANSFORM:
+  Apply Reflection = Off
+  Apply Rotation = Off
+  Apply Scale = Off
+  Apply Translation = Off
+  Principal Axis = Z
+  Reflection Plane Option = XY Plane
+  Rotation Angle = 0.0 [degree]
+  Rotation Axis From = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis To = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis Type = Principal Axis
+  Scale Vector = 1 , 1 , 1 
+  Translation Vector = 0 [mm], 0 [mm], 0 [mm]
+  X = 0.0 [mm]
+  Y = 0.0 [mm]
+  Z = 0.0 [mm]
+  END
+END""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /PLANE:Plane 1, view=/VIEW:View 1""")
+results1.SendCommand(Command="""PLANE:Plane 1
+Apply Instancing Transform = On
+Apply Texture = Off
+Blend Texture = On
+Bound Radius = 0.5 [m]
+Colour = 0.75, 0.75, 0.75
+Colour Map = Default Colour Map
+Colour Mode = Constant
+Colour Scale = Linear
+Colour Variable = Pressure
+Colour Variable Boundary Values = Conservative
+Culling Mode = No Culling
+Direction 1 Bound = 1.0 [m]
+Direction 1 Orientation = 0 [degree]
+Direction 1 Points = 10
+Direction 2 Bound = 1.0 [m]
+Direction 2 Points = 10
+Domain List = /DOMAIN GROUP:All Domains
+Draw Faces = On
+Draw Lines = Off
+Instancing Transform = /DEFAULT INSTANCE TRANSFORM:Default Transform
+Invert Plane Bound = Off
+Lighting = On
+Line Colour = 0, 0, 0
+Line Colour Mode = Default
+Line Width = 1
+Max = 0.0 [Pa]
+Min = 0.0 [Pa]
+Normal = 1 , 0 , 0 
+Option = ZX Plane
+Plane Bound = None
+Plane Type = Slice
+Point = 0 [mm], 0 [mm], 0 [mm]
+Point 1 = 0 [mm], 0 [mm], 0 [mm]
+Point 2 = 1 [mm], 0 [mm], 0 [mm]
+Point 3 = 0 [mm], 1 [mm], 0 [mm]
+Range = Global
+Render Edge Angle = 0 [degree]
+Specular Lighting = On
+Surface Drawing = Smooth Shading
+Texture Angle = 0
+Texture Direction = 0 , 1 , 0 
+Texture File =  
+Texture Material = Metal
+Texture Position = 0 , 0 
+Texture Scale = 1
+Texture Type = Predefined
+Tile Texture = Off
+Transform Texture = Off
+Transparency = 0.0
+X = 0.0 [mm]
+Y = 0.0 [mm]
+Z = 0.0 [mm]
+  OBJECT VIEW TRANSFORM:
+  Apply Reflection = Off
+  Apply Rotation = On
+  Apply Scale = Off
+  Apply Translation = Off
+  Principal Axis = Z
+  Rotation Angle = 30 [degree]
+  Rotation Axis From = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis To = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis Type = Principal Axis
+  END
+END""")
+results1.SendCommand(Command="> autolegend plot=/POLYLINE:Polyline 3, view=VIEW:View 1")
+results1.SendCommand(Command="""POLYLINE:Polyline 3
+Apply Instancing Transform = On
+Boundary List = cool surf1 shadow,cool surf2 shadow
+Colour = 0, 1, 0
+Colour Map = Default Colour Map
+Colour Mode = Constant
+Colour Scale = Linear
+Colour Variable = Pressure
+Colour Variable Boundary Values = Conservative
+Contour Level = 1
+Domain List = /DOMAIN GROUP:All Domains
+Input File =  
+Instancing Transform = /DEFAULT INSTANCE TRANSFORM:Default Transform
+Line Width = 2
+Location = /PLANE:Plane 1
+Max = 0.0
+Min = 0.0
+Option = Boundary Intersection
+Range = Global
+  OBJECT VIEW TRANSFORM:
+  Apply Reflection = Off
+  Apply Rotation = Off
+  Apply Scale = Off
+  Apply Translation = Off
+  Principal Axis = Z
+  Reflection Plane Option = XY Plane
+  Rotation Angle = 0.0 [degree]
+  Rotation Axis From = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis To = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis Type = Principal Axis
+  Scale Vector = 1 , 1 , 1 
+  Translation Vector = 0 [mm], 0 [mm], 0 [mm]
+  X = 0.0 [mm]
+  Y = 0.0 [mm]
+  Z = 0.0 [mm]
+  END
+END""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /POLYLINE:Polyline 3, view=/VIEW:View 1""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>hide /PLANE:Plane 1, view=/VIEW:View 1""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>show /PLANE:Plane 1, view=/VIEW:View 1""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>hide /CONTOUR:Cooled Surface, view=/VIEW:View 1""")
+results1.SendCommand(Command="""# Sending visibility action from ViewUtilities
+>hide /PLANE:Plane 1, view=/VIEW:View 1""")
+results1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.00819435, -0.00314413, 0.0327749
+    Scale = 203.828
+    Pan = 0, 0
+    Rotation Quaternion = -0.160938, -0.466549, 0.364255, 0.789759
+    
+  END
+
+END
+
+> update
+POLYLINE:Polyline 3
+Apply Instancing Transform = On
+Boundary List = cool surf1,cool surf2
+Colour = 0, 1, 0
+Colour Map = Default Colour Map
+Colour Mode = Constant
+Colour Scale = Linear
+Colour Variable = Pressure
+Colour Variable Boundary Values = Conservative
+Contour Level = 1
+Domain List = /DOMAIN GROUP:All Domains
+Input File =  
+Instancing Transform = /DEFAULT INSTANCE TRANSFORM:Default Transform
+Line Width = 2
+Location = /PLANE:Plane 1
+Max = 0.0 [Pa]
+Min = 0.0 [Pa]
+Option = Boundary Intersection
+Range = Global
+  OBJECT VIEW TRANSFORM:
+  Apply Reflection = Off
+  Apply Rotation = Off
+  Apply Scale = Off
+  Apply Translation = Off
+  Principal Axis = Z
+  Reflection Plane Option = XY Plane
+  Rotation Angle = 0.0 [degree]
+  Rotation Axis From = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis To = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis Type = Principal Axis
+  Scale Vector = 1 , 1 , 1 
+  Translation Vector = 0 [mm], 0 [mm], 0 [mm]
+  X = 0.0 [mm]
+  Y = 0.0 [mm]
+  Z = 0.0 [mm]
+  END
+END""")
+results1.SendCommand(Command="> autolegend plot=/PLANE:Plane 1, view=VIEW:View 1")
+results1.SendCommand(Command="> autolegend plot=/POLYLINE:Polyline 3, view=VIEW:View 1")
+results1.SendCommand(Command="> autolegend plot=/PLANE:Plane 1, view=VIEW:View 1")
+results1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.00635, 0.00549927, 0.0181737
+    Scale = 598.408
+    Pan = 0.00362672, 0.00358471
+    Rotation Quaternion = 0, 0, 0, 1
+    
+  END
+
+END
+
+> update
+> autolegend plot=/PLANE:Plane 1, view=VIEW:View 1""")
+results1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.00635, 0.00549927, 0.0181737
+    Scale = 559.895
+    Pan = -0.00427869, 0.00392468
+    Rotation Quaternion = 0, 1, 0, 6.12323e-017
+    
+  END
+
+END
+
+> update
+PLANE:Plane 1
+Apply Instancing Transform = On
+Apply Texture = Off
+Blend Texture = On
+Bound Radius = 0.5 [m]
+Colour = 0.75, 0.75, 0.75
+Colour Map = Default Colour Map
+Colour Mode = Constant
+Colour Scale = Linear
+Colour Variable = Pressure
+Colour Variable Boundary Values = Conservative
+Culling Mode = No Culling
+Direction 1 Bound = 1.0 [m]
+Direction 1 Orientation = 0 [degree]
+Direction 1 Points = 10
+Direction 2 Bound = 1.0 [m]
+Direction 2 Points = 10
+Domain List = /DOMAIN GROUP:All Domains
+Draw Faces = On
+Draw Lines = Off
+Instancing Transform = /DEFAULT INSTANCE TRANSFORM:Default Transform
+Invert Plane Bound = Off
+Lighting = On
+Line Colour = 0, 0, 0
+Line Colour Mode = Default
+Line Width = 1
+Max = 0.0 [Pa]
+Min = 0.0 [Pa]
+Normal = 1 , 0 , 0 
+Option = Three Points
+Plane Bound = None
+Plane Type = Slice
+Point = 0 [mm], 0 [mm], 0 [mm]
+Point 1 = 0 [mm], 0 [mm], 0 [mm]
+Point 2 = 1.4925 [mm], 0.888287 [mm], 0 [mm]
+Point 3 = 1.4925 [mm], 0.888287 [mm], 28 [mm]
+Range = Global
+Render Edge Angle = 0 [degree]
+Specular Lighting = On
+Surface Drawing = Smooth Shading
+Texture Angle = 0
+Texture Direction = 0 , 1 , 0 
+Texture File =  
+Texture Material = Metal
+Texture Position = 0 , 0 
+Texture Scale = 1
+Texture Type = Predefined
+Tile Texture = Off
+Transform Texture = Off
+Transparency = 0.0
+X = 0.0 [mm]
+Y = 0.0 [mm]
+Z = 0.0 [mm]
+  OBJECT VIEW TRANSFORM:
+  Apply Reflection = Off
+  Apply Rotation = On
+  Apply Scale = Off
+  Apply Translation = Off
+  Principal Axis = Z
+  Reflection Plane Option = XY Plane
+  Rotation Angle = 30 [degree]
+  Rotation Axis From = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis To = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis Type = Principal Axis
+  Scale Vector = 1 , 1 , 1 
+  Translation Vector = 0 [mm], 0 [mm], 0 [mm]
+  X = 0.0 [mm]
+  Y = 0.0 [mm]
+  Z = 0.0 [mm]
+  END
+END""")
+results1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.00635, 0.00549927, 0.0181737
+    Scale = 533.809
+    Pan = 0.00403568, 0.00418799
+    Rotation Quaternion = 0, 0, 7.45058e-009, 1
+    
+  END
+
+END
+
+> update
+PLANE:Plane 1
+Apply Instancing Transform = On
+Apply Texture = Off
+Blend Texture = On
+Bound Radius = 0.5 [m]
+Colour = 0.75, 0.75, 0.75
+Colour Map = Default Colour Map
+Colour Mode = Constant
+Colour Scale = Linear
+Colour Variable = Pressure
+Colour Variable Boundary Values = Conservative
+Culling Mode = No Culling
+Direction 1 Bound = 1.0 [m]
+Direction 1 Orientation = 0 [degree]
+Direction 1 Points = 10
+Direction 2 Bound = 1.0 [m]
+Direction 2 Points = 10
+Domain List = /DOMAIN GROUP:All Domains
+Draw Faces = On
+Draw Lines = Off
+Instancing Transform = /DEFAULT INSTANCE TRANSFORM:Default Transform
+Invert Plane Bound = Off
+Lighting = On
+Line Colour = 0, 0, 0
+Line Colour Mode = Default
+Line Width = 1
+Max = 0.0 [Pa]
+Min = 0.0 [Pa]
+Normal = 1 , 0 , 0 
+Option = Three Points
+Plane Bound = None
+Plane Type = Slice
+Point = 0 [mm], 0 [mm], 0 [mm]
+Point 1 = 0 [mm], 0 [mm], 0 [mm]
+Point 2 = 1.4925 [mm], 0.87 [mm], 0 [mm]
+Point 3 = 1.4925 [mm], 0.87 [mm], 28 [mm]
+Range = Global
+Render Edge Angle = 0 [degree]
+Specular Lighting = On
+Surface Drawing = Smooth Shading
+Texture Angle = 0
+Texture Direction = 0 , 1 , 0 
+Texture File =  
+Texture Material = Metal
+Texture Position = 0 , 0 
+Texture Scale = 1
+Texture Type = Predefined
+Tile Texture = Off
+Transform Texture = Off
+Transparency = 0.0
+X = 0.0 [mm]
+Y = 0.0 [mm]
+Z = 0.0 [mm]
+  OBJECT VIEW TRANSFORM:
+  Apply Reflection = Off
+  Apply Rotation = On
+  Apply Scale = Off
+  Apply Translation = Off
+  Principal Axis = Z
+  Reflection Plane Option = XY Plane
+  Rotation Angle = 30 [degree]
+  Rotation Axis From = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis To = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis Type = Principal Axis
+  Scale Vector = 1 , 1 , 1 
+  Translation Vector = 0 [mm], 0 [mm], 0 [mm]
+  X = 0.0 [mm]
+  Y = 0.0 [mm]
+  Z = 0.0 [mm]
+  END
+END""")
+results1.SendCommand(Command="""PLANE:Plane 1
+Apply Instancing Transform = On
+Apply Texture = Off
+Blend Texture = On
+Bound Radius = 0.5 [m]
+Colour = 0.75, 0.75, 0.75
+Colour Map = Default Colour Map
+Colour Mode = Constant
+Colour Scale = Linear
+Colour Variable = Pressure
+Colour Variable Boundary Values = Conservative
+Culling Mode = No Culling
+Direction 1 Bound = 1.0 [m]
+Direction 1 Orientation = 0 [degree]
+Direction 1 Points = 10
+Direction 2 Bound = 1.0 [m]
+Direction 2 Points = 10
+Domain List = /DOMAIN GROUP:All Domains
+Draw Faces = On
+Draw Lines = Off
+Instancing Transform = /DEFAULT INSTANCE TRANSFORM:Default Transform
+Invert Plane Bound = Off
+Lighting = On
+Line Colour = 0, 0, 0
+Line Colour Mode = Default
+Line Width = 1
+Max = 0.0 [Pa]
+Min = 0.0 [Pa]
+Normal = 1 , 0 , 0 
+Option = Three Points
+Plane Bound = None
+Plane Type = Slice
+Point = 0 [mm], 0 [mm], 0 [mm]
+Point 1 = 0 [mm], 0 [mm], 0 [mm]
+Point 2 = 1.4925 [mm], 0.86 [mm], 0 [mm]
+Point 3 = 1.4925 [mm], 0.86 [mm], 28 [mm]
+Range = Global
+Render Edge Angle = 0 [degree]
+Specular Lighting = On
+Surface Drawing = Smooth Shading
+Texture Angle = 0
+Texture Direction = 0 , 1 , 0 
+Texture File =  
+Texture Material = Metal
+Texture Position = 0 , 0 
+Texture Scale = 1
+Texture Type = Predefined
+Tile Texture = Off
+Transform Texture = Off
+Transparency = 0.0
+X = 0.0 [mm]
+Y = 0.0 [mm]
+Z = 0.0 [mm]
+  OBJECT VIEW TRANSFORM:
+  Apply Reflection = Off
+  Apply Rotation = On
+  Apply Scale = Off
+  Apply Translation = Off
+  Principal Axis = Z
+  Reflection Plane Option = XY Plane
+  Rotation Angle = 30 [degree]
+  Rotation Axis From = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis To = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis Type = Principal Axis
+  Scale Vector = 1 , 1 , 1 
+  Translation Vector = 0 [mm], 0 [mm], 0 [mm]
+  X = 0.0 [mm]
+  Y = 0.0 [mm]
+  Z = 0.0 [mm]
+  END
+END""")
+results1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.00635, 0.00549927, 0.0181737
+    Scale = 73.3985
+    Pan = -0.00188533, 0.000301831
+    Rotation Quaternion = -0.149776, -0.442072, 0.409476, 0.783881
+    
+  END
+
+END
+
+> update
+EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/439-SKE-polyline3.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /POLYLINE:Polyline 3
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results1.Exit()
+Save(Overwrite=True)

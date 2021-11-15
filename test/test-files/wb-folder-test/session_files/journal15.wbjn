@@ -1,0 +1,1834 @@
+﻿# encoding: utf-8
+# Release 17.1
+SetScriptVersion(Version="17.1.127")
+system1 = GetSystem(Name="FFF 39")
+results1 = system1.GetContainer(ComponentName="Results")
+results1.Edit()
+results1.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/439-SKE-8M.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /SURFACE GROUP:CS
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results1.Exit()
+system2 = GetSystem(Name="FFF 40")
+system2.Delete()
+solution1 = system1.GetContainer(ComponentName="Solution")
+solution1.Edit()
+setup1 = system1.GetContainer(ComponentName="Setup")
+setup1.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list ))')
+setup1.SendCommand(Command="(cx-gui-do cx-activate-item \"MenuBar*ImportSubMenu*Mesh...\")(cx-gui-do cx-activate-item \"Question*OK\")(cx-gui-do cx-set-toggle-button2 \"Read Mesh Options*Table1(Options)*ToggleBox1*Replace mesh\" #t)(cx-gui-do cx-activate-item \"Read Mesh Options*Table1(Options)*ToggleBox1*Replace mesh\")(cx-gui-do cx-set-toggle-button2 \"Read Mesh Options*Table1(Options)*Table2*CheckButton2(Show Scale Mesh Panel after Replacing Mesh)\" #t)(cx-gui-do cx-activate-item \"Read Mesh Options*Table1(Options)*Table2*CheckButton2(Show Scale Mesh Panel after Replacing Mesh)\")(cx-gui-do cx-set-toggle-button2 \"Read Mesh Options*Table1(Options)*Table2*CheckButton2(Show Scale Mesh Panel after Replacing Mesh)\" #f)(cx-gui-do cx-activate-item \"Read Mesh Options*Table1(Options)*Table2*CheckButton2(Show Scale Mesh Panel after Replacing Mesh)\")(cx-gui-do cx-activate-item \"Read Mesh Options*PanelButtons*PushButton1(OK)\")(cx-gui-do cx-set-file-dialog-entries \"Select File\" '( \"G:/Bailey/Fluent/ImportFiles/H-0.90 60 Deg Files/HEMJ_60Deg8M.msh\") \"Mesh Files (*.msh* *.MSH* )\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Information*Cancel")(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Setup|Materials"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Setup|Models"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Setup"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Setup|General"))')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton1(Scale)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Scale Mesh*Table1*Table2(Scaling)*DropDownList2(Mesh Was Created In)\" '( 3))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*Table1*Table2(Scaling)*DropDownList2(Mesh Was Created In)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Scale Mesh*Table1*Table2(Scaling)*DropDownList2(Mesh Was Created In)\" '( 1))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*Table1*Table2(Scaling)*DropDownList2(Mesh Was Created In)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*Table1*Table2(Scaling)*PushButton4(Scale)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Scale Mesh*Table1*Table2(Scaling)*DropDownList2(Mesh Was Created In)\" '( 2))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*Table1*Table2(Scaling)*DropDownList2(Mesh Was Created In)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*Table1*Table2(Scaling)*PushButton4(Scale)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*Table1*Table2(Scaling)*PushButton5(Unscale)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Scale Mesh*Table1*Table2(Scaling)*DropDownList2(Mesh Was Created In)\" '( 3))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*Table1*Table2(Scaling)*DropDownList2(Mesh Was Created In)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*Table1*Table2(Scaling)*PushButton5(Unscale)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*PanelButtons*PushButton1(Close)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Models\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Cell Zone Conditions\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Boundary Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 0))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 9))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*Table3*DropDownList2(Type)\" '( 5))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*DropDownList2(Type)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table8*DropDownList1\" '( 2))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table8*DropDownList1")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table11*DropDownList1\" '( 2))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table11*DropDownList1")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*DropDownList7(Mass Flow Specification Method)\" '( 1))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*DropDownList7(Mass Flow Specification Method)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table9*DropDownList1\" '( 2))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table9*DropDownList1")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*DropDownList12(Direction Specification Method)\" '( 1))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*DropDownList12(Direction Specification Method)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*DropDownList1(Specification Method)\" '( 0))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*DropDownList1(Specification Method)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table5*DropDownList1\" '( 2))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table5*DropDownList1")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table6*DropDownList1\" '( 2))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table6*DropDownList1")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame2(Thermal)*Table1*Table1*DropDownList1\" '( 2))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame2(Thermal)*Table1*Table1*DropDownList1")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*PanelButtons*PushButton1(OK)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 21))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 20))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Outlet Vent*Frame3*Frame1(Momentum)*Table1*DropDownList5(Backflow Reference Frame)\" '( 0))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Outlet Vent*Frame3*Frame1(Momentum)*Table1*DropDownList5(Backflow Reference Frame)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Outlet Vent*Frame3*Frame1(Momentum)*Table1*Table6*DropDownList1\" '( 3))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Outlet Vent*Frame3*Frame1(Momentum)*Table1*Table6*DropDownList1")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Outlet Vent*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*DropDownList1(Specification Method)\" '( 1))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Outlet Vent*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*DropDownList1(Specification Method)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Outlet Vent*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*DropDownList1(Specification Method)\" '( 0))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Outlet Vent*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*DropDownList1(Specification Method)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Outlet Vent*PanelButtons*PushButton1(OK)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*Table3*DropDownList2(Type)\" '( 11))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*DropDownList2(Type)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table5*DropDownList1\" '( 3))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table5*DropDownList1")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table6*DropDownList1\" '( 3))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table6*DropDownList1")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Pressure Outlet*Frame3*Frame2(Thermal)*Table1*Table1*DropDownList1\" '( 3))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*Frame3*Frame2(Thermal)*Table1*Table1*DropDownList1")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*PanelButtons*PushButton1(OK)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 21))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-set-text-entry "Symmetry*Frame1*TextEntry1(Zone Name)" "symmetry1-fluid")(cx-gui-do cx-activate-item "Symmetry*PanelButtons*PushButton1(OK)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 22))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-set-text-entry "Symmetry*Frame1*TextEntry1(Zone Name)" "symmetry1-jet")(cx-gui-do cx-activate-item "Symmetry*PanelButtons*PushButton1(OK)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 23))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-set-text-entry "Symmetry*Frame1*TextEntry1(Zone Name)" "symmetry1-thimble")(cx-gui-do cx-activate-item "Symmetry*PanelButtons*PushButton1(OK)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 28))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Solution\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Reference Values\"))(cx-gui-do cx-set-list-selections \"Reference Values*DropDownList1(Compute from)\" '( 4))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Reference Values*DropDownList1(Compute from)")')
+setup1.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Methods"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Setup|Boundary Conditions"))')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton3(Display Mesh)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Mesh Display*Frame2*List1(Surfaces)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Mesh Display*PushButton4(DeselectAll)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mesh Display*Frame2*List1(Surfaces)\" '( 29))(cx-gui-do cx-activate-item \"Mesh Display*Frame2*List1(Surfaces)\")(cx-gui-do cx-activate-item \"Mesh Display*PanelButtons*PushButton1(OK)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Mesh Display*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command="(cx-use-window-id 1)(cx-set-camera-relative '(5.63907e-005 -8.25805e-005 -0.000104771) '(0 0 0) '(0.820122 -0.448609 0.152873) 0 0)")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton3(Display Mesh)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mesh Display*Frame2*List1(Surfaces)\" '())(cx-gui-do cx-activate-item \"Mesh Display*Frame2*List1(Surfaces)\")(cx-gui-do cx-set-list-selections \"Mesh Display*Frame2*List1(Surfaces)\" '( 30))(cx-gui-do cx-activate-item \"Mesh Display*Frame2*List1(Surfaces)\")(cx-gui-do cx-activate-item \"Mesh Display*PanelButtons*PushButton1(OK)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Mesh Display*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-toggle-button2 \"Boundary Conditions*Table1*CheckButton4(Highlight Zone)\" #t)(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*CheckButton4(Highlight Zone)\")(cx-use-window-id 4)(cx-set-camera-relative '(0.0465645 -0.090137 -0.0323952) '(0 0 0) '(0.75152 0.164247 0.0787093) 0 0)(cx-use-window-id 4)(cx-set-camera-relative '(-0.0286302 -0.0303576 0.0364528) '(0 0 0) '(0.40014 -0.124532 0.288591) 0 0)(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Reference Values\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Boundary Conditions\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Solution|Solution Initialization\"))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Solution Initialization*Table1*ButtonBox10*PushButton2(Initialize)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Save Project")')
+Save(Overwrite=True)
+designPoint1 = Parameters.GetDesignPoint(Name="0")
+parameter1 = Parameters.GetParameter(Name="P804")
+designPoint1.SetParameterExpression(
+    Parameter=parameter1,
+    Expression="0.00348 [kg s^-1]")
+parameter2 = Parameters.GetParameter(Name="P806")
+designPoint1.SetParameterExpression(
+    Parameter=parameter2,
+    Expression="0.04798 [J kg^-1]")
+parameter3 = Parameters.GetParameter(Name="P813")
+designPoint1.SetParameterExpression(
+    Parameter=parameter3,
+    Expression="5556262.78 [W m^-2]")
+parameter4 = Parameters.GetParameter(Name="P815")
+designPoint1.SetParameterExpression(
+    Parameter=parameter4,
+    Expression="0.00014628 [m^2 s^-1]")
+parameter5 = Parameters.GetParameter(Name="P816")
+designPoint1.SetParameterExpression(
+    Parameter=parameter5,
+    Expression="6.817E-05 [m^2 s^-1]")
+parameter6 = Parameters.GetParameter(Name="P818")
+designPoint1.SetParameterExpression(
+    Parameter=parameter6,
+    Expression="617.06 [s^-1]")
+setup1.SendCommand(Command='(wb-check-upstream-change)(cx-gui-do cx-activate-item "Question*OK")(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Run Calculation"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Initialization"))')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Solution Initialization*Table1*ButtonBox10*PushButton2(Initialize)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+Save(Overwrite=True)
+system1.Update(AllDependencies=True)
+ClearMessages()
+results1.Edit()
+results1.SendCommand(Command="""VIEW:View 1
+  Camera Mode = User Specified
+  CAMERA:
+    Option = Pivot Point and Quaternion
+    Pivot Point = 0.00635, 0.00549927, 0.0181737
+    Scale = 62.6876
+    Pan = 0, 0
+    Rotation Quaternion = -0.181797, -0.462847, 0.412212, 0.763408
+    
+  END
+
+END
+
+> update
+> autolegend plot=/CONTOUR:Thimble, view=VIEW:View 1""")
+results1.SendCommand(Command="""CONTOUR:Thimble
+Apply Instancing Transform = On
+Clip Contour = Off
+Colour Map = Default Colour Map
+Colour Scale = Linear
+Colour Variable = Temperature
+Colour Variable Boundary Values = Conservative
+Constant Contour Colour = Off
+Contour Range = Local
+Culling Mode = No Culling
+Domain List = /DOMAIN GROUP:All Domains
+Draw Contours = On
+Font = Sans Serif
+Fringe Fill = On
+Instancing Transform = /DEFAULT INSTANCE TRANSFORM:Default Transform
+Lighting = On
+Line Colour = 0, 0, 0
+Line Colour Mode = Default
+Line Width = 1
+Location List = symmetry1 thimble,symmetry2 thimble,thimble walls
+Max = 0.0 [K]
+Min = 0.0 [K]
+Number of Contours = 50
+Show Numbers = Off
+Specular Lighting = On
+Surface Drawing = Smooth Shading
+Text Colour = 0, 0, 0
+Text Colour Mode = Default
+Text Height = 0.024
+Transparency = 0.0
+Use Face Values = Off
+Value List = 0 [K],1 [K]
+  OBJECT VIEW TRANSFORM:
+  Apply Reflection = Off
+  Apply Rotation = Off
+  Apply Scale = Off
+  Apply Translation = Off
+  Principal Axis = Z
+  Reflection Plane Option = XY Plane
+  Rotation Angle = 0.0 [degree]
+  Rotation Axis From = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis To = 0 [mm], 0 [mm], 0 [mm]
+  Rotation Axis Type = Principal Axis
+  Scale Vector = 1 , 1 , 1 
+  Translation Vector = 0 [mm], 0 [mm], 0 [mm]
+  X = 0.0 [mm]
+  Y = 0.0 [mm]
+  Z = 0.0 [mm]
+  END
+END""")
+results1.Exit()
+solution1.Edit()
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list ))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Models\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Materials\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Cell Zone Conditions\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Cell Zone Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 0))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Fluid*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 1))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Solid*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 2))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Fluid*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*Table3*DropDownList2(Type)\" '( 1))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*DropDownList2(Type)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Solid*PanelButtons*PushButton1(OK)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Boundary Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 0))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton1(OK)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 3))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 2))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton1(OK)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 6))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton1(OK)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 8))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton1(OK)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 9))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 10))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 13))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 14))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 16))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 19))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 18))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton3(Display Mesh)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Mesh Display*PanelButtons*PushButton4(Colors)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Mesh Display*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Mesh Colors*PanelButtons*PushButton1(Close)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-toggle-button2 \"Boundary Conditions*Table1*CheckButton4(Highlight Zone)\" #t)(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*CheckButton4(Highlight Zone)\")(cx-use-window-id 4)(cx-set-camera-relative '(-0.00149668 -0.158129 -0.0441726) '(0 0 0) '(1.37213 -0.219526 0.540828) 0 0)")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Wall*Frame3*Frame2(Thermal)*Frame1*Frame1(Thermal Conditions)*Table2*DropDownList1(Material Name)\" '( 2))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*Frame3*Frame2(Thermal)*Frame1*Frame1(Thermal Conditions)*Table2*DropDownList1(Material Name)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton1(OK)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 20))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 21))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 27))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 28))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 29))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton1(OK)")')
+setup1.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Reference Values\"))(cx-gui-do cx-set-list-selections \"Reference Values*DropDownList1(Compute from)\" '( 4))")
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Reference Values*DropDownList1(Compute from)")')
+setup1.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Methods"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Initialization"))')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Solution Initialization*Table1*ButtonBox10*PushButton2(Initialize)")')
+setup1.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Run Calculation"))')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Run Calculation*Table1*PushButton22(Calculate)")(cx-gui-do cx-activate-item "Error*Cancel")(cx-gui-do cx-activate-item "Error*Cancel")(cx-use-window-id 3)(cx-gui-do cx-activate-item "Error*Cancel")(cx-gui-do cx-activate-item "Error*Cancel")(cx-gui-do cx-activate-item "Error*Cancel")')
+setup1.SendCommand(Command='(cx-gui-do cx-activate-item "Information*OK")')
+setup1.SendCommand(Command="(cx-gui-do cx-activate-item \"Ribbon*Frame1*Frame2(Setting Up Domain)*Table1*Table2(Zones)*PushButton8(Replace Mesh)\")(cx-gui-do cx-activate-item \"Question*OK\")(cx-gui-do cx-set-file-dialog-entries \"Select File\" '( \"G:/Bailey/Fluent/ImportFiles/H-0.90 60 Deg Files/HEMJ_60Deg8M.msh\") \"Mesh Files (*.msh *.gz )\")")
+system1.Delete()
+ClearMessages()
+system3 = GetSystem(Name="FFF 38")
+system4 = system3.Duplicate(RelativeTo=system3)
+system4.DisplayText = "439, H=0.9, SKE, 8M"
+setup2 = system4.GetContainer(ComponentName="Setup")
+fluentLauncherSettings1 = setup2.GetFluentLauncherSettings()
+fluentLauncherSettings1.SetEntityProperties(Properties=Set(EnvPath={}))
+setup2.Edit()
+setup2.SendCommand(Command="(cx-gui-do cx-activate-item \"Ribbon*Frame1*Frame2(Setting Up Domain)*Table1*Table2(Zones)*PushButton8(Replace Mesh)\")(cx-gui-do cx-activate-item \"Question*OK\")(cx-gui-do cx-set-file-dialog-entries \"Select File\" '( \"G:/Bailey/Fluent/ImportFiles/H-0.90 60 Deg Files/HEMJ_60Deg8M.msh\") \"Mesh Files (*.msh *.gz )\")")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Information*OK")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton1(Scale)")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*PanelButtons*PushButton1(Close)")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton3(Check)")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Reference Values\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Dynamic Mesh\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Boundary Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 9))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 8))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Wall*Frame3*Frame2(Thermal)*Frame1*Frame1(Thermal Conditions)*Table3*Table1*Table2*DropDownList1\" '( 0))")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*Frame3*Frame2(Thermal)*Frame1*Frame1(Thermal Conditions)*Table3*Table1*Table2*DropDownList1")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+parameter7 = Parameters.GetParameter(Name="P842")
+designPoint1.SetParameterExpression(
+    Parameter=parameter7,
+    Expression="0.00348 [kg s^-1]")
+parameter8 = Parameters.GetParameter(Name="P844")
+designPoint1.SetParameterExpression(
+    Parameter=parameter8,
+    Expression="0.04798 [J kg^-1]")
+parameter9 = Parameters.GetParameter(Name="P851")
+designPoint1.SetParameterExpression(
+    Parameter=parameter9,
+    Expression="5556262.78 [W m^-2]")
+parameter10 = Parameters.GetParameter(Name="P853")
+designPoint1.SetParameterExpression(
+    Parameter=parameter10,
+    Expression="0.00014628 [m^2 s^-1]")
+parameter11 = Parameters.GetParameter(Name="P854")
+designPoint1.SetParameterExpression(
+    Parameter=parameter11,
+    Expression="6.817E-05 [m^2 s^-1]")
+parameter12 = Parameters.GetParameter(Name="P856")
+designPoint1.SetParameterExpression(
+    Parameter=parameter12,
+    Expression="617.06 [s^-1]")
+setupComponent1 = system4.GetComponent(Name="Setup")
+setupComponent1.Refresh()
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 0))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 8))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 9))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Velocity Inlet*PanelButtons*PushButton2(Cancel)")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*Table3*DropDownList2(Type)\" '( 5))")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*DropDownList2(Type)")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*DropDownList7(Mass Flow Specification Method)\" '( 1))")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*DropDownList7(Mass Flow Specification Method)")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table9*DropDownList1\" '( 2))")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table9*DropDownList1")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table11*DropDownList1\" '( 2))")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table11*DropDownList1")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*DropDownList12(Direction Specification Method)\" '( 1))")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*DropDownList12(Direction Specification Method)")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*DropDownList1(Specification Method)\" '( 0))")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*DropDownList1(Specification Method)")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table5*DropDownList1\" '( 2))")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table5*DropDownList1")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table6*DropDownList1\" '( 2))")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table6*DropDownList1")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame2(Thermal)*Table1*Table1*DropDownList1\" '( 2))")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame2(Thermal)*Table1*Table1*DropDownList1")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*PanelButtons*PushButton1(OK)")')
+setup2.SendCommand(Command="(cx-use-window-id 1)(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 20))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Outlet Vent*PanelButtons*PushButton2(Cancel)")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*Table3*DropDownList2(Type)\" '( 11))")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*DropDownList2(Type)")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table6*DropDownList1\" '( 3))")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table6*DropDownList1")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*DropDownList1(Specification Method)\" '( 0))")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*DropDownList1(Specification Method)")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table5*DropDownList1\" '( 3))")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table5*DropDownList1")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table6*DropDownList1\" '( 3))")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table6*DropDownList1")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Pressure Outlet*Frame3*Frame2(Thermal)*Table1*Table1*DropDownList1\" '( 3))")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*Frame3*Frame2(Thermal)*Table1*Table1*DropDownList1")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*PanelButtons*PushButton1(OK)")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 23))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 21))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup2.SendCommand(Command='(cx-gui-do cx-set-text-entry "Symmetry*Frame1*TextEntry1(Zone Name)" "symmetry1-fluid")(cx-gui-do cx-activate-item "Symmetry*PanelButtons*PushButton1(OK)")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 22))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup2.SendCommand(Command='(cx-gui-do cx-set-text-entry "Symmetry*Frame1*TextEntry1(Zone Name)" "symmetry1-jet")(cx-gui-do cx-activate-item "Symmetry*PanelButtons*PushButton1(OK)")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 23))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup2.SendCommand(Command='(cx-gui-do cx-set-text-entry "Symmetry*Frame1*TextEntry1(Zone Name)" "symmetry1-thimble")(cx-gui-do cx-activate-item "Symmetry*PanelButtons*PushButton1(OK)")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 27))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton1(OK)")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 28))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 29))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 19))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Wall*Frame3*Frame2(Thermal)*Frame1*Frame1(Thermal Conditions)*Table2*DropDownList1(Material Name)\" '( 1))")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*Frame3*Frame2(Thermal)*Frame1*Frame1(Thermal Conditions)*Table2*DropDownList1(Material Name)")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton1(OK)")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-toggle-button2 \"Boundary Conditions*Table1*CheckButton4(Highlight Zone)\" #t)(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*CheckButton4(Highlight Zone)\")(cx-use-window-id 4)(cx-set-camera-relative '(-0.00181666 -0.15795 -0.0402093) '(0 0 0) '(1.36616 -0.216827 0.596998) 0 0)(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 13))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-use-window-id 4)(cx-set-camera-relative '(-0.031263 0.00836042 -0.0691994) '(0 0 0) '(0.0969819 -0.230406 -0.166601) 0 0)")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 15))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-toggle-button2 \"Boundary Conditions*Table1*CheckButton4(Highlight Zone)\" #f)(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*CheckButton4(Highlight Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 9))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup2.SendCommand(Command='(cx-gui-do cx-set-text-entry "Mass-Flow Inlet*Frame1*TextEntry1(Zone Name)" "mass-flow-inlet")(cx-gui-do cx-activate-item "Mass-Flow Inlet*PanelButtons*PushButton1(OK)")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 20))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup2.SendCommand(Command='(cx-gui-do cx-set-text-entry "Pressure Outlet*Frame1*TextEntry1(Zone Name)" "pressure-outlet")(cx-gui-do cx-activate-item "Pressure Outlet*PanelButtons*PushButton1(OK)")')
+setup2.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Reference Values\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Boundary Conditions\"))(cx-gui-do cx-set-toggle-button2 \"Boundary Conditions*Table1*CheckButton4(Highlight Zone)\" #t)(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*CheckButton4(Highlight Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 28))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 29))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 27))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 29))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-toggle-button2 \"Boundary Conditions*Table1*CheckButton4(Highlight Zone)\" #f)(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*CheckButton4(Highlight Zone)\")(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Reference Values\"))(cx-gui-do cx-set-list-selections \"Reference Values*DropDownList1(Compute from)\" '( 4))")
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Reference Values*DropDownList1(Compute from)")')
+setup2.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Methods"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Initialization"))')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Solution Initialization*Table1*ButtonBox10*PushButton2(Initialize)")')
+setup2.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Run Calculation"))')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Run Calculation*Table1*PushButton22(Calculate)")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "Information*OK")')
+setup2.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+ClearMessages()
+results2 = system4.GetContainer(ComponentName="Results")
+results2.Edit()
+results2.Exit()
+system4.Delete()
+Save(Overwrite=True)
+system5 = system3.Duplicate(RelativeTo=system3)
+system5.DisplayText = "439, H=0.9, SKE, 8M"
+setup3 = system5.GetContainer(ComponentName="Setup")
+fluentLauncherSettings2 = setup3.GetFluentLauncherSettings()
+fluentLauncherSettings2.SetEntityProperties(Properties=Set(EnvPath={}))
+setup3.Edit()
+setup3.SendCommand(Command="(cx-gui-do cx-activate-item \"Ribbon*Frame1*Frame2(Setting Up Domain)*Table1*Table2(Zones)*PushButton8(Replace Mesh)\")(cx-gui-do cx-activate-item \"Question*OK\")(cx-gui-do cx-set-file-dialog-entries \"Select File\" '( \"G:/Bailey/Fluent/ImportFiles/H-0.90 60 Deg Files/HEMJ-60deg-8M-no-lip-v4.msh\") \"Mesh Files (*.msh *.gz )\")(cx-gui-do cx-activate-item \"Information*Cancel\")")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton1(Scale)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Scale Mesh*Table1*Table2(Scaling)*DropDownList2(Mesh Was Created In)\" '( 3))")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*Table1*Table2(Scaling)*DropDownList2(Mesh Was Created In)")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*Table1*Table2(Scaling)*PushButton4(Scale)")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*PanelButtons*PushButton1(Close)")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton3(Check)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Models\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Cell Zone Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 2))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 1))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 0))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Boundary Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 0))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 19))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*PanelButtons*PushButton2(Cancel)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 20))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*PanelButtons*PushButton2(Cancel)")')
+setup3.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Reference Values\"))(cx-gui-do cx-set-list-selections \"Reference Values*DropDownList1(Compute from)\" '( 23))")
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Reference Values*DropDownList1(Compute from)")')
+setup3.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Controls"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Methods"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Initialization"))')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Solution Initialization*Table1*ButtonBox10*PushButton2(Initialize)")')
+setup3.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Run Calculation"))')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Run Calculation*Table1*PushButton22(Calculate)")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "Information*OK")')
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+ClearMessages()
+results3 = system5.GetContainer(ComponentName="Results")
+results3.Edit()
+results3.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/439-SKE-8M.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /SURFACE GROUP:CS
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results3.Exit()
+Save(Overwrite=True)
+ClearMessages()
+fluentLauncherSettings2.SetEntityProperties(Properties=Set(EnvPath={}))
+setup3.Edit()
+setup3.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+system5.Delete()
+system6 = system3.Duplicate(RelativeTo=system3)
+system6.DisplayText = "439, H=0.9, SKE, 8M"
+setup4 = system6.GetContainer(ComponentName="Setup")
+fluentLauncherSettings3 = setup4.GetFluentLauncherSettings()
+fluentLauncherSettings3.SetEntityProperties(Properties=Set(EnvPath={}))
+setup4.Edit()
+setup4.SendCommand(Command="(cx-gui-do cx-activate-item \"Ribbon*Frame1*Frame2(Setting Up Domain)*Table1*Table2(Zones)*PushButton8(Replace Mesh)\")(cx-gui-do cx-activate-item \"Question*OK\")(cx-gui-do cx-set-file-dialog-entries \"Select File\" '( \"G:/Bailey/Fluent/ImportFiles/H-0.90 60 Deg Files/HEMJ-60deg-8M-no-lip-v5.msh\") \"Mesh Files (*.msh *.gz )\")(cx-gui-do cx-activate-item \"Information*Cancel\")")
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton1(Scale)")')
+setup4.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Scale Mesh*Table1*Table2(Scaling)*DropDownList2(Mesh Was Created In)\" '( 3))")
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*Table1*Table2(Scaling)*DropDownList2(Mesh Was Created In)")')
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*Table1*Table2(Scaling)*PushButton4(Scale)")')
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*PanelButtons*PushButton1(Close)")')
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton3(Check)")')
+setup4.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Models\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Boundary Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 19))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*PanelButtons*PushButton2(Cancel)")')
+setup4.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 20))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*PanelButtons*PushButton2(Cancel)")')
+setup4.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Reference Values\"))(cx-gui-do cx-set-list-selections \"Reference Values*DropDownList1(Compute from)\" '( 23))")
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "Reference Values*DropDownList1(Compute from)")')
+setup4.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Methods"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Initialization"))')
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "Solution Initialization*Table1*ButtonBox10*PushButton2(Initialize)")')
+setup4.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Run Calculation"))')
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "Run Calculation*Table1*PushButton22(Calculate)")')
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "Information*OK")')
+Save(Overwrite=True)
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Save Project")')
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+results4 = system6.GetContainer(ComponentName="Results")
+results4.Edit()
+results4.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/439-SKE-8M.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /SURFACE GROUP:CS
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results4.Exit()
+ClearMessages()
+solution2 = system6.GetContainer(ComponentName="Solution")
+solution2.Edit()
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton1(Scale)")')
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*PanelButtons*PushButton1(Close)")')
+setup4.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+system7 = GetSystem(Name="FFF 17")
+results5 = system7.GetContainer(ComponentName="Results")
+results5.Edit()
+results5.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/439-SKE-6M.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /SURFACE GROUP:CS
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results5.Exit()
+solution3 = system7.GetContainer(ComponentName="Solution")
+solution3.Edit()
+setup5 = system7.GetContainer(ComponentName="Setup")
+setup5.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list ))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Setup|General"))')
+setup5.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton1(Scale)")')
+setup5.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*PanelButtons*PushButton1(Close)")')
+setup5.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Models\"))(cx-gui-do cx-set-list-selections \"Models*Table1*List1(Models)\" '( 3))(cx-gui-do cx-activate-item \"Models*Table1*List1(Models)\")")
+setup5.SendCommand(Command='(cx-gui-do cx-activate-item "Models*Table1*PushButton2(Edit)")')
+setup5.SendCommand(Command='(cx-gui-do cx-activate-item "Radiation Model*PanelButtons*PushButton2(Cancel)")')
+setup5.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Materials\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Cell Zone Conditions\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Boundary Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 19))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup5.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup5.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*PanelButtons*PushButton2(Cancel)")')
+setup5.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 20))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup5.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup5.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*PanelButtons*PushButton2(Cancel)")')
+setup5.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Setup|Reference Values"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Methods"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Initialization"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Run Calculation"))')
+setup5.SendCommand(Command='(cx-gui-do cx-activate-item "Ribbon*Frame1*Frame2(Setting Up Domain)*Table1*Table2(Mesh)*PushButton1(Display)")')
+setup5.SendCommand(Command='(cx-gui-do cx-activate-item "Mesh Display*Frame2*List1(Surfaces)")')
+setup5.SendCommand(Command='(cx-gui-do cx-activate-item "Mesh Display*PushButton4(DeselectAll)")')
+setup5.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mesh Display*Frame2*List1(Surfaces)\" '( 26))(cx-gui-do cx-activate-item \"Mesh Display*Frame2*List1(Surfaces)\")(cx-gui-do cx-activate-item \"Mesh Display*PanelButtons*PushButton1(OK)\")")
+setup5.SendCommand(Command="(cx-use-window-id 1)(cx-set-camera-relative '(0.086674 0.0274315 -0.0581964) '(0 0 0) '(-0.141605 -0.0633044 -0.320244) 0 0)(cx-gui-do cx-activate-item \"Mesh Display*PanelButtons*PushButton2(Cancel)\")")
+setup5.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+solution2.Edit()
+setup4.SendCommand(Command="(cx-gui-do cx-activate-item \"Ribbon*Frame1*Frame2(Setting Up Domain)*Table1*Table2(Zones)*PushButton8(Replace Mesh)\")(cx-gui-do cx-activate-item \"Question*OK\")(cx-gui-do cx-set-file-dialog-entries \"Select File\" '( \"G:/Bailey/Fluent/ImportFiles/H-0.90 60 Deg Files/HEMJ-60deg-8M-no-lip-v6.msh\") \"Mesh Files (*.msh *.gz )\")")
+system6.Delete()
+ClearMessages()
+system8 = system3.Duplicate(RelativeTo=system3)
+system8.DisplayText = "439, H=0.9, SKE, 4M"
+system8.DisplayText = "439, H=0.9, SKE, 8M"
+setup6 = system8.GetContainer(ComponentName="Setup")
+fluentLauncherSettings4 = setup6.GetFluentLauncherSettings()
+fluentLauncherSettings4.SetEntityProperties(Properties=Set(EnvPath={}))
+setup6.Edit()
+setup6.SendCommand(Command="(cx-gui-do cx-activate-item \"Ribbon*Frame1*Frame2(Setting Up Domain)*Table1*Table2(Zones)*PushButton8(Replace Mesh)\")(cx-gui-do cx-activate-item \"Question*OK\")(cx-gui-do cx-set-file-dialog-entries \"Select File\" '( \"G:/Bailey/Fluent/ImportFiles/H-0.90 60 Deg Files/HEMJ-60deg-8M-no-lip-v6.msh\") \"Mesh Files (*.msh *.gz )\")")
+setup6.SendCommand(Command='(cx-gui-do cx-activate-item "Information*Cancel")')
+setup6.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton1(Scale)")')
+setup6.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Scale Mesh*Table1*Table2(Scaling)*DropDownList2(Mesh Was Created In)\" '( 3))")
+setup6.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*Table1*Table2(Scaling)*DropDownList2(Mesh Was Created In)")')
+setup6.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*Table1*Table2(Scaling)*PushButton4(Scale)")')
+setup6.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*PanelButtons*PushButton1(Close)")')
+setup6.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton3(Check)")')
+setup6.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Boundary Conditions\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Solution\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Reference Values\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Boundary Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 4))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup6.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton3(Display Mesh)")')
+setup6.SendCommand(Command='(cx-gui-do cx-activate-item "Mesh Display*Frame2*List1(Surfaces)")')
+setup6.SendCommand(Command='(cx-gui-do cx-activate-item "Mesh Display*PushButton4(DeselectAll)")')
+setup6.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mesh Display*Frame2*List1(Surfaces)\" '( 26))(cx-gui-do cx-activate-item \"Mesh Display*Frame2*List1(Surfaces)\")(cx-gui-do cx-activate-item \"Mesh Display*PanelButtons*PushButton1(OK)\")")
+setup6.SendCommand(Command="(cx-use-window-id 1)(cx-set-camera-relative '(0.046535 -0.0461576 -0.0244411) '(0 0 0) '(0.10794 -0.123161 0.468511) 0 0)(cx-gui-do cx-activate-item \"Mesh Display*PanelButtons*PushButton2(Cancel)\")")
+setup6.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Setup|Models"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Setup|Cell Zone Conditions"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Methods"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Report Definitions"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Initialization"))')
+setup6.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Save Project")')
+Save(Overwrite=True)
+ClearMessages()
+setup6.SendCommand(Command='(cx-gui-do cx-activate-item "Solution Initialization*Table1*ButtonBox10*PushButton2(Initialize)")')
+setup6.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Run Calculation"))')
+setup6.SendCommand(Command='(cx-gui-do cx-activate-item "Run Calculation*Table1*PushButton22(Calculate)")')
+setup6.SendCommand(Command='(cx-gui-do cx-activate-item "Information*OK")')
+setup6.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+ClearMessages()
+results6 = system8.GetContainer(ComponentName="Results")
+results6.Edit()
+results6.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/439-SKE-8M.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /SURFACE GROUP:CS
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results6.Exit()
+system8.Delete()
+ClearMessages()
+system3.DisplayText = "220, H=0.9, SKE, 4M"
+solutionComponent1 = system3.GetComponent(Name="Solution")
+solutionComponent1.Clean()
+setup7 = system3.GetContainer(ComponentName="Setup")
+fluentLauncherSettings5 = setup7.GetFluentLauncherSettings()
+fluentLauncherSettings5.SetEntityProperties(Properties=Set(EnvPath={}))
+setup7.Edit()
+setup7.SendCommand(Command="(cx-gui-do cx-activate-item \"Ribbon*Frame1*Frame2(Setting Up Domain)*Table1*Table2(Zones)*PushButton8(Replace Mesh)\")(cx-gui-do cx-activate-item \"Question*OK\")(cx-gui-do cx-set-file-dialog-entries \"Select File\" '( \"G:/Bailey/Fluent/ImportFiles/H-0.90 60 Deg Files/HEMJ_60Deg4.2M.msh\") \"Mesh Files (*.msh *.gz )\")(cx-gui-do cx-activate-item \"Information*Cancel\")")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton1(Scale)")')
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*PanelButtons*PushButton1(Close)")')
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton3(Check)")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Cell Zone Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 0))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Fluid*PanelButtons*PushButton2(Cancel)")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 1))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Solid*PanelButtons*PushButton2(Cancel)")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 2))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Solid*PanelButtons*PushButton2(Cancel)")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Boundary Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 8))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 9))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*Table3*DropDownList2(Type)\" '( 5))")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*DropDownList2(Type)")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*DropDownList7(Mass Flow Specification Method)\" '( 1))")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*DropDownList7(Mass Flow Specification Method)")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table9*DropDownList1\" '( 2))")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table9*DropDownList1")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table11*DropDownList1\" '( 2))")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table11*DropDownList1")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*DropDownList12(Direction Specification Method)\" '( 1))")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*DropDownList12(Direction Specification Method)")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*DropDownList1(Specification Method)\" '( 0))")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*DropDownList1(Specification Method)")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table5*DropDownList1\" '( 2))")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table5*DropDownList1")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table6*DropDownList1\" '( 2))")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table6*DropDownList1")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Mass-Flow Inlet*Frame3*Frame2(Thermal)*Table1*Table1*DropDownList1\" '( 2))")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*Frame3*Frame2(Thermal)*Table1*Table1*DropDownList1")')
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*PanelButtons*PushButton1(OK)")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 20))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Outlet Vent*PanelButtons*PushButton2(Cancel)")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*Table3*DropDownList2(Type)\" '( 11))")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*DropDownList2(Type)")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table6*DropDownList1\" '( 3))")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table6*DropDownList1")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*DropDownList1(Specification Method)\" '( 0))")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*DropDownList1(Specification Method)")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table5*DropDownList1\" '( 3))")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table5*DropDownList1")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table6*DropDownList1\" '( 3))")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*Frame3*Frame1(Momentum)*Table1*Table3(Turbulence)*Table6*DropDownList1")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Pressure Outlet*Frame3*Frame2(Thermal)*Table1*Table1*DropDownList1\" '( 3))")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*Frame3*Frame2(Thermal)*Table1*Table1*DropDownList1")')
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*PanelButtons*PushButton1(OK)")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 21))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup7.SendCommand(Command='(cx-gui-do cx-set-text-entry "Symmetry*Frame1*TextEntry1(Zone Name)" "symmetry1-fluid")(cx-gui-do cx-activate-item "Symmetry*PanelButtons*PushButton1(OK)")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 22))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup7.SendCommand(Command='(cx-gui-do cx-set-text-entry "Symmetry*Frame1*TextEntry1(Zone Name)" "symmetry1-jet")(cx-gui-do cx-activate-item "Symmetry*PanelButtons*PushButton1(OK)")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 23))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup7.SendCommand(Command='(cx-gui-do cx-set-text-entry "Symmetry*Frame1*TextEntry1(Zone Name)" "symmetry1-thimble")(cx-gui-do cx-activate-item "Symmetry*PanelButtons*PushButton1(OK)")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 27))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton2(Parameters)")')
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Parameters*PanelButtons*PushButton1(Close)")')
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+parameter13 = Parameters.GetParameter(Name="P785")
+designPoint1.SetParameterExpression(
+    Parameter=parameter13,
+    Expression="0.002941 [kg s^-1]")
+parameter14 = Parameters.GetParameter(Name="P786")
+designPoint1.SetParameterExpression(
+    Parameter=parameter14,
+    Expression="10331782 [Pa]")
+parameter15 = Parameters.GetParameter(Name="P787")
+designPoint1.SetParameterExpression(
+    Parameter=parameter15,
+    Expression="0.020683 [J kg^-1]")
+parameter16 = Parameters.GetParameter(Name="P788")
+designPoint1.SetParameterExpression(
+    Parameter=parameter16,
+    Expression="0.73193 [m^2 s^-3]")
+parameter17 = Parameters.GetParameter(Name="P789")
+designPoint1.SetParameterExpression(
+    Parameter=parameter17,
+    Expression="304.425 [K]")
+parameter18 = Parameters.GetParameter(Name="P790")
+designPoint1.SetParameterExpression(
+    Parameter=parameter18,
+    Expression="10321097 [Pa]")
+parameter19 = Parameters.GetParameter(Name="P791")
+designPoint1.SetParameterExpression(
+    Parameter=parameter19,
+    Expression="0.021919 [J kg^-1]")
+parameter20 = Parameters.GetParameter(Name="P792")
+designPoint1.SetParameterExpression(
+    Parameter=parameter20,
+    Expression="1.583285 [m^2 s^-3]")
+parameter21 = Parameters.GetParameter(Name="P793")
+designPoint1.SetParameterExpression(
+    Parameter=parameter21,
+    Expression="385.817 [K]")
+parameter22 = Parameters.GetParameter(Name="P794")
+designPoint1.SetParameterExpression(
+    Parameter=parameter22,
+    Expression="7013247.508 [W m^-2]")
+parameter23 = Parameters.GetParameter(Name="P795")
+designPoint1.SetParameterExpression(
+    Parameter=parameter23,
+    Expression="41.1428 [kg m^-2 s^-1]")
+parameter24 = Parameters.GetParameter(Name="P796")
+designPoint1.SetParameterExpression(
+    Parameter=parameter24,
+    Expression="9.6041E-05 [m^2 s^-1]")
+parameter25 = Parameters.GetParameter(Name="P797")
+designPoint1.SetParameterExpression(
+    Parameter=parameter25,
+    Expression="4.9861E-05 [m^2 s^-1]")
+parameter26 = Parameters.GetParameter(Name="P798")
+designPoint1.SetParameterExpression(
+    Parameter=parameter26,
+    Expression="221.11 [s^-1]")
+parameter27 = Parameters.GetParameter(Name="P799")
+designPoint1.SetParameterExpression(
+    Parameter=parameter27,
+    Expression="451.333 [s^-1]")
+system3.DisplayText = "219, H=0.9, SKE, 4M"
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 19))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Wall*Frame3*Frame2(Thermal)*Frame1*Frame1(Thermal Conditions)*Table2*DropDownList1(Material Name)\" '( 1))")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*Frame3*Frame2(Thermal)*Frame1*Frame1(Thermal Conditions)*Table2*DropDownList1(Material Name)")')
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton1(OK)")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 20))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*PanelButtons*PushButton2(Cancel)")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Reference Values\"))(cx-gui-do cx-set-list-selections \"Reference Values*DropDownList1(Compute from)\" '( 4))")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Reference Values*DropDownList1(Compute from)")')
+setupComponent2 = system3.GetComponent(Name="Setup")
+setupComponent2.Refresh()
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Reference Values*DropDownList1(Compute from)\" '( 4))")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Reference Values*DropDownList1(Compute from)")')
+setup7.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Methods"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Initialization"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Run Calculation"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Initialization"))')
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Solution Initialization*Table1*ButtonBox10*PushButton2(Initialize)")')
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+system9 = system3.Duplicate(RelativeTo=system3)
+system9.DisplayText = "219, H=0.9, SKE, 6M"
+system10 = system9.Duplicate(RelativeTo=system9)
+system10.DisplayText = "219, H=0.9, SKE, 8M"
+setup8 = system9.GetContainer(ComponentName="Setup")
+fluentLauncherSettings6 = setup8.GetFluentLauncherSettings()
+fluentLauncherSettings6.SetEntityProperties(Properties=Set(EnvPath={}))
+setup8.Edit()
+setup8.SendCommand(Command="(cx-gui-do cx-activate-item \"MenuBar*ImportSubMenu*Mesh...\")(cx-gui-do cx-activate-item \"Question*OK\")(cx-gui-do cx-set-toggle-button2 \"Read Mesh Options*Table1(Options)*ToggleBox1*Replace mesh\" #t)(cx-gui-do cx-activate-item \"Read Mesh Options*Table1(Options)*ToggleBox1*Replace mesh\")(cx-gui-do cx-activate-item \"Read Mesh Options*PanelButtons*PushButton1(OK)\")(cx-gui-do cx-set-file-dialog-entries \"Select File\" '( \"G:/Bailey/Fluent/ImportFiles/H-0.90 60 Deg Files/HEMJ_60Deg6M.msh\") \"Mesh Files (*.msh* *.MSH* )\")")
+setup8.SendCommand(Command='(cx-gui-do cx-activate-item "Information*Cancel")')
+setup8.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton1(Scale)")')
+setup8.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*PanelButtons*PushButton1(Close)")')
+setup8.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton3(Check)")')
+setup8.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Models\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Materials\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Boundary Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 9))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup8.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup8.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*PanelButtons*PushButton2(Cancel)")')
+setup8.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 21))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup8.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup8.SendCommand(Command='(cx-gui-do cx-set-text-entry "Symmetry*Frame1*TextEntry1(Zone Name)" "symmetry1-fluid")(cx-gui-do cx-activate-item "Symmetry*PanelButtons*PushButton1(OK)")')
+setup8.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 22))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup8.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup8.SendCommand(Command='(cx-gui-do cx-set-text-entry "Symmetry*Frame1*TextEntry1(Zone Name)" "symmetry1-jet")(cx-gui-do cx-activate-item "Symmetry*PanelButtons*PushButton1(OK)")')
+setup8.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 24))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 23))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup8.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup8.SendCommand(Command='(cx-gui-do cx-set-text-entry "Symmetry*Frame1*TextEntry1(Zone Name)" "symmetry1-thimble")(cx-gui-do cx-activate-item "Symmetry*PanelButtons*PushButton1(OK)")')
+setup8.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 20))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup8.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup8.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*PanelButtons*PushButton2(Cancel)")')
+setup8.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Reference Values\"))(cx-gui-do cx-set-list-selections \"Reference Values*DropDownList1(Compute from)\" '( 3))")
+setup8.SendCommand(Command='(cx-gui-do cx-activate-item "Reference Values*DropDownList1(Compute from)")')
+setup8.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Controls"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Methods"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Initialization"))')
+setup8.SendCommand(Command='(cx-gui-do cx-activate-item "Solution Initialization*Table1*ButtonBox10*PushButton2(Initialize)")')
+setup8.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+setup9 = system10.GetContainer(ComponentName="Setup")
+fluentLauncherSettings7 = setup9.GetFluentLauncherSettings()
+fluentLauncherSettings7.SetEntityProperties(Properties=Set(EnvPath={}))
+setup9.Edit()
+setup9.SendCommand(Command="(cx-gui-do cx-activate-item \"MenuBar*ImportSubMenu*Mesh...\")(cx-gui-do cx-activate-item \"Question*OK\")(cx-gui-do cx-set-toggle-button2 \"Read Mesh Options*Table1(Options)*ToggleBox1*Replace mesh\" #t)(cx-gui-do cx-activate-item \"Read Mesh Options*Table1(Options)*ToggleBox1*Replace mesh\")(cx-gui-do cx-activate-item \"Read Mesh Options*PanelButtons*PushButton1(OK)\")(cx-gui-do cx-set-file-dialog-entries \"Select File\" '( \"G:/Bailey/Fluent/ImportFiles/H-0.90 60 Deg Files/HEMJ_60Deg8M.msh\") \"Mesh Files (*.msh* *.MSH* )\")")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Information*Cancel")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton1(Scale)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*PanelButtons*PushButton1(Close)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton3(Check)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Boundary Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 9))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*PanelButtons*PushButton2(Cancel)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 21))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup9.SendCommand(Command='(cx-gui-do cx-set-text-entry "Symmetry*Frame1*TextEntry1(Zone Name)" "symmetry1-fluid")(cx-gui-do cx-activate-item "Symmetry*PanelButtons*PushButton1(OK)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 22))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup9.SendCommand(Command='(cx-gui-do cx-set-text-entry "Symmetry*Frame1*TextEntry1(Zone Name)" "symmetry1-jet")(cx-gui-do cx-activate-item "Symmetry*PanelButtons*PushButton1(OK)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 23))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup9.SendCommand(Command='(cx-gui-do cx-set-text-entry "Symmetry*Frame1*TextEntry1(Zone Name)" "symmetry1-thimble")(cx-gui-do cx-activate-item "Symmetry*PanelButtons*PushButton1(OK)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 27))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Reference Values\"))(cx-gui-do cx-set-list-selections \"Reference Values*DropDownList1(Compute from)\" '( 3))")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Reference Values*DropDownList1(Compute from)")')
+setup9.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Methods"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Calculation Activities"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Initialization"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Run Calculation"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Initialization"))')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Solution Initialization*Table1*ButtonBox10*PushButton2(Initialize)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+ClearMessages()
+Save(Overwrite=True)
+system3.Update(AllDependencies=True)
+ClearMessages()
+Save(Overwrite=True)
+Update()
+ClearMessages()
+results7 = system3.GetContainer(ComponentName="Results")
+results7.Edit()
+results7.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/219-SKE-4M.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /SURFACE GROUP:CS
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results7.Exit()
+results8 = system9.GetContainer(ComponentName="Results")
+results8.Edit()
+results8.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/219-SKE-6M.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /SURFACE GROUP:CS
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results8.Exit()
+results9 = system10.GetContainer(ComponentName="Results")
+results9.Edit()
+results9.Exit()
+solution4 = system10.GetContainer(ComponentName="Solution")
+solution4.Edit()
+setup9.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list ))')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Ribbon*Frame1*Frame6(Postprocessing)*Table1*Table2(Plots)*PushButton3(Residuals)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Residual Monitors*PanelButtons*PushButton5(Plot)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Residual Monitors*PanelButtons*PushButton2(Cancel)")')
+setup9.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Setup|Models"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Setup|General"))')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton1(Scale)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*PanelButtons*PushButton1(Close)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton3(Check)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Cell Zone Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 0))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Fluid*PanelButtons*PushButton2(Cancel)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 1))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Solid*PanelButtons*PushButton2(Cancel)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 2))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Fluid*PanelButtons*PushButton2(Cancel)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*Table3*DropDownList2(Type)\" '( 1))")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*DropDownList2(Type)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Solid*Table2*Table1*DropDownList1(Material Name)\" '( 3))")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Solid*Table2*Table1*DropDownList1(Material Name)")')
+setup9.SendCommand(Command='(cx-gui-do cx-set-text-entry "Solid*Frame1*TextEntry1(Zone Name)" "thimble_matpoint")(cx-gui-do cx-activate-item "Solid*PanelButtons*PushButton1(OK)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Boundary Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 0))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 6))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 8))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 9))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*PanelButtons*PushButton2(Cancel)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 13))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-toggle-button2 \"Boundary Conditions*Table1*CheckButton4(Highlight Zone)\" #t)(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*CheckButton4(Highlight Zone)\")(cx-use-window-id 3)(cx-set-camera-relative '(-0.0106174 -0.162763 -0.0525397) '(0 0 0) '(1.41804 -0.31246 0.461518) 0 0)(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 14))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup9.SendCommand(Command="(cx-use-window-id 3)(cx-set-camera-relative '(0.0146821 0.0703838 0.0838882) '(0 0 0) '(-0.706667 0.575754 0.155385) 0 0)(cx-gui-do cx-set-list-selections \"Wall*Frame3*Frame2(Thermal)*Frame1*Frame1(Thermal Conditions)*Table2*DropDownList1(Material Name)\" '( 1))")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*Frame3*Frame2(Thermal)*Frame1*Frame1(Thermal Conditions)*Table2*DropDownList1(Material Name)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton1(OK)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 16))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton1(OK)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 18))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton1(OK)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 20))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-toggle-button2 \"Boundary Conditions*Table1*CheckButton4(Highlight Zone)\" #f)(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*CheckButton4(Highlight Zone)\")")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*PanelButtons*PushButton1(OK)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 28))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 27))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 28))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 29))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Wall*PanelButtons*PushButton2(Cancel)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Reference Values\"))(cx-gui-do cx-set-list-selections \"Reference Values*DropDownList1(Compute from)\" '( 3))")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Reference Values*DropDownList1(Compute from)")')
+setup9.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Methods"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Initialization"))')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Solution Initialization*Table1*ButtonBox10*PushButton2(Initialize)")')
+setup9.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Run Calculation"))')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Run Calculation*Table1*PushButton22(Calculate)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Information*OK")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+ClearMessages()
+results9.Edit()
+results9.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/219-SKE-8M.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /SURFACE GROUP:CS
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results9.Exit()
+parameter28 = Parameters.GetParameter(Name="P842")
+designPoint1.SetParameterExpression(
+    Parameter=parameter28,
+    Expression="0.00348 [kg s^-1]")
+parameter29 = Parameters.GetParameter(Name="P843")
+designPoint1.SetParameterExpression(
+    Parameter=parameter29,
+    Expression="9809762 [Pa]")
+parameter30 = Parameters.GetParameter(Name="P844")
+designPoint1.SetParameterExpression(
+    Parameter=parameter30,
+    Expression="0.04798 [J kg^-1]")
+parameter31 = Parameters.GetParameter(Name="P845")
+designPoint1.SetParameterExpression(
+    Parameter=parameter31,
+    Expression="2.585992 [m^2 s^-3]")
+parameter32 = Parameters.GetParameter(Name="P846")
+designPoint1.SetParameterExpression(
+    Parameter=parameter32,
+    Expression="373.502 [K]")
+parameter33 = Parameters.GetParameter(Name="P847")
+designPoint1.SetParameterExpression(
+    Parameter=parameter33,
+    Expression="9789546 [Pa]")
+parameter34 = Parameters.GetParameter(Name="P848")
+designPoint1.SetParameterExpression(
+    Parameter=parameter34,
+    Expression="0.040971 [J kg^-1]")
+parameter35 = Parameters.GetParameter(Name="P849")
+designPoint1.SetParameterExpression(
+    Parameter=parameter35,
+    Expression="4.046215 [m^2 s^-3]")
+parameter36 = Parameters.GetParameter(Name="P850")
+designPoint1.SetParameterExpression(
+    Parameter=parameter36,
+    Expression="427.996 [K]")
+parameter37 = Parameters.GetParameter(Name="P851")
+designPoint1.SetParameterExpression(
+    Parameter=parameter37,
+    Expression="5556262.78 [W m^-2]")
+parameter38 = Parameters.GetParameter(Name="P852")
+designPoint1.SetParameterExpression(
+    Parameter=parameter38,
+    Expression="48.6899 [kg m^-2 s^-1]")
+parameter39 = Parameters.GetParameter(Name="P853")
+designPoint1.SetParameterExpression(
+    Parameter=parameter39,
+    Expression="0.00014628 [m^2 s^-1]")
+parameter40 = Parameters.GetParameter(Name="P854")
+designPoint1.SetParameterExpression(
+    Parameter=parameter40,
+    Expression="6.817E-05 [m^2 s^-1]")
+parameter41 = Parameters.GetParameter(Name="P855")
+designPoint1.SetParameterExpression(
+    Parameter=parameter41,
+    Expression="336.76 [s^-1]")
+parameter42 = Parameters.GetParameter(Name="P856")
+designPoint1.SetParameterExpression(
+    Parameter=parameter42,
+    Expression="617.06 [s^-1]")
+system9.DisplayText = "439, H=0.9, SKE, 6M"
+setupComponent3 = system9.GetComponent(Name="Setup")
+setupComponent3.Refresh()
+fluentLauncherSettings6.SetEntityProperties(Properties=Set(EnvPath={}))
+setup8.Edit()
+setup8.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton1(Scale)")')
+setup8.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*PanelButtons*PushButton1(Close)")')
+setup8.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Cell Zone Conditions\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Boundary Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 9))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup8.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup8.SendCommand(Command='(cx-gui-do cx-activate-item "Mass-Flow Inlet*PanelButtons*PushButton2(Cancel)")')
+setup8.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Reference Values\"))(cx-gui-do cx-set-list-selections \"Reference Values*DropDownList1(Compute from)\" '( 3))")
+setup8.SendCommand(Command='(cx-gui-do cx-activate-item "Reference Values*DropDownList1(Compute from)")')
+setup8.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Controls"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Methods"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Calculation Activities"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Initialization"))')
+setup8.SendCommand(Command='(cx-gui-do cx-activate-item "Solution Initialization*Table1*ButtonBox10*PushButton2(Initialize)")')
+setup8.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+parameter43 = Parameters.GetParameter(Name="P861")
+designPoint1.SetParameterExpression(
+    Parameter=parameter43,
+    Expression="0.00348 [kg s^-1]")
+parameter44 = Parameters.GetParameter(Name="P862")
+designPoint1.SetParameterExpression(
+    Parameter=parameter44,
+    Expression="9809762 [Pa]")
+parameter45 = Parameters.GetParameter(Name="P863")
+designPoint1.SetParameterExpression(
+    Parameter=parameter45,
+    Expression="0.04798 [J kg^-1]")
+parameter46 = Parameters.GetParameter(Name="P864")
+designPoint1.SetParameterExpression(
+    Parameter=parameter46,
+    Expression="2.585992 [m^2 s^-3]")
+parameter47 = Parameters.GetParameter(Name="P865")
+designPoint1.SetParameterExpression(
+    Parameter=parameter47,
+    Expression="373.502 [K]")
+parameter48 = Parameters.GetParameter(Name="P866")
+designPoint1.SetParameterExpression(
+    Parameter=parameter48,
+    Expression="9789546 [Pa]")
+parameter49 = Parameters.GetParameter(Name="P867")
+designPoint1.SetParameterExpression(
+    Parameter=parameter49,
+    Expression="0.040971 [J kg^-1]")
+parameter50 = Parameters.GetParameter(Name="P868")
+designPoint1.SetParameterExpression(
+    Parameter=parameter50,
+    Expression="4.046215 [m^2 s^-3]")
+parameter51 = Parameters.GetParameter(Name="P869")
+designPoint1.SetParameterExpression(
+    Parameter=parameter51,
+    Expression="427.996 [K]")
+parameter52 = Parameters.GetParameter(Name="P870")
+designPoint1.SetParameterExpression(
+    Parameter=parameter52,
+    Expression="5556262.78 [W m^-2]")
+parameter53 = Parameters.GetParameter(Name="P871")
+designPoint1.SetParameterExpression(
+    Parameter=parameter53,
+    Expression="48.6899 [kg m^-2 s^-1]")
+parameter54 = Parameters.GetParameter(Name="P872")
+designPoint1.SetParameterExpression(
+    Parameter=parameter54,
+    Expression="0.00014628 [m^2 s^-1]")
+parameter55 = Parameters.GetParameter(Name="P873")
+designPoint1.SetParameterExpression(
+    Parameter=parameter55,
+    Expression="6.817E-05 [m^2 s^-1]")
+parameter56 = Parameters.GetParameter(Name="P874")
+designPoint1.SetParameterExpression(
+    Parameter=parameter56,
+    Expression="336.76 [s^-1]")
+parameter57 = Parameters.GetParameter(Name="P875")
+designPoint1.SetParameterExpression(
+    Parameter=parameter57,
+    Expression="617.06 [s^-1]")
+system10.Update(AllDependencies=True)
+ClearMessages()
+solutionComponent2 = system10.GetComponent(Name="Solution")
+solutionComponent2.Refresh()
+solution4.Edit()
+solutionComponent2.Refresh()
+setup9.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list ))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Setup|General"))')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton1(Scale)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*PanelButtons*PushButton1(Close)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton3(Check)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Cell Zone Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 1))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 2))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*Table3*DropDownList2(Type)\" '( 1))")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*DropDownList2(Type)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Solid*Table2*Table1*DropDownList1(Material Name)\" '( 3))")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Solid*Table2*Table1*DropDownList1(Material Name)")')
+setup9.SendCommand(Command='(cx-gui-do cx-set-text-entry "Solid*Frame1*TextEntry1(Zone Name)" "thimble_matpoint")(cx-gui-do cx-activate-item "Solid*PanelButtons*PushButton1(OK)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Reference Values\"))(cx-gui-do cx-set-list-selections \"Reference Values*DropDownList1(Compute from)\" '( 3))")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Reference Values*DropDownList1(Compute from)")')
+setup9.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Methods"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Initialization"))')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Solution Initialization*Table1*ButtonBox10*PushButton2(Initialize)")')
+setup9.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Run Calculation"))')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Run Calculation*Table1*PushButton22(Calculate)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Information*OK")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+results9.Edit()
+results9.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = G:/Bailey/Fluent/HEMJ-60deg-SKE/HEMJ-60deg-SKE_files/user_files/439-SKE-8M.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /SURFACE GROUP:CS
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results9.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/439-SKE-8M.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /SURFACE GROUP:CS
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results9.Exit()
+ClearMessages()
+system3.DisplayText = "339, H=0.9, SKE, 4M"
+system9.DisplayText = "339, H=0.9, SKE, 6M"
+system10.DisplayText = "339, H=0.9, SKE, 8M"
+designPoint1.SetParameterExpression(
+    Parameter=parameter13,
+    Expression="0.00287 [kg s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter14,
+    Expression="9993648 [Pa]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter15,
+    Expression="0.020752 [J kg^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter16,
+    Expression="0.735555 [m^2 s^-3]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter17,
+    Expression="301.569 [K]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter18,
+    Expression="9984279 [Pa]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter19,
+    Expression="0.023504 [J kg^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter20,
+    Expression="1.75805 [m^2 s^-3]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter21,
+    Expression="394.141 [K]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter22,
+    Expression="7783677.748 [W m^-2]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter23,
+    Expression="40.1477 [kg m^-2 s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter24,
+    Expression="9.62E-05 [m^2 s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter25,
+    Expression="5.1632E-05 [m^2 s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter26,
+    Expression="221.47 [s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter27,
+    Expression="467.364 [s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter28,
+    Expression="0.00287 [kg s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter29,
+    Expression="9993648 [Pa]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter30,
+    Expression="0.020752 [J kg^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter31,
+    Expression="0.735555 [m^2 s^-3]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter32,
+    Expression="301.569 [K]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter33,
+    Expression="9984279 [Pa]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter34,
+    Expression="0.023504 [J kg^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter35,
+    Expression="1.75805 [m^2 s^-3]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter36,
+    Expression="394.141 [K]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter37,
+    Expression="7783677.748 [W m^-2]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter38,
+    Expression="40.1477 [kg m^-2 s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter39,
+    Expression="9.62E-05 [m^2 s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter40,
+    Expression="5.1632E-05 [m^2 s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter41,
+    Expression="221.47 [s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter42,
+    Expression="467.364 [s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter43,
+    Expression="0.00287 [kg s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter44,
+    Expression="9993648 [Pa]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter45,
+    Expression="0.020752 [J kg^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter46,
+    Expression="0.735555 [m^2 s^-3]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter47,
+    Expression="301.569 [K]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter48,
+    Expression="9984279 [Pa]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter49,
+    Expression="0.023504 [J kg^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter50,
+    Expression="1.75805 [m^2 s^-3]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter51,
+    Expression="394.141 [K]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter52,
+    Expression="7783677.748 [W m^-2]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter53,
+    Expression="40.1477 [kg m^-2 s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter54,
+    Expression="9.62E-05 [m^2 s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter55,
+    Expression="5.1632E-05 [m^2 s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter56,
+    Expression="221.47 [s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter57,
+    Expression="467.364 [s^-1]")
+solutionComponent2.Clean()
+Save(Overwrite=True)
+system3.Update(AllDependencies=True)
+ClearMessages()
+solutionComponent1.Clean()
+setupComponent3.Refresh()
+setupComponent4 = system10.GetComponent(Name="Setup")
+setupComponent4.Refresh()
+fluentLauncherSettings5.SetEntityProperties(Properties=Set(EnvPath={}))
+setup7.Edit()
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton1(Scale)")')
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*PanelButtons*PushButton1(Close)")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Models\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Materials\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Cell Zone Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 2))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Solid*PanelButtons*PushButton2(Cancel)")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 1))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 0))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Boundary Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 20))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Pressure Outlet*PanelButtons*PushButton2(Cancel)")')
+setup7.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Reference Values\"))(cx-gui-do cx-set-list-selections \"Reference Values*DropDownList1(Compute from)\" '( 4))")
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Reference Values*DropDownList1(Compute from)")')
+setup7.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Methods"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Calculation Activities"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Initialization"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Calculation Activities"))(cx-gui-do cx-set-integer-entry "Calculation Activities*Table1*IntegerEntry1(Autosave Every (Iterations))" 0)(cx-gui-do cx-activate-item "Calculation Activities*Table1*IntegerEntry1(Autosave Every (Iterations))")')
+setup7.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Initialization"))')
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "Solution Initialization*Table1*ButtonBox10*PushButton2(Initialize)")')
+setup7.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Run Calculation"))')
+setup7.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+fluentLauncherSettings6.SetEntityProperties(Properties=Set(EnvPath={}))
+setup8.Edit()
+setup8.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton1(Scale)")')
+setup8.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*PanelButtons*PushButton1(Close)")')
+setup8.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Cell Zone Conditions\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Boundary Conditions\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Cell Zone Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 2))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup8.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup8.SendCommand(Command='(cx-gui-do cx-activate-item "Solid*PanelButtons*PushButton2(Cancel)")')
+setup8.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Reference Values\"))(cx-gui-do cx-set-list-selections \"Reference Values*DropDownList1(Compute from)\" '( 3))")
+setup8.SendCommand(Command='(cx-gui-do cx-activate-item "Reference Values*DropDownList1(Compute from)")')
+setup8.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Methods"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Initialization"))')
+setup8.SendCommand(Command='(cx-gui-do cx-activate-item "Solution Initialization*Table1*ButtonBox10*PushButton2(Initialize)")')
+setup8.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Results"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Run Calculation"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Calculation Activities"))(cx-gui-do cx-set-integer-entry "Calculation Activities*Table1*IntegerEntry1(Autosave Every (Iterations))" 0)(cx-gui-do cx-activate-item "Calculation Activities*Table1*IntegerEntry1(Autosave Every (Iterations))")')
+setup8.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Run Calculation"))')
+setup8.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+fluentLauncherSettings7.SetEntityProperties(Properties=Set(EnvPath={}))
+setup9.Edit()
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "General*Table1*ButtonBox1(Mesh)*PushButton1(Scale)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Scale Mesh*PanelButtons*PushButton1(Close)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Materials\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Boundary Conditions\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Cell Zone Conditions\"))(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*List2(Zone)\" '( 2))(cx-gui-do cx-activate-item \"Boundary Conditions*Table1*List2(Zone)\")")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*Table4*ButtonBox1*PushButton1(Edit)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Fluid*PanelButtons*PushButton2(Cancel)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-list-selections \"Boundary Conditions*Table1*Table3*DropDownList2(Type)\" '( 1))")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Boundary Conditions*Table1*Table3*DropDownList2(Type)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-text-entry \"Solid*Frame1*TextEntry1(Zone Name)\" \"thimble_matpoint\")(cx-gui-do cx-set-list-selections \"Solid*Table2*Table1*DropDownList1(Material Name)\" '( 3))")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Solid*Table2*Table1*DropDownList1(Material Name)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Solid*PanelButtons*PushButton1(OK)")')
+setup9.SendCommand(Command="(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Boundary Conditions\"))(cx-gui-do cx-set-list-tree-selections \"NavigationPane*List_Tree1\" (list \"Setup|Reference Values\"))(cx-gui-do cx-set-list-selections \"Reference Values*DropDownList1(Compute from)\" '( 3))")
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Reference Values*DropDownList1(Compute from)")')
+setup9.SendCommand(Command='(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Methods"))(cx-gui-do cx-set-list-tree-selections "NavigationPane*List_Tree1" (list "Solution|Solution Initialization"))')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "Solution Initialization*Table1*ButtonBox10*PushButton2(Initialize)")')
+setup9.SendCommand(Command='(cx-gui-do cx-activate-item "MenuBar*FileMenu*Close Fluent")')
+Save(Overwrite=True)
+system3.Update(AllDependencies=True)
+ClearMessages()
+system11 = system9.Duplicate(RelativeTo=system9)
+system11.Delete()
+system9.Update(AllDependencies=True)
+ClearMessages()
+designPoint1.SetParameterExpression(
+    Parameter=parameter13,
+    Expression="0.005011 [kg s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter14,
+    Expression="10075323 [Pa]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter15,
+    Expression="0.217296 [J kg^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter16,
+    Expression="24.923715 [m^2 s^-3]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter17,
+    Expression="572.292 [K]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter18,
+    Expression="10016527 [Pa]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter19,
+    Expression="0.151406 [J kg^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter20,
+    Expression="28.743982 [m^2 s^-3]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter21,
+    Expression="594.964 [K]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter22,
+    Expression="3328583.092 [W m^-2]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter23,
+    Expression="70.0979 [kg m^-2 s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter24,
+    Expression="0.0003113 [m^2 s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter25,
+    Expression="0.00013105 [m^2 s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter26,
+    Expression="716.67 [s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter27,
+    Expression="1186.206 [s^-1]")
+system3.Update(AllDependencies=True)
+ClearMessages()
+solutionComponent3 = system9.GetComponent(Name="Solution")
+solutionComponent3.Clean()
+solutionComponent1.Clean()
+designPoint1.SetParameterExpression(
+    Parameter=parameter13,
+    Expression="0.003063 [kg s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter14,
+    Expression="9887688 [Pa]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter15,
+    Expression="0.023848 [J kg^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter16,
+    Expression="0.906189 [m^2 s^-3]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter17,
+    Expression="302.109 [K]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter18,
+    Expression="9875920 [Pa]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter19,
+    Expression="0.021348 [J kg^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter20,
+    Expression="1.521848 [m^2 s^-3]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter21,
+    Expression="354.157 [K]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter22,
+    Expression="4671055.166 [W m^-2]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter23,
+    Expression="42.8474 [kg m^-2 s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter24,
+    Expression="0.00010313 [m^2 s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter25,
+    Expression="4.9208E-05 [m^2 s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter26,
+    Expression="237.42 [s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter27,
+    Expression="445.418 [s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter28,
+    Expression="0.003063 [kg s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter29,
+    Expression="9887688 [Pa]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter30,
+    Expression="0.023848 [J kg^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter31,
+    Expression="0.906189 [m^2 s^-3]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter32,
+    Expression="302.109 [K]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter33,
+    Expression="9875920 [Pa]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter34,
+    Expression="0.021348 [J kg^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter35,
+    Expression="1.521848 [m^2 s^-3]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter36,
+    Expression="354.157 [K]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter37,
+    Expression="4671055.166 [W m^-2]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter38,
+    Expression="42.8474 [kg m^-2 s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter39,
+    Expression="0.00010313 [m^2 s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter40,
+    Expression="4.9208E-05 [m^2 s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter41,
+    Expression="237.42 [s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter42,
+    Expression="445.418 [s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter43,
+    Expression="0.003063 [kg s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter44,
+    Expression="9887688 [Pa]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter45,
+    Expression="0.023848 [J kg^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter46,
+    Expression="0.906189 [m^2 s^-3]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter47,
+    Expression="302.109 [K]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter48,
+    Expression="9875920 [Pa]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter49,
+    Expression="0.021348 [J kg^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter50,
+    Expression="1.521848 [m^2 s^-3]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter51,
+    Expression="354.157 [K]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter52,
+    Expression="4671055.166 [W m^-2]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter53,
+    Expression="42.8474 [kg m^-2 s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter54,
+    Expression="0.00010313 [m^2 s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter55,
+    Expression="4.9208E-05 [m^2 s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter56,
+    Expression="237.42 [s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter57,
+    Expression="445.418 [s^-1]")
+system3.DisplayText = "367, H=0.9, SKE, 4M"
+system9.DisplayText = "367, H=0.9, SKE, 6M"
+system10.DisplayText = "367, H=0.9, SKE, 8M"
+Refresh()
+system3.Update(AllDependencies=True)
+ClearMessages()
+designPoint1.SetParameterExpression(
+    Parameter=parameter13,
+    Expression="0.003543 [kg s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter14,
+    Expression="9954854 [Pa]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter15,
+    Expression="0.048651 [J kg^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter16,
+    Expression="2.640439 [m^2 s^-3]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter17,
+    Expression="375.567 [K]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter18,
+    Expression="9935372 [Pa]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter19,
+    Expression="0.039485 [J kg^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter20,
+    Expression="3.82806 [m^2 s^-3]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter21,
+    Expression="420.431 [K]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter22,
+    Expression="4656999.818 [W m^-2]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter23,
+    Expression="49.5687 [kg m^-2 s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter24,
+    Expression="0.0001473 [m^2 s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter25,
+    Expression="6.6922E-05 [m^2 s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter26,
+    Expression="339.11 [s^-1]")
+designPoint1.SetParameterExpression(
+    Parameter=parameter27,
+    Expression="605.765 [s^-1]")
+setupComponent2.Refresh()
+solutionComponent1.Clean()
+system3.Update(AllDependencies=True)
+ClearMessages()
+Save(Overwrite=True)
+Update()
+ClearMessages()
+results7.Edit()
+results7.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/367-SKE-4M.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /SURFACE GROUP:CS
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results7.Exit()
+results8.Edit()
+results8.SendCommand(Command="""EXPORT:
+ANSYS Export Data = Element Heat Flux
+ANSYS File Format = ANSYS
+ANSYS Reference Temperature = 0.0 [K]
+ANSYS Specify Reference Temperature = Off
+ANSYS Supplemental HTC = 0.0 [W m^-2 K^-1]
+Additional Variable List =  
+BC Profile Type = Inlet Velocity
+Export Connectivity = Off
+Export Coord Frame = Global
+Export File = C:/Users/Bailey/Desktop/367-SKE-6M.csv
+Export Geometry = On
+Export Location Aliases = 
+Export Node Numbers = Off
+Export Null Data = On
+Export Type = Generic
+Export Units System = Current
+Export Variable Type = Current
+External Export Data = None
+Include File Information = Off
+Include Header = On
+Location = cool surf1
+Location List = /SURFACE GROUP:CS
+Null Token = null
+Overwrite = On
+Precision = 8
+Separator = \", \"
+Spatial Variables = X,Y,Z
+Variable List = Temperature
+Vector Brackets = ()
+Vector Display = Scalar
+END
+>export""")
+results8.Exit()
+Save(Overwrite=True)

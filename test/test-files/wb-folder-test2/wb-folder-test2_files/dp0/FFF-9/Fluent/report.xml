@@ -1,0 +1,37 @@
+<FluentXMLReport>
+<version>
+Fluent
+Version: 3d, dp, pbns, ske (3d, double precision, pressure-based, standard k-epsilon)
+Release: 19.1.0
+Title: 
+</version>
+
+<Models>
+
+Models
+------
+
+   Model                        Settings                              
+   ----------------------------------------------------------------
+   Space                        3D                                    
+   Time                         Steady                                
+   Viscous                      Standard k-epsilon turbulence model   
+   Wall Treatment               Enhanced Wall Treatment               
+   Heat Transfer                Enabled                               
+   Solidification and Melting   Disabled                              
+   Radiation                    None                                  
+   Species                      Disabled                              
+   Coupled Dispersed Phase      Disabled                              
+   NOx Pollutants               Disabled                              
+   SOx Pollutants               Disabled                              
+   Soot                         Disabled                              
+   Mercury Pollutants           Disabled                              
+
+</Models>
+
+<MaterialProperties>
+Material Properties
+-------------------
+
+   Material: tungsten-wl10 (solid)
+
