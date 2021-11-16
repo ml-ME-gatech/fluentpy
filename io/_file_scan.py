@@ -1,9 +1,6 @@
-#third party imports
 import re
 import numpy as np
-import time
 import itertools
-import os
 
 
 __all__ = ['']
