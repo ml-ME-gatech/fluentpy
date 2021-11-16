@@ -1,22 +1,17 @@
 #third party imports
-from ast import Index
-from operator import concat, index
 from typing import Iterable,Union
 import more_itertools
 import numpy as np
-import pandas as pd 
-import os
+import pandas as pd
 import re
 from abc import ABC,abstractmethod
 from itertools import islice
 import itertools
 from more_itertools import peekable
-from pandas.core.algorithms import isin
 
 #package imports
-from ._file_scan import _get_repeated_text_phrase_lines,_get_text_between_phrase_lines,_convert_delimited_text
-from .filesystem import FluentFolder,DesignPointFolder
-from .._msg import get_error_message,get_warning_message
+from ._file_scan import _get_text_between_phrase_lines,_convert_delimited_text
+from .filesystem import FluentFolder
 from ..fluentPyconfig import settings
 
 __all__ = [
@@ -24,6 +19,7 @@ __all__ = [
            'SolutionFile',
            'ReportFilesOut',
            'SolutionFiles',
+           'PostDataFile',
            'DesignPoint'
            ]
 
@@ -34,19 +30,25 @@ Date: 05.10.2021
 
 Last Edit: 
 Editor(s): Michael Lanahan
-Date: 10.01.2021
+Date: 10.16.2021
 
 -- Description -- 
 These are the work horse classes for reading, interpreting, and
-interfacing with workbench fluent folder files. Classes are much much easier in this context
+interfacing with fluent folder files. Classes are much much easier in this context
 as they lend themselves to easily and concicsely representing file folder information
 """
 
 LINE_BREAK = '\n'
 
-#base class for fluent files
-#could be useful to add stuff on here later
+
 class FluentFile(ABC):
+    """
+    Description
+    -----------
+
+    base class for fluent files
+    could be useful to add stuff on here later
+    """
 
     def __init__(self,fname: str,               #full path to folder name
                       read_length = False,      #read the length of the file, if file is huge we may not want to do this for performance issues.
@@ -578,10 +580,32 @@ class SurfacePointFile(SurfaceFile):
         
         return pd.DataFrame(data,columns = sl[0].columns)
     
-
-
 class XYDataFile(FluentFile):
 
+
+    """"
+    class for representing the XYDataFile - data files that are exported from
+    XY Plots in Fluent. Handles the case
+    of multiple surface/volume data export by representing the data as either:
+    (1) a single data frame with concated data 
+    (2) a dictionary of data frames that can be iteratated over
+
+    Example:
+    --------------
+    my_file = 'sample.dat'
+    with XYDataFile(my_file) as xyf:
+        df = xyf.readdf()
+    
+    print(df)
+
+    for surface_name in xyf.keys():
+        print(xyf[surface_name])
+
+    Parameters
+    --------------
+    fname - str: the name of the file
+
+    """
     DATA_DELIM = '((xy/key/label'
     LINE_BREAK = '\n'
     COLUMN_DELIM = '\t'
@@ -609,6 +633,11 @@ class XYDataFile(FluentFile):
     
     def deliminate_data_file(self) -> pd.DataFrame:
 
+        """
+        main parsing logic for reading the data file
+        here. Iterates through the whole data file, and partitions
+        the various components based on pre-defined logic
+        """
         self.file.seek(0)
         len_data_delim = len(self.DATA_DELIM)+2
         txt = ''
@@ -661,9 +690,33 @@ class XYDataFile(FluentFile):
     
     def keys(self):
         return self.data_names.keys()
-
-    
+  
 class PostDataFile(FluentFile):
+
+    """"
+    class for representing files exported from CFD Post - Handles the case
+    of multiple surface/volume data export by representing the data as either:
+    (1) a single data frame with concated data 
+    (2) a dictionary of data frames that can be iteratated over
+
+    handles multiple variables exported on each surface by using dataframes
+    and adding columns to each member of the dictionary
+
+    Example:
+    --------------
+    my_file = 'sample.dat'
+    with PostDataFile(my_file) as pdf:
+        df = pdf.readdf()
+    
+    print(df)
+
+    for surface_name in pdf.keys():
+        print(pdf[surface_name])
+
+    Parameters
+    --------------
+    fname - str: the name of the file
+    """
 
     DATA_DELIM = '[Name]'
     DATA_START = '[Data]'
@@ -698,6 +751,13 @@ class PostDataFile(FluentFile):
 
     def deliminate_consistent_data_file(self):
 
+        """
+        main parsing logic here. Will scan the whole file looking
+        for pre-defined breaks in the file, and mark the lines 
+        at which those breaks occur. Records all of the deliminitated
+        data into a single dataframe, that can be seperated based upon
+        the retained delimination markings.
+        """
         self.file.seek(0)
         name = None
         txt = ''
@@ -744,10 +804,26 @@ class PostDataFile(FluentFile):
     def keys(self):
         return self.data_names.keys()
 
-
 #class for supporting the report file from fluent
 class ReportFileOut(FluentFile):
 
+    """
+    Class for representing the report file with .out extension output
+    by fluent
+
+    Parameters
+    -------------
+    fname - str: the string of the file name in fluent
+    
+    Examples
+    -------------
+    my_out_file = 'test.out'
+    with open ReportFileOut(my_out_file) as rfile:
+        df = rfile.readdf()
+
+    print(df)
+
+    """
     _STR_REMOVE = [')','"','\n','(']
     _HEADER_LINE = 2
     _DATA_START = 3
@@ -814,6 +890,24 @@ class SolutionFile(FluentFile):
                        'iterate']
     
     """
+    Description
+    ------------
+    Class for representing the "solution" files in Fleunt i.e. transcripts
+    usuaully output with a .trn extension. Useful for examining convergence of a solution
+
+    Parameters
+    ------------
+    fname - str: the file name of the solution file
+
+    Examples
+    ------------
+    my_file = 'solution.trn'
+    with SolutionFile(my_file) as sfile:
+        df = sfile.readdf()
+    
+    print(df)
+
+    BUGS 11.16.2021 - STATUS Property is not being determined properly
     The STATUS property of the SolutionFile indicates if the solution has 
     completed or not, determined by the logic in _get_status()
     False - solution is not finished
@@ -836,48 +930,18 @@ class SolutionFile(FluentFile):
     @STATUS.setter
     def STATUS(self,s):
         self.__STATUS = s
+    
 
-    @property
-    def input_parameters(self):
-        return self.__input_parameters
-    
-    @input_parameters.setter
-    def input_parameters(self,fp):
-        self.__input_parameters = fp
-    
-    #parses text from params and converts it into a dataframe 
-    #with labeled columns which is 1 row with p (the number of paramters)
-    #columns
-    def read_params(self):
-        """
-        I may want to deprecciated this - or maybe provide better documentataion
-        This only works with Workbench parameters - i.e. finds all of the parameters
-        that are passed from workbench to fluent and this limiatations should be understood
-        so as not to confuse the user on what boundary condition settings are being obtained
-        """
-        paramText = _get_repeated_text_phrase_lines(self.file,self._PARAM_PHRASE) +'\n'
-        self.file.seek(0)
-        paramDict = {}
-
-        N = re.finditer(self._PARAM_PHRASE,paramText)
-        T = re.finditer(',',paramText)
-        E = re.finditer('\n',paramText)
-        V = re.finditer('value:',paramText)
-       
-        for n,t,e,v in zip(N,T,E,V):
-            name = paramText[n.end():t.start()]
-            value = float(paramText[v.end():e.start()])
-            paramDict[name] = value
-        
-        self.input_parameters = pd.Series(paramDict.values(),index = paramDict.keys())
-        return self.input_parameters
-    
-    #parse the solution folder file in post into a pandas dataframe with the
-    #columns being the various values tracked over the course of the solver
-    #and the rows the iterations.
     def parse_solution_text(self,solution_text: str,
                                   eol1: Iterable,
                                   eol2: Iterable):
+        
+        """
+        parse the solution folder file in post into a pandas dataframe with the
+        columns being the various values tracked over the course of the solver
+        and the rows the iterations.
+        """
+
         skipchars = ['\n','!']
         endchars = ['>']
         if solution_text == '':
@@ -914,8 +978,11 @@ class SolutionFile(FluentFile):
         
         return cleanedText
 
-    def get_data(self,eof = True):
+    def get_data(self):
 
+        """
+        iteratively retrieve data 
+        """
         cleaned_text = ''
         columns = []
         solution_text = _get_text_between_phrase_lines(self.file,
@@ -941,21 +1008,20 @@ class SolutionFile(FluentFile):
     def readdf(self,
                 skiprows = [],
                 nrows = [],
-                eof = True,
                 ) -> pd.DataFrame:
 
         """
         main reading of data frame occurs here which goes through four main phases: 
         (1) the text containing the residual information is located
         (2) the solution text is parsed according to the annoying format presented
-            into digestable form -essentially space delimited rows
+            into digestable form - essentially space delimited rows
         (3) the text is converted to a numpy array - allowing for empty end rows
         (4) the numpy data frame is converted into a pandas dataframe using the columns
             gleaned from the np array converter
 
         """
         
-        cleaned_text,columns = self.get_data(eof = eof)
+        cleaned_text,columns = self.get_data()
         #hope that you can convert the text - deals with (or tries to) deal
         #with recorded data with inconsistent reporting width
         dat = _convert_delimited_text(cleaned_text,'\s+','\n',float,
@@ -992,7 +1058,6 @@ class SolutionFile(FluentFile):
 
     def read_data(self):
         
-        self.read_params()
         self.readdf()
 
     def _get_status(self):
@@ -1096,97 +1161,7 @@ class SolutionFiles(FluentFiles):
         df = pd.DataFrame.from_dict(self.input_parameters,orient = 'index')
         df.index.name = 'File'
         return df
-        
-#Representation of the "design point"
-#folder from ANSYS work bench
-#will attempt to find pairs of input/output based upon file extensions/console output files
-#and build a pandas dataframe of the results upon loading
-class DesignPoint:
 
-    def __init__(self,path: str,                    
-                 env = 'fluent-default',                
-                 *args,
-                 **kwargs
-                ):
-
-        super().__init__(*args,**kwargs)
-        self.__fluent_settings = settings.from_env(env)
-
-        self.filesys = DesignPointFolder(path)
-
-    @property
-    def settings(self):
-        return self.__fluent_settings
-    
-    @property
-    def X(self):
-        return self.__X
-
-    @X.setter
-    def X(self,x):
-        self.__X = x
-
-    @property
-    def Y(self):
-        return self.__Y
-    
-    @Y.setter
-    def Y(self,y):
-        self.__Y = y
-
-    
-    def _load_cases(self,solution_path = None,output_source = '.out',input_source = '.trn'):
-
-        """
-        main parser for determining where to load data from
-        """
-        
-        if output_source == '.out' and input_source == '.trn':
-            return self._load_cases_from_report_file_and_solution_file(solution_path = solution_path)
-
-    
-    def _load_cases_from_report_file_and_solution_file(self, solution_path = None):
-
-        """
-        load output data from a .out file and input data from a .trn file looking where ANSYS 
-        usually leaves them
-
-        WONT load data if a both of the report files and the solution files do not exist, or if there is
-        more than one of either file
-        """    
-
-        fluent_folders = self.filesys.get_fluent_folders()
-        report_files = []
-        solution_files = []
-        for f in fluent_folders:
-            rfiles = f.get_report_files()
-            sfiles = f.get_solution_files()
-            exists_condition = rfiles[0] is not None and sfiles[0] is not None
-            distinguishable_condition = len(rfiles) == 1 and len(sfiles) == 1
-
-            if exists_condition and distinguishable_condition:
-                report_files.append(rfiles[0])
-                solution_files.append(sfiles[0])
-        
-        rfiles = ReportFilesOut(report_files)
-        sfiles = SolutionFiles(solution_files)
-        X = sfiles.params_as_frame()
-        Y = rfiles.readdf()
-
-        return X,Y
-
-    def load(self,solution_path = None, input_source = '.trn',output_source = '.out'):
-
-        """
-        Load the available inputs and outputs into two pandas DataFrames with
-        
-        X: nxm dataframe with n the number of cases in a design point and m the number of parameter inputs
-        Y: nxp dataframe where p is the number of variable ouputs
-
-        A number of available searches are available based on where ANSYS Workbench outputs variable reports
-        """
-        self.X,self.Y = self._load_cases(solution_path = solution_path)
-        return self.X,self.Y
 
 def main():
     pass
