@@ -1,0 +1,262 @@
+
+Build Time: Apr  9 2018 14:07:31 
+Executable Path: C:/PROGRA~1/ANSYSI~1/v191/fluent/ntbin/win64/fluent.exe
+
+-------------------------------------------------------------------------------
+ID    Hostname        Core  O.S.         PID    Vendor                    
+-------------------------------------------------------------------------------
+n3    ME03W0336LAB02  4/8  Windows-x64  14788  Intel(R) Core(TM) i7-4770 
+n2    ME03W0336LAB02  3/8  Windows-x64  14056  Intel(R) Core(TM) i7-4770 
+n1    ME03W0336LAB02  2/8  Windows-x64  25368  Intel(R) Core(TM) i7-4770 
+n0*   ME03W0336LAB02  1/8  Windows-x64  15236  Intel(R) Core(TM) i7-4770 
+host  ME03W0336LAB02       Windows-x64  19548  Intel(R) Core(TM) i7-4770 
+
+MPI Option Selected: ibmmpi
+Selected system interconnect: default
+-------------------------------------------------------------------------------
+("Fluent license is not available")
+
+Error: Fluent license is not available
+Error Object: #f
+
+ME03W0336LAB02 is already loaded (96.0938%).                       Process affinity not being set.
+Reading "D:\Michael\Fluent\HEMJ_60d-SKE\HEMJ-60deg-SKE_files\dp0\FFF\Fluent\HEMJ60deg-2.cas"...
+Buffering for file scan...
+
+
+Dropping old-style context pbns single-phase steady from the case file.
+Dropping old-style context pbns single-phase steady buoyant from the case file.
+Dropping old-style context pbns single-phase transient from the case file.
+Dropping old-style context dbns compressible steady from the case file.
+Dropping old-style context dbns incompressible steady from the case file.
+Dropping old-style context dbns compressible transient from the case file.
+Dropping old-style context dbns incompressible transient from the case file.
+Dropping old-style context eulerian multiphase from the case file.
+Dropping old-style context mixture multiphase from the case file.
+
+  843346 hexahedral cells, zone 25, binary.
+  930690 hexahedral cells, zone 26, binary.
+ 4348661 hexahedral cells, zone 27, binary.
+  843346 cell partition ids, zone 25, 4 partitions, binary.
+  930690 cell partition ids, zone 26, 4 partitions, binary.
+ 4348661 cell partition ids, zone 27, 4 partitions, binary.
+ 2491318 quadrilateral interior faces, zone 28, binary.
+ 2753640 quadrilateral interior faces, zone 29, binary.
+12920154 quadrilateral interior faces, zone 30, binary.
+    6680 quadrilateral wall faces, zone  4, binary.
+    7614 quadrilateral wall faces, zone  5, binary.
+    5643 quadrilateral wall faces, zone  6, binary.
+    2808 quadrilateral wall faces, zone  7, binary.
+    2376 quadrilateral wall faces, zone  8, binary.
+    3672 quadrilateral wall faces, zone  9, binary.
+    7533 quadrilateral wall faces, zone 39, binary.
+    6680 quadrilateral wall faces, zone 42, binary.
+    7614 quadrilateral wall faces, zone 43, binary.
+    5643 quadrilateral wall faces, zone 46, binary.
+    2808 quadrilateral wall faces, zone 47, binary.
+    2376 quadrilateral wall faces, zone 48, binary.
+    3672 quadrilateral wall faces, zone 49, binary.
+    3186 quadrilateral wall faces, zone 173, binary.
+    3132 quadrilateral wall faces, zone 244, binary.
+   31050 quadrilateral wall faces, zone 245, binary.
+    3132 quadrilateral wall faces, zone 249, binary.
+   31050 quadrilateral wall faces, zone 267, binary.
+   14850 quadrilateral wall faces, zone 303, binary.
+    6966 quadrilateral pressure-outlet faces, zone 293, binary.
+   18423 quadrilateral symmetry faces, zone 36, binary.
+   85202 quadrilateral symmetry faces, zone 37, binary.
+   14455 quadrilateral symmetry faces, zone 38, binary.
+   85202 quadrilateral symmetry faces, zone 261, binary.
+   14455 quadrilateral symmetry faces, zone 262, binary.
+   18423 quadrilateral symmetry faces, zone 263, binary.
+   11313 quadrilateral mass-flow-inlet faces, zone 292, binary.
+    6680 shadow face pairs, binary. 
+    7614 shadow face pairs, binary. 
+    5643 shadow face pairs, binary. 
+    2808 shadow face pairs, binary. 
+    2376 shadow face pairs, binary. 
+    3672 shadow face pairs, binary. 
+    3132 shadow face pairs, binary. 
+   31050 shadow face pairs, binary. 
+ 6324416 nodes, binary.
+6324416 node flags, binary.
+
+Building...
+     mesh
+	distributing mesh
+		pairs....,
+		parts....,
+		faces....,
+		nodes....,
+		shadow nodes....,
+		cells....,
+        bandwidth reduction using Reverse Cuthill-McKee: 1277326/7752 = 164.774
+     materials,
+     interface,
+     domains,
+	mixture
+     zones,
+	thimble-walls
+	thimble-inner
+	jet-surf2
+	jet
+	jet-surf1
+	cool-surf4
+	cool-surf3
+	cool-surf2
+	cool-surf1
+	jet-bottom
+	pressure-outlet
+	mass-flow-inlet
+	symmetry2-thimble
+	symmetry2-fluid
+	symmetry2-jet
+	symmetry1-jet
+	symmetry1-fluid
+	symmetry1-thimble
+	heated-surf
+	int_thimble_matpoint
+	int_jet_matpoint
+	int_fluid_matpoint
+	cool-surf1-shadow
+	cool-surf2-shadow
+	cool-surf3-shadow
+	cool-surf4-shadow
+	jet-surf1-shadow
+	jet-shadow
+	jet-surf2-shadow
+	thimble-inner-shadow
+	fluid_matpoint
+	thimble_matpoint
+	jet_matpointSetting jet_matpoint (mixture) ... Done.
+Setting thimble_matpoint (mixture) ... Done.
+Setting fluid_matpoint (mixture) ... Done.
+ Setting zone id of jet_matpoint to 25.
+ Setting zone id of thimble_matpoint to 26.
+ Setting zone id of fluid_matpoint to 27.
+ Setting zone id of thimble-inner-shadow to 244.
+ Setting zone id of jet-surf2-shadow to 5.
+ Setting zone id of jet-shadow to 245.
+ Setting zone id of jet-surf1-shadow to 4.
+ Setting zone id of cool-surf4-shadow to 9.
+ Setting zone id of cool-surf3-shadow to 8.
+ Setting zone id of cool-surf2-shadow to 7.
+ Setting zone id of cool-surf1-shadow to 6.
+ Setting zone id of int_fluid_matpoint to 30.
+ Setting zone id of int_jet_matpoint to 28.
+ Setting zone id of int_thimble_matpoint to 29.
+ Setting zone id of heated-surf to 39.
+ Setting zone id of symmetry1-thimble to 263.
+ Setting zone id of symmetry1-fluid to 261.
+ Setting zone id of symmetry1-jet to 262.
+ Setting zone id of symmetry2-jet to 38.
+ Setting zone id of symmetry2-fluid to 37.
+ Setting zone id of symmetry2-thimble to 36.
+ Setting zone id of mass-flow-inlet to 292.
+ Setting zone id of pressure-outlet to 293.
+ Setting zone id of jet-bottom to 173.
+ Setting zone id of cool-surf1 to 46.
+ Setting zone id of cool-surf2 to 47.
+ Setting zone id of cool-surf3 to 48.
+ Setting zone id of cool-surf4 to 49.
+ Setting zone id of jet-surf1 to 42.
+ Setting zone id of jet to 267.
+ Setting zone id of jet-surf2 to 43.
+ Setting zone id of thimble-inner to 249.
+ Setting zone id of thimble-walls to 303.
+Done.
+Setting jet_matpoint (mixture) ... Done.
+Setting thimble_matpoint (mixture) ... Done.
+Setting fluid_matpoint (mixture) ... Done.
+Setting thimble-inner-shadow (mixture) ... Done.
+Setting jet-surf2-shadow (mixture) ... Done.
+Setting jet-shadow (mixture) ... Done.
+Setting jet-surf1-shadow (mixture) ... Done.
+Setting cool-surf4-shadow (mixture) ... Done.
+Setting cool-surf3-shadow (mixture) ... Done.
+Setting cool-surf2-shadow (mixture) ... Done.
+Setting cool-surf1-shadow (mixture) ... Done.
+Setting int_fluid_matpoint (mixture) ... Done.
+Setting int_jet_matpoint (mixture) ... Done.
+Setting int_thimble_matpoint (mixture) ... Done.
+Setting heated-surf (mixture) ... Done.
+Setting symmetry1-thimble (mixture) ... Done.
+Setting symmetry1-fluid (mixture) ... Done.
+Setting symmetry1-jet (mixture) ... Done.
+Setting symmetry2-jet (mixture) ... Done.
+Setting symmetry2-fluid (mixture) ... Done.
+Setting symmetry2-thimble (mixture) ... Done.
+Setting mass-flow-inlet (mixture) ... Done.
+Setting pressure-outlet (mixture) ... Done.
+Setting jet-bottom (mixture) ... Done.
+Setting cool-surf1 (mixture) ... Done.
+Setting cool-surf2 (mixture) ... Done.
+Setting cool-surf3 (mixture) ... Done.
+Setting cool-surf4 (mixture) ... Done.
+Setting jet-surf1 (mixture) ... Done.
+Setting jet (mixture) ... Done.
+Setting jet-surf2 (mixture) ... Done.
+Setting thimble-inner (mixture) ... Done.
+Setting thimble-walls (mixture) ... Done.
+
+     parallel,
+Done.
+
+Setting Post Processing and Surfaces information ...	 Done.
+WB->Fluent:Parameter name:MFR, value:0.004872109
+WB->Fluent:Parameter name:Pin, value:9716507
+WB->Fluent:Parameter name:Kin, value:0.1473441
+WB->Fluent:Parameter name:Epsin, value:13.91664
+WB->Fluent:Parameter name:Tin, value:473.4052
+WB->Fluent:Parameter name:Pout, value:9666781
+WB->Fluent:Parameter name:Kout, value:0.1177359
+WB->Fluent:Parameter name:Epsout, value:19.71031
+WB->Fluent:Parameter name:Tout, value:524.5664
+WB->Fluent:Parameter name:SurfHeatflux, value:5698986
+WB->Fluent:Parameter name:Massfluxin, value:68.16012000000001
+WB->Fluent:Parameter name:Vturbin, value:0.0002563
+WB->Fluent:Parameter name:Vturbout, value:0.0001156
+WB->Fluent:Parameter name:Omega-in, value:590.146
+WB->Fluent:Parameter name:Omega-out, value:1046.026
+Reading "\"| gunzip -c \\"D:\Michael\Fluent\HEMJ_60d-SKE\HEMJ-60deg-SKE_files\dp0\FFF-2\Fluent\HEMJ60deg-2-1-00150.dat.gz\\"\""...
+
+
+Parallel variables...
+Done.
+WB->Fluent:Parameter name:MFR, value:0.004872109
+WB->Fluent:Parameter name:Pin, value:9716507
+WB->Fluent:Parameter name:Kin, value:0.1473441
+WB->Fluent:Parameter name:Epsin, value:13.91664
+WB->Fluent:Parameter name:Tin, value:473.4052
+WB->Fluent:Parameter name:Pout, value:9666781
+WB->Fluent:Parameter name:Kout, value:0.1177359
+WB->Fluent:Parameter name:Epsout, value:19.71031
+WB->Fluent:Parameter name:Tout, value:524.5664
+WB->Fluent:Parameter name:SurfHeatflux, value:5698986
+WB->Fluent:Parameter name:Massfluxin, value:68.16012000000001
+WB->Fluent:Parameter name:Vturbin, value:0.0002563
+WB->Fluent:Parameter name:Vturbout, value:0.0001156
+WB->Fluent:Parameter name:Omega-in, value:590.146
+WB->Fluent:Parameter name:Omega-out, value:1046.026
+("Fluent license is not available")
+
+Error: Fluent license is not available
+Error Object: #f
+
+Performance Timer for 0 iterations on 4 compute nodes
+  Average wall-clock time per iteration:              0.000 sec
+  Global reductions per iteration:                        0 ops
+  Global reductions time per iteration:               0.000 sec (0.0%)
+  Message count per iteration:                            0 messages
+  Data transfer per iteration:                        0.000 MB
+  LE solves per iteration:                                0 solves
+  LE wall-clock time per iteration:                   0.000 sec (0.0%)
+  LE global solves per iteration:                         0 solves
+  LE global wall-clock time per iteration:            0.000 sec (0.0%)
+  LE global matrix maximum size:                         0
+  AMG cycles per iteration:                           0.000 cycles
+  Relaxation sweeps per iteration:                        0 sweeps
+  Relaxation exchanges per iteration:                     0 exchanges
+
+  Total wall-clock time:                              0.000 sec
+

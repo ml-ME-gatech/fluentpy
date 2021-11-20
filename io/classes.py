@@ -8,6 +8,7 @@ from abc import ABC,abstractmethod
 from itertools import islice
 import itertools
 from more_itertools import peekable
+from pandas.errors import ParserError
 
 #package imports
 from ._file_scan import _get_text_between_phrase_lines,_convert_delimited_text
@@ -36,6 +37,13 @@ Date: 10.16.2021
 These are the work horse classes for reading, interpreting, and
 interfacing with fluent folder files. Classes are much much easier in this context
 as they lend themselves to easily and concicsely representing file folder information
+
+#BUGS 11.20.2021 
+need to add something into the base class FluentFile - I think __new__()? that will ensure
+the fname is replace if their are multiple instances of FluentFiles in memory. This is creating
+errors because the wrong file is attempting to be read - this has only been an issue
+in Jupyter Notebooks so far, when class methods are used to create a FluentFile subclass
+
 """
 
 LINE_BREAK = '\n'
@@ -289,8 +297,15 @@ class SurfaceFile(FluentFile):
         and will restart at 1 each time a new surface is defined
         """
 
-        self.df = pd.read_csv(self.fname,sep = ',',header= 0)
-        self.df.columns = [c.strip() for c in self.df.columns]
+        try:
+            self.df = pd.read_csv(self.fname,sep = ',',header= 0,index_col= 0)
+            self.df.columns = [c.strip() for c in self.df.columns]
+        except ParserError as pe:
+            self.df = pd.read_csv(self.fname,sep = ',',header= 0,index_col= 0,
+                                  error_bad_lines= False)
+            self.df.columns = [c.strip() for c in self.df.columns]
+            #raise ParserError('file is corrupted: ' + str(pe))
+        
         return self.df
 
     
@@ -305,7 +320,7 @@ class SurfaceFile(FluentFile):
         if self.df is None:
             self.readdf()
         
-        idxs = np.where(self.df['cellnumber'] == 1)[0]
+        idxs = np.where(self.df.index == 1)[0]
         surface_list = []
         for i in range(idxs.shape[0]-1):
             surface_list.append(self.df.iloc[idxs[i]:idxs[i+1]])
@@ -456,7 +471,17 @@ class SurfaceFile(FluentFile):
         txt += 'yes' + cls.LINE_BREAK                #give commma delimiter
         
         #format variables for output
+        if isinstance(field_variables,str):
+            field_variables = [field_variables]
+        elif isinstance(field_variables,list):
+            pass
+        else:
+            raise ValueError('field variables must be designated by strings or list of strings')
+
         for fv in field_variables:
+            if not isinstance(fv,str):
+                raise ValueError('field variables must be designated by strings')
+            
             txt += fv + cls.LINE_BREAK
         
         txt += ',' + cls.LINE_BREAK
@@ -487,7 +512,7 @@ class SphereSliceFile(SurfaceFile):
         """
         
         sl = self.get_surface_list()
-
+        #print(len(sl))
         data = np.zeros([len(sl),sl[0].shape[1]-1])
         field_variables = [column for column in sl[0].columns if 
                          column not in ['x-coordinate','y-coordinate','z-coordinate','cellnumber']]
@@ -500,7 +525,7 @@ class SphereSliceFile(SurfaceFile):
             
         
             for k,var in enumerate(field_variables): 
-                data[i,dimension + k] = statistic(df[var],axis = 0)
+                data[i,dimension + k-1] = statistic(df[var],axis = 0)
             
         
         columns = list(sl[0].columns)
@@ -992,7 +1017,10 @@ class SolutionFile(FluentFile):
         eol = itertools.tee(re.finditer('\n',solution_text))
         eol1 = peekable(eol[0])
         eol2 = peekable(eol[1])
-        columns = re.split('\s+',solution_text[0:next(eol1).start()].strip())[0:-1]
+        try:
+            columns = re.split('\s+',solution_text[0:next(eol1).start()].strip())[0:-1]
+        except StopIteration:
+            raise AttributeError('no columns found in solution file')
 
         while True:
             try:
