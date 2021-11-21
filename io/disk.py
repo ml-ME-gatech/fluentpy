@@ -1,32 +1,20 @@
 #native imports
-import dill
 from abc import ABC,abstractstaticmethod
 import os
-
-#package imports
-from .._msg import get_error_message
-
-__all__ = ['']
+import dill
 
 """
-Creation:
-Author(s): Michael Lanahan 
-Date: 06.08.2021 (ported over from different file)
+Author: Michael Lanahan
+Date Created: 09.09.2021
+Last Edit: 09.09.2021
 
-Last Edit: 
-Editor(s): Michael Lanahan
-Date: 11.21.2021
-
--- Description -- 
-Seperated from classes because it was starting to get a little lengthy. These are the base classes that the
-classes module inherits, which contain the defining behavior of a DataModule and DataLink. The SerializableDataModule
-class has the methods for writing the link and the module to a file, loading it from a file
+This module contains some very base classes such as SerializableClass which are meant to be
+inherited by classes to provide enhanced low level functionality not particular to pace or fluent
 """
 
-class SerializableDataModule(ABC):
-
+class SerializableClass(ABC):
     """
-    SerializableDataModule
+    SerializableClass
 
     Description
     ----------
@@ -103,8 +91,27 @@ class SerializableDataModule(ABC):
         re-instatiate from dictionary representation of the class. class-method
         """
         _construction_args = cls._from_file_parser(dmdict)
-        return cls(*_construction_args)
+        if not isinstance(_construction_args,tuple):
+            raise ValueError('return from _from_file_parser must be a tuple of length 1 or 2')
+        
+        if len(_construction_args) == 1:
+            _construction_args = _construction_args[0]
+            if isinstance(_construction_args,list):
+                return cls(*_construction_args)
+            elif isinstance(_construction_args,dict):
+                return cls(**_construction_args)
+            else:
+                raise ValueError('cannot interpret construction arguments of type: {}'.format(type(_construction_args)))
+        elif len(_construction_args) == 2:
+            return cls(*_construction_args[0],**_construction_args[1])
 
+        else:
+            raise ValueError('cannot interpret construction arguments, must be a tuple of length 1 or 2')      
+
+
+            
+
+            
     def serialize(self,file_name = None):
         """
         serialize the dictionary representation of the class to a file. can provide a file_name
@@ -115,7 +122,7 @@ class SerializableDataModule(ABC):
         
         file_rep = self._dict_representation()
         _serialize_file_writer_dispatch(file_name,file_rep)
-    
+
 def _class_method_file_loader(file_name,_name_):
         
         if isinstance(file_name,str):
@@ -136,4 +143,4 @@ def _serialize_file_writer_dispatch(file_name,data):
         with open(file_name,'wb') as file:
             dill.dump(data,file)
     else:
-        dill.dump(data,file_name)
+        dill.dump(data,file_name)    

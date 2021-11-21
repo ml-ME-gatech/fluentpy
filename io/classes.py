@@ -10,6 +10,8 @@ from itertools import islice
 import itertools
 from more_itertools import peekable
 from pandas.errors import ParserError
+from pathlib import WindowsPath,PosixPath
+import sys
 
 #package imports
 from ._file_scan import _get_text_between_phrase_lines
@@ -23,7 +25,8 @@ __all__ = [
            'PostDataFile',
            'SphereSliceFile',
            'XYDataFile',
-           'PostDataFile'
+           'PostDataFile',
+           'SurfaceIntegralFile'
            ]
 
 """
@@ -42,6 +45,16 @@ as they lend themselves to easily and concicsely representing file folder inform
 """
 
 LINE_BREAK = '\n'
+#Set up the pathlib here based on the system we are on - since this code 
+#will likely be used on both windows and posix systems need to make compatible with
+#both
+os_name = sys.platform
+if os_name == 'win32' or os_name == 'win64':
+    _Path = WindowsPath
+elif os_name == 'linux' or os_name == 'posix':
+    _Path = PosixPath
+else:
+    raise ValueError('Cannot determine Path structure from platform: {}'.format(os_name))
 
 
 class FluentFile(ABC):
@@ -1163,7 +1176,67 @@ class SolutionFiles(FluentFiles):
         df.index.name = 'File'
         return df
 
+class SurfaceIntegralFile:
+    """
+    python class representation of the file created by a surface report
+    as of 10.01.2021 now supports multiple surfaces but not multiple variables per surface
+    """
+    def __init__(self,file: str):
+        
+        self.path = _Path(file)
+        self.attributes = {'type':None,
+                           'name':None,
+                           'unit':None,
+                           'value':[],
+                           'boundary': [],
+                          }
+    
+    def _parse_txt(self,lines: list) -> None:
+        """
+        parse the text from the surface integrals file (native format from fluent)
+        into attributes descibed by the "attributes" dictionary property. 
 
+        configured to read multiple surfaces but not multiple variables (is this possible?)
+        """
+        #this first line here reads the header information on the file
+        try:
+            self.attributes['type'] =  lines[2].strip()
+            self.attributes['name'],self.attributes['unit'] = self._space_delimited_line_split(lines[3])
+            for i in range(5,len(lines)):
+                try:
+                    boundary,value = self._space_delimited_line_split(lines[i])
+                    if boundary == 'Net':
+                        self.attributes['boundary'].append(boundary)
+                        self.attributes['value'].append(float(value))
+                        break
+                    elif '----' in boundary and '----' in value:
+                        pass
+                    else:
+                        self.attributes['boundary'].append(boundary)
+                        self.attributes['value'].append(float(value))
+                except ValueError:
+                    pass
+        except IndexError:
+            pass
+
+    @staticmethod
+    def _space_delimited_line_split(line: str) -> list:
+        #convinience function for parsing specific kinds of text
+        _line = line.strip()
+        items = [i for i in _line.split('  ') if i != '']
+        return items
+
+
+    def read(self) -> dict:
+        """
+        read a surface integral file - as of 09.08.2021 only configured to read
+        surface integral files containing 1 summary statistic
+        """
+        with open(str(self.path.resolve()),'r') as file:
+            txt = file.readlines()
+            self._parse_txt(txt)
+        
+        return self.attributes
 def main():
     pass
 
