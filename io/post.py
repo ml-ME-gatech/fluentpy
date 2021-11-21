@@ -2,7 +2,6 @@
 import os
 
 #package imports
-from .classes import ReportFileOut,ReportFilesOut
 from .._msg import get_report_message
 from ._util import _clear_folder,_cache_file
 from ..fluentPyconfig import settings

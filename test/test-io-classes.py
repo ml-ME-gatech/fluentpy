@@ -7,7 +7,6 @@ from dynaconf import Dynaconf
 import pickle
 
 #pacakge imports
-from wbfluentpy.io.filesystem import DesignPointFolder
 from wbfluentpy.io.classes import ReportFileOut,SolutionFile,ReportFilesOut,SolutionFiles,PostDataFile,XYDataFile
 #from fluentPy.fluentPyconfig import settings
 
@@ -17,7 +16,7 @@ Date: 05.25.2021
 Author: Michael Lanahan
 
 -- Last Edit -- 
-Date: 06.11.2021
+Date: 11.21.2021
 Editor: Michael Lanahan
 
 -- Further Description --
@@ -39,7 +38,7 @@ test_settings = Dynaconf(
     environments = True,
 )
 
-"""
+
 class ReportFileTests(unittest.TestCase):
 
     test_file_name = 'test-files\\wb-folder-test\\wb-folder-test_files\\dp0\\FFF\\Fluent\\report-file-0.out'
@@ -79,27 +78,20 @@ class SolutionFileTests(unittest.TestCase):
 
     solution_file = 'test-files\\wb-folder-test\\wb-folder-test_files\\progress_files\\dp0\\FFF\\Fluent\\Solution.trn'
     solution_file2 = 'test-files\\wb-folder-test2\\wb-folder-test2_files\\progress_files\\dp0\\FFF\\Fluent\\Solution-2.trn'
-    paramater_check_file = 'test-files\\check\\param_check.pkl'
     solution_check_file = 'test-files\\check\\solution-check.pkl'
 
-    def test_read_params(self):
-
-        with SolutionFile(self.solution_file) as sfile:
-            sfile.read_params()
-            sfile.input_parameters.to_pickle(self.paramater_check_file)
-            check_param = pd.read_pickle(self.paramater_check_file)
-            self.assertLess(np.linalg.norm(check_param-sfile.input_parameters),DIFF_TOL)
-    
-    
+        
     def test_readdf_exist(self):
         
         with SolutionFile(self.solution_file) as sfile:
             sfile.readdf()
             check_solution_file = pd.read_pickle(self.solution_check_file)
 
+        print(sfile.df)
         self.assertLess(np.linalg.norm(np.array(check_solution_file,dtype = float)-np.array(sfile.df,dtype = float)),DIFF_TOL)
 
 
+"""
 class ReportFilesTests(unittest.TestCase):
 
     dp_folder = 'test-files\\wb-folder-test\\wb-folder-test_files\\dp0'
@@ -223,7 +215,6 @@ class TestPostOutputFile(unittest.TestCase):
             for key in pdf.keys():
                 print(pdf[key])
 
-"""
 
 class TestXYOutputFile(unittest.TestCase):
 
@@ -236,7 +227,7 @@ class TestXYOutputFile(unittest.TestCase):
             df = xydf.readdf()
             for key in xydf.keys():
                 print(xydf[key])
+"""
 
-class XYPointFile
 if __name__ == '__main__':
     unittest.main()

@@ -1,4 +1,5 @@
 #third party imports
+from io import StringIO
 from typing import Iterable,Union
 import more_itertools
 import numpy as np
@@ -11,8 +12,7 @@ from more_itertools import peekable
 from pandas.errors import ParserError
 
 #package imports
-from ._file_scan import _get_text_between_phrase_lines,_convert_delimited_text
-from .filesystem import FluentFolder
+from ._file_scan import _get_text_between_phrase_lines
 from ..fluentPyconfig import settings
 
 __all__ = [
@@ -21,7 +21,9 @@ __all__ = [
            'ReportFilesOut',
            'SolutionFiles',
            'PostDataFile',
-           'DesignPoint'
+           'SphereSliceFile',
+           'XYDataFile',
+           'PostDataFile'
            ]
 
 """
@@ -31,19 +33,12 @@ Date: 05.10.2021
 
 Last Edit: 
 Editor(s): Michael Lanahan
-Date: 10.16.2021
+Date: 11.21.2021
 
 -- Description -- 
 These are the work horse classes for reading, interpreting, and
 interfacing with fluent folder files. Classes are much much easier in this context
 as they lend themselves to easily and concicsely representing file folder information
-
-#BUGS 11.20.2021 
-need to add something into the base class FluentFile - I think __new__()? that will ensure
-the fname is replace if their are multiple instances of FluentFiles in memory. This is creating
-errors because the wrong file is attempting to be read - this has only been an issue
-in Jupyter Notebooks so far, when class methods are used to create a FluentFile subclass
-
 """
 
 LINE_BREAK = '\n'
@@ -58,9 +53,18 @@ class FluentFile(ABC):
     could be useful to add stuff on here later
     """
 
+    def __new__(cls,*args,**kwargs):
+
+        """
+        had some issues with class method instantion, python was getting
+        confused about which fname to use
+        """
+        instance = super(FluentFile,cls).__new__(cls)
+        instance.fname = args[0]
+        return instance
+
     def __init__(self,fname: str,               #full path to folder name
                       read_length = False,      #read the length of the file, if file is huge we may not want to do this for performance issues.
-                      fluent_folder = None,     #option to provide the fluent Folder name if it is already known.
                       case_name = None,         #option to provide the case name
                       *args,**kwargs):
 
@@ -68,16 +72,6 @@ class FluentFile(ABC):
         self.file = None
         self.length = None
         self.__df = None
-
-        #determine from whence the folder comes
-        if fluent_folder is None:
-            try:
-                ff = FluentFolder(fname)
-                self.__fluent_folder = ff.ff_root
-            except AttributeError:
-                self.__fluent_folder = None
-        else:
-            self.__fluent_folder = fluent_folder
         
         self.__case_name = case_name
         
@@ -88,7 +82,7 @@ class FluentFile(ABC):
     
     #"official" string representation of an object
     def __repr__(self):
-        return "File: {} \nCase: {} \nFolder: {}".format(self.fname,self.caseName,self.fluent_folder)
+        return "File: {} \nCase: {}".format(self.fname,self.caseName)
 
     #"informal" string represetnation
     def __str__(self):
@@ -138,10 +132,6 @@ class FluentFile(ABC):
     @property
     def case_name(self):
         return self.__case_name
-
-    @property
-    def fluent_folder(self):
-        return self.__fluent_folder
     
     @property
     def fname(self):
@@ -163,7 +153,6 @@ class FluentFile(ABC):
     def readdf(self):
         pass
 
-#base class for fluent file(s) as in more than one files
 class FluentFiles(dict):
 
     def __init__(self,flist: list,
@@ -192,16 +181,12 @@ class FluentFiles(dict):
     def df(self,df):
         self.__df = df
 
-    def _set_component_class(self,fluent_folders = []):
+    def _set_component_class(self):
         if self.component_class is None:
             raise NotImplementedError('Must set Class in subclasses of fluentFiles')
         
-        if not fluent_folders:
-            fluent_folders = [None for _ in range(len(self.keys))]
-
-        for key,ff in zip(self.keys,fluent_folders):
-            self.__setitem__(key,self.component_class(str(key),
-                                 fluent_folder = ff)) 
+        for key in self.keys:
+            self.__setitem__(key,self.component_class(str(key))) 
         
     def __setitem__(self,key,item):
         self.__dict__[key] = item
@@ -232,8 +217,7 @@ class FluentFiles(dict):
     def load(self,
               skiprows = [],    #list of lists 
               nrows = [],       #list of lists
-              convergedResult = False,
-              index = []):
+              convergedResult = False):
         
         if convergedResult:
             skiprows = self._parsedicts(skiprows,'skiprows',fill_value = 'converged')
@@ -265,7 +249,7 @@ class FluentFiles(dict):
         for key in self.keys:
             try:
                 with self.__getitem__(key) as ffile:
-                    dat.append(ffile.readdf()[varname].rename(ffile.fluent_folder))
+                    dat.append(ffile.readdf()[varname])
             except KeyError as ke:
                 if ignore_missing:
                     dat.append(None)
@@ -283,10 +267,9 @@ class SurfaceFile(FluentFile):
     EXIT_CMD = 'q'
     EXPORT_CMD = 'file/export/ascii'
 
-    def __init__(self,fname,
-                      fluent_folder = None) -> None:
+    def __init__(self,fname) -> None:
 
-        super().__init__(fname,fluent_folder= fluent_folder)
+        super().__init__(fname)
 
     def readdf(self):
         """
@@ -493,10 +476,9 @@ class SphereSliceFile(SurfaceFile):
 
     CREATE_SL_CMD = 'sphere-slice'
 
-    def __init__(self,fname,
-                      fluent_folder = None) -> None:
+    def __init__(self,fname) -> None:
 
-        super().__init__(fname,fluent_folder= fluent_folder)
+        super().__init__(fname)
 
     def readdf(self):
         return super().readdf()
@@ -512,7 +494,6 @@ class SphereSliceFile(SurfaceFile):
         """
         
         sl = self.get_surface_list()
-        #print(len(sl))
         data = np.zeros([len(sl),sl[0].shape[1]-1])
         field_variables = [column for column in sl[0].columns if 
                          column not in ['x-coordinate','y-coordinate','z-coordinate','cellnumber']]
@@ -548,10 +529,9 @@ class SurfacePointFile(SurfaceFile):
 
     CREATE_SL_CMD = 'point-surface'
 
-    def __init__(self,fname,
-                      fluent_folder = None) -> None:
+    def __init__(self,fname) -> None:
 
-        super().__init__(fname,fluent_folder= fluent_folder)
+        super().__init__(fname)
 
     def readdf(self):
         return super().readdf()
@@ -637,10 +617,9 @@ class XYDataFile(FluentFile):
     SERIES_SPACING = 2
     DATA_END_LINE = ')'
 
-    def __init__(self, fname: str,
-                        fluent_folder= None):
+    def __init__(self, fname: str):
 
-        super().__init__(fname,fluent_folder = fluent_folder)
+        super().__init__(fname)
         self.__data_names = {}
 
     @property
@@ -652,10 +631,11 @@ class XYDataFile(FluentFile):
         self.__data_names = dn
 
     def _parse_text_block(self,txt_block: str) -> np.ndarray:
-
-        return _convert_delimited_text(txt_block,self.COLUMN_DELIM,self.LINE_BREAK,
-                                        float, force_columns= False)
-    
+        
+        return pd.read_csv(StringIO(txt_block),
+                          sep = self.COLUMN_DELIM,
+                          dtype= float, header = None).to_numpy()
+            
     def deliminate_data_file(self) -> pd.DataFrame:
 
         """
@@ -748,9 +728,9 @@ class PostDataFile(FluentFile):
     LINE_BREAK = '\n'
     COLUMN_DELIM = ','
 
-    def __init__(self,fname,fluent_folder = None):
+    def __init__(self,fname):
 
-        super().__init__(fname,fluent_folder= fluent_folder)
+        super().__init__(fname)
         self.__data_names = {}
     
     @property
@@ -770,10 +750,10 @@ class PostDataFile(FluentFile):
         columns = [c.strip() for c in txt_block[0:columns_end].split(self.COLUMN_DELIM)]
         txt_block = txt_block[columns_end+1:].strip() + self.LINE_BREAK
 
-        return columns,_convert_delimited_text(txt_block,self.COLUMN_DELIM,
-                                        self.LINE_BREAK,float,force_columns= False)
-
-
+        return columns, pd.read_csv(StringIO(txt_block), 
+                                     sep = self.COLUMN_DELIM,
+                                     dtype = float,header = None).to_numpy()
+        
     def deliminate_consistent_data_file(self):
 
         """
@@ -853,9 +833,9 @@ class ReportFileOut(FluentFile):
     _HEADER_LINE = 2
     _DATA_START = 3
 
-    def __init__(self,fname,fluent_folder = None):
+    def __init__(self,fname):
 
-        super().__init__(fname,fluent_folder = fluent_folder)
+        super().__init__(fname)
 
     ##get headers in a custom fashion because .out files are annoying
     def _get_headers(self):
@@ -938,10 +918,9 @@ class SolutionFile(FluentFile):
     False - solution is not finished
     True - solution is finished
     """
-    def __init__(self,fname,
-                      fluent_folder = None):
+    def __init__(self,fname):
 
-        super().__init__(fname,fluent_folder = fluent_folder)
+        super().__init__(fname)
         self.__input_parameters = None
         self.__STATUS = None
     
@@ -1033,10 +1012,7 @@ class SolutionFile(FluentFile):
         
         return cleaned_text,columns
 
-    def readdf(self,
-                skiprows = [],
-                nrows = [],
-                ) -> pd.DataFrame:
+    def readdf(self) -> pd.DataFrame:
 
         """
         main reading of data frame occurs here which goes through four main phases: 
@@ -1052,8 +1028,7 @@ class SolutionFile(FluentFile):
         cleaned_text,columns = self.get_data()
         #hope that you can convert the text - deals with (or tries to) deal
         #with recorded data with inconsistent reporting width
-        dat = _convert_delimited_text(cleaned_text,'\s+','\n',float,
-                                      force_columns = True,empty_columns= None)
+        dat = pd.read_csv(StringIO(cleaned_text), sep = '\s+',dtype = float, header = None).to_numpy()
         
         #this can happen sometimes if the _convert_delimited_text runs into issues
         #and leaves things as a string, will try to convert effective here
@@ -1135,12 +1110,11 @@ class SolutionFile(FluentFile):
 class ReportFilesOut(FluentFiles):
 
     def __init__(self,flist: list,
-                      folder_names = [],
                      *args,**kwargs):
 
         super().__init__(flist,*args,**kwargs)
         self.component_class = ReportFileOut
-        self._set_component_class(fluent_folders= folder_names)
+        self._set_component_class()
     
     def readdf(self):
         self.load(convergedResult= True)
@@ -1153,12 +1127,11 @@ class ReportFilesOut(FluentFiles):
 class SolutionFiles(FluentFiles): 
 
     def __init__(self,flist:list,
-                      folder_names = [],
                       *args,**kwargs): 
 
         super().__init__(flist,*args,**kwargs)
         self.component_class = SolutionFile
-        self._set_component_class(fluent_folders= folder_names)
+        self._set_component_class()
         self.__input_parameters = dict.fromkeys(self.keys)
 
     @property

@@ -1,7 +1,5 @@
 import re
-import numpy as np
 import itertools
-
 
 __all__ = ['']
 
@@ -12,7 +10,7 @@ Date: 05.10.2021
 
 Last Edit: 
 Editor(s): Michael Lanahan
-Date: 09.16.2021
+Date: 11.11.2021
 
 -- Description -- 
 low level functions for scanning through text that return a very specific requested output
@@ -188,85 +186,3 @@ def _get_repeated_text_phrase_lines(text: str,    #the name of the file
     
     else:
         return output,True,record
-            
-
-def _convert_delimited_text(text:str,
-                            delim:str,
-                            newline:str,
-                            dtype:type,
-                            force_columns = True,
-                            empty_columns = 'donotfilemptycolumns') -> np.ndarray:
-
-    """
-    Description
-    ----------
-    converts a block of text that contains delimited values into a numpy array
-
-    Parameters
-    ----------
-    text: text to convert - string
-    delim: the delimiter
-    newline: the newline character
-    dtype: datatype to convert the values to
-    force_columns: the number of columns in the array to force - this may
-                   cause issues if you are not positive on the width
-    empty_columns: if columns are empty, what do you fill the columns with.
-                    the default, donotfilemptycolumns, will raise a ValueError
-
-    Returns
-    ----------
-    Returns the converted values as a numpy array. If values cannot be converted
-    will place nan in array
-
-    Limitations
-    ----------
-    will only support adding width to the columns on the last rows
-    this would required some additional thought to let it fill in intermediate columns
-    """
-
-    def _column_coerce(loldat: list,
-                        width: int) -> None:
-
-        """
-        make the list of lists a uniform size to make the np.array
-        intializer happy
-        """
-        
-        if empty_columns == 'donotfilemptycolumns': 
-            raise ValueError('must specificy empty_columns as something other than donotfilemptycolumns')
-        
-        for i in range(len(loldat)):
-            for _ in range(width - len(loldat[i])):
-                loldat[i].append(empty_columns)
-
-    lines_start,lines_end = itertools.tee(re.finditer(newline,text))
-    loldat = []
-    loldat.append([dtype(r) for r in re.split(delim,text[0:next(lines_end).start()].strip())])
-    
-    max_col = len(loldat[0])
-    coerce = False
-    
-    #main parsing login down here - as you can see 
-    #this is expecting some pretty nice looking txt data
-    for ls,le in zip(lines_start,lines_end):
-        line = text[ls.start():le.start()].strip()
-        row = re.split(delim,line)
-        if max_col < len(row):
-            coerce = True
-            max_col = len(row )
-        if max_col != len(row):
-            coerce = True
-        
-        dat = []
-        for v in row:
-            try:
-                dat.append(dtype(v))
-            except ValueError:
-                dat.append(None)
-        
-        loldat.append(dat)
-
-    if force_columns and coerce:
-        _column_coerce(loldat,max_col)
-    
-    return np.array(loldat)

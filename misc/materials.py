@@ -1,14 +1,10 @@
-from typing import Type
-from numpy.lib.arraysetops import isin
 import pandas as pd
-import numpy as np
 import os
-
 
 """
 Author: Michael Lanahan
 Date created: 07.29.2021
-Last Edit: 07.29.2021
+Last Edit: 11.21.2021
 
 Description
 ----------------
@@ -17,14 +13,36 @@ creating fluent material library files - essentially formatted text files
 leveraging the pandas library. For some reason entering in this data into fluent
 is virtually impossible if you have more than a few data points - so this should 
 take some of the tedium out of it.
-
-I'd like to add some basic automated conversion of property udf's at some point 
-but we'll have to see...
 """
 
 DEFAULT_INTERPOLATION = 'polynomial piecewise-linear'
 
 class Material:
+
+        """
+        Description
+        ----------
+        The Material class is a basic class for describing a material in fluent -
+        either a solid or a fluid. 
+
+        Parameters
+        ----------
+        df: DataFrame - data for the material
+        name: str - name of the material 
+        mattype: str - type of the material, either fluid or solid
+        chemical_formulae: None by default, but can be added
+        interpolation_type: how to interpolate the data, options are taken from Fluent 
+
+        Methods
+        ----------
+        add_property(pd.Series,interpolation_type: None) - allows the addition of properties to the materials, such as viscosity,
+                                                     conductivity, ect.... 
+
+                                                     The first argument is a series containing the data for the property
+                                                     of the material, while the second argument is the type of interpolation to use 
+                                                     which if not provided defaults to the global interpolation type
+        write(file)- writes the material to a file
+        """
 
         endchar = '\t)'
         def __init__(self,df:pd.DataFrame,
@@ -81,8 +99,11 @@ class Material:
         def txt(self,text):
                 self.__txt = text
 
-        def add_property(self,data: pd.Series,interpolation_type):
+        def add_property(self,data: pd.Series,interpolation_type = None) -> None:
             
+            if interpolation_type is None:
+                    interpolation_type = self.interpolation_type
+        
             self.txt += '\t'+ str(Property(data)) + ')\n'
 
         def data_to_text(self):
@@ -101,6 +122,22 @@ class Material:
                         f.write(self.__str__())
         
 class Property:
+
+        """
+        Description:
+        -----------
+        class for represnting properties of Materials - A Material is thus just collection
+        of Properties. 
+
+        Parameters:
+        -----------
+        df: pd.Series - a Series object containing the data for the Property
+        interpolation_type: str - a string specifying the type of interpolation to use on the data
+
+        Methods:
+        -----------
+        __str__() - string representation of a property which is interable by Fluent
+        """
 
         def __init__(self,df: pd.Series,
                                 interpolation_type = DEFAULT_INTERPOLATION):
@@ -147,10 +184,27 @@ class Property:
                 return self.to_txt()
 
 class MaterialDataBase:
+        """
+        Description
+        -----------
+        Class for representing a material data base from Fluent, or an .scm file. 
+        This consists of a collection of Materials with some Fluent Specific heading
 
+        Parameters
+        -----------
+        matlist: list - a list of materials
+
+        Methods
+        -----------
+        read(file) - read in a list of materials from a file
+        write(file) - write material library to a file
+        append(material) - append a material to the library
+        """
+        
         endchar = ')'
         thisdir = os.path.split(__file__)[0]
         header_file = os.path.join(thisdir,'dat','mat_prop_header_text.txt')
+        
         with open(header_file,'r') as file:
                 init_text = file.read()
 
