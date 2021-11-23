@@ -1,18 +1,20 @@
 #native imports
 from abc import ABC,abstractmethod,abstractstaticmethod
 import os
-from typing import OrderedDict, Union
-from fluentpy.io.disk import SerializableClass
-from util import _surface_construction_arg_validator
+from typing import OrderedDict, Type, Union
+import os
+import subprocess
+import numpy as np 
 
 #package imports
-from ..io.classes import SurfaceIntegralFile
-from ..engines import FluentEngine
+from ..fluentio.disk import SerializableClass
+from ..tui.util import _surface_construction_arg_validator
+from ..fluentio.classes import SurfaceIntegralFile
 
 """
 Author: Michael Lanahan
 Date Created: 08.05.2021
-Last Edit: 11.21.2021
+Last Edit: 11.23.2021
 
 The purpose of this file is provide python class interfaces to TUI commands in 
 the command line or batch mode fluent software. The hope is that this will make 
@@ -33,8 +35,8 @@ SURFACE_INTEGRAL_FILE_DELIM = '-'
 SURFACE_INTEGRAL_EXT = '.srp'
 
 ALLOWABLE_SOLVERS = ['pressure-based']
-ALLOWABLE_VISCOUS_MODELS = ['ke-standard','kw-standard']
-ALLOWABLE_MODELS = ['energy'] 
+ALLOWABLE_VISCOUS_MODELS = ['ke-standard','kw-standard','ke-realizable','ke-rng']
+ALLOWABLE_MODELS = ['energy','viscous'] 
 ALLOWABLE_MODELS += ['viscous/' + vm for vm in ALLOWABLE_VISCOUS_MODELS]
 ALLOWABLE_BOUNDARY_TYPES = ['mass-flow-inlet','pressure-outlet','wall']
 
@@ -57,6 +59,12 @@ ALLOWABLE_RELAXATION = {'courant number':200,
                         'pressure':0.75}
 
 
+WINDOWS_FLUENT_INIT_STATEMENT = 'fluent {} -t{} -g -i {} -o {}'
+FLUENT_INPUT_NAME = 'input.fluent'
+FLUENT_OUTPUT_NAME = 'output.fluent'
+LINE_BREAK = '\n'
+EXIT_CHAR = 'q' + LINE_BREAK
+EXIT_STATEMENT = 'exit'
 
 class Initializer:
 
@@ -160,7 +168,6 @@ class ScalarRelaxation(Relaxation):
         else:
             raise ValueError('{} not an allowable variable for relaxation'.format(variable))
 
-    
 class EquationRelaxation(Relaxation):
 
     """
@@ -439,7 +446,93 @@ class CaseDataReader(CaseReader):
         
         super().__init__(file)
 
-            
+class FluentEngine:
+
+    """
+    main class for the post processing engine using fluent
+    """
+    def __init__(self,file: str,
+                      specification = '3ddp',
+                      num_processors = 1,
+                      reader = CaseDataReader):
+        
+        self.path,file_name = os.path.split(file)
+        self.spec = specification
+        self.__num_processors = num_processors
+        self.__input = reader(file_name)
+        self._additional_txt = ''
+        self.input_file = os.path.join(self.path,FLUENT_INPUT_NAME)
+        self.output_file = os.path.join(self.path,FLUENT_OUTPUT_NAME)
+    
+
+    def insert_text(self,other):
+        self._additional_txt += other
+    
+    @property
+    def num_processors(self):
+        return str(self.__num_processors)
+
+    def _fluent_initializer(self,
+                            system = 'windows'):
+        
+        if system == 'windows':
+            return WINDOWS_FLUENT_INIT_STATEMENT.format(self.spec,
+                                                        self.num_processors,
+                                                        FLUENT_INPUT_NAME,
+                                                        FLUENT_OUTPUT_NAME) + EXIT_CHAR
+    
+
+    @property
+    def input(self):
+        return str(self.__input)
+    
+    def format_call(self):
+        """
+        format the text for the call, and also write the input file for 
+        fluent
+        """
+        call_text = self._fluent_initializer()
+        self.format_input_file()
+        return call_text
+    
+    def format_input_file(self) -> None:
+        """
+        format the input file to fluent to read and create the surface integral
+        """
+        txt = self.input + LINE_BREAK
+        txt += self._additional_txt + LINE_BREAK
+        txt += EXIT_STATEMENT + LINE_BREAK
+
+        with open(self.input_file,'w') as file:
+            file.write(txt)
+    
+    def clean(self):
+        """ 
+        clean directory from input and output files
+        """
+        if os.path.exists(self.input_file):
+            os.remove(self.input_file)
+        
+        if os.path.exists(self.output_file):
+            os.remove(self.output_file)
+        
+    def __call__(self):
+        """
+        This call does the following:
+        (1) cleans the directory of the fluent case file from input and output files
+        (2) formats the call
+        (3) opens fluent and submits commands to fluent
+        (4) cleans up the directory again
+        """
+
+        self.clean()
+        txt = self.format_call()
+        cwd = os.getcwd()
+        os.chdir(self.path)
+        process = subprocess.call(txt)
+        os.chdir(cwd)
+        self.clean()
+        return process
 
 class BatchCaseReader(CaseReader):
 
@@ -773,6 +866,8 @@ class StandardKEpsilonSpecification(TwoEquationTurbulentBoundarySpecification):
 def _assign_turbulence_model(model:str) -> TurbulentBoundarySpecification:
 
     assignment = {'ke-standard':StandardKEpsilonSpecification,
+                  'ke-realizable':StandardKEpsilonSpecification,
+                  'ke-rng': StandardKEpsilonSpecification,
                   'kw-standard':StandardKOmegaSpecification}
 
     try:
@@ -799,7 +894,6 @@ class ModelModification(ABC):
     @abstractmethod
     def format_model_modification():
         pass
-
 
 class ViscousModelModification(ModelModification):
     """
@@ -972,11 +1066,125 @@ class SolidCellZone(FluentCellZone):
     def __init__(self,name: str) -> None:
 
         super().__init__(name,'solid')
+
+class UDF:
+
+    """
+    Description
+    -----------
+    class for representing a UDF for loading into boundary conditions in fluent
     
+    Parameters
+    -----------
+    file_name: str - the name of the udf file
+    udf_name: str - the name of the udf in fluent
+    data_name: str - the name of the data name in fluent
+    condition_name: str - the name of the condition (i.e. convection_coefficient, 
+                          heat_flux, ect.. the UDF is intended to be applied to)
+
+    compile = False - option to compile the UDF at runtime. Default is False
+    """
+
+    _line_break = '\n'
+    _compile_prefix = 'define/user-defined'
+    def __init__(self,file_name: str,
+                      udf_name: str,
+                      data_name: str,
+                      condition_name: str,
+                      compile = False) -> None:
+
+
+        if not os.path.exists(file_name):
+            raise FileNotFoundError('file: {} does could not be found'.format(file_name))
+        
+        self.file_name = file_name
+        self.udf_name = udf_name
+        self.__data_name = data_name
+        self.condition_name = condition_name
+        self.compile = compile
+
+    @property
+    def data_name(self):
+        return r'"' + self.__data_name + r'"'
+
+    def format_enable_udf(self):
+        """
+        string sequence to enable using udf
+        """
+        text = 'yes' + self._line_break
+        text += 'yes' + self._line_break
+        text += self.udf_name + self._line_break
+        text += self.data_name + self._line_break
+
+        return text
+
+    def format_compile_udf(self):
+        """
+        format string sequence to compile udf if required
+        """
+        return ''
+
+    def __str__(self):
+        """
+        string sequence to enablle
+        """
+
+        return self.format_enable_udf()
+
+def enable_udf(condition_name: str) -> callable:
+    """
+    decorator meant to enable all conditions 
+    that can have  udf profile to have one 
     
+    udf - the udf that could be enabled
+    """
+    def udf_enabled_condition(condition: callable) -> callable:
+
+        """
+        wrapper for a udf enabled condition that 
+        takes in the arguments of 
+
+        1. condition - a callable with the specifications for the condition
+        
+        if the udf is None, the condition is returned. If the udf is not None
+        then the text for the udf is returned as well as the condition
+
+        """
+
+        def enabled_condition(self,*args,**kwargs) -> str:
+            
+            try:
+                return str(self.udf[condition_name])
+            except KeyError:
+                additional_text = 'no' + self._line_break
+                return additional_text + condition(self,*args,**kwargs)
+            
+        return enabled_condition
+    
+    return udf_enabled_condition
 
 class FluentBoundaryCondition(ABC):
+    """
+    Description
+    -----------
+    Base class for all fluent boundary conditions. This class contains many of the basic 
+    routines required for parsing in other boudnary conditions, and does some basic
+    parsing and checking of inputs as well
 
+    Parameters
+    ------------
+    boundary_type: the type of the boundary, will raise ValueError if not in ALLOWABLE_BOUNDARY_TYPES
+    models: a list of models that are being used in Fluent, will raise ValueError if not in ALLOWABLE_VISCOUS_MODELS
+            or not in ALLOWABLE_MODELS
+    solver: the solver that is being used in Fluent. Will raise ValueError if not in ALLOWABLE_SOLVERS
+    reference_frame: whether or not the reference frame is absolute
+
+    Methods
+    -------------
+    add_udf() - add a udf to the boundary condition
+    remove_udf() - remove a udf from the boundary condition
+
+    """
     _prefix = '/define/boundary-conditions/'
     _line_break = LINE_BREAK
     _line_start = '/'
@@ -985,7 +1193,9 @@ class FluentBoundaryCondition(ABC):
                       boundary_type: str,
                       models: list,
                       solver: str,
-                      *args,**kwargs):
+                      *args,
+                      reference_frame = 'absolute',
+                      **kwargs):
         
         if solver not in ALLOWABLE_SOLVERS:
             raise ValueError('solver: {} is not allowed'.format(solver))
@@ -1001,6 +1211,8 @@ class FluentBoundaryCondition(ABC):
         self.__name = name
         self.__models = models
         self.__solver = solver
+        self.__udf = {}
+        self.__reference_frame = reference_frame
 
     @property
     def name(self):
@@ -1018,8 +1230,55 @@ class FluentBoundaryCondition(ABC):
     def btype(self):
         return self.__btype
 
+    @property
+    def udf(self):
+        return self.__udf
+    
+    @property
+    def reference_frame(self):
+        if self.__reference_frame == 'absolute':
+            return 'yes'
+        else:
+            return 'no'
+    
+    @udf.setter
+    def udf(self,udf):
+        self.__udf = udf
+    
     def enter_statement(self):
         return self._prefix + self.btype + self._line_break + self.name + self._line_break        
+
+    def add_udf(self,new_udf: UDF) -> None:
+        """
+        add a new udf to the udf dictionary
+        """
+        if new_udf.condition_name not in self.udf:
+            self.udf[new_udf.condition_name] = new_udf
+        else:
+            raise ValueError('Cannot have multiple udfs with the same condition name for the same boundary')
+
+    def remove_udf(self,udf_condition_name: str) -> UDF:
+        """
+        remove a UDF by condition name and return that UDF
+        """
+        try:
+            self.udf.pop(udf_condition_name)
+        except KeyError as ke:
+            raise KeyError('Cannot find UDF with condition name:{} in udf dictionary'.format(udf_condition_name))
+        
+    def _configure_udf_from_mapping(self,mapping: dict) -> str:
+        """
+        base function for configuring the udfs for a boundary condition
+        """
+        _compile_text = ''
+        for formatter,property_name in mapping.items():
+            #assign values of -1 to all properties with udf
+            if formatter in self.udf:
+                self.__setattr__(property_name,-1)
+                if self.udf[formatter].compile:
+                    _compile_text += self.udf[formatter].format_compile_udf()
+
+        return _compile_text
 
     @abstractmethod
     def format_boundary_condition(self):
@@ -1056,6 +1315,9 @@ class WallBoundaryCondition(FluentSolidBoundaryCondition):
                       solver: str,
                       shell_conduction = False):
 
+        if 'energy' not in models:
+            raise NotImplementedError('boundary condition not configured to work without energy equation')
+        
         super().__init__(name,'wall',models,solver)
         self.__wall_thickness = 0
         self.__generation = 0
@@ -1092,7 +1354,7 @@ class WallBoundaryCondition(FluentSolidBoundaryCondition):
     @property
     def caf(self):
         return self.__caf
-    
+
     @wall_thickness.setter
     def wall_thickness(self,wt):
         self.__wall_thickness = wt
@@ -1125,49 +1387,52 @@ class WallBoundaryCondition(FluentSolidBoundaryCondition):
         
         return txt
     
+    @enable_udf('heat_generation')
     def format_heat_generation(self):
-
-        #no to profile
-        txt = 'no' + self._line_break
-        txt += str(self.generation) + self._line_break
-        return txt
+            
+        return str(self.generation) + self._line_break
     
+    @enable_udf('heat_flux')
     def format_heat_flux(self):
 
-        #no to profile
-        txt = 'no' + self._line_break
-        txt += str(self.heat_flux) + self._line_break
-        return txt
+        return str(self.heat_flux) + self._line_break
 
+    @enable_udf('convection_coefficient')
     def format_convection_coefficient(self):
 
-        #no to profile
-        txt = 'no' + self._line_break
-        txt += str(self.convection_coefficient) + self._line_break
-        return txt
-    
-    def format_free_stream_temperature(self):
-        #no to profile
-        txt = 'no' + self._line_break
-        txt += str(self.free_stream_temperature) + self._line_break
-        return txt
+        return str(self.convection_coefficient) + self._line_break
 
+    @enable_udf('free_stream_temperature')
+    def format_free_stream_temperature(self):
+
+        return str(self.free_stream_temperature) + self._line_break
+
+    @enable_udf('convective_augmentation')
     def format_convective_augmentation(self):
 
-        #no to profile
-        txt = 'no' + self._line_break
-        txt += str(self.caf) + self._line_break
-        return txt
-    
+        return str(self.caf) + self._line_break
+        
     def format_shell_conduction(self):
 
-        #no to shell conduction
         txt = self.shell_conduction + self._line_break
         return txt
     
+    def _configure_udf(self):
+        """
+        configure mapping of udfs
+        """
+        mapping = {'heat_generation': 'generation',
+                   'heat_flux': 'heat_flux',
+                   'convection_coefficient': 'convection_coefficient',
+                   'free_stream_temperature': 'free_stream_temperature',
+                   'convective_augmentation': 'caf'}
+        
+        return self._configure_udf_from_mapping(mapping)
+
     def format_boundary_condition(self):
 
-        txt = self.enter_statement()
+        txt = self._configure_udf()
+        txt += self.enter_statement()
         txt += str(self.wall_thickness) + self._line_break
         txt += self.format_heat_generation()
         #no to change material
@@ -1203,11 +1468,14 @@ class FluentFluidBoundaryCondition(FluentBoundaryCondition):
                       models: list,
                       solver: str,
                       turbulence_model: str,
-                      *args,**kwargs):
+                      *args,
+                      direction_vector = None,
+                      temperature = None,
+                      **kwargs):
 
         super().__init__(name,boundary_type,models,solver,*args,**kwargs)
-        self.__direction_vector = None
-        self.__temperature = None
+        self.__direction_vector = direction_vector
+        self.__temperature = temperature
         self.__turbulence_model = _assign_turbulence_model(turbulence_model)
         self.__turbulence_specification = None
 
@@ -1248,7 +1516,11 @@ class FluentFluidBoundaryCondition(FluentBoundaryCondition):
 
         """
         deals with setting the direction vector
-        """
+        options consist of 
+        (1) normal to boundary - selected if direction_vector is None
+        (2) sets the direction vector asssuming a list or numpy array
+            strict checking of the shape of the direction vector
+         """
     
         txt = ''
         if self.direction_vector is None:
@@ -1256,23 +1528,34 @@ class FluentFluidBoundaryCondition(FluentBoundaryCondition):
             #normal to boundary
             txt += 'yes' + self._line_break
         else:
+            msg = 'direction vector (if specified) must be a list or 1D numpy array'
+            if isinstance(self.direction_vector,list):
+                self.direction_vector = np.array(self.direction_vector).squeeze()
+            elif isinstance(self.direction_vector,np.ndarray):
+                self.direction_vector = self.direction_vector.squeeze()
+            else:
+                raise TypeError(msg)
+            
+            if self.direction_vector.ndim != 1:
+                raise ValueError(msg)
+            
+            if self.direction_vector.shape[0] > 3:
+                raise ValueError('direction vector cannot contain more than 3 components')
+
             txt = 'yes' + self._line_break + 'yes' + self._line_break
-            for i in range(3):
+            for i in range(self.direction_vector.shape[0]):
                 txt += 'no' + self._line_break + str(self.direction_vector[i]) + self._line_break
             
         return txt
     
-    def temperature_spec(self) -> str:
+    @enable_udf('temperature')
+    def format_temperature(self) -> str:
 
         """
         deals with the tempearture specifications
         """
+        return str(self.temperature) + self._line_break
 
-        #no to profile
-        txt = 'no' + self._line_break
-        txt += str(self.temperature) + self._line_break
-
-        return txt
 
     def __call__(self):
         return self.format_boundary_condition(turbulent_specification= self.turbulence_specification)
@@ -1286,9 +1569,10 @@ class MassFlowInlet(FluentFluidBoundaryCondition):
     def __init__(self,name: str,
                       models: list,
                       solver: str,
-                      turbulence_model: str):
+                      turbulence_model: str,
+                      *args,**kwargs):
 
-        super().__init__(name,'mass-flow-inlet',models,solver,turbulence_model)
+        super().__init__(name,'mass-flow-inlet',models,solver,turbulence_model,*args,**kwargs)
         self.__mass_flow_rate = None
         self.__mass_flux = None
         self.__init_pressure = 0
@@ -1317,78 +1601,76 @@ class MassFlowInlet(FluentFluidBoundaryCondition):
     def init_pressure(self,ip):
         self.__init_pressure = ip
 
+    @enable_udf('mass_flow_rate')
+    def format_mass_flow_rate(self):
+        return 'mass flow: {}'.format(self.mass_flow_rate) + self._line_break
+
+    @enable_udf('mass_flux')
+    def format_mass_flux(self):
+        return 'mass flux: {}'.format(self.mass_flux) + self._line_break
+    
+    @enable_udf('pressure')
+    def format_pressure(self):
+        return 'pressure: {}'.format(self.init_pressure) + self._line_break
+    
     def __str__(self):
 
         if self.mass_flow_rate is not None:
-            txt = 'mass flow: {}'.format(self.mass_flow_rate)
+            txt = self.format_mass_flow_rate()
         elif self.mass_flux is not None:
-            txt = 'mass flux: {}'.format(self.mass_flux)
+            txt = self.format_mass_flux()
         else:
-            txt = 'mass: None'
+            raise ValueError('cannot have both mass flux and mass flow rate as None for MassFlowINlet Boundary condition')
         
-        txt += self._line_break
-        txt += 'temperature: {}'.format(self.temperature) + self._line_break
-        txt += 'pressure: {}'.format(self.init_pressure) + self._line_break
+        txt += self.format_temperature()
+        txt += self.format_pressure()
         
         return txt
         
-    def mass_spec(self) -> str:
+    def mass_specification(self) -> str:
 
         """ 
-        deal with the mass flow rate specifications
-
-        Assumes (for now) that the case has formatted boundary condition accepting either 
-        the mass flow rate or the mass flux argument - because of the stupid syntax of the tui 
-        this has to be pre-user set. i.e. if the case was configured by the user to accept a 
-        MassFlux and you try to input a MassFlowRate it will best case crash the run, worst 
-        case it could run with unpredictable results
+        deal with the mass flow rate specifications. Formats either the mass flow rate
+        or the mass flux depending upon user specification. Allows specification through
+        UDF. 
         """ 
 
         if self.mass_flow_rate is None:
-            txt = 'no' + self._line_break + 'yes' + self._line_break
-            #no to profile
-            txt += 'no' + self._line_break
             if self.mass_flux is None:
-                txt = 'yes' + self._line_break + 'no' + self._line_break
-
-                #no to profile
-                txt += 'no' + self._line_break 
-                txt += '1' + self._line_break
-
-            else:
-                txt += str(self.mass_flux) + self._line_break
+                raise ValueError('cannot leave both mass flow rate and mass flux unspecified')
+            
+            txt = 'no' + self._line_break + 'yes' + self._line_break
+            txt += self.format_mass_flux()
         
         else:
             if self.mass_flux is not None:
                 raise ValueError('You cannot specify both the mass flux and the mass flow rate')
             
             txt = 'yes' + self._line_break + 'no' + self._line_break
-            #no to profile
-            txt += 'no' + self._line_break
-            txt += str(self.mass_flow_rate) + self._line_break
-        
-
-        return txt
-
-    def pressure_spec(self) -> str:
-
-        """
-        deals with initial pressure specifications
-        """
-
-        #no to profile
-        txt = 'no' + self._line_break
-        txt += str(self.init_pressure) + self._line_break
+            txt += self.format_mass_flow_rate()
         
         return txt
 
+    def _configure_udf(self):
+        """
+        configure mapping of udfs
+        """
+        mapping = {'temperature': 'temperature',
+                   'pressure': 'init_pressure',
+                   'mass_flux': 'mass_flux',
+                   'mass_flow_rate': 'mass_flow_rate'}
+        
+        return self._configure_udf_from_mapping(mapping)
+    
     def format_boundary_condition(self,turbulent_specification = 'K and Epsilon') -> str:
 
-        txt = self.enter_statement()
-        txt += 'yes' + self._line_break
-        txt += self.mass_spec()
-        txt += self.temperature_spec()
-        txt += self.pressure_spec()
+        txt = self._configure_udf()
+        txt += self.enter_statement()
+        txt += self.reference_frame + self._line_break     
+        txt += self.mass_specification()
+        if 'energy' in self.models:
+            txt += self.format_temperature()
+        txt += self.format_pressure()
         txt += self.direction_spec()
         txt += self.turbulence_model.turbulence_spec(turbulent_specification)
         
@@ -1412,21 +1694,29 @@ class PressureOutlet(FluentFluidBoundaryCondition):
     def pressure(self,p):
         self.__pressure = p
     
-    def pressure_spec(self):
+    @enable_udf('pressure')
+    def format_pressure(self):
         """
         specifications for the pressure
         """ 
-        #no to profile
-        txt = 'no' + self._line_break
-        txt += str(self.pressure) + self._line_break
-        return txt
+        return str(self.pressure) + self._line_break
 
+    def _configure_udf(self):
+        """
+        configure mapping of udfs
+        """
+        mapping = {'temperature': 'temperature',
+                   'pressure': 'pressure'}
+        
+        return self._configure_udf_from_mapping(mapping)
+    
     def format_boundary_condition(self,turbulent_specification = 'K and Epsilon') -> str:
 
         txt = self.enter_statement()
         txt += 'yes' + self._line_break
-        txt += self.pressure_spec()
-        txt += self.temperature_spec()
+        txt += self.format_pressure()
+        if 'energy' in self.models:
+            txt += self.format_temperature()
         txt += self.direction_spec()
         txt += self.turbulence_model.turbulence_spec(turbulent_specification)
         #no to a couple of end options that are pretty obscure:
@@ -1770,73 +2060,10 @@ class FluentRun(SerializableClass):
         return [case_file],dmdict
     
 
-def get_test_mfr():
 
-    mass_flow = MassFlowInlet('inner_tube_inlet',['energy','ke-standard'],'pressure-based')
-    mass_flow.mass_flow_rate = 0.04
-    mass_flow.init_pressure = 4.2e6
-    mass_flow.temperature = 360
-    mass_flow.hydraulic_diameter = 0.013
-    mass_flow.intensity = 3.8
 
-    return mass_flow
 
-def get_test_pressure():
-    pressure_outlet = PressureOutlet('outer_tube_outlet',['energy','ke-standard'],'pressure-based')
-    pressure_outlet.pressure = 4.3e6
-    pressure_outlet.temperature = 320
-    pressure_outlet.hydraulic_diameter = 0.003
-    pressure_outlet.intensity = 3.8
-
-    return pressure_outlet
-
-def test_fluent_run():
     
-    mfr = get_test_mfr()
-    po = get_test_pressure()
-
-    solver = Solver(solver_iterator= Solver_Iterator(niter = 500))
-    ff = FluentRun('test.cas',solver = solver, boundary_conditions= [mfr,po])
-    ff.write('fleunt_input.fluent')
-
-def test_mass_flow_rate_bc():
-
-    mass_flow = get_test_mfr()
-    txt = mass_flow(turbulent_specification = 'Intensity and Hydraulic Diameter')
-    print(txt)
-
-def test_pressure_outlet_bc():
-
-    po = get_test_pressure()
-    print(po())
-
-def test_format_convergence_conditions():
-
-    cc = ConvergenceConditions(['p-out','max-temp'])
-    print(str(cc))
-
-def test_discritization():
-
-    disc = Discritization(orders = 'First Order Upwind')
-    print(disc)
-
-def test_real_gas():
-
-    nrg = NISTRealGas('co2')
-    print(nrg)
-
-def test_scalar_relaxation():
-
-    relaxation = ScalarRelaxation(['density','temperature'],[0.8,0.7])
-    print(relaxation)
-
-def test_equation_relaxation():
-
-    #relax = EquationRelaxation('pressure',0.8)
-    #print(relax)
-    relax = EquationRelaxation.from_dict({'pressure':0.7})
-    print(relax)
-
 def main():
 
     #test_fluent_run()
@@ -1846,7 +2073,8 @@ def main():
     #test_discritization()
     #test_real_gas()
     #test_scalar_relaxation()
-    test_equation_relaxation()
+    #test_equation_relaxation()
+    test_wall_udf()
 
 if __name__ == '__main__':
     main()

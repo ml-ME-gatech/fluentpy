@@ -1237,6 +1237,7 @@ class SurfaceIntegralFile:
             self._parse_txt(txt)
         
         return self.attributes
+
 def main():
     pass
 
