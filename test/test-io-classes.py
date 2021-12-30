@@ -1,14 +1,13 @@
 #native imports
-import os
 import pandas as pd
 import numpy as np
 import unittest
-from dynaconf import Dynaconf
 import pickle
 
 #pacakge imports
-from wbfluentpy.io.classes import ReportFileOut,SolutionFile,ReportFilesOut,SolutionFiles,PostDataFile,XYDataFile
-#from fluentPy.fluentPyconfig import settings
+from fluentpy.fluentio import ReportFileOut,SolutionFile,PostDataFile,\
+                                      XYDataFile,SurfacePointFile,SurfaceIntegralFile,\
+                                      SphereSliceFile
 
 """
 -- Creation -- 
@@ -16,28 +15,16 @@ Date: 05.25.2021
 Author: Michael Lanahan
 
 -- Last Edit -- 
-Date: 11.21.2021
+Date: 12.28.2021
 Editor: Michael Lanahan
 
 -- Further Description --
 
-Rigorously checking the function of the workhorse classes
-
-> Classes Checked
-- ReportFileOut
-- SolutionFile
-- ReportFilesOut
-- SolutionFiles
+Checking the function of the io classes
 
 """
 
 DIFF_TOL = 1e-10
-
-test_settings = Dynaconf(
-    settings_files=['test_settings.toml'],
-    environments = True,
-)
-
 
 class ReportFileTests(unittest.TestCase):
 
@@ -73,152 +60,48 @@ class ReportFileTests(unittest.TestCase):
             check_skip = pd.read_pickle(self.check_skip_rows)
             self.assertLess(np.linalg.norm(check_skip-rfile.df),DIFF_TOL)
 
-
 class SolutionFileTests(unittest.TestCase):
 
     solution_file = 'test-files\\wb-folder-test\\wb-folder-test_files\\progress_files\\dp0\\FFF\\Fluent\\Solution.trn'
     solution_file2 = 'test-files\\wb-folder-test2\\wb-folder-test2_files\\progress_files\\dp0\\FFF\\Fluent\\Solution-2.trn'
     solution_check_file = 'test-files\\check\\solution-check.pkl'
-
+    check_solution2 = 'test-files\\check\\solution-check2.pkl'
         
     def test_readdf_exist(self):
         
-        with SolutionFile(self.solution_file) as sfile:
-            sfile.readdf()
-            check_solution_file = pd.read_pickle(self.solution_check_file)
+        for solution_string,check_string in zip([self.solution_file,self.solution_file2],[self.solution_check_file,self.check_solution2]):
+            with SolutionFile(solution_string) as sfile:
+                sfile.readdf()
+                check_solution_file = pd.read_pickle(check_string)
 
-        print(sfile.df)
-        self.assertLess(np.linalg.norm(np.array(check_solution_file,dtype = float)-np.array(sfile.df,dtype = float)),DIFF_TOL)
+            self.assertLess(np.linalg.norm(np.array(check_solution_file,dtype = float)-np.array(sfile.df,dtype = float)),DIFF_TOL)
 
-
-"""
-class ReportFilesTests(unittest.TestCase):
-
-    dp_folder = 'test-files\\wb-folder-test\\wb-folder-test_files\\dp0'
-    columns_check_file = 'test-files\\check\\dp_load_columns.txt'
-    df_check_file = 'test-files\\check\\dp_load_df-{}.pkl'
-    df_arb_check_file = 'test-files\\check\\dp_load_arbitary_df-{}.pkl'
-    df_variable_check = 'test-files\\check\\variable_loading.pkl'
-
-    def test_report_files_dict(self):
-
-        dpf = DesignPointFolder(self.dp_folder)    
-        files = [f.get_report_files()[0] for f in dpf.get_fluent_folders()]
-        rfiles = ReportFilesOut(files)
-        for rfile,fname in zip(rfiles,files):
-            self.assertIn(fname,str(rfile))
-            self.assertIsInstance(rfile,ReportFileOut)
-    
-
-    def test_load_converged(self):
-        
-        
-        #check that the loading of the result files works correctly when the converged result 
-        #is requested
-        
-
-        dpf = DesignPointFolder(self.dp_folder)    
-        files = [f.get_report_files()[0] for f in dpf.get_fluent_folders()]
-        rfiles = ReportFilesOut(files)
-        rfiles.load(convergedResult= True)
-        
-        #check column reading
-        with open(self.columns_check_file,'r') as file:
-            for line in file.readlines():
-                self.assertIn(line[0:-1],rfiles.columns)
-        
-        #check data frames
-        for i,df in enumerate(rfiles.data.values()):
-            check = pd.read_pickle(self.df_check_file.format(str(i)))
-            self.assertLess(np.linalg.norm(check-df),DIFF_TOL)
-
-    def test_load_arbitrary(self):
-
-       
-       # #check that the loading of thee result files works correctly with arbitary number of rows 
-       # #ignored
-       
-
-        dpf = DesignPointFolder(self.dp_folder)    
-        files = [f.get_report_files()[0] for f in dpf.get_fluent_folders()]
-        rfiles = ReportFilesOut(files)
-
-        skiprows = dict.fromkeys(files)
-        for i,key in enumerate(skiprows):
-            skiprows[key] = i
-        
-        rfiles.load(skiprows = skiprows)
-
-        for i,df in enumerate(rfiles.data):
-            check = pd.read_pickle(self.df_arb_check_file.format(str(i)))
-            self.assertLess(np.linalg.norm(check-rfiles.data[df]),DIFF_TOL)
-
-    
-    def test_variable_df_get(self):
-    
-        #check that the retrieval of a variable from multiple results files works as expected
-
-        dpf = DesignPointFolder(self.dp_folder)    
-        files = [f.get_report_files()[0] for f in dpf.get_fluent_folders()]
-        rfiles = ReportFilesOut(files)
-
-        df = rfiles.get_variable('cs-temp')
-        check = pd.read_pickle(self.df_variable_check)
-        
-        self.assertLess(np.linalg.norm(check.fillna(value = 0)-df.fillna(value =0)),DIFF_TOL)
-
-
-class SolutionFilesTests(unittest.TestCase):
-
-    progress_files_folders = 'test-files\\wb-folder-test\\wb-folder-test_files\\dp0'
-    check_param_file = 'test-files\\check\\solution_files_params_check-{}.pkl'
-    check_df_files = 'test-files\\check\\solution_files_df_check-{}.pkl'
-    difficult_solution_file = 'test-files\\test\\difficult_solution.trn'
-
-    def test_read_params(self):
-        dpf = DesignPointFolder(self.progress_files_folders)    
-        files = [f.get_solution_files()[0] for f in dpf.get_fluent_folders()]
-        sfiles = SolutionFiles(files)
-
-        sfiles.read_params()
-        for i,(ff,df) in enumerate(sfiles.input_parameters.items()):
-            df.to_pickle(self.check_param_file.format(i))
-            check = pd.read_pickle(self.check_param_file.format(i))
-            self.assertLess(np.linalg.norm(df - check),DIFF_TOL)
-
-    def test_load(self):
-
-        dpf = DesignPointFolder(self.progress_files_folders)    
-        files = [f.get_solution_files()[0] for f in dpf.get_fluent_folders()]
-        sfiles = SolutionFiles(files)
-        sfiles.load()
-        for i,(ff,df) in enumerate(sfiles.items()):
-            check = pd.read_pickle(self.check_df_files.format(i))
-            self.assertLess(np.linalg.norm(df - check),DIFF_TOL)
-
-    def test_get_status(self):
-        with SolutionFile(self.difficult_solution_file,fluent_folder= 'test') as sf:
-            print(sf.STATUS)
-"""
-
-"""
 class TestPostOutputFile(unittest.TestCase): 
 
     file = 'test-files\\test\\yplus_and_htc_data.csv'
+    check_df = 'test-files\\check\\post_df-check.pkl'
+    check_keys = 'test-files\\check\\post_df-keys-check.pkl'
 
     def test_get_data_names(self):
 
         with PostDataFile(self.file) as pdf:
             df = pdf.readdf()
             
-            #print(pdf.data_names)
-            for key in pdf.keys():
-                print(pdf[key])
+            with open(self.check_keys,'w') as file:
+                file.write('\n'.join(list(pdf.keys())))
 
+            with open(self.check_keys,'r') as file:
+                check_keys = file.read().split('\n')
+
+            self.assertListEqual(check_keys,list(pdf.keys()))
+        
+        check = pd.read_pickle(self.check_df)
+        self.assertLess(np.linalg.norm(np.array(df,dtype = float)- np.array(check,dtype = float)),DIFF_TOL)
 
 class TestXYOutputFile(unittest.TestCase):
 
     file = 'test-files\\test\\Re19000_standard_k_epsilon'
+    check_file = 'test-files\\check\\XYread-{}.pkl'
 
     def test_get_data(self):
 
@@ -226,8 +109,84 @@ class TestXYOutputFile(unittest.TestCase):
 
             df = xydf.readdf()
             for key in xydf.keys():
-                print(xydf[key])
-"""
+                df = xydf[key]
 
+                checkdf = pd.read_pickle(self.check_file.format(key))
+                self.assertLess(np.linalg.norm(np.array(df,dtype = float) - np.array(checkdf,dtype = float)),DIFF_TOL)
+
+class TestSurfacePointFile(unittest.TestCase):
+
+    create_file = 'test-files\\check\\test_surface_point_file.spf'
+    check_create = 'test-files\\check\\test_surface_point_file_check.spf'
+    output_file = 'test-files\\test\\test_output.psf'
+    check_output = 'test-files\\check\\test_output_psf.pkl'
+
+    def test_create(self):
+
+        X = np.array([[1,1,1],[2,2,2],[3,3,3]])
+        SurfacePointFile.write_fluent_input_from_table(X,self.create_file,['temperature'])
+
+        with open(self.create_file,'r') as file:
+            text = file.read()
+        
+        with open(self.check_create,'r') as file:
+            check_text = file.read()
+            check_text = check_text.replace(self.check_create,self.create_file)
+        
+        self.assertEqual(text,check_text)
+
+    def test_read_output(self):
+
+        with SurfacePointFile(self.output_file) as spf:
+            df = spf.readdf()
+
+        check = pd.read_pickle(self.check_output).to_numpy()
+        self.assertLess(np.linalg.norm(df.to_numpy()- check),DIFF_TOL)
+
+class TestSphereSliceFile(unittest.TestCase):
+
+    create_file = 'test-files\\check\\test_surface_point_file.ssf'
+    check_create = 'test-files\\check\\test_surface_point_file_check.ssf'
+    output_file = 'test-files\\test\\test_output.ssf.so'
+    check_output = 'test-files\\check\\test_output_ssf.pkl'
+
+    def test_create(self):
+
+        X = np.array([[1,1,1],[2,2,2],[3,3,3]])
+        R = np.array([1,2,3])
+        SurfacePointFile.write_fluent_input_from_table(X,self.create_file,['temperature'])
+
+        with open(self.create_file,'r') as file:
+            text = file.read()
+        
+        with open(self.check_create,'r') as file:
+            check_text = file.read()
+            check_text = check_text.replace(self.check_create,self.create_file)
+        
+        self.assertEqual(text,check_text)
+
+    def test_read_output(self):
+        
+        with SphereSliceFile(self.output_file) as ssf:
+            df = ssf.readdf()
+                
+        check = pd.read_pickle(self.check_output).to_numpy()
+        self.assertLess(np.linalg.norm(df.to_numpy()- check),DIFF_TOL)
+
+class TestSurfaceIntegralFile(unittest.TestCase):
+
+    test_file = 'test-files\\test\\surface_integral_file_test.sif'
+    check_file = 'test-files\\check\\check_sif.sif'
+
+    def test_read(self):
+
+        with SurfaceIntegralFile(self.test_file) as sif:
+            test_dict = sif.read()
+        
+        with open(self.check_file,'rb') as file:
+            check_dict = pickle.load(file)
+        
+        self.assertDictEqual(test_dict,check_dict)
+            
 if __name__ == '__main__':
     unittest.main()

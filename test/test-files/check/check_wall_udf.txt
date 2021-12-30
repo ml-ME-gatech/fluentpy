@@ -1,0 +1,16 @@
+/define/boundary-conditions/wall
+test
+0
+no
+0
+no
+no
+yes
+yes
+udf
+"HTC::UDF"
+no
+400.0
+no
+no
+1

@@ -1,88 +1,226 @@
-from fluentpy.tui.fluent import WallBoundaryCondition,UDF,MassFlowInlet,PressureOutlet,Solver,Solver_Iterator
-from fluentpy.tui.fluent import FluentRun,ConvergenceConditions,Discritization,NISTRealGas,ScalarRelaxation
-from fluentpy.tui.fluent import EquationRelaxation
+from fluentpy.tui import WallBoundaryCondition,UDF,MassFlowInlet,PressureOutlet,Solver,Solver_Iterator,\
+                                FluentRun,ConvergenceConditions,Discritization,NISTRealGas,ScalarRelaxation,\
+                                EquationRelaxation
+from fluentpy.util import _surface_construction_arg_validator
 
-def test_wall_udf():
+from unittest import TestCase,main
+import shutil
 
-    wall = WallBoundaryCondition('test',['energy','viscous'],'pressure-based')
-    wall.free_stream_temperature = 400.0
-    udf = UDF('test.c','udf','HTC::UDF','convection_coefficient')
-    wall.add_udf(udf)
-    text = wall.format_boundary_condition()
-    print(text)
+"""
+-- Creation -- 
+Date: 11.28.2021
+Author: Michael Lanahan
 
-def get_test_mfr():
+-- Last Edit -- 
+Date: 12.28.2021
+Editor: Michael Lanahan
 
-    mass_flow = MassFlowInlet('inner_tube_inlet',['energy','ke-standard'],'pressure-based')
-    mass_flow.mass_flow_rate = 0.04
-    mass_flow.init_pressure = 4.2e6
-    mass_flow.temperature = 360
-    mass_flow.hydraulic_diameter = 0.013
-    mass_flow.intensity = 3.8
+-- Further Description --
 
-    return mass_flow
+Checking the function of the io classes
 
-def get_test_pressure():
-    pressure_outlet = PressureOutlet('outer_tube_outlet',['energy','ke-standard'],'pressure-based')
-    pressure_outlet.pressure = 4.3e6
-    pressure_outlet.temperature = 320
-    pressure_outlet.hydraulic_diameter = 0.003
-    pressure_outlet.intensity = 3.8
 
-    return pressure_outlet
+Remaining Basic Unit Tests to Write
+-----------------------------------
 
-def test_fluent_run():
+- Initializer
+- CaseReader
+- CaseMeshReplaceReader
+- CaseDataReader
+- FluentEngine
+- BatchCaseReader
+- DataWriter
+- CaseWriter
+- Solver_Iterator
+- Solver
+- FluentCase
+- StandardKOmegaSpecification
+- StandardKEpsilonSpecification
+- ViscousModelModification
+- SolidCellZone
+- WallBoundaryCondition
+- SurfaceIntegrals
+"""
+
+class TestUDF(TestCase):
+
+    check_wall_udf  = 'test-files\\check\\check_wall_udf.txt'
+
+    def test_wall_udf(self):
+        wall = WallBoundaryCondition('test',['energy','viscous'],'pressure-based')
+        wall.free_stream_temperature = 400.0
+        udf = UDF('test.c','udf','HTC::UDF','convection_coefficient')
+        wall.add_udf(udf)
+        text = wall()
+        
+        with open(self.check_wall_udf,'r') as file:
+            check = file.read()
+        
+        self.assertEqual(text,check)
+
+class TestMassFlowInlet(TestCase):
+
+    check_mfi = 'test-files\\check\\check_mass_flow_inlet.txt'
+
+    def get_test_mfr(self):
+
+        mass_flow = MassFlowInlet('inner_tube_inlet',['energy','ke-standard'],'pressure-based','ke-standard')
+        mass_flow.mass_flow_rate = 0.04
+        mass_flow.init_pressure = 4.2e6
+        mass_flow.temperature = 360
+        mass_flow.turbulence_model.hydraulic_diameter = 0.013
+        mass_flow.turbulence_model.intensity = 3.8
+        return mass_flow
+
+    def test_mass_flow_rate(self):
+
+        mfi = self.get_test_mfr()
+        text = mfi()
+        
+        with open(self.check_mfi,'r') as file:
+            check = file.read()
+
+        self.assertEqual(text,check)
+
+class TestPressureOutlet(TestCase):
+
+    check_po = 'test-files\\check\\check_pressure_outlet.txt'
+
+    def get_test_pressure(self):
+        pressure_outlet = PressureOutlet('outer_tube_outlet',['energy','viscous'],'pressure-based','kw-standard')
+        pressure_outlet.pressure = 4.3e6
+        pressure_outlet.temperature = 320
+        pressure_outlet.turbulence_model.hydraulic_diameter = 0.003
+        pressure_outlet.turbulence_model.intensity = 3.8
+
+        return pressure_outlet
+
+    def test_pressure_outlet(self):
+
+        po = self.get_test_pressure()
+        text  = po()
+        
+        with open(self.check_po,'r') as file:
+            check = file.read()
+        
+        self.assertEqual(text,check)
+
+class TestFluentRun(TestCase):
+
+    input_file = 'test-files\\test\\fluent_run_input.input'
+    input_check = 'test-files\\check\\check_fluentrun_input.txt'
+
+    def test_fluent_run(self):
+
+        mfr = TestMassFlowInlet().get_test_mfr()
+        po = TestPressureOutlet().get_test_pressure()
+        solver = Solver(solver_iterator= Solver_Iterator(niter = 500))
+        ff = FluentRun('test.cas',solver = solver, boundary_conditions= [mfr,po])
+        ff.write(self.input_file)
+        shutil.copy2(self.input_file,self.input_check)
+
+        with open(self.input_check,'r') as file:
+            check = file.read()
+        
+        with open(self.input_file,'r') as file:
+            test = file.read()
+
+        self.assertEqual(check,test)
     
-    mfr = get_test_mfr()
-    po = get_test_pressure()
+class TestConvergenceConditions(TestCase):
 
-    solver = Solver(solver_iterator= Solver_Iterator(niter = 500))
-    ff = FluentRun('test.cas',solver = solver, boundary_conditions= [mfr,po])
-    ff.write('fleunt_input.fluent')
+    cc_check = 'test-files\\check\\check_convergence_conditions.txt'
 
-def test_mass_flow_rate_bc():
+    def test_convergence_conditions(self):
+        cc = ConvergenceConditions(['p-out','max-temp'])
+        text = str(cc)
+        with open(self.cc_check,'r') as file:
+            check = file.read()
+        
+        self.assertEqual(text,check)
 
-    mass_flow = get_test_mfr()
-    mass_flow.udf = UDF('RadialHTCW10mm.c')
+class TestDiscritization(TestCase):
 
-    #txt = mass_flow(turbulent_specification = 'Intensity and Hydraulic Diameter')
-    #print(txt)
+    disc_check1 = 'test-files\\check\\check_discritization1.txt'
+    disc_check2 = 'test-files\\check\\check_discritization2.txt'
+    disc_check3 = 'test-files\\check\\check_discritization3.txt'
 
+    def test_disciritization_conditions(self):
+        
+        for file_name,order in zip([self.disc_check1,self.disc_check2,self.disc_check3],\
+                             ['First Order Upwind','Second Order Upwind','Third Order MUSCL']):
+                
+            disc = Discritization(orders = order)
+            
+            with open(file_name,'r') as file:
+                check = file.read()
+            
+            self.assertEqual(str(disc),check)
 
-def test_pressure_outlet_bc():
+class TestNistRealGas(TestCase):
 
-    po = get_test_pressure()
-    print(po())
+    nist_rg_check1 = 'test-files\\check\\nist-real-gas-co2.txt'
 
-def test_format_convergence_conditions():
+    def test_nrg(self):
 
-    cc = ConvergenceConditions(['p-out','max-temp'])
-    print(str(cc))
+        nrg = NISTRealGas('co2')
+        
+        with open(self.nist_rg_check1,'r') as file:
+            check = file.read()
+        
+        self.assertEqual(str(nrg),check)
 
-def test_discritization():
+class TestScalarRelaxation(TestCase):
 
-    disc = Discritization(orders = 'First Order Upwind')
-    print(disc)
+    sr_file = 'test-files\\check\\scalar_relaxation.txt'
 
-def test_real_gas():
+    def test_sr(self):
+        relaxation = ScalarRelaxation(['density','temperature'],[0.8,0.7])
+        
+        with open(self.sr_file,'r') as file:
+            check = file.read()
+        
+        self.assertEqual(str(relaxation),check)
 
-    nrg = NISTRealGas('co2')
-    print(nrg)
+class TestEquationRelaxation(TestCase):
 
-def test_scalar_relaxation():
+    er_file1 = 'test-files\\check\\equation_relaxation1.txt'
+    er_file2 = 'test-files\\check\\equation_relaxation2.txt'
 
-    relaxation = ScalarRelaxation(['density','temperature'],[0.8,0.7])
-    print(relaxation)
+    def test_er(self):
+        relaxation = EquationRelaxation('pressure',0.8)
 
-def test_equation_relaxation():
+        with open(self.er_file1,'r') as file:
+            check = file.read()
+        
+        self.assertEqual(str(relaxation),check)
 
-    #relax = EquationRelaxation('pressure',0.8)
-    #print(relax)
-    relax = EquationRelaxation.from_dict({'pressure':0.7})
-    print(relax)
+    def test_er_list(self):
+        relaxation = EquationRelaxation(['pressure','momentum'],[0.8,0.7])
+        
+        with open(self.er_file2,'r') as file:
+            check = file.read()
+        
+        self.assertEqual(str(relaxation),check)
 
-def main():
-    test_wall_udf()
+class TestSurfaceIntegrals(TestCase):
 
+    def test_scav_single(self):
+
+        output = _surface_construction_arg_validator(11,'temperature','area-weighted-avg')
+        self.assertListEqual(output[0],['11'])
+        self.assertListEqual(output[1],['temperature'])
+        self.assertListEqual(output[2],['area-weighted-avg'])
+    
+    def test_scav_multiple_id(self):
+
+        output = _surface_construction_arg_validator([[10,11],12],
+                                                     ['temperature','temperature'],
+                                                     ['area-weighted-avg','area-weighted-avg'])
+        
+        self.assertListEqual(output[0],[['12'],['10','11']])
+        self.assertListEqual(output[1],['temperature','temperature'])
+        self.assertListEqual(output[2],['area-weighted-avg','area-weighted-avg'])
+    
 if __name__ == '__main__':
     main()

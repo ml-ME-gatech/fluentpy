@@ -1,0 +1,53 @@
+file/start-transcript solution.trn
+file/read-case test.cas
+
+;Model Modifications
+
+
+;Boundary Conditions
+
+/define/boundary-conditions/mass-flow-inlet
+inner_tube_inlet
+yes
+yes
+no
+no
+mass flow: 0.04
+no
+360
+no
+pressure: 4200000.0
+no
+yes
+yes
+no
+1
+no
+1
+/define/boundary-conditions/pressure-outlet
+outer_tube_outlet
+yes
+no
+4300000.0
+no
+320
+no
+yes
+yes
+no
+1
+no
+1
+yes
+no
+no
+no
+solve/initialize/hyb-initialization
+solve/iterate 500
+parallel timer usage
+
+;Post Processing
+
+file/write-case result.cas
+file/write-data result.dat
+exit

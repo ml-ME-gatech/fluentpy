@@ -1,8 +1,5 @@
-import os
-from wbfluentpy.io._file_scan import _get_text_between_phrase_lines,_get_repeated_text_phrase_lines
+from fluentpy._file_scan import _get_repeated_text_phrase_lines,_get_text_between_phrase_lines
 import unittest
-from dynaconf import Dynaconf
-from wbfluentpy.fluentPyconfig import settings
 
 """
 
@@ -24,11 +21,6 @@ check the ability of the _file-scan functions and make sure the low level operat
 
 """
 
-
-test_settings = Dynaconf(
-    settings_files=['test_settings.toml'],
-    environments = True,
-)
 
 class TestgetTextBetweenPhraseLines(unittest.TestCase): 
 

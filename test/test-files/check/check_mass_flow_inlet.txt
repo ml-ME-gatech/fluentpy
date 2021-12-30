@@ -1,0 +1,18 @@
+/define/boundary-conditions/mass-flow-inlet
+inner_tube_inlet
+yes
+yes
+no
+no
+mass flow: 0.04
+no
+360
+no
+pressure: 4200000.0
+no
+yes
+yes
+no
+1
+no
+1

@@ -1,0 +1,1504 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Welcome to fluentpy’s API documentation! &#8212; fluentpy 0.1 documentation</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/blank.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+<a class="navbar-brand" href="#">
+<p class="title">fluentpy</p>
+</a>
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Welcome to fluentpy’s API documentation!
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#fluentio">
+   fluentio
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tui">
+   TUI
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-fluentpy.batch.submit">
+   batch
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#indices-and-tables">
+   Indices and tables
+  </a>
+ </li>
+</ul>
+
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <section id="welcome-to-fluentpy-s-api-documentation">
+<h1>Welcome to fluentpy’s API documentation!<a class="headerlink" href="#welcome-to-fluentpy-s-api-documentation" title="Permalink to this headline">¶</a></h1>
+<p>The documentation for API is split into IO (in fluentio),TUI, and batch.</p>
+</section>
+<section id="fluentio">
+<h1>fluentio<a class="headerlink" href="#fluentio" title="Permalink to this headline">¶</a></h1>
+<p>fluentio is a submodule intended to provided convinient classes for reading (and sometimes writing)
+output files created from fluent, almost exclusively into the pandas DataFrame format. Common files
+include solution files (or transcript files), report files, and post data files, or files created by
+exporting surface data from CFD Post. This list will grow as needed and support will be added for additional
+file formats</p>
+<p>** The solution file is challenging to read due to the format of the text data. While no cases have been
+found that read incorrectly presently, it is not to difficult to imagine cases where this will fail. Please
+report the issue on github.</p>
+<span class="target" id="module-fluentpy.fluentio"></span><dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.fluentio.PostDataFile">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.fluentio.</span></span><span class="sig-name descname"><span class="pre">PostDataFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.fluentio.PostDataFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>”
+class for representing files exported from CFD Post - Handles the case
+of multiple surface/volume data export by representing the data as either:
+(1) a single data frame with concatenated data
+(2) a dictionary of data frames that can be iteratated over</p>
+<p>handles multiple variables exported on each surface by using dataframes
+and adding columns to each member of the dictionary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fname</strong> (<em>str</em>) – the name of the file as a string</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">my_file</span> <span class="o">=</span> <span class="s1">&#39;sample.dat&#39;</span>
+<span class="k">with</span> <span class="n">PostDataFile</span><span class="p">(</span><span class="n">my_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">pdf</span><span class="p">:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pdf</span><span class="o">.</span><span class="n">readdf</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">surface_name</span> <span class="ow">in</span> <span class="n">pdf</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">pdf</span><span class="p">[</span><span class="n">surface_name</span><span class="p">])</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.fluentio.PostDataFile.readdf">
+<span class="sig-name descname"><span class="pre">readdf</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">pandas.core.frame.DataFrame</span><a class="headerlink" href="#fluentpy.fluentio.PostDataFile.readdf" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>df</strong> – all of the data contained in the XY Data File
+concatenate as a DataFrame. To seperate data by surface name
+access class using keys.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.fluentio.ReportFileOut">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.fluentio.</span></span><span class="sig-name descname"><span class="pre">ReportFileOut</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.fluentio.ReportFileOut" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for representing the report file with .out extension output
+by fluent</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fname</strong> (<em>str</em>) – the string of the file name</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">my_out_file</span> <span class="o">=</span> <span class="s1">&#39;test.out&#39;</span>
+<span class="k">with</span> <span class="nb">open</span> <span class="n">ReportFileOut</span><span class="p">(</span><span class="n">my_out_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">rfile</span><span class="p">:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">rfile</span><span class="o">.</span><span class="n">readdf</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.fluentio.ReportFileOut.readdf">
+<span class="sig-name descname"><span class="pre">readdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">pandas.core.frame.DataFrame</span><a class="headerlink" href="#fluentpy.fluentio.ReportFileOut.readdf" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> (<em>dict</em>) – key word arguments for pandas read_csv() function</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>df</strong> – containing the report file contents with
+headers named appropriately. The index is the iteration number supplied
+in the file</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.fluentio.ReportFilesOut">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.fluentio.</span></span><span class="sig-name descname"><span class="pre">ReportFilesOut</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flist</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.fluentio.ReportFilesOut" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.fluentio.SolutionFile">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.fluentio.</span></span><span class="sig-name descname"><span class="pre">SolutionFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.fluentio.SolutionFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for representing the “solution” files in Fleunt i.e. transcripts
+usuaully output with a .trn extension. Useful for examining convergence of a solution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fname</strong> (<em>str</em>) – the file name of the solution file</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">my_file</span> <span class="o">=</span> <span class="s1">&#39;solution.trn&#39;</span>
+<span class="k">with</span> <span class="n">SolutionFile</span><span class="p">(</span><span class="n">my_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">sfile</span><span class="p">:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">sfile</span><span class="o">.</span><span class="n">readdf</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>BUGS 11.16.2021 - STATUS Property is not being determined properly
+The STATUS property of the SolutionFile indicates if the solution has
+completed or not, determined by the logic in _get_status()
+False - solution is not finished
+True - solution is finished</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.fluentio.SolutionFile.readdf">
+<span class="sig-name descname"><span class="pre">readdf</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">pandas.core.frame.DataFrame</span><a class="headerlink" href="#fluentpy.fluentio.SolutionFile.readdf" title="Permalink to this definition">¶</a></dt>
+<dd><p>main reading of data frame occurs here which goes through four main phases:
+1. the text containing the residual information is located
+2. the solution text is parsed according to the annoying format presented            into digestable form - essentially space delimited rows
+3. the text is converted to a numpy array - allowing for empty end rows
+4. the numpy data frame is converted into a pandas dataframe using the columns            gleaned from the np array converter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>df</strong> – returns the solution file information as a DataFrame. If information
+is missing from any column, this is filled with nan.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.fluentio.SolutionFiles">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.fluentio.</span></span><span class="sig-name descname"><span class="pre">SolutionFiles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flist</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.fluentio.SolutionFiles" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.fluentio.SphereSliceFile">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.fluentio.</span></span><span class="sig-name descname"><span class="pre">SphereSliceFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.fluentio.SphereSliceFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>A specific surface file format type. Creates and reads sphere slices</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fname</strong> (<em>str</em>) – the file name as a string</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<ol class="arabic simple">
+<li><p>making tui input</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fluentio.classes</span> <span class="kn">import</span> <span class="n">SphereSliceFile</span>
+
+<span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>                       <span class="c1">#three spheres radiusus of 1,2,3 [m]</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]])</span>     <span class="c1">#locations of the three spheres in cartesian coordinates [m] \</span>
+<span class="n">SphereSliceFile</span><span class="o">.</span><span class="n">write_fluent_input_from_table</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">R</span><span class="p">,</span><span class="s2">&quot;test.ssf&quot;</span><span class="p">,[</span><span class="s1">&#39;temperature&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>creates a sphere slice file input with the specified radiuses and locations, located at the “test.ssf” file
+exporting the field variable “temperature”</p>
+<ol class="arabic simple" start="2">
+<li><p>reading fluent output</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fluentio.classes</span> <span class="kn">import</span> <span class="n">SphereSliceFile</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">with</span> <span class="n">SphereSliceFile</span><span class="p">(</span><span class="s1">&#39;test.ssf.so&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">ssf</span><span class="p">:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">ssf</span><span class="o">.</span><span class="n">readdf</span><span class="p">()</span>
+    <span class="n">sdf_list</span> <span class="o">=</span> <span class="n">ssf</span><span class="o">.</span><span class="n">get_surface_list</span><span class="p">()</span>
+    <span class="n">mean_df</span> <span class="o">=</span> <span class="n">ssf</span><span class="o">.</span><span class="n">get_sphere_surface_data</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">sdf_list</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.fluentio.SphereSliceFile.get_sphere_surface_data">
+<span class="sig-name descname"><span class="pre">get_sphere_surface_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">statistic</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">pandas.core.frame.DataFrame</span><a class="headerlink" href="#fluentpy.fluentio.SphereSliceFile.get_sphere_surface_data" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>statistic</strong> (<em>callable</em>) – i.e. np.mean,np.max, ect… MUST have the signature
+&gt;&gt; statistic(array,axis = 0)</p></li>
+<li><p><strong>dimension</strong> (<em>int</em>) – keyword argument showing the dimension of the data</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>df</strong> (<em>pd.DataFrame</em>) – a dataframe indexed by the index of the sphere with the statistic
+applied to all of the data within that sphere</p></li>
+<li><p><em>convinience function for applying a statistic to the data</em></p></li>
+<li><p><em>of the spheres and returning the result as a dataframe with each</em></p></li>
+<li><p><em>row the result of that statistic applied to each variable in the dataframe</em></p></li>
+<li><p><em>the center of the sphere is taken as the mean</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.fluentio.SphereSliceFile.readdf">
+<span class="sig-name descname"><span class="pre">readdf</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">pandas.core.frame.DataFrame</span><a class="headerlink" href="#fluentpy.fluentio.SphereSliceFile.readdf" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> (<em>dict</em>) – keyword arguments for input into pandas pd.read_csv()
+function</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>df</strong> – this will output as a table of values like:
+cellnumber,xcoordinate,y-coordinate,z-coordinate,var1,var2,….
+in the cellnumber column, the counting is local to the surface
+and will restart at 1 each time a new surface is defined</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.fluentio.SphereSliceFile.write_fluent_input_from_table">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">write_fluent_input_from_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_variables</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sphere'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seperator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'-'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_surfaces</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#fluentpy.fluentio.SphereSliceFile.write_fluent_input_from_table" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pd.DataFrame | np.ndarray</em>) – n x 3 pandas DataFrame or numpy ndarray</p></li>
+<li><p><strong>R</strong> (<em>pd.DataFrame | np.ndarray</em>) – n x 1 or 1-D pandas DataFrame or numpy npdarray containing the radius
+of the spheres of the SphereSlice Surfaces</p></li>
+<li><p><strong>file_name</strong> (<em>str</em>) – the name of the file to write to as a string</p></li>
+<li><p><strong>export_variables</strong> (<em>list</em>) – a list of the field variables to export from fluent                    i.e. “temperature”,”density”.</p></li>
+</ul>
+</dd>
+</dl>
+<p>from the input dataframe “df” creates the appropriate fluent input
+journal file with name “file_name” that once run in fluent
+will produce data containing the variables in “export_variables”
+for each of the point surfaces</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.fluentio.SurfaceIntegralFile">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.fluentio.</span></span><span class="sig-name descname"><span class="pre">SurfaceIntegralFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.fluentio.SurfaceIntegralFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>class representation of the file created by a surface integral. This typically
+contains a single number as the surface integral is usually approximated as a reimann sum
+representation with some weight depending on the type of integral</p>
+<p>This does not really lend itself to a dataframe representation, and a dictionary is actually
+more useful, so the data is represented in that manner. If multiple surface integrals are contained within
+the file, this is supported by making the value and boundary fields list the same length as the number
+of surface integrals</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.fluentio.SurfaceIntegralFile.read">
+<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">dict</span><a class="headerlink" href="#fluentpy.fluentio.SurfaceIntegralFile.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>read a surface integral file</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.fluentio.SurfaceIntegralFile.readdf">
+<span class="sig-name descname"><span class="pre">readdf</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">pandas.core.frame.DataFrame</span><a class="headerlink" href="#fluentpy.fluentio.SurfaceIntegralFile.readdf" title="Permalink to this definition">¶</a></dt>
+<dd><p>each inherited file will require a method designed to read in the data
+frame</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.fluentio.SurfacePointFile">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.fluentio.</span></span><span class="sig-name descname"><span class="pre">SurfacePointFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.fluentio.SurfacePointFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>A specific example of a SurfaceFile used for creating and reading point surfaces</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fname</strong> (<em>str</em>) – the name of the file as a string</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<ol class="arabic simple">
+<li><p>creating tui input</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fluentio.classes</span> <span class="kn">import</span> <span class="n">SurfacePointFile</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]])</span>     <span class="c1">#locations of the three spheres in cartesian coordinates [m]</span>
+<span class="n">SurfacePointFile</span><span class="o">.</span><span class="n">write_fluent_input_from_table</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="s2">&quot;test.spf&quot;</span><span class="p">,[</span><span class="s1">&#39;temperature&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>creates a point surface file file input with the specified locations, located at the “test.spf” file
+exporting the field variable “temperature”</p>
+<ol class="arabic simple" start="2">
+<li><p>reading fluent output</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fluentio.classes</span> <span class="kn">import</span> <span class="n">SurfacePointFile</span>
+
+<span class="k">with</span> <span class="n">SurfacePointFile</span><span class="p">(</span><span class="s1">&#39;test.spf.so&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">spf</span><span class="p">:</span>
+    <span class="c1">#read in all of the data as one dataframe</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">spf</span><span class="o">.</span><span class="n">readdf</span><span class="p">()</span>
+
+    <span class="c1">#read in data as a list of dataframes for each surface</span>
+    <span class="n">sdf_list</span> <span class="o">=</span> <span class="n">spf</span><span class="o">.</span><span class="n">get_surface_list</span><span class="p">()</span>
+
+<span class="c1">#print dataframe for each surface</span>
+<span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">sdf_list</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.fluentio.SurfacePointFile.get_point_surface_data">
+<span class="sig-name descname"><span class="pre">get_point_surface_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">pandas.core.frame.DataFrame</span><a class="headerlink" href="#fluentpy.fluentio.SurfacePointFile.get_point_surface_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>convinience function for turning the list of surfaces into an
+array</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.fluentio.SurfacePointFile.readdf">
+<span class="sig-name descname"><span class="pre">readdf</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">pandas.core.frame.DataFrame</span><a class="headerlink" href="#fluentpy.fluentio.SurfacePointFile.readdf" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> (<em>dict</em>) – keyword arguments for input into pandas pd.read_csv()
+function</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>df</strong> – this will output as a table of values like:
+cellnumber,xcoordinate,y-coordinate,z-coordinate,var1,var2,….
+in the cellnumber column, the counting is local to the surface
+and will restart at 1 each time a new surface is defined</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.fluentio.SurfacePointFile.write_fluent_input_from_table">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">write_fluent_input_from_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_variables</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'point'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seperator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'-'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_surfaces</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#fluentpy.fluentio.SurfacePointFile.write_fluent_input_from_table" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pd.DataFrame | np.ndarray</em>) – n x 3 pandas DataFrame or numpy ndarray</p></li>
+<li><p><strong>R</strong> (<em>pd.DataFrame | np.ndarray</em>) – n x 1 or 1-D pandas DataFrame or numpy npdarray containing the radius
+of the spheres of the SphereSlice Surfaces</p></li>
+<li><p><strong>file_name</strong> (<em>str</em>) – the name of the file to write to as a string</p></li>
+<li><p><strong>export_variables</strong> (<em>list</em>) – a list of the field variables to export from fluent                    i.e. “temperature”,”density”.</p></li>
+</ul>
+</dd>
+</dl>
+<p>from the input dataframe “df” creates the appropriate fluent input
+journal file with name “file_name” that once run in fluent
+will produce data containing the variables in “export_variables”
+for each of the point surfaces</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.fluentio.XYDataFile">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.fluentio.</span></span><span class="sig-name descname"><span class="pre">XYDataFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.fluentio.XYDataFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>class for representing the XYDataFile - data files that are exported from
+XY Plots in Fluent. Handles the case
+of multiple surface/volume data export by representing the data as either:
+(1) a single data frame with concated data
+(2) a dictionary of data frames that can be iteratated over. The keys of the dictionary        are determined from the names of the XY Surfaces in the output file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fname</strong> (<em>str</em>) – the name of the file as a string</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#asssuming you have a file in XYFile format called &quot;sample.dat&quot;</span>
+<span class="n">my_file</span> <span class="o">=</span> <span class="s1">&#39;sample.dat&#39;</span>
+<span class="k">with</span> <span class="n">XYDataFile</span><span class="p">(</span><span class="n">my_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">xyf</span><span class="p">:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">xyf</span><span class="o">.</span><span class="n">readdf</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">surface_name</span> <span class="ow">in</span> <span class="n">xyf</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">xyf</span><span class="p">[</span><span class="n">surface_name</span><span class="p">])</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.fluentio.XYDataFile.readdf">
+<span class="sig-name descname"><span class="pre">readdf</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">pandas.core.frame.DataFrame</span><a class="headerlink" href="#fluentpy.fluentio.XYDataFile.readdf" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>df</strong> – returns all of the XY data concatenated as a single DataFrame</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="tui">
+<h1>TUI<a class="headerlink" href="#tui" title="Permalink to this headline">¶</a></h1>
+<p>The tui module provides basic class interface building blocks for producing strings interperable
+by the tui interface in fluent. These are only required if something needs to be modified at run time,
+so if a fluent case is set-up entirely the way you want it, don’t bother. These do provide a convinient
+interface for scripting exotic batch jobs, and are the base interface for the batch module. In order
+to make progress and provide support for basic cases, the functionality of these interfaces has been limited
+in some cases, such as boundary conditions, or cell zone modification. Additional functionality will be
+added to exisiting classes and additional classes will be added as need be.</p>
+<span class="target" id="module-fluentpy.tui"></span><dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.tui.BatchCaseReader">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">BatchCaseReader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_folder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.BatchCaseReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Case reader for batched inputs. Assumes a file structure like:</p>
+<p>main folder
+* | -&gt; batch folder 1
+* | -&gt; batch folder 2
+* .
+* .
+* | -&gt; batch folder n</p>
+<p>sample.cas``</p>
+<p>will first change to an outer directory, read in file, and then change
+back to the original directory</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>str</em>) – the name of the .cas file as a string</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>set folder to change back into on initiation</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bcr</span> <span class="o">=</span> <span class="n">BatchCaseReader</span><span class="p">(</span><span class="s1">&#39;sample.cas&#39;</span><span class="p">,</span><span class="n">current_folder</span> <span class="o">=</span> <span class="s1">&#39;main&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bcr</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">sync</span><span class="o">-</span><span class="n">chdir</span> <span class="o">..</span>
+<span class="o">&gt;</span> <span class="n">file</span><span class="o">/</span><span class="n">read</span><span class="o">-</span><span class="n">case</span> <span class="n">sample</span><span class="o">.</span><span class="n">cas</span>
+<span class="o">&gt;</span> <span class="n">sync</span><span class="o">-</span><span class="n">chdir</span> <span class="n">main</span>
+</pre></div>
+</div>
+<p>set property directly</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bcr</span> <span class="o">=</span> <span class="n">BatchCaseReader</span><span class="p">(</span><span class="s1">&#39;sample.cas&#39;</span><span class="p">)</span>
+<span class="n">bcr</span><span class="o">.</span><span class="n">pwd</span> <span class="o">=</span> <span class="s1">&#39;main&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bcr</span><span class="p">)</span>
+
+<span class="o">&gt;</span> <span class="n">sync</span><span class="o">-</span><span class="n">chdir</span> <span class="o">..</span>
+<span class="o">&gt;</span> <span class="n">file</span><span class="o">/</span><span class="n">read</span><span class="o">-</span><span class="n">case</span> <span class="n">sample</span><span class="o">.</span><span class="n">cas</span>
+<span class="o">&gt;</span> <span class="n">sync</span><span class="o">-</span><span class="n">chdir</span> <span class="n">main</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.tui.CaseDataReader">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">CaseDataReader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.CaseDataReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>representation of the read-case-data command in python</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>str</em>) – name of the file as a string</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cdr</span> <span class="o">=</span> <span class="n">CaseDataReader</span><span class="p">(</span><span class="s1">&#39;sample.cas&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cdr</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">file</span><span class="o">/</span><span class="n">read</span><span class="o">-</span><span class="n">case</span><span class="o">-</span><span class="n">data</span> <span class="n">sample</span><span class="o">.</span><span class="n">cas</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.tui.CaseMeshReplaceReader">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">CaseMeshReplaceReader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">case_file</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mesh_file</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.CaseMeshReplaceReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>read-case and then replace with another mesh</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>case_file</strong> (<em>str</em>) – the string file name of the case file you want to read</p></li>
+<li><p><strong>mesh_file</strong> (<em>str</em>) – the mesh file string name of the case file you want to read</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cmr</span> <span class="o">=</span> <span class="n">CaseMeshReplaceReader</span><span class="p">(</span><span class="s1">&#39;sample.cas&#39;</span><span class="p">,</span><span class="s1">&#39;new.msh&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cmr</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">file</span><span class="o">/</span><span class="n">read</span><span class="o">-</span><span class="n">case</span> <span class="n">sample</span><span class="o">.</span><span class="n">cas</span>
+<span class="o">&gt;</span> <span class="n">mesh</span><span class="o">/</span><span class="n">replace</span> <span class="n">new</span><span class="o">.</span><span class="n">msh</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.tui.CaseReader">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">CaseReader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.CaseReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>representation of the read-case command</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>str</em>) – name of the file as a string</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cr</span> <span class="o">=</span> <span class="n">CaseReader</span><span class="p">(</span><span class="s1">&#39;sample.cas&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cr</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">file</span><span class="o">/</span><span class="n">read</span><span class="o">-</span><span class="n">case</span> <span class="n">sample</span><span class="o">.</span><span class="n">cas</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.tui.CaseWriter">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">CaseWriter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.CaseWriter" title="Permalink to this definition">¶</a></dt>
+<dd><p>representation of the write-case command
+:param file: string of the file name to write (.cas)
+:type file: str</p>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cr</span> <span class="o">=</span> <span class="n">CaseWriter</span><span class="p">(</span><span class="s1">&#39;sample.cas&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cr</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">file</span><span class="o">/</span><span class="n">write</span><span class="o">-</span><span class="n">case</span> <span class="n">sample</span><span class="o">.</span><span class="n">cas</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.tui.ConvergenceConditions">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">ConvergenceConditions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variables</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_values_to_ignore</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">previous_values_to_consider</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_criterion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.ConvergenceConditions" title="Permalink to this definition">¶</a></dt>
+<dd><p>modify convergence conditions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>variables</strong> (<em>list</em>) – a list of variables to moniter for convergence</p></li>
+<li><p><strong>condition</strong> (<em>'all' | 'any'</em>) – either all or any indicating to terminate solution procedure once all or any conditions are met</p></li>
+<li><p><strong>initial_values_to_ignore</strong> (<em>int</em><em> (</em><em>default 0</em><em>)</em>) – how many iterations to ignore before checking convergence</p></li>
+<li><p><strong>previous_values_to_consider</strong> (<em>int</em><em> (</em><em>default 1</em><em>)</em>) – how many previous iterations to check to ensure convergence,handy for oscillating solutions</p></li>
+<li><p><strong>stop_criterion</strong> (<em>float</em><em> (</em><em>default 1e-3</em><em>)</em>) – value to judge convergence by</p></li>
+<li><p><strong>print_value</strong> (<em>bool</em><em> (</em><em>default True</em><em>)</em>) – print the value of the monitored variable or not</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cc</span> <span class="o">=</span> <span class="n">ConvergenceConditions</span><span class="p">([</span><span class="s1">&#39;report-def1&#39;</span><span class="p">],</span><span class="n">condition</span> <span class="o">=</span> <span class="s1">&#39;all&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cc</span><span class="p">)</span>
+
+<span class="o">&gt;</span> <span class="o">/</span><span class="n">solve</span><span class="o">/</span><span class="n">convergence</span><span class="o">-</span><span class="n">conditions</span>
+<span class="o">&gt;</span> <span class="n">condition</span>
+<span class="o">&gt;</span> <span class="mi">1</span>
+<span class="o">&gt;</span> <span class="n">conv</span><span class="o">-</span><span class="n">reports</span>
+<span class="o">&gt;</span> <span class="n">add</span>
+<span class="o">&gt;</span> <span class="n">report</span><span class="o">-</span><span class="n">def1</span><span class="o">-</span><span class="n">convergence</span>
+<span class="o">&gt;</span> <span class="n">initial</span><span class="o">-</span><span class="n">values</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">ignore</span>
+<span class="o">&gt;</span> <span class="mi">0</span>
+<span class="o">&gt;</span> <span class="n">previous</span><span class="o">-</span><span class="n">values</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">consider</span>
+<span class="o">&gt;</span> <span class="mi">1</span>
+<span class="o">&gt;</span> <span class="nb">print</span>
+<span class="o">&gt;</span> <span class="n">yes</span>
+<span class="o">&gt;</span> <span class="n">stop</span><span class="o">-</span><span class="n">criterion</span>
+<span class="o">&gt;</span> <span class="mf">0.001</span>
+<span class="o">&gt;</span> <span class="n">report</span><span class="o">-</span><span class="n">defs</span>
+<span class="o">&gt;</span> <span class="n">report</span><span class="o">-</span><span class="n">def1</span>
+<span class="o">&gt;</span> <span class="n">q</span>
+<span class="o">&gt;</span> <span class="n">q</span>
+<span class="o">&gt;</span> <span class="n">q</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.tui.DataWriter">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">DataWriter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.DataWriter" title="Permalink to this definition">¶</a></dt>
+<dd><p>representation of the write-data command</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>str</em>) – string of the file name to write (.dat)</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dr</span> <span class="o">=</span> <span class="n">DataWriter</span><span class="p">(</span><span class="s1">&#39;mydata.dat&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dr</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">file</span><span class="o">/</span><span class="n">write</span><span class="o">-</span><span class="n">data</span> <span class="n">mydata</span><span class="o">.</span><span class="n">dat</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.tui.Discritization">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">Discritization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">schemes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orders</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.Discritization" title="Permalink to this definition">¶</a></dt>
+<dd><p>class for changing discritization schemes. This can be useful if you are
+having issues with convergence of the solution i.e. starting out at first order
+and working to second order/higher orders.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>schemes</strong> (<em>'all' | str | list</em>) – one of “all” a string, or a list of strings. if “all” is selected,
+all discritization schemes are set to the order supplied. If a string or a
+list of strings is supplied, must be one of “density”, “epsilon”, ‘k”,’mom’,
+‘pressure’, ‘temperature’.</p></li>
+<li><p><strong>orders</strong> (<em>str | list</em>) – string or list of strings designated the orders of the schemes. Can accomodate
+all differencing scheme names from Fluent i.e. “Second Order Upwind”</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">disc</span> <span class="o">=</span> <span class="n">Discritization</span><span class="p">(</span><span class="n">schemes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;density&#39;</span><span class="p">,</span><span class="s1">&#39;pressure&#39;</span><span class="p">],</span>
+    <span class="n">orders</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Second Order Upwind&#39;</span><span class="p">,</span><span class="s1">&#39;First Order Upwind&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">disc</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="o">/</span><span class="n">solve</span><span class="o">/</span><span class="nb">set</span><span class="o">/</span><span class="n">discretization</span><span class="o">-</span><span class="n">scheme</span>
+<span class="o">&gt;</span> <span class="n">density</span>
+<span class="o">&gt;</span> <span class="mi">1</span>
+<span class="o">&gt;</span> <span class="n">pressure</span>
+<span class="o">&gt;</span> <span class="mi">11</span>
+<span class="o">&gt;</span> <span class="n">q</span>
+<span class="o">&gt;</span> <span class="n">q</span>
+<span class="o">&gt;</span> <span class="n">q</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.tui.EquationRelaxation">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">EquationRelaxation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variable</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.EquationRelaxation" title="Permalink to this definition">¶</a></dt>
+<dd><p>class for allowing the adjustment of relaxation factors
+to aid in the convergence of difficult solutions
+This treats explicitly the equation relaxations and adjustment of the
+courant number</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>variable</strong> (<em>str | list</em>) – either a string or a list of strings designating the variables to be relaxed.
+Must be one of (1) courant number (2) momentum (3) pressure</p></li>
+<li><p><strong>value</strong> (<em>str | list</em>) – momentum and pressure must be in [0,1] while courant number must be greater than 0</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">er</span> <span class="o">=</span> <span class="n">EquationRelaxation</span><span class="p">([</span><span class="s1">&#39;courant number&#39;</span><span class="p">,</span><span class="s1">&#39;momentum&#39;</span><span class="p">],[</span><span class="mi">500</span><span class="p">,</span><span class="mf">0.6</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">er</span><span class="p">)</span>
+
+<span class="o">&gt;</span> <span class="n">solve</span><span class="o">/</span><span class="nb">set</span><span class="o">/</span><span class="n">p</span><span class="o">-</span><span class="n">v</span><span class="o">-</span><span class="n">controls</span>
+<span class="o">&gt;</span> <span class="mi">500</span>
+<span class="o">&gt;</span> <span class="mf">0.6</span>
+<span class="o">&gt;</span> <span class="mf">0.75</span>
+<span class="o">&gt;</span> <span class="n">q</span>
+<span class="o">&gt;</span> <span class="n">q</span>
+<span class="o">&gt;</span> <span class="n">q</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.tui.FluentCase">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">FluentCase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">case_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.FluentCase" title="Permalink to this definition">¶</a></dt>
+<dd><p>class for representing a fluent case</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.tui.FluentEngine">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">FluentEngine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">file:</span> <span class="pre">str</span></em>, <em class="sig-param"><span class="pre">specification='3ddp'</span></em>, <em class="sig-param"><span class="pre">num_processors=1</span></em>, <em class="sig-param"><span class="pre">reader=&lt;class</span> <span class="pre">'fluentpy.tui.CaseDataReader'&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.FluentEngine" title="Permalink to this definition">¶</a></dt>
+<dd><p>main class for the post processing engine using fluent. If fluent needs
+to be invoked and supplied with commands via the python interface, this is the best
+option.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file</strong> (<em>str</em>) – string of the .cas file in fluent</p></li>
+<li><p><strong>specification</strong> (<em>str</em>) – keyword argument for the specification of fluent - default “3ddp”</p></li>
+<li><p><strong>num_processors</strong> (<em>int</em>) – keyword argument specifying the number of processors to use            when invoking fluent - default 1</p></li>
+<li><p><strong>reader</strong> (<em>object</em>) – keyword argument specifying the type of reader to use to read in the
+case file. Readers must have a __str__ method. - default CaseDataReader</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>example demonstrates how to extract a surface integral from a case file via fluent.
+This example would invoke fluent provided that the fluent executable is on the system path.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">engine</span> <span class="o">=</span> <span class="n">FluentEngine</span><span class="p">(</span><span class="s1">&#39;sample.cas&#39;</span><span class="p">,</span><span class="n">num_processors</span> <span class="o">=</span> <span class="mi">8</span><span class="p">)</span>
+<span class="n">si</span> <span class="o">=</span> <span class="n">SurfaceIntegrals</span><span class="p">(</span><span class="s1">&#39;sample.cas&#39;</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="s1">&#39;temperature&#39;</span><span class="p">,</span><span class="s1">&#39;area-weighted-avg&#39;</span><span class="p">,</span><span class="n">engine</span> <span class="o">=</span> <span class="n">engine</span><span class="p">)</span>
+<span class="n">sif</span> <span class="o">=</span> <span class="n">si</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.tui.FluentRun">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">FluentRun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">case_file:</span> <span class="pre">str</span></em>, <em class="sig-param"><span class="pre">output_name='result'</span></em>, <em class="sig-param"><span class="pre">transcript_file='solution.trn'</span></em>, <em class="sig-param"><span class="pre">reader=&lt;class</span> <span class="pre">'fluentpy.tui.CaseReader'&gt;</span></em>, <em class="sig-param"><span class="pre">data_writer=&lt;class</span> <span class="pre">'fluentpy.tui.DataWriter'&gt;</span></em>, <em class="sig-param"><span class="pre">case_writer=&lt;class</span> <span class="pre">'fluentpy.tui.CaseWriter'&gt;</span></em>, <em class="sig-param"><span class="pre">solver=&lt;fluentpy.tui.Solver</span> <span class="pre">object&gt;</span></em>, <em class="sig-param"><span class="pre">post=[]</span></em>, <em class="sig-param"><span class="pre">convergence_condition=None</span></em>, <em class="sig-param"><span class="pre">model_modifications=[]</span></em>, <em class="sig-param"><span class="pre">boundary_conditions=[]</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.FluentRun" title="Permalink to this definition">¶</a></dt>
+<dd><p>class for producing a fluent batch job file using provided information. This essentially
+knits all essential information required to run a fluent case into a single journal file.
+The intent is to make this as easy to use as possible, so the only required argument
+is the case_file as a string argument, and everything else should be handled
+automatically, with optional specification provided as keyword arguments</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>case_file</strong> (<em>str</em>) – the string of the case file</p></li>
+<li><p><strong>output_name</strong> (<em>str</em>) – the name of the output .cas and .dat files - default “result”</p></li>
+<li><p><strong>transcript_file</strong> (<em>str</em>) – the name of the transcript file - default “solution.trn”</p></li>
+<li><p><strong>reader</strong> (<em>object</em>) – the reader in fluent, defaults to “CaseReader”. must have a __str__() method</p></li>
+<li><p><strong>data_writer</strong> (<em>object</em>) – the data writer in fluent, defaults to “DataWriter”. must have a __str__() method</p></li>
+<li><p><strong>case_writer</strong> (<em>object</em>) – the case writer in fluent, defaults to “CaseWriter”. must have a __str__() method</p></li>
+<li><p><strong>solver</strong> (<em>object</em>) – the solver object in fluent, defaults to “Solver”. must have __str__() method</p></li>
+<li><p><strong>post</strong> (<em>list</em>) – a list of post objects, each of which must be callable and return a string</p></li>
+<li><p><strong>model_modifications</strong> (<em>list</em>) – a list of model modifications, each of which must have a __str__() method</p></li>
+<li><p><strong>boundary_conditions</strong> (<em>list</em>) – a list of boundary conditions, each of which must be callable and return a string</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.tui.Initializer">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">Initializer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'hyb-initialization'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.Initializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>representation of the initializer object in Fluent</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>init_type</strong> (<em>str</em>) – one of either “hyb-initialization” or “initialize-flow”. creates
+the initialization for the solver</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">initializer</span> <span class="o">=</span> <span class="n">Initializer</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">initializer</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="s2">&quot;solve/initialize/hyb-initialization&quot;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.tui.MassFlowInlet">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">MassFlowInlet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">models</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">turbulence_model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.MassFlowInlet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mass flow rate boundary condition class. Allows for specification of either the mass flux
+or the mass flow rate. Specification of the turbulence model is required. Starred
+arguments are keyword arguments that act as inputs for the fluent journal. mass_flow_Rate
+and mass_flux default to None, and only one of these variables is permitted to not be None
+to avoid specification of both.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – the name of the mass flow inlet boundary condition</p></li>
+<li><p><strong>models</strong> (<em>list</em>) – a list of the models used, does not require specification of temperature</p></li>
+<li><p><strong>solver</strong> (<em>str</em>) – the solver, one of ‘pressure-based’ or ‘density-based’</p></li>
+<li><p><strong>turbulence_model</strong> (<em>str</em>) – the turbulence model used, see allowable turbulence models</p></li>
+<li><p><strong>temperature</strong> (<em>float | *</em>) – the temperature of the inlet flow, only applicable if model “energy” is used,            defaults to 300 K</p></li>
+<li><p><strong>mass_flow_rate</strong> (<em>float | *</em>) – the mass flow rate defaults to None</p></li>
+<li><p><strong>mass_flux</strong> (<em>float | *</em>) – the mass flux defaults to None</p></li>
+<li><p><strong>init_pressure</strong> (<em>float | *</em>) – the initial pressure defaults to 0</p></li>
+<li><p><strong>direction_vector</strong> (<em>float | *</em>) – optional specfication of the direction vector, must be specified as a
+1D array with three components x,y,z. Defaults to None, in which case
+the mass flow is normal to the boundary.</p></li>
+<li><p><strong>turbulence_specification</strong> (<em>float | *</em>) – how to specify the turbulent quantities on the boundary. default is either
+“k and epsilon” or “k and omega” depending upon the viscous model. Can alternatively
+be specified using “intensity and hydraulic diameter”</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mfi</span> <span class="o">=</span> <span class="n">MassFlowInlet</span><span class="p">(</span><span class="s1">&#39;test_mfi&#39;</span><span class="p">,[</span><span class="s1">&#39;viscous&#39;</span><span class="p">],</span><span class="s1">&#39;pressure-based&#39;</span><span class="p">,</span><span class="s1">&#39;ke-standard&#39;</span><span class="p">)</span>
+<span class="n">mfi</span><span class="o">.</span><span class="n">mass_flux</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mfi</span><span class="p">())</span>
+
+<span class="o">&gt;</span> <span class="o">/</span><span class="n">define</span><span class="o">/</span><span class="n">boundary</span><span class="o">-</span><span class="n">conditions</span><span class="o">/</span><span class="n">mass</span><span class="o">-</span><span class="n">flow</span><span class="o">-</span><span class="n">inlet</span>
+<span class="o">&gt;</span> <span class="n">test_mfi</span>
+<span class="o">&gt;</span> <span class="n">yes</span>
+<span class="o">&gt;</span> <span class="n">no</span>
+<span class="o">&gt;</span> <span class="n">yes</span>
+<span class="o">&gt;</span> <span class="n">no</span>
+<span class="o">&gt;</span> <span class="n">mass</span> <span class="n">flux</span><span class="p">:</span> <span class="mf">1.0</span>
+<span class="o">&gt;</span> <span class="n">no</span>
+<span class="o">&gt;</span> <span class="n">pressure</span><span class="p">:</span> <span class="mi">0</span>
+<span class="o">&gt;</span> <span class="n">no</span>
+<span class="o">&gt;</span> <span class="n">yes</span>
+<span class="o">&gt;</span> <span class="n">yes</span>
+<span class="o">&gt;</span> <span class="n">no</span>
+<span class="o">&gt;</span> <span class="mi">1</span>
+<span class="o">&gt;</span> <span class="n">no</span>
+<span class="o">&gt;</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.tui.NISTRealGas">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">NISTRealGas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gas</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.NISTRealGas" title="Permalink to this definition">¶</a></dt>
+<dd><p>class for setting up a real gas model for fluent. This is required if
+we want to shift from interpolated/constant properties in fluent to
+NIST real gas models after a few iterations - you may want to do this
+because NIST real gas models can make convergence very difficult/
+can error fluent out if the solutions are very outside of the reccomended
+range of the correlation used.</p>
+<p>** this will check to make sure that the fluid supplied is allowable within the
+fluent database so that this doesn’t cause errors at runtime</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>gas</strong> (<em>str</em>) – the name of the gas in the NIST real gas library</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nrg</span> <span class="o">=</span> <span class="n">NISTRealGas</span><span class="p">(</span><span class="s1">&#39;co2&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">nrg</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="o">/</span><span class="n">define</span><span class="o">/</span><span class="n">user</span><span class="o">-</span><span class="n">defined</span><span class="o">/</span><span class="n">real</span><span class="o">-</span><span class="n">gas</span><span class="o">-</span><span class="n">models</span><span class="o">/</span><span class="n">nist</span><span class="o">-</span><span class="n">real</span><span class="o">-</span><span class="n">gas</span><span class="o">-</span><span class="n">model</span>
+<span class="o">&gt;</span> <span class="n">yes</span>
+<span class="o">&gt;</span> <span class="n">co2</span><span class="o">.</span><span class="n">fld</span>
+<span class="o">&gt;</span> <span class="n">no</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.tui.PressureOutlet">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">PressureOutlet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">models</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">turbulence_model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.PressureOutlet" title="Permalink to this definition">¶</a></dt>
+<dd><p>A pressure outlet boundary condition class. Similar to other boundary conditions,
+requires specification of a name, models simulated, the solver used and the turbulence model.
+The pressure and temperature are the only values that impact input into the TUI and the
+pressure defaults to None. This will create an error if left unspecified, so this must be modified
+during instantation or directly on the instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – the name of the mass flow inlet boundary condition</p></li>
+<li><p><strong>models</strong> (<em>list</em>) – a list of the models used, does not require specification of temperature</p></li>
+<li><p><strong>solver</strong> (<em>str</em>) – the solver, one of ‘pressure-based’ or ‘density-based’</p></li>
+<li><p><strong>turbulence_model</strong> (<em>str</em>) – the turbulence model used, see allowable turbulence models</p></li>
+<li><p><strong>temperature</strong> (<em>float | *</em>) – the temperature of the inlet flow, only applicable if model “energy” is used,            defaults to 300 K</p></li>
+<li><p><strong>pressure</strong> (<em>float | *</em>) – the pressure at the outlet</p></li>
+<li><p><strong>direction_vector</strong> (<em>float | *</em>) – optional specfication of the direction vector, must be specified as a
+1D array with three components x,y,z. Defaults to None, in which case
+the mass flow is normal to the boundary.</p></li>
+<li><p><strong>turbulence_specification</strong> (<em>float | *</em>) – how to specify the turbulent quantities on the boundary. default is either
+“k and epsilon” or “k and omega” depending upon the viscous model. Can alternatively
+be specified using “intensity and hydraulic diameter”</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">po</span> <span class="o">=</span> <span class="n">PressureOutlet</span><span class="p">(</span><span class="s1">&#39;test_pressure_outlet&#39;</span><span class="p">,[</span><span class="s1">&#39;viscous&#39;</span><span class="p">,</span><span class="s1">&#39;energy&#39;</span><span class="p">],</span><span class="s1">&#39;pressure-based&#39;</span><span class="p">,</span><span class="s1">&#39;kw-standard&#39;</span><span class="p">)</span>
+<span class="n">po</span><span class="o">.</span><span class="n">pressure</span> <span class="o">=</span> <span class="mf">10e5</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">po</span><span class="p">())</span>
+<span class="o">&gt;</span> <span class="o">/</span><span class="n">define</span><span class="o">/</span><span class="n">boundary</span><span class="o">-</span><span class="n">conditions</span><span class="o">/</span><span class="n">pressure</span><span class="o">-</span><span class="n">outlet</span>
+<span class="o">&gt;</span> <span class="n">test_pressure_outlet</span>
+<span class="o">&gt;</span> <span class="n">yes</span>
+<span class="o">&gt;</span> <span class="n">no</span>
+<span class="o">&gt;</span> <span class="mf">1000000.0</span>
+<span class="o">&gt;</span> <span class="n">no</span>
+<span class="o">&gt;</span> <span class="mi">300</span>
+<span class="o">&gt;</span> <span class="n">no</span>
+<span class="o">&gt;</span> <span class="n">yes</span>
+<span class="o">&gt;</span> <span class="n">yes</span>
+<span class="o">&gt;</span> <span class="n">no</span>
+<span class="o">&gt;</span> <span class="mi">1</span>
+<span class="o">&gt;</span> <span class="n">no</span>
+<span class="o">&gt;</span> <span class="mi">1</span>
+<span class="o">&gt;</span> <span class="n">yes</span>
+<span class="o">&gt;</span> <span class="n">no</span>
+<span class="o">&gt;</span> <span class="n">no</span>
+<span class="o">&gt;</span> <span class="n">no</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.tui.ScalarRelaxation">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">ScalarRelaxation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variable</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.ScalarRelaxation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Representation of relaxing scalars in Fluent</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>variable</strong> (<em>str | list</em>) – either a string or a list of strings designating the variables to be relaxed</p></li>
+<li><p><strong>value</strong> (<em>float | list</em>) – the value of the relaxation, or a list of values between 0 and 1</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sr</span> <span class="o">=</span> <span class="n">ScalarRelaxation</span><span class="p">(</span><span class="s1">&#39;temperature&#39;</span><span class="p">,</span><span class="mf">0.5</span><span class="p">)</span>    <span class="c1">#relax temperature to 0.5</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sr</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">solve</span><span class="o">/</span><span class="nb">set</span><span class="o">/</span><span class="n">under</span><span class="o">-</span><span class="n">relaxation</span>
+<span class="o">&gt;</span> <span class="n">temperature</span>
+<span class="o">&gt;</span> <span class="mf">0.5</span>
+<span class="o">&gt;</span> <span class="n">q</span>
+<span class="o">&gt;</span> <span class="n">q</span>
+<span class="o">&gt;</span> <span class="n">q</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sr</span> <span class="o">=</span> <span class="n">ScalarRelaxation</span><span class="p">([</span><span class="s1">&#39;temperature&#39;</span><span class="p">,</span><span class="s1">&#39;epsilon&#39;</span><span class="p">],[</span><span class="mf">0.6</span><span class="p">,</span><span class="mf">0.3</span><span class="p">])</span>  <span class="c1">#relax temperature and epsilon</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sr</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">solve</span><span class="o">/</span><span class="nb">set</span><span class="o">/</span><span class="n">under</span><span class="o">-</span><span class="n">relaxation</span>
+<span class="o">&gt;</span> <span class="n">temperature</span>
+<span class="o">&gt;</span> <span class="mf">0.6</span>
+<span class="o">&gt;</span> <span class="n">epsilon</span>
+<span class="o">&gt;</span> <span class="mf">0.3</span>
+<span class="o">&gt;</span> <span class="n">q</span>
+<span class="o">&gt;</span> <span class="n">q</span>
+<span class="o">&gt;</span> <span class="n">q</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.tui.SolidCellZone">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">SolidCellZone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.SolidCellZone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for modifying the properties of a Solid Cell Zone in fluent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – the string of the solid cell zone to modify in fluent</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">scz</span> <span class="o">=</span> <span class="n">SolidCellZone</span><span class="p">(</span><span class="s1">&#39;wall1&#39;</span><span class="p">)</span>
+<span class="n">scz</span><span class="o">.</span><span class="n">add_constant_source</span><span class="p">(</span><span class="mf">1e6</span><span class="p">)</span>
+<span class="n">scz</span><span class="o">.</span><span class="n">change_material</span><span class="p">(</span><span class="s1">&#39;aluminum&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.tui.Solver">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">Solver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">initializer=&lt;fluentpy.tui.Initializer</span> <span class="pre">object&gt;</span></em>, <em class="sig-param"><span class="pre">solver_iterator=&lt;fluentpy.tui.Solver_Iterator</span> <span class="pre">object&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.Solver" title="Permalink to this definition">¶</a></dt>
+<dd><p>the solver class, must be initialzed with an initializer (for the solver)
+and a Solver_Iterator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>initializer</strong> (<em>object</em>) – an object with a __str__ method intended to initalize a fluent solution</p></li>
+<li><p><strong>solver_iterator</strong> (<em>object</em>) – an object with a __str__ method intended to iterate a fluent solution</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">solver</span> <span class="o">=</span> <span class="n">Solver</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">solver</span> <span class="o">=</span> <span class="n">Solver</span><span class="p">(</span><span class="n">initializer</span><span class="o">=</span> <span class="n">Initializer</span><span class="p">(),</span>
+        <span class="n">solver_iterator</span><span class="o">=</span> <span class="n">Solver_Iterator</span><span class="p">(</span><span class="n">niter</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.tui.Solver_Iterator">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">Solver_Iterator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">niter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.Solver_Iterator" title="Permalink to this definition">¶</a></dt>
+<dd><p>base representation of a solver iterator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>niter</strong> (<em>int</em>) – number of iterations to iterate for - default 200</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">si</span> <span class="o">=</span> <span class="n">Solver_Iterator</span><span class="p">(</span><span class="n">niter</span> <span class="o">=</span> <span class="mi">500</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">si</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">solve</span><span class="o">/</span><span class="n">iterate</span> <span class="mi">500</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.tui.StandardKEpsilonSpecification">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">StandardKEpsilonSpecification</span></span><a class="headerlink" href="#fluentpy.tui.StandardKEpsilonSpecification" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.tui.StandardKOmegaSpecification">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">StandardKOmegaSpecification</span></span><a class="headerlink" href="#fluentpy.tui.StandardKOmegaSpecification" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.tui.SurfaceIntegrals">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">SurfaceIntegrals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">file:</span> <span class="pre">str</span></em>, <em class="sig-param"><span class="pre">id:</span> <span class="pre">str</span></em>, <em class="sig-param"><span class="pre">variable:</span> <span class="pre">str</span></em>, <em class="sig-param"><span class="pre">surface_type:</span> <span class="pre">str</span></em>, <em class="sig-param"><span class="pre">engine=&lt;class</span> <span class="pre">'fluentpy.tui.FluentEngine'&gt;</span></em>, <em class="sig-param"><span class="pre">id_pad=1</span></em>, <em class="sig-param"><span class="pre">**engine_kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.SurfaceIntegrals" title="Permalink to this definition">¶</a></dt>
+<dd><p>base class for all surface integrals that can be generated using
+fluent. Hooks into an engine and executes upon inserting commands</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file</strong> (<em>str</em>) – string of the file to apply the surface integrals to</p></li>
+<li><p><strong>id</strong> (<em>list</em>) – a list of integers of the boundary condition identification</p></li>
+<li><p><strong>variable</strong> (<em>list</em>) – a list of strings of the field variable to compute the surface integral for</p></li>
+<li><p><strong>surface_type</strong> (<em>list</em>) – the type of surface integral - i.e. area-weighted-avg</p></li>
+<li><p><strong>engine</strong> (<em>object</em>) – default FluentEngine - the engine to open fluent with</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">si</span> <span class="o">=</span> <span class="n">SurfaceIntegrals</span><span class="p">(</span><span class="s1">&#39;sample.cas&#39;</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="s1">&#39;temperature&#39;</span><span class="p">,</span><span class="s1">&#39;area-weighted-avg&#39;</span><span class="p">)</span>
+<span class="n">sif</span> <span class="o">=</span> <span class="n">si</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">si</span> <span class="o">=</span> <span class="n">SurfaceIntegrals</span><span class="p">(</span><span class="s1">&#39;sample.cas&#39;</span><span class="p">,[[</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">],[</span><span class="mi">12</span><span class="p">]],</span>
+                      <span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">,</span><span class="s1">&#39;temperature&#39;</span><span class="p">],</span>
+                      <span class="p">[</span><span class="s1">&#39;area-weighted-avg&#39;</span><span class="p">,</span><span class="s1">&#39;vertex-max&#39;</span><span class="p">],</span>
+                      <span class="n">engine</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">sif</span> <span class="o">=</span> <span class="n">si</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sif</span><span class="p">)</span>
+
+<span class="o">&gt;</span> <span class="o">/</span><span class="n">report</span><span class="o">/</span><span class="n">surface</span><span class="o">-</span><span class="n">integrals</span><span class="o">/</span><span class="n">vertex</span><span class="o">-</span><span class="nb">max</span>
+<span class="o">&gt;</span> <span class="mi">12</span>
+<span class="o">&gt;</span> <span class="p">,</span>
+<span class="o">&gt;</span> <span class="n">temperature</span>
+<span class="o">&gt;</span> <span class="n">yes</span>
+<span class="o">&gt;</span> <span class="n">sample</span><span class="o">-</span><span class="n">vertex</span><span class="o">-</span><span class="nb">max</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="n">temperature</span>
+<span class="o">&gt;</span> <span class="o">/</span><span class="n">report</span><span class="o">/</span><span class="n">surface</span><span class="o">-</span><span class="n">integrals</span><span class="o">/</span><span class="n">area</span><span class="o">-</span><span class="n">weighted</span><span class="o">-</span><span class="n">avg</span>
+<span class="o">&gt;</span> <span class="mi">10</span>
+<span class="o">&gt;</span> <span class="mi">11</span>
+<span class="o">&gt;</span> <span class="p">,</span>
+<span class="o">&gt;</span> <span class="n">temperature</span>
+<span class="o">&gt;</span> <span class="n">yes</span>
+<span class="o">&gt;</span> <span class="n">sample</span><span class="o">-</span><span class="n">area</span><span class="o">-</span><span class="n">weighted</span><span class="o">-</span><span class="n">avg</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="n">temperature</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.tui.SurfaceIntegrals.file_name">
+<span class="sig-name descname"><span class="pre">file_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surface_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variable</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.SurfaceIntegrals.file_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the filename to write the surface integral to</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.tui.UDF">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">UDF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">udf_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.UDF" title="Permalink to this definition">¶</a></dt>
+<dd><p>class for representing a UDF for loading into boundary conditions in fluent. Meant primary
+to be used in conjunction with boundary conditions i.e. MassFlowInlet,PressureOutlet ect…</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_name</strong> (<em>str</em>) – the name of the udf file</p></li>
+<li><p><strong>udf_name</strong> (<em>str</em>) – the name of the udf in fluent</p></li>
+<li><p><strong>data_name</strong> (<em>str</em>) – the name of the data name in fluent</p></li>
+<li><p><strong>condition_name</strong> (<em>str</em>) – the name of the condition (i.e. convection_coefficient,
+heat_flux, ect.. the UDF is intended to be applied to)</p></li>
+<li><p><strong>compile</strong> (<em>bool</em>) – default False - option to compile the UDF at runtime</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">udf</span> <span class="o">=</span> <span class="n">UDF</span><span class="p">(</span><span class="s1">&#39;test.c&#39;</span><span class="p">,</span><span class="s1">&#39;myudf&#39;</span><span class="p">,</span><span class="s1">&#39;mydata&#39;</span><span class="p">,</span><span class="s1">&#39;heat_flux&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">udf</span><span class="p">)</span>
+
+<span class="o">&gt;</span> <span class="n">yes</span>
+<span class="o">&gt;</span> <span class="n">yes</span>
+<span class="o">&gt;</span> <span class="n">myudf</span>
+<span class="o">&gt;</span> <span class="s2">&quot;mydata&quot;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.tui.ViscousModelModification">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">ViscousModelModification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.ViscousModelModification" title="Permalink to this definition">¶</a></dt>
+<dd><p>class implemented in order to facilitate changing of turbulence models
+in Fluent.</p>
+<p>The allowable models (listed) below are limited here because I am unsure of the
+behavior of the fluent case if two-equation models are not selected at this time
+this list may be appended to in the future</p>
+<p>Allowable models:</p>
+<ol class="arabic simple">
+<li><p>‘ke-realizable’</p></li>
+<li><p>‘ke-rng’</p></li>
+<li><p>‘ke-standard’</p></li>
+<li><p>‘kw-bsl’</p></li>
+<li><p>‘kw-sst’</p></li>
+<li><p>‘kw-standard’</p></li>
+<li><p>‘k-kl-w’</p></li>
+</ol>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – the viscous model to modify</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">vmm</span> <span class="o">=</span> <span class="n">ViscousModelModification</span><span class="p">(</span><span class="s1">&#39;ke-realizable&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">vmm</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">define</span><span class="o">/</span><span class="n">models</span><span class="o">/</span><span class="n">viscous</span>
+<span class="o">&gt;</span> <span class="n">ke</span><span class="o">-</span><span class="n">realizable</span>
+<span class="o">&gt;</span> <span class="n">yes</span>
+<span class="o">&gt;</span> <span class="n">q</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.tui.WallBoundaryCondition">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">WallBoundaryCondition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">models</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shell_conduction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.WallBoundaryCondition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wall boundary condition representation. Properties with a star may be set after instantation.
+UDFS may be applied to a particular property of the wall following the example below.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – the name of the wall boundary condition as a string</p></li>
+<li><p><strong>models</strong> (<em>list</em>) – the models used</p></li>
+<li><p><strong>solver</strong> (<em>str</em>) – the solver used as a string</p></li>
+<li><p><strong>shell_conduction</strong> (<em>bool</em>) – use shell conduction or not - default False</p></li>
+<li><p><strong>wall_thickness</strong> (<em>float | *</em>) – thickness of the wall, default 0</p></li>
+<li><p><strong>generation</strong> (<em>float | *</em>) – generation in the wall, default 0</p></li>
+<li><p><strong>heat_flux</strong> (<em>float | *</em>) – heat flux at the wall, default None</p></li>
+<li><p><strong>convection_coefficient</strong> (<em>float | *</em>) – convection coefficient at the wall, default None</p></li>
+<li><p><strong>free_stream_temperature</strong> (<em>float | *</em>) – free stream temperature, default None</p></li>
+<li><p><strong>caf</strong> (<em>float | *</em>) – convective augmentation factor, default 1</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">wall</span> <span class="o">=</span> <span class="n">WallBoundaryCondition</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">,[</span><span class="s1">&#39;energy&#39;</span><span class="p">,</span><span class="s1">&#39;viscous&#39;</span><span class="p">],</span><span class="s1">&#39;pressure-based&#39;</span><span class="p">)</span>
+<span class="n">wall</span><span class="o">.</span><span class="n">free_stream_temperature</span> <span class="o">=</span> <span class="mf">400.0</span>
+<span class="n">wall</span><span class="o">.</span><span class="n">convection_coefficient</span> <span class="o">=</span> <span class="mf">10e3</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">wall</span><span class="p">())</span>
+
+<span class="n">udf</span> <span class="o">=</span> <span class="n">UDF</span><span class="p">(</span><span class="s1">&#39;test.c&#39;</span><span class="p">,</span><span class="s1">&#39;udf&#39;</span><span class="p">,</span><span class="s1">&#39;HTC::UDF&#39;</span><span class="p">,</span><span class="s1">&#39;convection_coefficient&#39;</span><span class="p">)</span>
+<span class="n">wall</span><span class="o">.</span><span class="n">add_udf</span><span class="p">(</span><span class="n">udf</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">wall</span><span class="p">())</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="module-fluentpy.batch.submit">
+<span id="batch"></span><h1>batch<a class="headerlink" href="#module-fluentpy.batch.submit" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.batch.submit.FluentBatchSubmission">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.batch.submit.</span></span><span class="sig-name descname"><span class="pre">FluentBatchSubmission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fluent_submission_list</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seperator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'-'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.submit.FluentBatchSubmission" title="Permalink to this definition">¶</a></dt>
+<dd><p>an interface for the batched submission of fluent jobs</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.batch.submit.FluentBatchSubmission.format_submit">
+<span class="sig-name descname"><span class="pre">format_submit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pace_pbs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">purge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.submit.FluentBatchSubmission.format_submit" title="Permalink to this definition">¶</a></dt>
+<dd><p>final function here for formatting the submission
+makes appropriate directories if they do not exist
+and optionally purges data using a safety delete that does not allow
+recursion past a level of 2 on file folders, and will not delete .cas
+or .dat files</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.batch.submit.FluentBatchSubmission.from_batch_cache">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_batch_cache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch_folder</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.submit.FluentBatchSubmission.from_batch_cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>read in the batch_cache</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.batch.submit.FluentBatchSubmission.from_frame">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">case_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">turbulence_model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pandas.core.frame.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pbs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#fluentpy.batch.pbs.FluentPBS" title="fluentpy.batch.pbs.FluentPBS"><span class="pre">fluentpy.batch.pbs.FluentPBS</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seperator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'-'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">frargs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">frkwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.submit.FluentBatchSubmission.from_frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class method for creating a fluent batch submission using a data frame
+refer to the util.py document for details on the specification of the input dataframe</p>
+<p>the SAME pbs script is used for each of the runs - if there needs to be a different pbs script for
+each run you should consider manually building the list</p>
+<p>frargs and frkwargs are passed to the fluent run objects for each of the FluentSubmissions - so they will
+be the same for each run - again if you need these to be different you should consider building the
+batch submission differently or submitting seperate jobs</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.batch.submit.FluentBatchSubmission.submission_list_from_boundary_df">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">submission_list_from_boundary_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">case_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bdf</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pandas.core.frame.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pbs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#fluentpy.batch.pbs.FluentPBS" title="fluentpy.batch.pbs.FluentPBS"><span class="pre">fluentpy.batch.pbs.FluentPBS</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">seperator</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">frargs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">frkwargs</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">list</span><a class="headerlink" href="#fluentpy.batch.submit.FluentBatchSubmission.submission_list_from_boundary_df" title="Permalink to this definition">¶</a></dt>
+<dd><p>make a submission object from a boundary DataFrame i.e. a DataFrame of
+FluentBoundaryConditions.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.batch.submit.FluentSubmission">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.batch.submit.</span></span><span class="sig-name descname"><span class="pre">FluentSubmission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fluent_run</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#fluentpy.tui.FluentRun" title="fluentpy.tui.FluentRun"><span class="pre">fluentpy.tui.FluentRun</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fluent_pbs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#fluentpy.batch.pbs.FluentPBS" title="fluentpy.batch.pbs.FluentPBS"><span class="pre">fluentpy.batch.pbs.FluentPBS</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.submit.FluentSubmission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for representing the unit “submission” of a fluent job to pace
+This MUST be instantiated with a FluentRun as a first argument and a
+FluentPBS script as a second argument</p>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">write</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">format_submit</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">submit</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.batch.submit.FluentSubmission.bash_submission">
+<span class="sig-name descname"><span class="pre">bash_submission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pace_pbs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'fluent.pbs'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.submit.FluentSubmission.bash_submission" title="Permalink to this definition">¶</a></dt>
+<dd><p>submit the job. Format the submission, i.e. write the file to the folder
+change to the directory, run the script, and then change back to the original directory
+return the output from the command line call</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.batch.submit.FluentSubmission.format_submit">
+<span class="sig-name descname"><span class="pre">format_submit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pace_pbs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'fluent.pbs'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.submit.FluentSubmission.format_submit" title="Permalink to this definition">¶</a></dt>
+<dd><p>format the submission at the command line in pace</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.batch.submit.FluentSubmission.write">
+<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pace_pbs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'fluent.pbs'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.submit.FluentSubmission.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>writes the fluent pbs script &amp; the fluent file to a folder
+provided in the variable “folder”. If the folder does not exist,
+the folder will be created</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-fluentpy.batch.pbs"></span><dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.batch.pbs.DefaultPBS">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.batch.pbs.</span></span><span class="sig-name descname"><span class="pre">DefaultPBS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">walltime</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodes</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processors</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'fluent.out'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email_permissions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'abe'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory_request</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'p'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">account</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'GT-my14'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.pbs.DefaultPBS" title="Permalink to this definition">¶</a></dt>
+<dd><p>a default pbs script. The account and queue are now hardcoded into the initializer
+while variables such as walltime,memory, nodes and processors are still required</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.batch.pbs.FluentPBS">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.batch.pbs.</span></span><span class="sig-name descname"><span class="pre">FluentPBS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">input_file:</span> <span class="pre">str</span></em>, <em class="sig-param"><span class="pre">name=None</span></em>, <em class="sig-param"><span class="pre">WALLTIME=None</span></em>, <em class="sig-param"><span class="pre">MEMORY=None</span></em>, <em class="sig-param"><span class="pre">N_NODES=1</span></em>, <em class="sig-param"><span class="pre">N_PROCESSORS=1</span></em>, <em class="sig-param"><span class="pre">output_file='pace.out'</span></em>, <em class="sig-param"><span class="pre">version='2019R3'</span></em>, <em class="sig-param"><span class="pre">email=None</span></em>, <em class="sig-param"><span class="pre">email_permissions='abe'</span></em>, <em class="sig-param"><span class="pre">mpi_option='intel'</span></em>, <em class="sig-param"><span class="pre">pbs=&lt;class</span> <span class="pre">'fluentpy.batch.pbs.DefaultPBS'&gt;</span></em>, <em class="sig-param"><span class="pre">_cached_pbs=None</span></em>, <em class="sig-param"><span class="pre">account='GT-my14'</span></em>, <em class="sig-param"><span class="pre">memory_request='p'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.pbs.FluentPBS" title="Permalink to this definition">¶</a></dt>
+<dd><p>A default PBS scrit for a fluent function call. Provides additional formatting
+for calling ANSYS fluent after the pbs script. Note that the type of pbs
+can be changed by supplying the keyword argument</p>
+<p>pbs = MyPBSClass</p>
+<p>in the initialization of the FluentPBS class</p>
+<p>The initial header from the pbs class, along with the additional text required for the fluent
+call are formatted in the function “format_call” and the text is returned by the following syntax</p>
+<p>fluentpbs = FluentPBS(<a href="#id1"><span class="problematic" id="id2">*</span></a>args,**kwargs)
+txt = fluentpbs()</p>
+<p>where the variable “txt” contains all of the information required for a pbs script with fluent</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.batch.pbs.FluentPBS.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.pbs.FluentPBS.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>useful for making a bunch of copies in a batch script</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.batch.pbs.FluentPBS.format_call">
+<span class="sig-name descname"><span class="pre">format_call</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.pbs.FluentPBS.format_call" title="Permalink to this definition">¶</a></dt>
+<dd><p>format the whole script here</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.batch.pbs.FluentPBS.format_change_dir">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">format_change_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chdir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.pbs.FluentPBS.format_change_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>this is important to change to the PBS dir which is an environment variable
+native to the bash shell on PACE</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.batch.pbs.FluentPBS.format_cnf">
+<span class="sig-name descname"><span class="pre">format_cnf</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.pbs.FluentPBS.format_cnf" title="Permalink to this definition">¶</a></dt>
+<dd><p>this is required for the process affinity to work on pace</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.batch.pbs.FluentPBS.format_fluent_footer">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">format_fluent_footer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">processors</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodes</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_file</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mpi</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cnf</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="headerlink" href="#fluentpy.batch.pbs.FluentPBS.format_fluent_footer" title="Permalink to this definition">¶</a></dt>
+<dd><p>format the fluent call in the pbs script</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.batch.pbs.FluentPBS.format_load_ansys">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">format_load_ansys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">version</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.pbs.FluentPBS.format_load_ansys" title="Permalink to this definition">¶</a></dt>
+<dd><p>format the command to load the version of ansys</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.batch.pbs.FluentPBS.format_machine_file">
+<span class="sig-name descname"><span class="pre">format_machine_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.pbs.FluentPBS.format_machine_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets the MPI option correctly for pace</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.batch.pbs.FluentPBS.write">
+<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.pbs.FluentPBS.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>write the script to a file or IOStream (whatever its called in python)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.batch.pbs.PBS">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.batch.pbs.</span></span><span class="sig-name descname"><span class="pre">PBS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">account</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">queue</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">walltime</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodes</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processors</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email_permissions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory_request</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'p'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.pbs.PBS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abstract base class for the pbs header. Provides a base initialization method that formats the various
+initializer arguments into the required form for the pbs script. The formatting is done
+in the property methods and is formatted into a script by the method “format_pbs_header()”
+this formatted text is then called like-so:</p>
+<p>pbs = PBS(<a href="#id3"><span class="problematic" id="id4">*</span></a>args,**kwargs)
+text = pbs()</p>
+<p>where the variable “text” now contains the text in a pbs script</p>
+<p>note that the key word argument “memory_request” has options ‘p’ and ‘t’
+where ‘p’ is per core and ‘t’ is total memory</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.batch.pbs.PBS.wall_time_formatter">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">wall_time_formatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">td</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">datetime.timedelta</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="headerlink" href="#fluentpy.batch.pbs.PBS.wall_time_formatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>you get issues upon direct string conversion of time delta
+because pace doesn’t allow a “date” field for walltime - the largest
+unit of time is hour and it wants the wall time in:</p>
+<p>HH:MM:SS</p>
+<p>format</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2021, Michael Lanahan.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.0.1.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+/solve/set/discretization-scheme
+density
+5
+epsilon
+5
+k
+5
+mom
+5
+pressure
+5
+temperature
+5
+q
+q
+q

@@ -1,0 +1,4 @@
+/define/user-defined/real-gas-models/nist-real-gas-model
+yes
+co2.fld
+no

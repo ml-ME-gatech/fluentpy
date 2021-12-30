@@ -1,0 +1,8 @@
+solve/set/under-relaxation
+density
+0.8
+temperature
+0.7
+q
+q
+q
