@@ -1,7 +1,7 @@
 #native imports
 from abc import ABC,abstractmethod
 import os
-from typing import OrderedDict, Union
+from typing import OrderedDict, Union, List
 import os
 import subprocess
 import numpy as np 
@@ -37,14 +37,15 @@ __all__ = [
            'WallBoundaryCondition',
            'MassFlowInlet',
            'PressureOutlet',
+           'VelocityInlet',
            'SurfaceIntegrals',
-           'FluentRun'
+           'FluentJournal'
            ]
 
 """
 Author: Michael Lanahan
 Date Created: 08.05.2021
-Last Edit: 12.29.2021
+Last Edit: 01.04.2021
 
 The purpose of this file is provide python class interfaces to TUI commands in 
 the command line or batch mode fluent software.
@@ -55,10 +56,14 @@ class TUIBase:
     LINE_BREAK = '\n'
     EXIT_CHAR = 'q' + LINE_BREAK
     EXIT_STATEMENT = 'exit'
-    
-    def __init__(*args,**kwargs):
-        pass
+    ALLOWABLE_PRECISION_SPEC = ['3ddp','2ddp']
 
+    def __init__(self,*args,
+                precision_specification = '3ddp',
+                **kwargs):
+        
+        self.precision_specification = precision_specification
+    
 class Initializer(TUIBase):
 
     """
@@ -1103,157 +1108,6 @@ class FluentCase(TUIBase):
     def case_file(self):
         return self.__case_file
 
-class TurbulentBoundarySpecification(ABC,TUIBase):
-
-    def __init__(self):
-        pass
-
-    @abstractmethod
-    def turbulence_spec(self):
-        pass
-
-    def skip_choices(self,num):
-
-        return ''.join(['no' + self.LINE_BREAK for _ in range(num)])
-
-class TwoEquationTurbulentBoundarySpecification(TurbulentBoundarySpecification):
-
-    def __init__(self):
-        self.__tke = 1
-        self.__length_scale = None
-        self.__intensity = None
-        self.__viscosity_ratio = None
-        self.__hydraulic_diameter = None
-
-    @property
-    def intensity(self):
-        return self.__intensity
-    
-    @property
-    def tke(self):
-        return self.__tke
-
-    @property
-    def length_scale(self):
-        return self.__length_scale
-
-    @property
-    def viscosity_ratio(self):
-        return self.__viscosity_ratio
-
-    @property
-    def hydraulic_diameter(self):
-        return self.__hydraulic_diameter
-    
-    @intensity.setter
-    def intensity(self,intensity):
-        self.__intensity = intensity
-    
-    @tke.setter
-    def tke(self,tke):
-        self.__tke = tke
-
-    @length_scale.setter
-    def length_scale(self,ls):
-        self.__length_scale = ls
-
-    @viscosity_ratio.setter
-    def viscosity_ratio(self,vr):
-        self.__viscosity_ratio = vr
-    
-    @hydraulic_diameter.setter
-    def hydraulic_diameter(self,hd):
-        self.__hydraulic_diameter = hd
-
-    def _intensity_and_hydraulic_diameter(self) -> str:
-
-        txt = self.skip_choices(3)
-        txt += 'yes' + self.LINE_BREAK
-        #no to profile
-        txt += str(self.intensity) + self.LINE_BREAK
-        #no to profile
-        txt += str(self.hydraulic_diameter) + self.LINE_BREAK
-
-        return txt
-    
-    def turbulence_spec(self,specification):
-        if specification == 'intensity and hydraulic diameter':
-            return self._intensity_and_hydraulic_diameter()
-        elif specification == 'k and omega':
-            return self._k_and_omega_specification()
-        elif specification == 'k and epsilon':
-            return self._k_and_epsilon_specification()
-        else:
-            raise NotImplementedError('Havent implemented boundary specification mechanisms\
-                 beyond intensity and hydraulic diameter, k and omega and k and epsilon')
-    
-class StandardKOmegaSpecification(TwoEquationTurbulentBoundarySpecification):
-
-    def __init__(self):
-
-        super().__init__()
-        self.__omega = 1
-    
-    @property
-    def omega(self):
-        return self.__omega
-    
-    @omega.setter
-    def omega(self,o):
-        self.__omega = o
-    
-    def _k_and_omega_specification(self) -> str:
-        
-        #no to profile
-        txt = 'yes' + self.LINE_BREAK + 'no' + self.LINE_BREAK
-        txt += str(self.tke) + self.LINE_BREAK
-        #no to profile
-        txt += 'no' + self.LINE_BREAK
-        txt += str(self.omega) + self.LINE_BREAK
-        return txt
-
-class StandardKEpsilonSpecification(TwoEquationTurbulentBoundarySpecification):
-
-    def __init__(self):
-
-        super().__init__()
-        self.__tdr = 1
-
-    @property
-    def tdr(self):
-        return self.__tdr
-
-    @tdr.setter
-    def tdr(self,tdr):
-        self.__tdr = tdr
-
-    def _k_and_epsilon_specification(self) -> str:
-        
-        #no to profile
-        txt = 'yes' + self.LINE_BREAK + 'no' + self.LINE_BREAK
-        txt += str(self.tke) + self.LINE_BREAK
-        #no to profile
-        txt += 'no' + self.LINE_BREAK
-        txt += str(self.tdr) + self.LINE_BREAK
-        return txt
-
-def _assign_turbulence_model(model:str) -> TurbulentBoundarySpecification:
-
-    class_assignment = {'ke-standard':StandardKEpsilonSpecification,
-                        'ke-realizable':StandardKEpsilonSpecification,
-                        'ke-rng': StandardKEpsilonSpecification,
-                        'kw-standard':StandardKOmegaSpecification}
-    
-    specification_assigmnment = {'ke-standard':'k and epsilon',
-                                 'ke-realizable': 'k and epsilon',
-                                 'ke-rng': 'k and epsilon',
-                                 'kw-standard': 'k and omega'}
-
-    try:
-        return class_assignment[model](), specification_assigmnment[model]
-    except KeyError:
-        raise ValueError('cannot identify the requested model: {}'.format(model))
-
 class ModelModification(ABC,TUIBase):
 
     _prefix = 'define/models/{}'
@@ -1585,7 +1439,7 @@ class UDF(TUIBase):
 
         return self._format_enable_udf()
 
-def enable_udf(condition_name: str) -> callable:
+def udf_property(condition_name: str) -> callable:
     """
     decorator meant to enable all conditions 
     that can have udf profile to have one 
@@ -1594,6 +1448,22 @@ def enable_udf(condition_name: str) -> callable:
     ----------
     condition_name : str
             the condition_name that could be enabled
+
+    Examples
+    --------
+    .. code-block:: python
+
+        @udf_property('t0')
+        def temperature(self):
+            return self.__temperature 
+    
+    this will do the following in the "set" menu (define/boundary-conditions/set)
+    1. if there is no udf
+    > t0
+    > no
+    > value of temperature
+    2. if there is a udf
+
     """
     
     def udf_enabled_condition(condition: callable) -> callable:
@@ -1610,18 +1480,51 @@ def enable_udf(condition_name: str) -> callable:
         condition : callable
                 a callable with the specifications for the condition
         """
-
-        def enabled_condition(self,*args,**kwargs) -> str:
+        @property
+        def enabled_condition(self) -> str:
             
-            try:
-                return str(self.udf[condition_name])
-            except KeyError:
-                additional_text = 'no' + self.LINE_BREAK
-                return additional_text + condition(self,*args,**kwargs)
+            output = condition(self)
+            if output is None:
+                return output
+            else:
+                self.decorated_list.append(condition.__name__)
+
+                _condition_names = [condition_name,
+                                    condition.__name__,
+                                    condition.__name__.replace('_','-')]
+                
+                for cname in _condition_names:
+
+                    try:
+                        #found a udf with matching condition_name
+                        return str(self.udf[cname])
+                    except KeyError:
+                        pass
+                
+                return condition_name + self.LINE_BREAK +\
+                    'no' +self.LINE_BREAK +\
+                        str(output) + self.LINE_BREAK
             
         return enabled_condition
     
     return udf_enabled_condition
+
+def boolean_property(cls_property: callable) -> callable:
+    """
+    Convinience function for turning boolean properties into 
+    yes/no answers for the TUI interface
+    """
+    @property
+    def wrapped_property(self):
+
+        tui_name = cls_property.__name__.replace('_','-')
+        tui_syntax = tui_name + self.LINE_BREAK + '{}' + self.LINE_BREAK
+        if cls_property(self):
+            return tui_syntax.format('yes')
+        else:
+            return tui_syntax.format('no')
+
+    return wrapped_property
 
 class FluentBoundaryCondition(ABC,TUIBase):
     """
@@ -1643,74 +1546,57 @@ class FluentBoundaryCondition(ABC,TUIBase):
     remove_udf() - remove a udf from the boundary condition
 
     """
-    _prefix = '/define/boundary-conditions/'
-    _line_start = '/'
+    _prefix = '/define/boundary-conditions/set/'
     ALLOWABLE_SOLVERS = ['pressure-based','density-based']
-    ALLOWABLE_BOUNDARY_TYPES = ['mass-flow-inlet','pressure-outlet','wall']
+    ALLOWABLE_BOUNDARY_TYPES = ['mass-flow-inlet',
+                                'pressure-outlet',
+                                'wall',
+                                'velocity-inlet',
+                                'turbulence_specification']
+
     ALLOWABLE_VISCOUS_MODELS = ['ke-standard','kw-standard','ke-realizable','ke-rng']
     ALLOWABLE_MODELS = ['energy','viscous'] 
     ALLOWABLE_MODELS += ['viscous/' + vm for vm in ALLOWABLE_VISCOUS_MODELS]
+    ALLOWABLE_REFERENCE_FRAME = ['absolute',
+                                 'relative to adjacent cell zone']
     
     def __init__(self,name: str,
                       boundary_type: str,
                       models: list,
-                      solver: str,
-                      reference_frame = 'absolute',
+                      defaults = {},
                       **kwargs):
         
-        if solver not in self.ALLOWABLE_SOLVERS:
-            raise ValueError('solver: {} is not allowed'.format(solver))
-        
+        #check to ensure the models are allowed
         for model in models:
             if model not in self.ALLOWABLE_VISCOUS_MODELS and model not in self.ALLOWABLE_MODELS:
                 raise ValueError('model: {} is not allowed'.format(model))
         
+        #check to ensure the boundary type is allowed
         if boundary_type not in self.ALLOWABLE_BOUNDARY_TYPES:
             raise ValueError('Cannot parse boundary of type: {}'.format(boundary_type))
         
-        self._assign_default_attributes(self.DEFAULTS,**kwargs)
-
-        self.__btype = boundary_type
-        self.__name = name
-        self.__models = models
-        self.__solver = solver
+        self._assign_default_attributes(defaults,**kwargs)
+        self.property_methods = self.determine_properties()
+        self.decorated_list = []
+        self.btype = boundary_type
+        self.name = name
+        self.models = models
         self.__udf = {}
-        self.__reference_frame = reference_frame
-
-    @property
-    def name(self):
-        return self.__name
-
-    @property
-    def models(self):
-        return self.__models
-    
-    @property
-    def solver(self):
-        return self.__solver
-
-    @property
-    def btype(self):
-        return self.__btype
-
+        
     @property
     def udf(self):
         return self.__udf
-    
-    @property
-    def reference_frame(self):
-        if self.__reference_frame == 'absolute':
-            return 'yes'
-        else:
-            return 'no'
     
     @udf.setter
     def udf(self,udf):
         self.__udf = udf
     
     def enter_statement(self):
-        return self._prefix + self.btype + self.LINE_BREAK + self.name + self.LINE_BREAK        
+        return self._prefix + self.btype + self.LINE_BREAK + '(' + self.name + ')' + self.LINE_BREAK        
 
+    def exit_statement(self):
+        return self.EXIT_CHAR
+    
     def add_udf(self,new_udf: UDF) -> None:
         """
         add a new udf to the udf dictionary
@@ -1728,25 +1614,113 @@ class FluentBoundaryCondition(ABC,TUIBase):
             self.udf.pop(udf_condition_name)
         except KeyError as ke:
             raise KeyError('Cannot find UDF with condition name:{} in udf dictionary'.format(udf_condition_name))
-        
-    def _configure_udf_from_mapping(self,mapping: dict) -> str:
+
+    def format_pre_udf(self) -> str:
         """
-        base function for configuring the udfs for a boundary condition
+        all of the udf_properties must be iterated through. If they have a UDF
+        associated with them, set the value to -np.inf, and if requested for compilation
+        add the necessary text to compile the udf 
         """
+
         _compile_text = ''
-        for formatter,property_name in mapping.items():
-            #assign values of -1 to all properties with udf
-            if formatter in self.udf:
-                self.__setattr__(property_name,-1)
-                if self.udf[formatter].compile:
-                    _compile_text += self.udf[formatter].format_compile_udf()
+        for property_name in self.property_methods:
+            fmt1 = property_name.replace('_','-')
+            fmt2 = property_name.replace('-','_')
+            
+            for fmt_property in [fmt1,fmt2]:
+                #assign values of -1 to all properties with udf
+                if fmt_property in self.udf:
+                    self.__setattr__(property_name,-np.inf)
+                    if self.udf[fmt_property].compile:
+                        _compile_text += self.udf[fmt_property].format_compile_udf()
+                    
+                    break
 
         return _compile_text
 
+    def specification_conditions(self,prefix = '') -> str:
+        """
+        deals with all boundary conditions which may be set like: 
+        > [name]
+        > [udf? (y/n)]
+        > [value]
+        this is fairly generic, and thus can be set in the base class
+        """
+
+        txt = ''
+        self.decorated_list = []
+        
+        for property_name in self.property_methods:
+            if (property_name == 'temperature' and 'energy' in self.models)\
+                or property_name != 'temperature':
+                try:
+                    new_text = prefix + self.__getattribute__(property_name)
+                    if property_name in self.decorated_list:
+                        txt += new_text
+                except (TypeError,AttributeError):
+                    pass
+            
+        return txt
+
     @abstractmethod
-    def _format_boundary_condition(self) -> str:
+    def format_conditions(self) -> str:
+        """
+        meant to deal with all formatting of conditions
+        that are not udf enabled, especially those that
+        determine which values must be specified. This is unique
+        to each boundary condition.
+        """
+        pass
+
+    @abstractmethod
+    def format_boundary_condition(self) -> str:
 
         pass
+
+    def __call__(self):
+        return self.format_boundary_condition()
+    
+    @classmethod
+    def determine_properties(cls) -> List[str]:
+        """
+        Helper function for determining all properties 
+        in a (sub)class of FluentBoundaryCondition that are properties
+
+        .. code-block:: python
+            
+            @udf_property("prop_name")
+            def prop_name(self):
+                .
+                .
+
+        .. code-block:: python
+
+            @property
+            def direction_vector(self):
+                .
+                .
+        
+        Parameters
+        ----------
+        None
+
+        Returns
+        --------
+        property_list : List[str]
+                a list of strings that can be acsessed with the
+                __getattribute__() method that are properties
+        """
+
+        class_line = [cls_ for cls_ in cls.mro() if 'abc.ABC' not
+                      in str(cls_) and 'object' not in str(cls_)]
+        
+        property_list = []
+        for cls_ in class_line:
+            for attr_name,attr_value in cls_.__dict__.items():
+                if isinstance(attr_value,property):
+                    property_list.append(attr_name)
+        
+        return property_list
     
     def _assign_default_attributes(self,defaults,**kwargs) -> None:
         """
@@ -1765,18 +1739,29 @@ class FluentSolidBoundaryCondition(FluentBoundaryCondition):
     def __init__(self,name: str,
                       boundary_type: str,
                       models: list,
-                      solver: str,
+                      defaults = {},
                       **kwargs):
+        
+        super().__init__(name,boundary_type,models,
+                        defaults = defaults,**kwargs)    
 
-        super().__init__(name,boundary_type,models,solver,**kwargs)
+    def format_boundary_condition(self) -> str:
+        """
+        Main Design pattern conglommeration here. Boundary conditions
+        all consist of 
+        (1) configuart
+        """
+        txt = self.format_pre_udf()
+        txt += self.enter_statement()
+        txt += self.format_conditions()
+        txt += self.specification_conditions()
+        txt += self.exit_statement()
 
-    def __call__(self):
-
-        return self._format_boundary_condition()
+        return txt
     
-    def _format_boundary_condition(self):
+    def format_conditions(self):
 
-        return super()._format_boundary_condition()
+        return super().format_conditions()
     
 class WallBoundaryCondition(FluentSolidBoundaryCondition):
 
@@ -1784,301 +1769,471 @@ class WallBoundaryCondition(FluentSolidBoundaryCondition):
     Wall boundary condition representation. Properties with a star may be set after instantation. 
     UDFS may be applied to a particular property of the wall following the example below.
 
+    Does not support:
+    
+    1. via-mapped-interface
+    2. via-system-coupling
+
     Parameters
     ----------
     name : str
             the name of the wall boundary condition as a string
     models : list
             the models used 
-    solver: str
-            the solver used as a string
-    shell_conduction : bool
-            use shell conduction or not - default False
-    wall_thickness : float | *
-            thickness of the wall, default 0
-    generation : float | *
-            generation in the wall, default 0
+    q_dot : float | *
+            heat generation
     heat_flux : float | *
-            heat flux at the wall, default None
-    convection_coefficient : float | * 
-            convection coefficient at the wall, default None
-    free_stream_temperature : float | * 
-            free stream temperature, default None
+            heat flux
+    convective_heat_transfer_coefficient : float | *
+            convective heat transfer coefficient
+    wall_temperature : float | *
+            temperature of the wall
+    tinf : float | *
+            temperature used for the convective heat transfer coefficient
     caf : float | *
-            convective augmentation factor, default 1
+            convective augmentation factor
+    trad : float | *
+            the temperature used for calculating radiative heat transfer
+    ex_emiss : float | *
+            emissivity of the surface
+    thermal_network : bool | *
+            use thermal network or not
+    planar_conduction : float | *
+            use planar conduction or not
 
     Examples
     --------
     .. code-block:: python
 
-        wall = WallBoundaryCondition('test',['energy','viscous'],'pressure-based')
-        wall.free_stream_temperature = 400.0
-        wall.convection_coefficient = 10e3
-        print(wall())
+        wall = WallBoundaryCondition('heated-surf',['viscous','energy'])
+        wall.heat_flux = 10e3
+        wall.trad = 1e4
+        wall.ex_emiss = 0.5
+        wall.convective_heat_transfer_coefficient = 10
+        wall.tinf = 500
 
-        udf = UDF('test.c','udf','HTC::UDF','convection_coefficient')
-        wall.add_udf(udf)
         print(wall())
     """
     
-    DEFAULTS = {'wall_thickness':0,
-                'generation': 0,
+    DEFAULTS = {'wall_thickness':None,
+                'q_dot': None,
                 'heat_flux':None,
-                'convection_coefficient':None,
-                'free_stream_temperature': None,
-                'caf': 1}
+                'convective_heat_transfer_coefficient':None,
+                'wall_temperature': None,
+                'tinf': None,
+                'caf': None,
+                'trad': None,
+                'ex_emiss':None,
+                'thermal_network':None,
+                'planar_conduction':False}
 
     def __init__(self,name: str,
                       models: list,
-                      solver: str,
-                      shell_conduction = False,
+                      defaults = {},
                       **kwargs):
 
-        if 'energy' not in models:
-            raise NotImplementedError('boundary condition not configured to work without energy equation')
+        for key,value in self.DEFAULTS.items():
+            defaults[key] = value
         
-        super().__init__(name,'wall',models,solver,**kwargs)
+        super().__init__(name,'wall',models,defaults = defaults,**kwargs)
 
-        if shell_conduction:
-            self.shell_conduction = 'yes'
-        else:
-            self.shell_conduction = 'no'
 
-    @property
-    def wall_thickness(self):
-        return self.__wall_thickness
+    @udf_property('q-dot')
+    def q_dot(self):
+        return self.__q_dot
     
-    @property
-    def generation(self):
-        return self.__generation
-
-    @property
-    def convection_coefficient(self):
-        return self.__convection_coefficient
+    @q_dot.setter
+    def q_dot(self,qd: float):
+        self.__q_dot = qd
     
-    @property
+    @udf_property('heat-flux')
     def heat_flux(self):
         return self.__heat_flux
     
-    @property
-    def free_stream_temperature(self):
-        return self.__free_stream_temperature
-    
-    @property
-    def caf(self):
-        return self.__caf
-
-    @wall_thickness.setter
-    def wall_thickness(self,wt):
-        self.__wall_thickness = wt
-    
-    @generation.setter
-    def generation(self,g):
-        self.__generation = g
-    
     @heat_flux.setter
-    def heat_flux(self,hf):
+    def heat_flux(self,hf: float):
         self.__heat_flux = hf
     
-    @convection_coefficient.setter
-    def convection_coefficient(self,cc):
-        self.__convection_coefficient = cc
+    @udf_property('convective-heat-transfer-coefficient')
+    def convective_heat_transfer_coefficient(self):
+        return self.__convective_heat_transfer_coefficient
     
-    @free_stream_temperature.setter
-    def free_stream_temperature(self,fst):
-        self.__free_stream_temperature = fst
+    @convective_heat_transfer_coefficient.setter
+    def convective_heat_transfer_coefficient(self,chtc: float):
+        self.__convective_heat_transfer_coefficient = chtc
+
+    @udf_property('tinf')
+    def tinf(self):
+        return self.__tinf
+    
+    @tinf.setter
+    def tinf(self,t: float):
+        self.__tinf = t
+    
+    @udf_property('temperature')
+    def wall_temperature(self):
+        return self.__wall_temperature
+    
+    @wall_temperature.setter
+    def wall_temperature(self,wt: float):
+        self.__wall_temperature =wt
+    
+    @udf_property('caf')
+    def caf(self):
+        return self.__caf
     
     @caf.setter
-    def caf(self,caf):
+    def caf(self,caf:float):
         self.__caf = caf
-    
-    def __str__(self):
 
-        txt = 'wall thickness: ' + str(self.wall_thickness) + self.LINE_BREAK
-        txt += 'heat generation: ' + str(self.generation) + self.LINE_BREAK
-        txt += 'heat flux: ' + str(self.heat_flux) + self.LINE_BREAK
-        
-        return txt
+    @udf_property('trad')
+    def trad(self):
+        return self.__trad
     
-    @enable_udf('heat_generation')
-    def format_heat_generation(self):
+    @trad.setter
+    def trad(self,tr: float):
+        self.__trad = tr
+    
+    @udf_property('ex-emiss')
+    def ex_emiss(self):
+        return self.__ex_emiss
+    
+    @ex_emiss.setter
+    def ex_emiss(self,ee: float):
+        self.__ex_emiss = ee
+    
+    @boolean_property
+    def planar_conduction(self):
+        return self.__planar_conduction
+    
+    @planar_conduction.setter
+    def planar_conduction(self,pc: bool):
+        self.__planar_conduction = pc
+    
+    def format_thermal_bc(self):
+
+        mapping = {'heat-flux':[self.heat_flux],
+                   'convection': [self.convective_heat_transfer_coefficient,self.tinf,self.caf],
+                   'radiation': [self.ex_emiss,self.trad],
+                   'network': [self.thermal_network]}
+        
+        _thermal_bc = None
+        for thermal_bc, clist in mapping.items():
             
-        return str(self.generation) + self.LINE_BREAK
-    
-    @enable_udf('heat_flux')
-    def format_heat_flux(self):
-
-        return str(self.heat_flux) + self.LINE_BREAK
-
-    @enable_udf('convection_coefficient')
-    def format_convection_coefficient(self):
-
-        return str(self.convection_coefficient) + self.LINE_BREAK
-
-    @enable_udf('free_stream_temperature')
-    def format_free_stream_temperature(self):
-
-        return str(self.free_stream_temperature) + self.LINE_BREAK
-
-    @enable_udf('convective_augmentation')
-    def format_convective_augmentation(self):
-
-        return str(self.caf) + self.LINE_BREAK
+            try:
+                #can't convert string to floats, so will fail
+                #if boundary conditions are present
+                np.array(clist,dtype = 'float')
+            except ValueError:
+                if _thermal_bc is not None:
+                    _thermal_bc = 'mixed'
+                    break
+                else:
+                    _thermal_bc = thermal_bc
         
-    def format_shell_conduction(self):
+        if _thermal_bc is None:
+            return ''
+        else:
+            return 'thermal-bc' + self.LINE_BREAK + 'yes' +\
+                    self.LINE_BREAK + _thermal_bc + self.LINE_BREAK
 
-        txt = self.shell_conduction + self.LINE_BREAK
-        return txt
-    
-    def _configure_udf(self):
-        """
-        configure mapping of udfs
-        """
-        mapping = {'heat_generation': 'generation',
-                   'heat_flux': 'heat_flux',
-                   'convection_coefficient': 'convection_coefficient',
-                   'free_stream_temperature': 'free_stream_temperature',
-                   'convective_augmentation': 'caf'}
+    def format_wall_thickness(self):
+        if self.wall_thickness is not None:
+            return 'wall-thickness' + self.LINE_BREAK + str(self.wall_thickness) + self.LINE_BREAK
+        else:
+            return ''
         
-        return self._configure_udf_from_mapping(mapping)
+    def format_conditions(self):
 
-    def _format_boundary_condition(self):
-
-        txt = self._configure_udf()
-
-        txt += self.enter_statement()
-        txt += str(self.wall_thickness) + self.LINE_BREAK
-        txt += self.format_heat_generation()
-        #no to change material
-        txt += 'no' + self.LINE_BREAK
-        #no to change Thermal BC Type
-        txt += 'no' + self.LINE_BREAK
-        if self.heat_flux is None:
-            if self.convection_coefficient is None or self.free_stream_temperature is None:
-                raise ValueError('cannot have None value for convection coefficient and free stream temperature if heat flux is None')
-            
-            txt += self.format_convection_coefficient()
-            txt += self.format_free_stream_temperature()
-
-        elif self.convection_coefficient is None:
-            txt += self.format_heat_flux()
-        
-        txt += self.format_shell_conduction()
-        txt += self.format_convective_augmentation()
-
-        return txt
+        text = self.format_thermal_bc()
+        text += self.format_wall_thickness()
+        text += self.planar_conduction 
+        return text
         
 class FluentFluidBoundaryCondition(FluentBoundaryCondition):
     """
-    Note on variable names: 
-    tke - total kinetic energy
-    tdr - total dissipation rate
+    Base class for Fluid Boundary Conditions in Fluent. This class is inherited
+    by all Fluid Boundary Conditions
+
+    Parameters
+    ----------
+    temperature : float | *
+            only used if energy is in models. sets the temperature at the 
+            boundary, defaults to 300
+    frame_of_reference: str | *
+            choice of absolute or relative, defaults to absolute
+    direction_vector : list | *
+        optional specfication of the direction vector, must be specified as a
+        1D array with 1-3 components x,y,z. Defaults to None, in which case
+        the mass flow is normal to the boundary.
     """ 
+
     FLUID_DEFAULTS = {'temperature': 300,
-                     'direction_vector': None}
+                      'direction_vector': None,
+                      'frame_of_reference':'absolute'}
 
     def __init__(self,name:str,
                       boundary_type: str,
                       models: list,
-                      solver: str,
                       turbulence_model: str,
+                      defaults = {},
                       **kwargs):
-
+        
         for key,value in self.FLUID_DEFAULTS.items():
-            self.DEFAULTS[key] = value
+            defaults[key] = value
         
-        super().__init__(name,boundary_type,models,solver,**kwargs)
+        super().__init__(name,boundary_type,models,defaults = defaults,**kwargs)
 
-        self.__turbulence_model,self.__turbulence_specification = \
-            _assign_turbulence_model(turbulence_model)
-    
-    def add_statement(self,text: str,
-                           newtext: str) -> str:
-        
-        return text + self._line_start + newtext + self._line_start
+        self.__turbulence_model = _assign_turbulence_model(turbulence_model,**kwargs)
     
     @property
     def turbulence_model(self):
         return self.__turbulence_model
-    
-    @property
-    def direction_vector(self):
-        return self.__direction_vector
 
-    @property
+    @udf_property('t0')
     def temperature(self):
-        return self.__temperature
-      
-    @direction_vector.setter
-    def direction_vector(self,dv):
-        self.__direction_vector = dv
+        return self.__t0
 
     @temperature.setter
     def temperature(self,t):
-        self.__temperature = t
+        self.__t0 = t
     
     @property
-    def turbulence_specification(self):
-        return self.__turbulence_specification
+    def direction_vector(self) -> np.ndarray:
+        return self.__direction_vector
     
-    @turbulence_specification.setter
-    def turbulence_specification(self,ts):
-        self.__turbulence_specification = ts
-    
-    def direction_spec(self) -> str:
-
-        """
-        deals with setting the direction vector
-        options consist of 
-        (1) normal to boundary - selected if direction_vector is None
-        (2) sets the direction vector asssuming a list or numpy array
-            strict checking of the shape of the direction vector
-         """
-    
-        txt = ''
-        if self.direction_vector is None:
-            txt = 'no' + self.LINE_BREAK
-            #normal to boundary
-            txt += 'yes' + self.LINE_BREAK
+    @direction_vector.setter
+    def direction_vector(self,dv : Union[np.ndarray,list,tuple]):
+        
+        if dv is not None:
+            self.__direction_vector = np.array(dv).squeeze()
+            if self.__direction_vector.ndim != 1:
+                raise ValueError('direction vector must be specified by 1D array')
+            if self.__direction_vector.shape[0] < 1 or self.__direction_vector.shape[0] >3:
+                raise ValueError('direction vector must be between length 1 and 3')
         else:
-            msg = 'direction vector (if specified) must be a list or 1D numpy array'
-            if isinstance(self.direction_vector,list):
-                self.direction_vector = np.array(self.direction_vector).squeeze()
-            elif isinstance(self.direction_vector,np.ndarray):
-                self.direction_vector = self.direction_vector.squeeze()
-            else:
-                raise TypeError(msg)
-            
-            if self.direction_vector.ndim != 1:
-                raise ValueError(msg)
-            
-            if self.direction_vector.shape[0] > 3:
-                raise ValueError('direction vector cannot contain more than 3 components')
+            self.__direction_vector = dv
 
-            txt = 'yes' + self.LINE_BREAK + 'yes' + self.LINE_BREAK
-            for i in range(self.direction_vector.shape[0]):
-                txt += 'no' + self.LINE_BREAK + str(self.direction_vector[i]) + self.LINE_BREAK
+    @property
+    def frame_of_reference(self) -> str:
+        return self.__frame_of_reference
+
+    @frame_of_reference.setter
+    def frame_of_reference(self,frm : str) -> None:
+        _frm = frm.lower()
+        if _frm not in self.ALLOWABLE_REFERENCE_FRAME:
+            txt = [text  + '\n' for text in self.ALLOWABLE_REFERENCE_FRAME]
+            raise ValueError('frame of reference must\
+             be one of \n {}. \n not : {}'.format(txt,_frm))
+        
+        
+        self.__frame_of_reference = _frm
+               
+    def format_direction_spec(self,
+                              direction_str = ['ni','nj','nk'],
+                              direction_spec = 'direction-spec') -> str:
+        """
+        all direction vectors follow the same format
+        if the direction vector is None, specify as normal the boundary.
+        otherwise, specify the direction vector
+        """
+        if direction_spec is None:
+            txt = ''
+        else:
+            txt = direction_spec + self.LINE_BREAK
+        
+        if self.direction_vector is None:
+            return txt + 'no' + self.LINE_BREAK + 'yes' + self.LINE_BREAK
+        else:
+            if direction_spec is not None:
+                txt += 'yes' + self.LINE_BREAK
+            direction_vector = list(self.direction_vector)
+            for dv,ds in zip(direction_vector,direction_str):
+                txt += ds + self.LINE_BREAK + 'no' + self.LINE_BREAK +\
+                       str(dv) + self.LINE_BREAK
             
+            return txt
+
+    def format_frame_of_reference(self) -> str:
+        """
+        all frame of references have a generic format
+        """
+        txt = 'frame-of-reference' + self.LINE_BREAK
+        if self.frame_of_reference == 'absolute':
+            return txt + 'yes' + self.LINE_BREAK
+        else:
+            return txt + 'no' + self.LINE_BREAK + 'yes' + self.LINE_BREAK
+
+    def format_turbulent_quantities(self) -> str:
+        """
+        just calls the turbulence_model format_spec() method
+        """
+        return self.turbulence_model.specification_conditions()
+
+    def format_boundary_condition(self) -> str:
+        """
+        Main Design pattern conglommeration here. Boundary conditions
+        all consist of 
+        (1) configuart
+        """
+        txt = self.format_pre_udf()
+        txt += self.enter_statement()
+        txt += self.format_conditions()
+        txt += self.specification_conditions()
+        txt += self.format_turbulent_quantities()
+        txt += self.exit_statement()
+
         return txt
+
+class NoTurbulenceModel:
+
+    def __init__(self,*args,**kwargs):
+        pass
+
+    def format_boundary_condition(self):
+        return ''
     
-    @enable_udf('temperature')
-    def format_temperature(self) -> str:
+    def format_conditions(self):
+        return ''
+    
+    def specification_conditions(self):
+        return ''
 
-        """
-        deals with the tempearture specifications
-        """
-        return str(self.temperature) + self.LINE_BREAK
+class TwoEquationTurbulentBoundarySpecification(FluentFluidBoundaryCondition):
 
+    TET_DEFAULTS = {'turbulent_kinetic_energy':None,
+                    'turb_intensity':None,
+                    'turb_length_scale':None,
+                    'turb_viscosity_ratio':None,
+                    'turb_hydraulic_diam':None}
 
-    def __call__(self):
-        return self._format_boundary_condition()
+    def __init__(self,model: str,defaults = {}, **kwargs):
+
+        for key,value in self.TET_DEFAULTS.items():
+            defaults[key] = value
+        
+        super().__init__(model[0],
+                         'turbulence_specification',
+                          model,'viscous',defaults = defaults,
+                          temperature = None,**kwargs)
+
+    @udf_property('turbulent-kinetic-energy')
+    def turbulent_kinetic_energy(self) -> float:
+        return self.__turbulent_kinetic_energy
+    
+    @turbulent_kinetic_energy.setter
+    def turbulent_kinetic_energy(self,tke) -> None:
+        self.__turbulent_kinetic_energy = tke
+    
+    @abstractmethod
+    def format_conditions(self) -> str:
+        
+        if self.turb_intensity is not None and self.turb_length_scale is not None:
+            return 'no' + self.LINE_BREAK + 'yes' + self.LINE_BREAK
+        elif self.turb_intensity is not None and self.turb_viscosity_ratio is not None:
+            return 'no' + self.LINE_BREAK + 'no' + self.LINE_BREAK +\
+                   'yes' + self.LINE_BREAK
+        elif self.turb_intensity is not None and self.turb_hydraulic_diam is not None:
+            return 'no' + self.LINE_BREAK + 'no' + self.LINE_BREAK +\
+                    'no' + self.LINE_BREAK + 'yes' + self.LINE_BREAK 
+        else:
+            raise ValueError('Cannot format turbulent conditions based upon specified values')
+
+    def specification_conditions(self, prefix = '') -> str:
+        text = prefix + 'turb-intensity' + self.LINE_BREAK + \
+                   str(self.turb_intensity) + self.LINE_BREAK
+        
+        if self.turb_intensity is not None and self.turb_length_scale is not None:
+            return  text +\
+                    prefix + 'turb-length-scale' + self.LINE_BREAK +\
+                    str(self.turb_length_scale) + self.LINE_BREAK
+
+        elif self.turb_intensity is not None and self.turb_viscosity_ratio is not None:
+            return text +\
+                    prefix +  'turb-viscosity-ratio' + self.LINE_BREAK +\
+                    str(self.turb_viscosity_ratio) + self.LINE_BREAK
+                
+        elif self.turb_intensity is not None and self.turb_hydraulic_diam is not None:
+            return text +\
+                    prefix + 'turb-hydraulic-diam' + self.LINE_BREAK +\
+                    str(self.turb_hydraulic_diam) + self.LINE_BREAK
+        else:
+            return super().specification_conditions(prefix = prefix)
+    
+    def format_boundary_condition(self):
+
+        return self.format_conditions()+\
+               self.specification_conditions()
+
+class StandardKEpsilonSpecification(TwoEquationTurbulentBoundarySpecification):
+
+    SKE_DEFAULTS = {'turbulent_dissipation_rate':None}
+
+    def __init__(self,**kwargs):
+
+        super().__init__(['ke-standard'],defaults = self.SKE_DEFAULTS,**kwargs)
+        for key,value in self.SKE_DEFAULTS.items():
+            self.TET_DEFAULTS[key] = value
+        
+    @udf_property('turbulent-dissipation-rate')
+    def turbulent_dissipation_rate(self):
+        return self.__turbulent_dissipation_rate
+
+    @turbulent_dissipation_rate.setter
+    def turbulent_dissipation_rate(self,tdr):
+        self.__turbulent_dissipation_rate = tdr
+    
+    def format_conditions(self):
+        txt = 'ke-spec' + self.LINE_BREAK
+        if self.turbulent_dissipation_rate is not None and self.turbulent_kinetic_energy is not None:
+            return txt + 'yes' + self.LINE_BREAK
+        else:
+            return txt + super().format_conditions()
+    
+class StandardKOmegaSpecification(TwoEquationTurbulentBoundarySpecification):
+
+    def __init__(self,*args,**kwargs):
+
+        super().__init__(*args,**kwargs)
+        self.__omega = 1
+    
+    @property
+    def omega(self):
+        return self.__omega
+    
+    @omega.setter
+    def omega(self,o):
+        self.__omega = o      
+
+def _assign_turbulence_model(model:str,**kwargs) -> TwoEquationTurbulentBoundarySpecification:
+
+    allowable_kwargs = ['turbulent_kinetic_energy',
+                         'turb_intensity',
+                         'turb_length_scale',
+                         'turb_viscosity_ratio',
+                         'turb_hydraulic_diam',
+                         'turbulent_dissipation_rate']
+
+    _kwargs = {key: value for key,value in kwargs.items() if key in allowable_kwargs}
+
+    class_assignment = {'ke-standard':StandardKEpsilonSpecification,
+                        'ke-realizable':StandardKEpsilonSpecification,
+                        'ke-rng': StandardKEpsilonSpecification,
+                        'kw-standard':StandardKOmegaSpecification,
+                        'viscous':NoTurbulenceModel}
+
+    try:
+        return class_assignment[model](**_kwargs)
+
+    except KeyError:
+        raise ValueError('cannot identify the requested model: {}'.format(model))
 
 class MassFlowInlet(FluentFluidBoundaryCondition):
 
     """
     Mass flow rate boundary condition class. Allows for specification of either the mass flux
     or the mass flow rate. Specification of the turbulence model is required. Starred 
-    arguments are keyword arguments that act as inputs for the fluent journal. mass_flow_Rate 
+    arguments are keyword arguments that act as inputs for the fluent journal. mass_flow 
     and mass_flux default to None, and only one of these variables is permitted to not be None
     to avoid specification of both.
 
@@ -2088,175 +2243,103 @@ class MassFlowInlet(FluentFluidBoundaryCondition):
             the name of the mass flow inlet boundary condition
     models : list
             a list of the models used, does not require specification of temperature
-    solver : str
-            the solver, one of 'pressure-based' or 'density-based'
     turbulence_model: str
             the turbulence model used, see allowable turbulence models
-    temperature : float | *
-            the temperature of the inlet flow, only applicable if model "energy" is used,\
-            defaults to 300 K
-    mass_flow_rate : float | *
+    mass_flow : float | *
             the mass flow rate defaults to None
     mass_flux : float | *
             the mass flux defaults to None
-    init_pressure : float | *
+    initial_gauge_pressure : float | *
             the initial pressure defaults to 0
-    direction_vector : float | *
-            optional specfication of the direction vector, must be specified as a
-            1D array with three components x,y,z. Defaults to None, in which case
-            the mass flow is normal to the boundary.
-    turbulence_specification : float | *
-            how to specify the turbulent quantities on the boundary. default is either
-            "k and epsilon" or "k and omega" depending upon the viscous model. Can alternatively
-            be specified using "intensity and hydraulic diameter"
 
     Examples
     --------
     .. code-block:: python
-        
-        mfi = MassFlowInlet('test_mfi',['viscous'],'pressure-based','ke-standard')
-        mfi.mass_flux = 1.0
-        print(mfi())
 
-        > /define/boundary-conditions/mass-flow-inlet
-        > test_mfi
-        > yes
-        > no
-        > yes
-        > no
-        > mass flux: 1.0
-        > no
-        > pressure: 0
-        > no
-        > yes
-        > yes
-        > no
-        > 1
-        > no
-        > 1
+        mfi = MassFlowInlet('mass-flow-inlet',['viscous','energy'],'ke-standard')
+        mfi.mass_flux = 1.0
+        mfi.turbulence_model.turb_intensity = 1.0
+        mfi.turbulence_model.turb_length_scale = 5.0
+        print(mfi())
     """
 
-    DEFAULTS = {'mass_flow_rate': None,
+    DEFAULTS = {'mass_flow': None,
                 'mass_flux': None,
-                'init_pressure':0}
+                'initial_gauge_pressure':0}
                 
     def __init__(self,name: str,
                       models: list,
-                      solver: str,
                       turbulence_model: str,
                       **kwargs):
 
         fkwargs = {kw: val for kw,val in kwargs.items() if kw not in self.DEFAULTS}
-        super().__init__(name,'mass-flow-inlet',models,
-                         solver,turbulence_model,**fkwargs)
+        super().__init__(name,'mass-flow-inlet',models,turbulence_model,**fkwargs)
         self._assign_default_attributes(self.DEFAULTS,**kwargs)
 
-    @property
-    def mass_flow_rate(self):
-        return self.__mass_flow_rate
+
+    @udf_property('mass-flow')
+    def mass_flow(self):
+        return self.__mass_flow
     
-    @property
+    @udf_property('mass-flux')
     def mass_flux(self):
         return self.__mass_flux
 
-    @property
-    def init_pressure(self):
-        return self.__init_pressure
+    @udf_property('supersonic/initial-gauge-pressure')
+    def initial_gauge_pressure(self):
+        return self.__initial_gauge_pressure
     
-    @mass_flow_rate.setter
-    def mass_flow_rate(self,mfr):
-        self.__mass_flow_rate = mfr
+    @mass_flow.setter
+    def mass_flow(self,mfr):
+        self.__mass_flow = mfr
     
     @mass_flux.setter
     def mass_flux(self,mf):
         self.__mass_flux = mf
 
-    @init_pressure.setter
-    def init_pressure(self,ip):
-        self.__init_pressure = ip
-
-    @enable_udf('mass_flow_rate')
-    def format_mass_flow_rate(self):
-        return 'mass flow: {}'.format(self.mass_flow_rate) + self.LINE_BREAK
-
-    @enable_udf('mass_flux')
-    def format_mass_flux(self):
-        return 'mass flux: {}'.format(self.mass_flux) + self.LINE_BREAK
+    @initial_gauge_pressure.setter
+    def initial_gauge_pressure(self,ip):
+        self.__initial_gauge_pressure = ip
     
-    @enable_udf('pressure')
-    def format_pressure(self):
-        return 'pressure: {}'.format(self.init_pressure) + self.LINE_BREAK
-    
-    def __str__(self):
+    def format_flow_spec(self) -> str:
 
-        if self.mass_flow_rate is not None:
-            txt = self.format_mass_flow_rate()
-        elif self.mass_flux is not None:
-            txt = self.format_mass_flux()
-        else:
-            raise ValueError('cannot have both mass flux and mass flow rate as None for MassFlowINlet Boundary condition')
-        
-        txt += self.format_temperature()
-        txt += self.format_pressure()
-        
-        return txt
-        
-    def _mass_specification(self) -> str:
+        text = 'flow-spec' + self.LINE_BREAK
 
-        """ 
-        deal with the mass flow rate specifications. Formats either the mass flow rate
-        or the mass flux depending upon user specification. Allows specification through
-        UDF. 
-        """ 
-
-        if self.mass_flow_rate is None:
-            if self.mass_flux is None:
-                raise ValueError('cannot leave both mass flow rate and mass flux unspecified')
+        if self.mass_flux is not None and self.mass_flow is not None:
+            raise ValueError('both mass flow rate and mass flux cannot be specified')
+        
+        elif self.mass_flux is None and self.mass_flow is None:
+            raise ValueError('both mass flow rate and mass flux cannot be None')
+        
+        elif self.mass_flux is None and self.mass_flow is not None:
             
-            txt = 'no' + self.LINE_BREAK + 'yes' + self.LINE_BREAK
-            txt += self.format_mass_flux()
+            return text + 'yes' + self.LINE_BREAK
         
         else:
-            if self.mass_flux is not None:
-                raise ValueError('You cannot specify both the mass flux and the mass flow rate')
-            
-            txt = 'yes' + self.LINE_BREAK + 'no' + self.LINE_BREAK
-            txt += self.format_mass_flow_rate()
-        
-        return txt
+            return text + 'no' + self.LINE_BREAK + 'yes' + self.LINE_BREAK
 
-    def _configure_udf(self):
+    def format_conditions(self) -> str:
         """
-        configure mapping of udfs
+        Logic Notes
+        ----------
         """
-        mapping = {'temperature': 'temperature',
-                   'pressure': 'init_pressure',
-                   'mass_flux': 'mass_flux',
-                   'mass_flow_rate': 'mass_flow_rate'}
-        
-        return self._configure_udf_from_mapping(mapping)
+
+        txt = self.format_direction_spec()
+        txt += self.format_frame_of_reference()
+        txt += self.format_flow_spec()
+        txt += self.turbulence_model.format_conditions()
+
+        return txt
     
-    def _format_boundary_condition(self) -> str:
-
-        txt = self._configure_udf()
-        txt += self.enter_statement()
-        txt += self.reference_frame + self.LINE_BREAK     
-        txt += self._mass_specification()
-        if 'energy' in self.models:
-            txt += self.format_temperature()
-        txt += self.format_pressure()
-        txt += self.direction_spec()
-        txt += self.turbulence_model.turbulence_spec(self.turbulence_specification)
-        
-        return txt
-
 class PressureOutlet(FluentFluidBoundaryCondition):
     """
     A pressure outlet boundary condition class. Similar to other boundary conditions,
-    requires specification of a name, models simulated, the solver used and the turbulence model.
+    requires specification of a name, models simulated and the turbulence model.
     The pressure and temperature are the only values that impact input into the TUI and the
     pressure defaults to None. This will create an error if left unspecified, so this must be modified
     during instantation or directly on the instance.
+
+    Does not permit specification of targeted-mf-boundary at the moment
 
     Parameters
     ---------
@@ -2264,107 +2347,181 @@ class PressureOutlet(FluentFluidBoundaryCondition):
             the name of the mass flow inlet boundary condition
     models : list
             a list of the models used, does not require specification of temperature
-    solver : str
-            the solver, one of 'pressure-based' or 'density-based'
     turbulence_model: str
             the turbulence model used, see allowable turbulence models
-    temperature : float | *
-            the temperature of the inlet flow, only applicable if model "energy" is used,\
-            defaults to 300 K
     pressure : float | *
             the pressure at the outlet
-    direction_vector : float | *
-            optional specfication of the direction vector, must be specified as a
-            1D array with three components x,y,z. Defaults to None, in which case
-            the mass flow is normal to the boundary.
-    turbulence_specification : float | *
-            how to specify the turbulent quantities on the boundary. default is either
-            "k and epsilon" or "k and omega" depending upon the viscous model. Can alternatively
-            be specified using "intensity and hydraulic diameter"
+    p_profile_multiplier: float | *
+            multiplier for the pressure profile
+    avg_press_spec : float | *
+            whether to activate the average pressure specification or not
+    radial : float | *
+            activate radial pressure distribution
+
     Examples
     ---------
     .. code-block:: python 
 
-        po = PressureOutlet('test_pressure_outlet',['viscous','energy'],'pressure-based','kw-standard')
-        po.pressure = 10e5
+        po = PressureOutlet('pressure-outlet',['viscous','energy'],'ke-standard',pressure = 1e5)
+        po.turbulence_model.turbulent_kinetic_energy = 1.0
+        po.turbulence_model.turbulent_dissipation_rate = 5.0
         print(po())
-        > /define/boundary-conditions/pressure-outlet
-        > test_pressure_outlet
-        > yes
-        > no
-        > 1000000.0
-        > no
-        > 300
-        > no
-        > yes
-        > yes
-        > no
-        > 1
-        > no
-        > 1
-        > yes
-        > no
-        > no
-        > no
     """
 
-    DEFAULTS = {'pressure': None}
+    DEFAULTS = {'pressure': None,
+                'p_profile_multiplier': 1.0,
+                'avg_press_spec': False,
+                'radial':False}
 
     def __init__(self,name:str,
                       models: list,
-                      solver: str,
                       turbulence_model: str,
                       **kwargs):
 
-        super().__init__(name,'pressure-outlet',models,solver,
-                        turbulence_model,**kwargs)
+        super().__init__(name,'pressure-outlet',models,
+                         turbulence_model,defaults = self.DEFAULTS,**kwargs)
         
-    @property
+    @udf_property('gauge-pressure')
     def pressure(self):
         return self.__pressure
     
     @pressure.setter
     def pressure(self,p):
         self.__pressure = p
-    
-    @enable_udf('pressure')
-    def format_pressure(self):
-        """
-        specifications for the pressure
-        """ 
-        return str(self.pressure) + self.LINE_BREAK
 
-    def _configure_udf(self):
+    @boolean_property
+    def avg_press_spec(self) -> str:
+        return self.__avg_press_spec
+    
+    @avg_press_spec.setter
+    def avg_press_spec(self,aps: bool):
+        self.__avg_press_spec = aps
+    
+    @boolean_property
+    def radial(self) -> str:
+        return self.__radial
+    
+    @radial.setter
+    def radial(self,r: bool):
+        self.__radial = r
+    
+    def format_turbulent_quantities(self) -> str:
         """
-        configure mapping of udfs
+        have to modify to allow the additional of "backflow-" to the front
+        of the turbulent quantities
         """
-        mapping = {'temperature': 'temperature',
-                   'pressure': 'pressure'}
+        if self.turbulence_model.turbulent_kinetic_energy is not None:
+            return self.turbulence_model.specification_conditions(prefix = 'backflow-')
+        else:
+            return self.turbulence_model.specification_conditions()
+    
+    def format_p_profile_multiplier(self) -> str:
         
-        return self._configure_udf_from_mapping(mapping)
+        return 'p-profile-multiplier' + self.LINE_BREAK +\
+                str(self.p_profile_multiplier) + self.LINE_BREAK
     
-    def _format_boundary_condition(self) -> str:
+    def format_conditions(self) -> str:
 
-        txt = self.enter_statement()
-        txt += 'yes' + self.LINE_BREAK
-        txt += self.format_pressure()
-        if 'energy' in self.models:
-            txt += self.format_temperature()
-        txt += self.direction_spec()
-        txt += self.turbulence_model.turbulence_spec(self.turbulence_specification)
-        #no to a couple of end options that are pretty obscure:
-        #Radial Equiliibrium Pressure Distribution
-        #Average Pressure Specification
-        #Specify Targeted Mass Flow Rate
-        txt += 'yes' + self.LINE_BREAK + ''.join(['no' + self.LINE_BREAK for _ in range(3)])
+        txt = self.format_direction_spec()
+        txt += self.format_frame_of_reference()
+        txt += self.turbulence_model.format_conditions()
+        txt += self.radial + self.avg_press_spec
+        txt += self.format_p_profile_multiplier()
 
         return txt
-    
-    def __str__(self):
 
-        txt = 'pressure: {}'.format(self.pressure) + self.LINE_BREAK
-        txt += 'temperature: {}'.format(self.temperature) + self.LINE_BREAK
+class VelocityInlet(FluentFluidBoundaryCondition):
+    """
+    Representation of the Velocity Inlet Boundary condition in fluent. Does not support
+    specification by components, only magnitude and direction
+
+    Parameters
+    ----------
+    name : str
+            the name of the mass flow inlet boundary condition
+    models : list
+            a list of the models used, does not require specification of temperature
+    turbulence_model: str
+            the turbulence model used, see allowable turbulence models
+    vmag : float | *
+            the magnitude of the velocity
+    p_sup : float | *
+            the initial pressure of the inlet
+    velocity_spec : str | *
+            for now only supports "magnitude, normal to boundary"
+
+    Examples
+    --------
+    
+    .. code-block:: python
+
+        vi = VelocityInlet('test_vi',['viscous'],'ke-standard')
+        print(vi())
+
+    """
+
+
+    DEFAULTS = {'vmag': 0,
+                'p_sup': 0,
+                'velocity_spec':'magnitude, normal to boundary'}
+
+    VELOCITY_SPEC = ['magnitude and direction',
+                     'magnitude, normal to boundary']
+
+
+    def __init__(self,name: str,
+                      models: list,
+                      turbulence_model: str,
+                      **kwargs):
+
         
+        super().__init__(name,'velocity-inlet',models,turbulence_model,
+                         defaults = self.DEFAULTS,**kwargs)
+    
+    @udf_property('vmag')
+    def vmag(self):
+        return self.__vmag
+    
+    @vmag.setter
+    def vmag(self,vm: float):
+        self.__vmag = vm
+    
+    @udf_property('p-sup')
+    def p_sup(self):
+        return self.__p_sup
+
+    @p_sup.setter
+    def p_sup(self,p: float):
+        self.__p_sup = p
+    
+    def format_velocity_spec(self):
+
+        if self.velocity_spec not in self.VELOCITY_SPEC:
+            text_list =[txt + '\n' for txt in self.VELOCITY_SPEC]
+            raise ValueError('velocity must be specified by one \
+                              of: {} \n not {}'.format(text_list,self.velocity_spec))
+        
+        if self.direction_vector is not None:
+            self.velocity_spec = 'magnitude and direction'
+
+        text = 'velocity-spec' + self.LINE_BREAK
+        if self.velocity_spec == 'magnitude, normal to boundary':
+            return text + 'no' +self.LINE_BREAK + 'no' +self.LINE_BREAK +\
+                   'yes' +self.LINE_BREAK
+        else:
+            text += 'yes' + self.LINE_BREAK
+            text += self.format_direction_spec(direction_str= ['direction-0',
+                                                               'direction-1',
+                                                               'direction-2'],
+                                                direction_spec = None)
+            return text
+
+    def format_conditions(self) -> str:
+
+        txt = self.format_velocity_spec()
+        txt += self.format_frame_of_reference()
+        txt += self.turbulence_model.format_conditions()
+
         return txt
 
 class SurfaceIntegrals(TUIBase):
@@ -2538,7 +2695,7 @@ class SurfaceIntegrals(TUIBase):
          
         return os.path.join(path,write_file)
     
-class FluentRun(SerializableClass,TUIBase):
+class FluentJournal(SerializableClass,TUIBase):
     
     """
     class for producing a fluent batch job file using provided information. This essentially

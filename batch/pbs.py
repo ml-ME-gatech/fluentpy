@@ -10,29 +10,9 @@ from ..disk import SerializableClass
 """
 Author: Michael Lanahan
 Date Created: 08.01.2021
-Last Edit: 09.08.2021
+Last Edit: 01.03.2021
 
 scripts for working with fluent using the PACE computational cluster at GT
-
-https://docs.pace.gatech.edu/software/PBS_script_guide/
-
-#Example PBS script
-
-#PBS -N <job-name>                  -> name that shows up on the queue
-#PBS -A [Account]                   -> Account - the account that is required to run the jobs - who to charge
-#PBS -l nodes=1:ppn=8: cores24      -> resource-list; number of nodes and processers per node, specify number of cores
-#PBS -l pmem=8gb                    -> memory allocated PER CORE
-#PBS -l mem = 2gb                   -> total memory allocated over all nodes
-#PBS -l walltime=2:00:00            -> projected walltime - hard stop here
-#PBS -q inferno                     -> which que to submit too
-#PBS -j oe                          -> combines output and error into one file
-#PBS -o fluent.out                  -> names output files
-#PBS -m <a,b,e>                     -> will send job satus
-                                    -> a - if job aborted; b- when job begins; e - when job ends
-
-cd $PBS_O_WORKDIR                               -> change to working directroy - where script is submited from
-module load ansys/<version.number>              -> load ansys, with version number in <int>.<int> i.e. 19.12
-fluent -t8 -g <inputfile> outputfile            -> run fluent command with input file and output file
 """
 
 LINE_BREAK = '\n'
@@ -52,6 +32,25 @@ class PBS:
 
     note that the key word argument "memory_request" has options 'p' and 't'
     where 'p' is per core and 't' is total memory
+
+    Example PBS script
+    https://docs.pace.gatech.edu/software/PBS_script_guide/
+    
+    #PBS -N <job-name>                  -> name that shows up on the queue
+    #PBS -A [Account]                   -> Account - the account that is required to run the jobs - who to charge
+    #PBS -l nodes=1:ppn=8: cores24      -> resource-list; number of nodes and processers per node, specify number of cores
+    #PBS -l pmem=8gb                    -> memory allocated PER CORE
+    #PBS -l mem = 2gb                   -> total memory allocated over all nodes
+    #PBS -l walltime=2:00:00            -> projected walltime - hard stop here
+    #PBS -q inferno                     -> which que to submit too
+    #PBS -j oe                          -> combines output and error into one file
+    #PBS -o fluent.out                  -> names output files
+    #PBS -m <a,b,e>                     -> will send job satus
+                                        -> a - if job aborted; b- when job begins; e - when job ends
+
+    cd $PBS_O_WORKDIR                               -> change to working directroy - where script is submited from
+    module load ansys/<version.number>              -> load ansys, with version number in <int>.<int> i.e. 19.12
+    fluent -t8 -g <inputfile> outputfile            -> run fluent command with input file and output file
     """
     
     line_leader = '#PBS '
@@ -210,7 +209,6 @@ class DefaultPBS(PBS):
         super().__init__(name,account,'inferno',output_file,walltime,
                         memory,nodes,processors,email = email,
                         email_permissions= email_permissions,memory_request = memory_request)
-
 
 class FluentPBS(SerializableClass):
 

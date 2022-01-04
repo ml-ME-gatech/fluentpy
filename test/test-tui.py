@@ -1,6 +1,6 @@
 from fluentpy.tui import WallBoundaryCondition,UDF,MassFlowInlet,PressureOutlet,Solver,Solver_Iterator,\
-                                FluentRun,ConvergenceConditions,Discritization,NISTRealGas,ScalarRelaxation,\
-                                EquationRelaxation
+                                FluentJournal,ConvergenceConditions,Discritization,NISTRealGas,ScalarRelaxation,\
+                                EquationRelaxation, VelocityInlet
 from fluentpy.util import _surface_construction_arg_validator
 
 from unittest import TestCase,main
@@ -42,6 +42,7 @@ Remaining Basic Unit Tests to Write
 - SurfaceIntegrals
 """
 
+"""
 class TestUDF(TestCase):
 
     check_wall_udf  = 'test-files\\check\\check_wall_udf.txt'
@@ -221,6 +222,16 @@ class TestSurfaceIntegrals(TestCase):
         self.assertListEqual(output[0],[['12'],['10','11']])
         self.assertListEqual(output[1],['temperature','temperature'])
         self.assertListEqual(output[2],['area-weighted-avg','area-weighted-avg'])
+"""
+
+class TestVelocityInlet(TestCase):
+
+    def test_normal_initalization(self):
+
+        vi = VelocityInlet('velocity_inlet',['viscous'],'pressure-based','ke-standard',
+                            precision_specification = '2ddp')
+        print(vi())
     
+
 if __name__ == '__main__':
     main()

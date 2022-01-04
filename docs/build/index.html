@@ -845,8 +845,8 @@ This example would invoke fluent provided that the fluent executable is on the s
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="fluentpy.tui.FluentRun">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">FluentRun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">case_file:</span> <span class="pre">str</span></em>, <em class="sig-param"><span class="pre">output_name='result'</span></em>, <em class="sig-param"><span class="pre">transcript_file='solution.trn'</span></em>, <em class="sig-param"><span class="pre">reader=&lt;class</span> <span class="pre">'fluentpy.tui.CaseReader'&gt;</span></em>, <em class="sig-param"><span class="pre">data_writer=&lt;class</span> <span class="pre">'fluentpy.tui.DataWriter'&gt;</span></em>, <em class="sig-param"><span class="pre">case_writer=&lt;class</span> <span class="pre">'fluentpy.tui.CaseWriter'&gt;</span></em>, <em class="sig-param"><span class="pre">solver=&lt;fluentpy.tui.Solver</span> <span class="pre">object&gt;</span></em>, <em class="sig-param"><span class="pre">post=[]</span></em>, <em class="sig-param"><span class="pre">convergence_condition=None</span></em>, <em class="sig-param"><span class="pre">model_modifications=[]</span></em>, <em class="sig-param"><span class="pre">boundary_conditions=[]</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.FluentRun" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="fluentpy.tui.FluentJournal">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">FluentJournal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">case_file:</span> <span class="pre">str</span></em>, <em class="sig-param"><span class="pre">output_name='result'</span></em>, <em class="sig-param"><span class="pre">transcript_file='solution.trn'</span></em>, <em class="sig-param"><span class="pre">reader=&lt;class</span> <span class="pre">'fluentpy.tui.CaseReader'&gt;</span></em>, <em class="sig-param"><span class="pre">data_writer=&lt;class</span> <span class="pre">'fluentpy.tui.DataWriter'&gt;</span></em>, <em class="sig-param"><span class="pre">case_writer=&lt;class</span> <span class="pre">'fluentpy.tui.CaseWriter'&gt;</span></em>, <em class="sig-param"><span class="pre">solver=&lt;fluentpy.tui.Solver</span> <span class="pre">object&gt;</span></em>, <em class="sig-param"><span class="pre">post=[]</span></em>, <em class="sig-param"><span class="pre">convergence_condition=None</span></em>, <em class="sig-param"><span class="pre">model_modifications=[]</span></em>, <em class="sig-param"><span class="pre">boundary_conditions=[]</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.FluentJournal" title="Permalink to this definition">¶</a></dt>
 <dd><p>class for producing a fluent batch job file using provided information. This essentially
 knits all essential information required to run a fluent case into a single journal file.
 The intent is to make this as easy to use as possible, so the only required argument
@@ -890,10 +890,10 @@ the initialization for the solver</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="fluentpy.tui.MassFlowInlet">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">MassFlowInlet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">models</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">turbulence_model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.MassFlowInlet" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">MassFlowInlet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">models</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">turbulence_model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.MassFlowInlet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Mass flow rate boundary condition class. Allows for specification of either the mass flux
 or the mass flow rate. Specification of the turbulence model is required. Starred
-arguments are keyword arguments that act as inputs for the fluent journal. mass_flow_Rate
+arguments are keyword arguments that act as inputs for the fluent journal. mass_flow
 and mass_flux default to None, and only one of these variables is permitted to not be None
 to avoid specification of both.</p>
 <dl class="field-list simple">
@@ -901,44 +901,26 @@ to avoid specification of both.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> (<em>str</em>) – the name of the mass flow inlet boundary condition</p></li>
 <li><p><strong>models</strong> (<em>list</em>) – a list of the models used, does not require specification of temperature</p></li>
-<li><p><strong>solver</strong> (<em>str</em>) – the solver, one of ‘pressure-based’ or ‘density-based’</p></li>
 <li><p><strong>turbulence_model</strong> (<em>str</em>) – the turbulence model used, see allowable turbulence models</p></li>
-<li><p><strong>temperature</strong> (<em>float | *</em>) – the temperature of the inlet flow, only applicable if model “energy” is used,            defaults to 300 K</p></li>
-<li><p><strong>mass_flow_rate</strong> (<em>float | *</em>) – the mass flow rate defaults to None</p></li>
+<li><p><strong>mass_flow</strong> (<em>float | *</em>) – the mass flow rate defaults to None</p></li>
 <li><p><strong>mass_flux</strong> (<em>float | *</em>) – the mass flux defaults to None</p></li>
-<li><p><strong>init_pressure</strong> (<em>float | *</em>) – the initial pressure defaults to 0</p></li>
-<li><p><strong>direction_vector</strong> (<em>float | *</em>) – optional specfication of the direction vector, must be specified as a
-1D array with three components x,y,z. Defaults to None, in which case
-the mass flow is normal to the boundary.</p></li>
-<li><p><strong>turbulence_specification</strong> (<em>float | *</em>) – how to specify the turbulent quantities on the boundary. default is either
-“k and epsilon” or “k and omega” depending upon the viscous model. Can alternatively
-be specified using “intensity and hydraulic diameter”</p></li>
+<li><p><strong>initial_gauge_pressure</strong> (<em>float | *</em>) – the initial pressure defaults to 0</p></li>
 </ul>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mfi</span> <span class="o">=</span> <span class="n">MassFlowInlet</span><span class="p">(</span><span class="s1">&#39;test_mfi&#39;</span><span class="p">,[</span><span class="s1">&#39;viscous&#39;</span><span class="p">],</span><span class="s1">&#39;pressure-based&#39;</span><span class="p">,</span><span class="s1">&#39;ke-standard&#39;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mfi</span> <span class="o">=</span> <span class="n">MassFlowInlet</span><span class="p">(</span><span class="s1">&#39;mass-flow-inlet&#39;</span><span class="p">,[</span><span class="s1">&#39;viscous&#39;</span><span class="p">,</span><span class="s1">&#39;energy&#39;</span><span class="p">],</span><span class="s1">&#39;ke-standard&#39;</span><span class="p">)</span>
 <span class="n">mfi</span><span class="o">.</span><span class="n">mass_flux</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">mfi</span><span class="o">.</span><span class="n">turbulence_model</span><span class="o">.</span><span class="n">turb_intensity</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">mfi</span><span class="o">.</span><span class="n">turbulence_model</span><span class="o">.</span><span class="n">turb_length_scale</span> <span class="o">=</span> <span class="mf">5.0</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">mfi</span><span class="p">())</span>
-
-<span class="o">&gt;</span> <span class="o">/</span><span class="n">define</span><span class="o">/</span><span class="n">boundary</span><span class="o">-</span><span class="n">conditions</span><span class="o">/</span><span class="n">mass</span><span class="o">-</span><span class="n">flow</span><span class="o">-</span><span class="n">inlet</span>
-<span class="o">&gt;</span> <span class="n">test_mfi</span>
-<span class="o">&gt;</span> <span class="n">yes</span>
-<span class="o">&gt;</span> <span class="n">no</span>
-<span class="o">&gt;</span> <span class="n">yes</span>
-<span class="o">&gt;</span> <span class="n">no</span>
-<span class="o">&gt;</span> <span class="n">mass</span> <span class="n">flux</span><span class="p">:</span> <span class="mf">1.0</span>
-<span class="o">&gt;</span> <span class="n">no</span>
-<span class="o">&gt;</span> <span class="n">pressure</span><span class="p">:</span> <span class="mi">0</span>
-<span class="o">&gt;</span> <span class="n">no</span>
-<span class="o">&gt;</span> <span class="n">yes</span>
-<span class="o">&gt;</span> <span class="n">yes</span>
-<span class="o">&gt;</span> <span class="n">no</span>
-<span class="o">&gt;</span> <span class="mi">1</span>
-<span class="o">&gt;</span> <span class="n">no</span>
-<span class="o">&gt;</span> <span class="mi">1</span>
 </pre></div>
 </div>
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.tui.MassFlowInlet.format_conditions">
+<span class="sig-name descname"><span class="pre">format_conditions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="headerlink" href="#fluentpy.tui.MassFlowInlet.format_conditions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -970,54 +952,49 @@ fluent database so that this doesn’t cause errors at runtime</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="fluentpy.tui.PressureOutlet">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">PressureOutlet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">models</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">turbulence_model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.PressureOutlet" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">PressureOutlet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">models</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">turbulence_model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.PressureOutlet" title="Permalink to this definition">¶</a></dt>
 <dd><p>A pressure outlet boundary condition class. Similar to other boundary conditions,
-requires specification of a name, models simulated, the solver used and the turbulence model.
+requires specification of a name, models simulated and the turbulence model.
 The pressure and temperature are the only values that impact input into the TUI and the
 pressure defaults to None. This will create an error if left unspecified, so this must be modified
 during instantation or directly on the instance.</p>
+<p>Does not permit specification of targeted-mf-boundary at the moment</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> (<em>str</em>) – the name of the mass flow inlet boundary condition</p></li>
 <li><p><strong>models</strong> (<em>list</em>) – a list of the models used, does not require specification of temperature</p></li>
-<li><p><strong>solver</strong> (<em>str</em>) – the solver, one of ‘pressure-based’ or ‘density-based’</p></li>
 <li><p><strong>turbulence_model</strong> (<em>str</em>) – the turbulence model used, see allowable turbulence models</p></li>
-<li><p><strong>temperature</strong> (<em>float | *</em>) – the temperature of the inlet flow, only applicable if model “energy” is used,            defaults to 300 K</p></li>
 <li><p><strong>pressure</strong> (<em>float | *</em>) – the pressure at the outlet</p></li>
-<li><p><strong>direction_vector</strong> (<em>float | *</em>) – optional specfication of the direction vector, must be specified as a
-1D array with three components x,y,z. Defaults to None, in which case
-the mass flow is normal to the boundary.</p></li>
-<li><p><strong>turbulence_specification</strong> (<em>float | *</em>) – how to specify the turbulent quantities on the boundary. default is either
-“k and epsilon” or “k and omega” depending upon the viscous model. Can alternatively
-be specified using “intensity and hydraulic diameter”</p></li>
+<li><p><strong>p_profile_multiplier</strong> (<em>float | *</em>) – multiplier for the pressure profile</p></li>
+<li><p><strong>avg_press_spec</strong> (<em>float | *</em>) – whether to activate the average pressure specification or not</p></li>
+<li><p><strong>radial</strong> (<em>float | *</em>) – activate radial pressure distribution</p></li>
 </ul>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">po</span> <span class="o">=</span> <span class="n">PressureOutlet</span><span class="p">(</span><span class="s1">&#39;test_pressure_outlet&#39;</span><span class="p">,[</span><span class="s1">&#39;viscous&#39;</span><span class="p">,</span><span class="s1">&#39;energy&#39;</span><span class="p">],</span><span class="s1">&#39;pressure-based&#39;</span><span class="p">,</span><span class="s1">&#39;kw-standard&#39;</span><span class="p">)</span>
-<span class="n">po</span><span class="o">.</span><span class="n">pressure</span> <span class="o">=</span> <span class="mf">10e5</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">po</span> <span class="o">=</span> <span class="n">PressureOutlet</span><span class="p">(</span><span class="s1">&#39;pressure-outlet&#39;</span><span class="p">,[</span><span class="s1">&#39;viscous&#39;</span><span class="p">,</span><span class="s1">&#39;energy&#39;</span><span class="p">],</span><span class="s1">&#39;ke-standard&#39;</span><span class="p">,</span><span class="n">pressure</span> <span class="o">=</span> <span class="mf">1e5</span><span class="p">)</span>
+<span class="n">po</span><span class="o">.</span><span class="n">turbulence_model</span><span class="o">.</span><span class="n">turbulent_kinetic_energy</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">po</span><span class="o">.</span><span class="n">turbulence_model</span><span class="o">.</span><span class="n">turbulent_dissipation_rate</span> <span class="o">=</span> <span class="mf">5.0</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">po</span><span class="p">())</span>
-<span class="o">&gt;</span> <span class="o">/</span><span class="n">define</span><span class="o">/</span><span class="n">boundary</span><span class="o">-</span><span class="n">conditions</span><span class="o">/</span><span class="n">pressure</span><span class="o">-</span><span class="n">outlet</span>
-<span class="o">&gt;</span> <span class="n">test_pressure_outlet</span>
-<span class="o">&gt;</span> <span class="n">yes</span>
-<span class="o">&gt;</span> <span class="n">no</span>
-<span class="o">&gt;</span> <span class="mf">1000000.0</span>
-<span class="o">&gt;</span> <span class="n">no</span>
-<span class="o">&gt;</span> <span class="mi">300</span>
-<span class="o">&gt;</span> <span class="n">no</span>
-<span class="o">&gt;</span> <span class="n">yes</span>
-<span class="o">&gt;</span> <span class="n">yes</span>
-<span class="o">&gt;</span> <span class="n">no</span>
-<span class="o">&gt;</span> <span class="mi">1</span>
-<span class="o">&gt;</span> <span class="n">no</span>
-<span class="o">&gt;</span> <span class="mi">1</span>
-<span class="o">&gt;</span> <span class="n">yes</span>
-<span class="o">&gt;</span> <span class="n">no</span>
-<span class="o">&gt;</span> <span class="n">no</span>
-<span class="o">&gt;</span> <span class="n">no</span>
 </pre></div>
 </div>
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.tui.PressureOutlet.format_conditions">
+<span class="sig-name descname"><span class="pre">format_conditions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="headerlink" href="#fluentpy.tui.PressureOutlet.format_conditions" title="Permalink to this definition">¶</a></dt>
+<dd><p>meant to deal with all formatting of conditions
+that are not udf enabled, especially those that
+determine which values must be specified. This is unique
+to each boundary condition.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.tui.PressureOutlet.format_turbulent_quantities">
+<span class="sig-name descname"><span class="pre">format_turbulent_quantities</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="headerlink" href="#fluentpy.tui.PressureOutlet.format_turbulent_quantities" title="Permalink to this definition">¶</a></dt>
+<dd><p>have to modify to allow the additional of “backflow-” to the front
+of the turbulent quantities</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -1116,12 +1093,21 @@ and a Solver_Iterator</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="fluentpy.tui.StandardKEpsilonSpecification">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">StandardKEpsilonSpecification</span></span><a class="headerlink" href="#fluentpy.tui.StandardKEpsilonSpecification" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">StandardKEpsilonSpecification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.StandardKEpsilonSpecification" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.tui.StandardKEpsilonSpecification.format_conditions">
+<span class="sig-name descname"><span class="pre">format_conditions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.StandardKEpsilonSpecification.format_conditions" title="Permalink to this definition">¶</a></dt>
+<dd><p>meant to deal with all formatting of conditions
+that are not udf enabled, especially those that
+determine which values must be specified. This is unique
+to each boundary condition.</p>
+</dd></dl>
+
+</dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="fluentpy.tui.StandardKOmegaSpecification">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">StandardKOmegaSpecification</span></span><a class="headerlink" href="#fluentpy.tui.StandardKOmegaSpecification" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">StandardKOmegaSpecification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.StandardKOmegaSpecification" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py class">
@@ -1205,6 +1191,39 @@ heat_flux, ect.. the UDF is intended to be applied to)</p></li>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.tui.VelocityInlet">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">VelocityInlet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">models</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">turbulence_model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.VelocityInlet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Representation of the Velocity Inlet Boundary condition in fluent. Does not support
+specification by components, only magnitude and direction</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – the name of the mass flow inlet boundary condition</p></li>
+<li><p><strong>models</strong> (<em>list</em>) – a list of the models used, does not require specification of temperature</p></li>
+<li><p><strong>turbulence_model</strong> (<em>str</em>) – the turbulence model used, see allowable turbulence models</p></li>
+<li><p><strong>vmag</strong> (<em>float | *</em>) – the magnitude of the velocity</p></li>
+<li><p><strong>p_sup</strong> (<em>float | *</em>) – the initial pressure of the inlet</p></li>
+<li><p><strong>velocity_spec</strong> (<em>str | *</em>) – for now only supports “magnitude, normal to boundary”</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">vi</span> <span class="o">=</span> <span class="n">VelocityInlet</span><span class="p">(</span><span class="s1">&#39;test_vi&#39;</span><span class="p">,[</span><span class="s1">&#39;viscous&#39;</span><span class="p">],</span><span class="s1">&#39;ke-standard&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">vi</span><span class="p">())</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.tui.VelocityInlet.format_conditions">
+<span class="sig-name descname"><span class="pre">format_conditions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="headerlink" href="#fluentpy.tui.VelocityInlet.format_conditions" title="Permalink to this definition">¶</a></dt>
+<dd><p>meant to deal with all formatting of conditions
+that are not udf enabled, especially those that
+determine which values must be specified. This is unique
+to each boundary condition.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="fluentpy.tui.ViscousModelModification">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">ViscousModelModification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.ViscousModelModification" title="Permalink to this definition">¶</a></dt>
 <dd><p>class implemented in order to facilitate changing of turbulence models
@@ -1240,36 +1259,52 @@ this list may be appended to in the future</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="fluentpy.tui.WallBoundaryCondition">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">WallBoundaryCondition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">models</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shell_conduction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.WallBoundaryCondition" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.tui.</span></span><span class="sig-name descname"><span class="pre">WallBoundaryCondition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">models</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">defaults</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.WallBoundaryCondition" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wall boundary condition representation. Properties with a star may be set after instantation.
 UDFS may be applied to a particular property of the wall following the example below.</p>
+<p>Does not support:</p>
+<ol class="arabic simple">
+<li><p>via-mapped-interface</p></li>
+<li><p>via-system-coupling</p></li>
+</ol>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> (<em>str</em>) – the name of the wall boundary condition as a string</p></li>
 <li><p><strong>models</strong> (<em>list</em>) – the models used</p></li>
-<li><p><strong>solver</strong> (<em>str</em>) – the solver used as a string</p></li>
-<li><p><strong>shell_conduction</strong> (<em>bool</em>) – use shell conduction or not - default False</p></li>
-<li><p><strong>wall_thickness</strong> (<em>float | *</em>) – thickness of the wall, default 0</p></li>
-<li><p><strong>generation</strong> (<em>float | *</em>) – generation in the wall, default 0</p></li>
-<li><p><strong>heat_flux</strong> (<em>float | *</em>) – heat flux at the wall, default None</p></li>
-<li><p><strong>convection_coefficient</strong> (<em>float | *</em>) – convection coefficient at the wall, default None</p></li>
-<li><p><strong>free_stream_temperature</strong> (<em>float | *</em>) – free stream temperature, default None</p></li>
-<li><p><strong>caf</strong> (<em>float | *</em>) – convective augmentation factor, default 1</p></li>
+<li><p><strong>q_dot</strong> (<em>float | *</em>) – heat generation</p></li>
+<li><p><strong>heat_flux</strong> (<em>float | *</em>) – heat flux</p></li>
+<li><p><strong>convective_heat_transfer_coefficient</strong> (<em>float | *</em>) – convective heat transfer coefficient</p></li>
+<li><p><strong>wall_temperature</strong> (<em>float | *</em>) – temperature of the wall</p></li>
+<li><p><strong>tinf</strong> (<em>float | *</em>) – temperature used for the convective heat transfer coefficient</p></li>
+<li><p><strong>caf</strong> (<em>float | *</em>) – convective augmentation factor</p></li>
+<li><p><strong>trad</strong> (<em>float | *</em>) – the temperature used for calculating radiative heat transfer</p></li>
+<li><p><strong>ex_emiss</strong> (<em>float | *</em>) – emissivity of the surface</p></li>
+<li><p><strong>thermal_network</strong> (<em>bool | *</em>) – use thermal network or not</p></li>
+<li><p><strong>planar_conduction</strong> (<em>float | *</em>) – use planar conduction or not</p></li>
 </ul>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">wall</span> <span class="o">=</span> <span class="n">WallBoundaryCondition</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">,[</span><span class="s1">&#39;energy&#39;</span><span class="p">,</span><span class="s1">&#39;viscous&#39;</span><span class="p">],</span><span class="s1">&#39;pressure-based&#39;</span><span class="p">)</span>
-<span class="n">wall</span><span class="o">.</span><span class="n">free_stream_temperature</span> <span class="o">=</span> <span class="mf">400.0</span>
-<span class="n">wall</span><span class="o">.</span><span class="n">convection_coefficient</span> <span class="o">=</span> <span class="mf">10e3</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">wall</span><span class="p">())</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">wall</span> <span class="o">=</span> <span class="n">WallBoundaryCondition</span><span class="p">(</span><span class="s1">&#39;heated-surf&#39;</span><span class="p">,[</span><span class="s1">&#39;viscous&#39;</span><span class="p">,</span><span class="s1">&#39;energy&#39;</span><span class="p">])</span>
+<span class="n">wall</span><span class="o">.</span><span class="n">heat_flux</span> <span class="o">=</span> <span class="mf">10e3</span>
+<span class="n">wall</span><span class="o">.</span><span class="n">trad</span> <span class="o">=</span> <span class="mf">1e4</span>
+<span class="n">wall</span><span class="o">.</span><span class="n">ex_emiss</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">wall</span><span class="o">.</span><span class="n">convective_heat_transfer_coefficient</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">wall</span><span class="o">.</span><span class="n">tinf</span> <span class="o">=</span> <span class="mi">500</span>
 
-<span class="n">udf</span> <span class="o">=</span> <span class="n">UDF</span><span class="p">(</span><span class="s1">&#39;test.c&#39;</span><span class="p">,</span><span class="s1">&#39;udf&#39;</span><span class="p">,</span><span class="s1">&#39;HTC::UDF&#39;</span><span class="p">,</span><span class="s1">&#39;convection_coefficient&#39;</span><span class="p">)</span>
-<span class="n">wall</span><span class="o">.</span><span class="n">add_udf</span><span class="p">(</span><span class="n">udf</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">wall</span><span class="p">())</span>
 </pre></div>
 </div>
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.tui.WallBoundaryCondition.format_conditions">
+<span class="sig-name descname"><span class="pre">format_conditions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.tui.WallBoundaryCondition.format_conditions" title="Permalink to this definition">¶</a></dt>
+<dd><p>meant to deal with all formatting of conditions
+that are not udf enabled, especially those that
+determine which values must be specified. This is unique
+to each boundary condition.</p>
+</dd></dl>
+
 </dd></dl>
 
 <div class="toctree-wrapper compound">
@@ -1279,18 +1314,18 @@ UDFS may be applied to a particular property of the wall following the example b
 <span id="batch"></span><h1>batch<a class="headerlink" href="#module-fluentpy.batch.submit" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="fluentpy.batch.submit.FluentBatchSubmission">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.batch.submit.</span></span><span class="sig-name descname"><span class="pre">FluentBatchSubmission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fluent_submission_list</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seperator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'-'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.submit.FluentBatchSubmission" title="Permalink to this definition">¶</a></dt>
-<dd><p>an interface for the batched submission of fluent jobs</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="fluentpy.batch.submit.FluentBatchSubmission.format_submit">
-<span class="sig-name descname"><span class="pre">format_submit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pace_pbs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">purge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.submit.FluentBatchSubmission.format_submit" title="Permalink to this definition">¶</a></dt>
-<dd><p>final function here for formatting the submission
-makes appropriate directories if they do not exist
-and optionally purges data using a safety delete that does not allow
-recursion past a level of 2 on file folders, and will not delete .cas
-or .dat files</p>
-</dd></dl>
-
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.batch.submit.</span></span><span class="sig-name descname"><span class="pre">FluentBatchSubmission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fluent_submission_list</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seperator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'-'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.submit.FluentBatchSubmission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for representing a batch submission of Fluent computations</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fluent_sumission_list</strong> (<em>list</em>) – a list of objects with FluentSubmission as their base class.</p></li>
+<li><p><strong>index</strong> (<em>Iterable</em>) – an iterable (list, np.ndarray, pandas Series) with the same length as the            fluent_submission_list</p></li>
+<li><p><strong>prefix</strong> (<em>str</em>) – gives the ability to add a prefix to the names in the fluent_submission_list</p></li>
+<li><p><strong>seperator</strong> (<em>str</em>) – gives the ability to seperate the prefix and the index of the names in the            fluent_submission_list</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="fluentpy.batch.submit.FluentBatchSubmission.from_batch_cache">
 <em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_batch_cache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch_folder</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.submit.FluentBatchSubmission.from_batch_cache" title="Permalink to this definition">¶</a></dt>
@@ -1299,7 +1334,7 @@ or .dat files</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="fluentpy.batch.submit.FluentBatchSubmission.from_frame">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">case_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">turbulence_model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pandas.core.frame.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pbs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#fluentpy.batch.pbs.FluentPBS" title="fluentpy.batch.pbs.FluentPBS"><span class="pre">fluentpy.batch.pbs.FluentPBS</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seperator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'-'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">frargs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">frkwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.submit.FluentBatchSubmission.from_frame" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">case_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">turbulence_model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pandas.core.frame.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submission_args</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seperator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'-'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">frargs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">frkwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.submit.FluentBatchSubmission.from_frame" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class method for creating a fluent batch submission using a data frame
 refer to the util.py document for details on the specification of the input dataframe</p>
 <p>the SAME pbs script is used for each of the runs - if there needs to be a different pbs script for
@@ -1310,55 +1345,97 @@ batch submission differently or submitting seperate jobs</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="fluentpy.batch.submit.FluentBatchSubmission.submission_list_from_boundary_df">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">submission_list_from_boundary_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">case_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bdf</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pandas.core.frame.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pbs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#fluentpy.batch.pbs.FluentPBS" title="fluentpy.batch.pbs.FluentPBS"><span class="pre">fluentpy.batch.pbs.FluentPBS</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">seperator</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">frargs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">frkwargs</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">list</span><a class="headerlink" href="#fluentpy.batch.submit.FluentBatchSubmission.submission_list_from_boundary_df" title="Permalink to this definition">¶</a></dt>
-<dd><p>make a submission object from a boundary DataFrame i.e. a DataFrame of
-FluentBoundaryConditions.</p>
+<dt class="sig sig-object py" id="fluentpy.batch.submit.FluentBatchSubmission.make_batch_submission">
+<span class="sig-name descname"><span class="pre">make_batch_submission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">purge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.submit.FluentBatchSubmission.make_batch_submission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formatting the submission
+makes appropriate directories if they do not exist
+and optionally purges data using a safety delete that does not allow
+recursion past a level of 2 on file folders, and will not delete .cas
+or .dat files</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> (<em>str</em>) – the parent or root directory of the submission to make</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – if True will print information during runtime</p></li>
+<li><p><strong>purge</strong> (<em>bool</em>) – if True will purge the parent folder of any files or folders prior to
+populating with current batch information</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="fluentpy.batch.submit.FluentSubmission">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.batch.submit.</span></span><span class="sig-name descname"><span class="pre">FluentSubmission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fluent_run</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#fluentpy.tui.FluentRun" title="fluentpy.tui.FluentRun"><span class="pre">fluentpy.tui.FluentRun</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fluent_pbs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#fluentpy.batch.pbs.FluentPBS" title="fluentpy.batch.pbs.FluentPBS"><span class="pre">fluentpy.batch.pbs.FluentPBS</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.submit.FluentSubmission" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.batch.submit.</span></span><span class="sig-name descname"><span class="pre">FluentSubmission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fluent_journal</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#fluentpy.tui.FluentJournal" title="fluentpy.tui.FluentJournal"><span class="pre">fluentpy.tui.FluentJournal</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.submit.FluentSubmission" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class for representing the unit “submission” of a fluent job to pace
-This MUST be instantiated with a FluentRun as a first argument and a
-FluentPBS script as a second argument</p>
+This MUST be instantiated with a FluentJournal as a first argument</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fluent_journal</strong> (<a class="reference internal" href="#fluentpy.tui.FluentJournal" title="fluentpy.tui.FluentJournal"><em>FluentJournal</em></a>) – an instance of a FluentJournal</p></li>
+<li><p><strong>args*</strong> (<em>args</em>) – any additional arguments. If additional arguments are specified in the
+write_file_attributes property, they must have a “write” method</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">-</span> <span class="pre">write</span></span></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">-</span> <span class="pre">format_submit</span></span></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">-</span> <span class="pre">submit</span></span></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="fluentpy.batch.submit.FluentSubmission.bash_submission">
-<span class="sig-name descname"><span class="pre">bash_submission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pace_pbs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'fluent.pbs'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.submit.FluentSubmission.bash_submission" title="Permalink to this definition">¶</a></dt>
-<dd><p>submit the job. Format the submission, i.e. write the file to the folder
-change to the directory, run the script, and then change back to the original directory
-return the output from the command line call</p>
+<dt class="sig sig-object py" id="fluentpy.batch.submit.FluentSubmission.execute_command">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">execute_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="headerlink" href="#fluentpy.batch.submit.FluentSubmission.execute_command" title="Permalink to this definition">¶</a></dt>
+<dd><p>abstract method that must take in argument of a folder and returns
+a list of strings (or objects with a string method) that can
+be piped to .subprocess.call()</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="fluentpy.batch.submit.FluentSubmission.format_submit">
-<span class="sig-name descname"><span class="pre">format_submit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pace_pbs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'fluent.pbs'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.submit.FluentSubmission.format_submit" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">format_submit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">list</span><a class="headerlink" href="#fluentpy.batch.submit.FluentSubmission.format_submit" title="Permalink to this definition">¶</a></dt>
 <dd><p>format the submission at the command line in pace</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="fluentpy.batch.submit.FluentSubmission.write">
-<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pace_pbs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'fluent.pbs'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.submit.FluentSubmission.write" title="Permalink to this definition">¶</a></dt>
-<dd><p>writes the fluent pbs script &amp; the fluent file to a folder
-provided in the variable “folder”. If the folder does not exist,
-the folder will be created</p>
+<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#fluentpy.batch.submit.FluentSubmission.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>writes the fluent journal to a folder along with any additional
+required files.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="fluentpy.batch.submit.FluentSubmission.write_file_attributes">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">write_file_attributes</span></span><em class="property"><span class="pre">:</span> <span class="pre">dict</span></em><a class="headerlink" href="#fluentpy.batch.submit.FluentSubmission.write_file_attributes" title="Permalink to this definition">¶</a></dt>
+<dd><p>this property must be specified in order to write
+all of the required files to a folder in a batch submission
+folder</p>
+<p>Property must be specified as a dicitonary:</p>
+<p>{property_name : file_string}</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.batch.submit.PaceBatchSubmission">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.batch.submit.</span></span><span class="sig-name descname"><span class="pre">PaceBatchSubmission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fluent_submission_list</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seperator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'-'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.submit.PaceBatchSubmission" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="fluentpy.batch.submit.PaceBatchSubmission.SUBMISSION_CLASS">
+<span class="sig-name descname"><span class="pre">SUBMISSION_CLASS</span></span><a class="headerlink" href="#fluentpy.batch.submit.PaceBatchSubmission.SUBMISSION_CLASS" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#fluentpy.batch.submit.PaceFluentSubmission" title="fluentpy.batch.submit.PaceFluentSubmission"><code class="xref py py-class docutils literal notranslate"><span class="pre">fluentpy.batch.submit.PaceFluentSubmission</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fluentpy.batch.submit.PaceFluentSubmission">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">fluentpy.batch.submit.</span></span><span class="sig-name descname"><span class="pre">PaceFluentSubmission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fluent_journal</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#fluentpy.tui.FluentJournal" title="fluentpy.tui.FluentJournal"><span class="pre">fluentpy.tui.FluentJournal</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fluent_pbs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#fluentpy.batch.pbs.FluentPBS" title="fluentpy.batch.pbs.FluentPBS"><span class="pre">fluentpy.batch.pbs.FluentPBS</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fluentpy.batch.submit.PaceFluentSubmission" title="Permalink to this definition">¶</a></dt>
+<dd><p>The unit submission object for the computing cluster PACE &#64; GT
+combines the FluentJournal and FluentPBS objects into a single
+folder.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="fluentpy.batch.submit.PaceFluentSubmission.execute_command">
+<span class="sig-name descname"><span class="pre">execute_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="headerlink" href="#fluentpy.batch.submit.PaceFluentSubmission.execute_command" title="Permalink to this definition">¶</a></dt>
+<dd><p>abstract method that must take in argument of a folder and returns
+a list of strings (or objects with a string method) that can
+be piped to .subprocess.call()</p>
 </dd></dl>
 
 </dd></dl>
@@ -1446,6 +1523,24 @@ text = pbs()</p>
 <p>where the variable “text” now contains the text in a pbs script</p>
 <p>note that the key word argument “memory_request” has options ‘p’ and ‘t’
 where ‘p’ is per core and ‘t’ is total memory</p>
+<p>Example PBS script
+<a class="reference external" href="https://docs.pace.gatech.edu/software/PBS_script_guide/">https://docs.pace.gatech.edu/software/PBS_script_guide/</a></p>
+<p>#PBS -N &lt;job-name&gt;                  -&gt; name that shows up on the queue
+#PBS -A [Account]                   -&gt; Account - the account that is required to run the jobs - who to charge
+#PBS -l nodes=1:ppn=8: cores24      -&gt; resource-list; number of nodes and processers per node, specify number of cores
+#PBS -l pmem=8gb                    -&gt; memory allocated PER CORE
+#PBS -l mem = 2gb                   -&gt; total memory allocated over all nodes
+#PBS -l walltime=2:00:00            -&gt; projected walltime - hard stop here
+#PBS -q inferno                     -&gt; which que to submit too
+#PBS -j oe                          -&gt; combines output and error into one file
+#PBS -o fluent.out                  -&gt; names output files
+#PBS -m &lt;a,b,e&gt;                     -&gt; will send job satus</p>
+<blockquote>
+<div><p>-&gt; a - if job aborted; b- when job begins; e - when job ends</p>
+</div></blockquote>
+<p>cd $PBS_O_WORKDIR                               -&gt; change to working directroy - where script is submited from
+module load ansys/&lt;version.number&gt;              -&gt; load ansys, with version number in &lt;int&gt;.&lt;int&gt; i.e. 19.12
+fluent -t8 -g &lt;inputfile&gt; outputfile            -&gt; run fluent command with input file and output file</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="fluentpy.batch.pbs.PBS.wall_time_formatter">
 <em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">wall_time_formatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">td</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">datetime.timedelta</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="headerlink" href="#fluentpy.batch.pbs.PBS.wall_time_formatter" title="Permalink to this definition">¶</a></dt>

@@ -1,5 +1,5 @@
 #native imports
-from typing import Iterable
+from typing import Iterable, Tuple
 import os
 from pandas.core.frame import DataFrame
 import numpy as np
@@ -8,110 +8,170 @@ from pathlib import Path, PosixPath,WindowsPath
 from collections.abc import MutableMapping
 import pandas as pd
 import json
+from abc import ABC, abstractmethod, abstractstaticmethod
+import sys
 
 #package imports
 from ..disk import SerializableClass
 from .pbs import FluentPBS
-from ..tui import BatchCaseReader, FluentRun
-from .util import partition_boundary_table
+from ..tui import BatchCaseReader, FluentJournal
+from .table_parse import partition_boundary_table
 from .filesystem import TableFileSystem
 
 """ 
 Author: Michael Lanahan
 Date created: 08.04.2021
-Last Edit: 12.29.2021
+Last Edit: 01.03.2022
 
 functions and classes for submitting fluent pace jobs to pace
 """
     
-class FluentSubmission(SerializableClass):
-
+class FluentSubmission(SerializableClass,ABC):
     """
     Class for representing the unit "submission" of a fluent job to pace
-    This MUST be instantiated with a FluentRun as a first argument and a 
-    FluentPBS script as a second argument
+    This MUST be instantiated with a FluentJournal as a first argument
 
-    Methods 
-    -----------
-    - write
-    - format_submit
-    - submit
-
+    Parameters
+    ----------
+    fluent_journal : FluentJournal
+            an instance of a FluentJournal
+    args* : args
+            any additional arguments. If additional arguments are specified in the
+            write_file_attributes property, they must have a "write" method
     """
-    
-    def __init__(self,fluent_run: FluentRun,
-                      fluent_pbs: FluentPBS):
+
+    FLUENT_INPUT = 'fluent.input'
+
+    def __init__(self,fluent_journal: FluentJournal,
+                      *args,**kwargs):
         
-        self.__fluent_run = fluent_run
-        self.__fluent_pbs = fluent_pbs
+        self.__fluent_journal = fluent_journal
+        self.__write_file_attributes = None
     
     @property
-    def fluent_run(self):
-        return self.__fluent_run
+    def fluent_journal(self):
+        return self.__fluent_journal
     
     @property
-    def fluent_pbs(self):
-        return self.__fluent_pbs
+    def write_file_attributes(self) -> dict:
+        """
+        this property must be specified in order to write
+        all of the required files to a folder in a batch submission
+        folder 
+
+        Property must be specified as a dicitonary: 
+
+        {property_name : file_string}
+        """
+        if self.__write_file_attributes is None:
+            raise NotImplementedError('write_file_attributes cannot be None')
+        
+        return self.__write_file_attributes
     
-    def write(self,folder,
-                   pace_pbs = 'fluent.pbs'):
+    @write_file_attributes.setter
+    def write_file_attributes(self,wfa : dict) -> None:
+        self.__write_file_attributes = wfa
+     
+    @abstractmethod
+    def execute_command(self, f: str) -> str:
+        """
+        abstract method that must take in argument of a folder and returns
+        a list of strings (or objects with a string method) that can
+        be piped to .subprocess.call()
+        """
+        pass
+
+    def write(self,folder : str) -> None:
 
         """ 
-        writes the fluent pbs script & the fluent file to a folder 
-        provided in the variable "folder". If the folder does not exist,
-        the folder will be created
+        writes the fluent journal to a folder along with any additional
+        required files.
         """
         
         if not os.path.isdir(folder):
             os.mkdir(folder)
         
-        self.fluent_run.write(os.path.join(folder,self.fluent_pbs.input_file))
-        self.fluent_pbs.write(os.path.join(folder,pace_pbs))
+        for attr, file_name in self.write_file_attributes.items():
+            self.__getattribute__(attr).write(os.path.join(folder,file_name))
     
-    def format_submit(self,f,
-                          pace_pbs = 'fluent.pbs'):
+    def format_submit(self,f: str) -> list:
         """
         format the submission at the command line in pace
         """
         
         self.write(f)
-        return ['qsub ',pace_pbs]
+        return self.execute_command(f)
     
-    def bash_submission(self,f,
-                       pace_pbs = 'fluent.pbs'):
+class PaceFluentSubmission(FluentSubmission):
+    """
+    The unit submission object for the computing cluster PACE @ GT
+    combines the FluentJournal and FluentPBS objects into a single
+    folder.
+    """
 
-        """
-        submit the job. Format the submission, i.e. write the file to the folder
-        change to the directory, run the script, and then change back to the original directory
-        return the output from the command line call
-        """
-        
-        cmd = self.format_submit(f,pace_pbs = pace_pbs)
-        return cmd
+    PACE_PBS = 'fluent.pbs'
+
+    def __init__(self,fluent_journal: FluentJournal,
+                      fluent_pbs: FluentPBS) -> None:
+
+        super().__init__(fluent_journal)
+        self.write_file_attributes = {'fluent_journal':self.FLUENT_INPUT,
+                                      'fluent_pbs':self.PACE_PBS}
+
+        self.fluent_pbs = fluent_pbs
+
+    def execute_command(self, f: str) -> str:
+        return ['qsub ',self.PACE_PBS]
     
-    def _from_file_parser(dmdict):
+    def _from_file_parser(dmdict : dict) -> Tuple:
         
         fluentpbs = dmdict['fluent_pbs']['class']
         pbs = fluentpbs.from_dict(dmdict['fluent_pbs'])
-        fluentrun = dmdict['fluent_run']['class']
-        run = fluentrun.from_dict(dmdict['fluent_run'])
+        fluentrun = dmdict['fluent_journal']['class']
+        run = fluentrun.from_dict(dmdict['fluent_journal'])
 
         return ([run,pbs],)
-        
-class FluentBatchSubmission:
+
+class FluentBatchSubmission(ABC):
 
     """
-    an interface for the batched submission of fluent jobs 
+    Base class for representing a batch submission of Fluent computations
+
+    Parameters
+    ----------
+    fluent_sumission_list : list
+            a list of objects with FluentSubmission as their base class. 
+    index : Iterable
+            an iterable (list, np.ndarray, pandas Series) with the same length as the\
+            fluent_submission_list
+    prefix : str
+            gives the ability to add a prefix to the names in the fluent_submission_list
+    seperator : str
+            gives the ability to seperate the prefix and the index of the names in the\
+            fluent_submission_list
     """
 
     LINE_BREAK = '\n'
+    
+    os_name = sys.platform
+    if os_name == 'win32' or os_name == 'win64':
+        BATCH_EXE_EXT = '.bat'
+    elif os_name == 'linux' or os_name == 'posix':
+        BATCH_EXE_EXT = '.sh'
+    else:
+        raise ValueError('Cannot determine Path structure from platform: {}'.format(os_name))
+    
+    BATCH_EXE_FNAME = 'batch' + BATCH_EXE_EXT
+
     _df = None
 
     def __init__(self,fluent_submission_list: list,
                       index = None,
                       prefix = '',
-                      seperator = '-'):
+                      seperator = '-',
+                      *args,**kwargs):
 
+        super().__init__()
         index,prefix,seperator = self._initializer_kwarg_parser(len(fluent_submission_list),
                                                                 index,prefix,seperator)
 
@@ -126,7 +186,25 @@ class FluentBatchSubmission:
                                   index: Iterable,
                                   prefix: str,
                                   seperator: str) -> tuple:
+        """
+        Helper function for parsing the index, prefix, and seperator for initialization
 
+        Parameters
+        ----------
+        n : int
+                length of the submission object
+        index : Iterable
+                the index of the submission list
+        prefix : str
+                optional prefix of the index
+        seperator : str
+                optional seperator between the prefix and the index
+        
+        Returns
+        -------
+        tuple : Tuple
+                a parsed Tuple containing (index,prefix,seperator)
+        """
         if index is None:
             index = range(n)
         
@@ -182,7 +260,7 @@ class FluentBatchSubmission:
         
         return self
 
-    def _populate_batch_information_folder(self,parent: str):
+    def _populate_batch_cache_folder(self,parent: str) -> None:
         """
         make the cache to access later
         """
@@ -190,20 +268,28 @@ class FluentBatchSubmission:
         batch_cache.cache_batch(self.submission_object,
                                 self._df,
                                 prefix = self.prefix,
-                                seperator = self.seperator
-                                )
+                                seperator = self.seperator)
     
-    def format_submit(self,parent: str,
-                          pace_pbs: str,
-                          verbose = True,
-                          purge = False):
+    def make_batch_submission(self,parent: str,
+                                   verbose = True,
+                                   purge = False):
         
         """
-        final function here for formatting the submission
+        Formatting the submission
         makes appropriate directories if they do not exist
         and optionally purges data using a safety delete that does not allow
         recursion past a level of 2 on file folders, and will not delete .cas
         or .dat files
+
+        Parameters
+        ----------
+        parent : str
+                the parent or root directory of the submission to make
+        verbose : bool
+                if True will print information during runtime
+        purge : bool
+                if True will purge the parent folder of any files or folders prior to 
+                populating with current batch information
         """
         
         if not os.path.isdir(parent):
@@ -217,7 +303,7 @@ class FluentBatchSubmission:
             except FileExistsError:
                 pass
         
-        self._populate_batch_information_folder(parent)
+        self._populate_batch_cache_folder(parent)
         
         txt = ''
         for folder,submission in self.submission_object.items():
@@ -230,20 +316,15 @@ class FluentBatchSubmission:
             txt += 'cd ..' + self.LINE_BREAK
 
         return txt
-    
-    def bash_submit(self,parent: str,
-                         batch_file = 'batch.sh',
-                         pace_pbs = 'fluent.pbs',
-                         purge = False,
-                         verbose = True):
 
-        _bf = os.path.join(parent,batch_file)
-        txt = self.format_submit(parent,pace_pbs,
-                                 verbose = verbose, 
-                                 purge = purge)
-
-        with open(_bf,'w',newline = self.LINE_BREAK) as file:
-            file.write(txt)
+    @abstractmethod
+    def generate_submission(parent : str,
+                             *args,
+                             purge = False,
+                             verbose = True,
+                             **kwargs) -> None:
+        
+        pass
     
     @classmethod
     def from_batch_cache(cls,
@@ -261,7 +342,7 @@ class FluentBatchSubmission:
 
         #there are some troublesome classes that I have to hack to make work here
         for pwd,fluent_submission in _cls.submission_object.items():
-            fluent_submission.fluent_run.reader.pwd = pwd 
+            fluent_submission.fluent_journal.reader.pwd = pwd 
                 
         _cls._df = df
         return _cls
@@ -271,11 +352,11 @@ class FluentBatchSubmission:
                    case_name: str,
                    turbulence_model:str,
                    df:DataFrame,
-                   pbs:FluentPBS,
+                   submission_args:list,
                    prefix = '',
                    seperator = '-',
-                    *frargs,
-                    **frkwargs):
+                   *frargs,
+                   **frkwargs):
 
         """
         Class method for creating a fluent batch submission using a data frame
@@ -289,22 +370,32 @@ class FluentBatchSubmission:
         batch submission differently or submitting seperate jobs
         """
 
+        if not isinstance(submission_args,list) and not isinstance(submission_args,Tuple):
+            submission_args = [submission_args]
+        
         index,_,seperator = cls._initializer_kwarg_parser(df.shape[0],
                                                           df.index,prefix,seperator)
 
         boundary_df = partition_boundary_table(df,turbulence_model)
-        sl,index = cls.submission_list_from_boundary_df(case_name, boundary_df, pbs,
-                                                         seperator,*frargs,**frkwargs)
-        cls._df = df 
-        return cls(sl,index = index,prefix = index.name)
+        sl,index = cls._submission_list_from_boundary_df(cls.submission_args_from_boundary_df,
+                                                     cls.SUBMISSION_CLASS,
+                                                     case_name, boundary_df, submission_args,
+                                                     seperator,*frargs,**frkwargs)
+        
+        _cls = cls(sl,index = index,prefix = index.name)
+        _cls._df = df
+
+        return _cls
 
     @staticmethod
-    def submission_list_from_boundary_df(case_name: str,
-                                         bdf:DataFrame,
-                                         pbs:FluentPBS,
-                                         seperator: str,
-                                         *frargs,
-                                         **frkwargs) -> list:
+    def _submission_list_from_boundary_df(submission_object_parser : callable,
+                                            submission_class : object,
+                                            case_name: str,
+                                            bdf:DataFrame,
+                                            submission_args: list,
+                                            seperator: str,
+                                            *frargs,
+                                            **frkwargs) -> list:
 
         """
         make a submission object from a boundary DataFrame i.e. a DataFrame of
@@ -314,21 +405,75 @@ class FluentBatchSubmission:
         submit_list = []
         name = '' if bdf.index.name is None else bdf.index.name
         for index in bdf.index:
-            fluent_run = FluentRun(case_name,
-                                   reader = BatchCaseReader,
-                                   *frargs,**frkwargs)
+            fluent_journal = FluentJournal(case_name,
+                                            reader = BatchCaseReader,
+                                            *frargs,**frkwargs)
             
-            fluent_run.reader.pwd = name + seperator + str(index)
-            fluent_run.boundary_conditions = list(bdf.loc[index])
-            _pbs = pbs.copy()
-            _pbs.pbs.name = name + seperator + str(index)
+            fluent_journal.reader.pwd = name + seperator + str(index)
+            fluent_journal.boundary_conditions = list(bdf.loc[index])
+            submission_args = submission_object_parser(submission_args,case_name,
+                                                        index,name,seperator,
+                                                        *frargs,**frkwargs)
 
             submit_list.append(
-                               FluentSubmission(fluent_run,
-                                                _pbs)
-                              )
+                                submission_class(fluent_journal,
+                                                *submission_args)
+                                )
         
         return submit_list,bdf.index
+
+    @abstractstaticmethod
+    def submission_args_from_boundary_df(submission_args: list,
+                                         case_name : str,
+                                         index,
+                                         name: str,
+                                         seperator : str,
+                                         *frargs,
+                                         **frkwargs) -> Tuple:
+        pass
+
+class PaceBatchSubmission(FluentBatchSubmission):
+
+    PACE_PBS = 'fluent.pbs'
+    SUBMISSION_CLASS = PaceFluentSubmission
+
+    def __init__(self,fluent_submission_list: list,
+                      index = None,
+                      prefix = '',
+                      seperator = '-'):
+
+        super().__init__(fluent_submission_list,
+                         index = index,
+                         prefix = prefix,
+                         seperator = seperator)
+        
+        self.BATCH_EXE_FNAME = 'batch.sh'
+    
+    def generate_submission(self,parent: str,
+                            purge=False, 
+                            verbose=True) -> None:
+
+        _bf = os.path.join(parent,self.BATCH_EXE_FNAME)
+        txt = self.make_batch_submission(parent,
+                                        verbose = verbose, 
+                                        purge = purge)
+
+        with open(_bf,'w',newline = self.LINE_BREAK) as file:
+            file.write(txt)
+
+    @staticmethod
+    def submission_args_from_boundary_df(submission_args: list,
+                                         case_name : str,
+                                         index,
+                                         name: str,
+                                         seperator : str,
+                                         *frargs,
+                                         **frkwargs) -> Tuple:
+        
+        _pbs = submission_args[0].copy()
+        _pbs.pbs.name = name + seperator + str(index)
+        return (_pbs,)
+
 
 class BatchCache:
     
@@ -508,7 +653,7 @@ class BatchSubmissionSummary:
                     cached_batch.submission_object.pop(index.name)
             
             for folder,submission in cached_batch.submission_object.items():
-                submission.fluent_run.reader.pwd = folder
+                submission.fluent_journal.reader.pwd = folder
             
             if cached_batch._df is not None:
                 new_index = []

@@ -1,6 +1,7 @@
 from pandas import DataFrame,Series
 import numpy as np
-from pace_fluent.pace_fluent.util import * 
+from fluentpy.batch.table_parse import partition_boundary_table
+from unittest import TestCase,main
 
 def test_single_pressure_outlet_format():
 
@@ -64,31 +65,28 @@ def test_multiple_table():
     table.to_csv('example_inputs.csv')
     df = partition_boundary_table(table,'ke-standard')
     print(df)
-    
-def test_udf_specification():
-    data = np.expand_dims(np.array([1.0,2.0]),axis = 1)
 
-    table = DataFrame(data,
-                      columns = ['heated-surf:free stream temperature:wall'])
-    
-    table['heated-surf:htc:wall'] = ['<test.c#convection_coefficient#udf#HTC::LIBUDF>' for _ in range(2)]
+class TestUDFSpecification(TestCase):
 
+    def test_windows_specification(self):
 
-    df = partition_boundary_table(table,None)
+        data = np.expand_dims(np.array([1.0,2.0]),axis = 1)
 
-    print(df.columns)
-    bc1 = df['heated-surf:wall'].iloc[0]
-    text = bc1.format_boundary_condition()
-    print(text)
+        table = DataFrame(data,
+                        columns = ['heated-surf:free stream temperature:wall'])
+        
+        table['heated-surf:htc:wall'] = ['<test.c#convection_coefficient#udf#HTC::LIBUDF>' for _ in range(2)]
 
 
-def main():
+        df = partition_boundary_table(table,None)
 
-    #test_single_pressure_outlet_format()
-    #test_single_mass_flow_inlet_format()
-    #test_wall_format()
-    #test_multiple_table()
-    test_udf_specification()
+        print(df.columns)
+        bc1 = df['heated-surf:wall'].iloc[0]
+        text = bc1.format_boundary_condition()
+        print(text)
+
+    def test_linux_runtime_specification(self):
+        pass
 
 if __name__ == '__main__':
     main()
