@@ -1,0 +1,86 @@
+file/start-transcript solution.trn
+sync-chdir ..
+file/read-case ICM-11.cas.gz
+sync-chdir case-10
+
+;Model Modifications
+
+
+;Boundary Conditions
+
+/define/boundary-conditions/set/wall
+(heated-surface)
+thermal-bc
+yes
+heat-flux
+planar-conduction
+no
+heat-flux
+no
+10.0
+q
+/define/boundary-conditions/set/mass-flow-inlet
+(inlet)
+direction-spec
+no
+yes
+frame-of-reference
+yes
+flow-spec
+no
+yes
+ke-spec
+yes
+mass-flux
+no
+10.0
+supersonic/initial-gauge-pressure
+no
+10.0
+t0
+no
+10.0
+turbulent-dissipation-rate
+no
+10.0
+turbulent-kinetic-energy
+no
+10.0
+q
+/define/boundary-conditions/set/pressure-outlet
+(outlet)
+direction-spec
+no
+yes
+frame-of-reference
+yes
+ke-spec
+yes
+radial
+no
+avg-press-spec
+no
+p-profile-multiplier
+1.0
+gauge-pressure
+no
+10.0
+t0
+no
+10.0
+backflow-turbulent-dissipation-rate
+no
+10.0
+backflow-turbulent-kinetic-energy
+no
+10.0
+q
+solve/initialize/hyb-initialization
+solve/iterate 200
+parallel timer usage
+
+;Post Processing
+
+file/write-case result.cas
+file/write-data result.dat
+exit

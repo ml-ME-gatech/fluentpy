@@ -252,21 +252,14 @@ class FluentFiles(dict):
         return edict
 
     #load the data set into a list of fluent files
-    def load(self,
-              skiprows = [],    #list of lists 
-              nrows = [],       #list of lists
-              convergedResult = False):
+    def load(self,convergedResult = True):
         
-        if convergedResult:
-            skiprows = self._parsedicts(skiprows,'skiprows',fill_value = 'converged')
-        else:
-            skiprows = self._parsedicts(skiprows,'skiprows',fill_value = [])
-    
-        nrows = self._parsedicts(nrows,'nrows',fill_value = None)
-
         for key in self.keys:
             with self.__getitem__(key) as ffile:
-                self.data[key] = ffile.readdf(skiprows[key],nrows[key])
+                if convergedResult:
+                    self.data[key] = ffile.readdf().iloc[-1]
+                else:
+                    self.data[key] = ffile.readdf().iloc[-1]
                 self.columns += list(ffile.df.columns)
         
         self.columns = list(set(self.columns))
@@ -398,12 +391,15 @@ class SurfaceFile(FluentFile):
         if array.ndim != 2:
             raise ValueError('Array must be two-dimensional')
         
-        if array.shape[1] != 3:
-            raise ValueError('table input only supported for 3D input i.e. x,y,z')
+        if array.shape[1] != 3 and array.shape[1] != 2:
+            raise ValueError('table input only supported for 2D or 3D input i.e. x,y,z')
         
         if isinstance(array,np.ndarray):            
             
-            df = pd.DataFrame(array,columns = ['x','y','z'])
+            try:
+                df = pd.DataFrame(array,columns = ['x','y','z'])
+            except ValueError:
+                df = pd.DataFrame(array,columns = ['x','y'])
         
         elif isinstance(array,pd.DataFrame):
 
@@ -454,6 +450,9 @@ class SurfaceFile(FluentFile):
         return text
 
     def __str__(self):
+        return self.format_text()
+    
+    def __call__(self):
         return self.format_text()
     
     @staticmethod

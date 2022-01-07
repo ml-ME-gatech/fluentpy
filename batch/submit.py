@@ -115,7 +115,7 @@ class PaceFluentSubmission(FluentSubmission):
                       fluent_pbs: FluentPBS) -> None:
 
         super().__init__(fluent_journal)
-        self.write_file_attributes = {'fluent_journal':self.FLUENT_INPUT,
+        self.write_file_attributes = {'fluent_journal':fluent_pbs.input_file,
                                       'fluent_pbs':self.PACE_PBS}
 
         self.fluent_pbs = fluent_pbs
@@ -169,6 +169,7 @@ class FluentBatchSubmission(ABC):
                       index = None,
                       prefix = '',
                       seperator = '-',
+                      case_name = None,
                       *args,**kwargs):
 
         super().__init__()
@@ -177,6 +178,7 @@ class FluentBatchSubmission(ABC):
 
         self.prefix = prefix
         self.seperator = seperator
+        self.case_name = case_name
         self.__submission_object = dict(zip([prefix + seperator + str(i) for i in index],
                                              fluent_submission_list))
 
@@ -227,6 +229,10 @@ class FluentBatchSubmission(ABC):
     @submission_object.setter
     def submission_object(self,so):
         self.__submission_object = so
+    
+    @property
+    def case_file(self):
+        return os.path.split(self.case_file)[1]
     
     def __add__(self,other) -> None:
 
@@ -377,12 +383,15 @@ class FluentBatchSubmission(ABC):
                                                           df.index,prefix,seperator)
 
         boundary_df = partition_boundary_table(df,turbulence_model)
-        sl,index = cls._submission_list_from_boundary_df(cls.submission_args_from_boundary_df,
-                                                     cls.SUBMISSION_CLASS,
-                                                     case_name, boundary_df, submission_args,
-                                                     seperator,*frargs,**frkwargs)
+        _,case_file = os.path.split(case_name)
         
-        _cls = cls(sl,index = index,prefix = index.name)
+        sl,index = cls._submission_list_from_boundary_df(cls.submission_args_from_boundary_df,
+                                                         cls.SUBMISSION_CLASS,
+                                                         case_file, boundary_df, submission_args,
+                                                          seperator,*frargs,**frkwargs)
+        
+        _cls = cls(sl,index = index,prefix = index.name,
+                    case_name = case_name)
         _cls._df = df
 
         return _cls
@@ -440,12 +449,14 @@ class PaceBatchSubmission(FluentBatchSubmission):
     def __init__(self,fluent_submission_list: list,
                       index = None,
                       prefix = '',
-                      seperator = '-'):
+                      seperator = '-',
+                      case_name = None):
 
         super().__init__(fluent_submission_list,
                          index = index,
                          prefix = prefix,
-                         seperator = seperator)
+                         seperator = seperator,
+                         case_name = case_name)
         
         self.BATCH_EXE_FNAME = 'batch.sh'
     
@@ -461,6 +472,13 @@ class PaceBatchSubmission(FluentBatchSubmission):
         with open(_bf,'w',newline = self.LINE_BREAK) as file:
             file.write(txt)
 
+        _,case_name = os.path.split(self.case_name)
+        dst = os.path.join(parent,case_name)
+        try:
+            shutil.copy2(self.case_name,dst)
+        except shutil.Error:
+            pass
+    
     @staticmethod
     def submission_args_from_boundary_df(submission_args: list,
                                          case_name : str,
@@ -603,7 +621,6 @@ class BatchSubmissionSummary:
         
         folders = []
         self.filesys.solution_files
-        print('here')
         for solution_file in self.filesys.solution_files.keys:
             with self.filesys.solution_files[solution_file] as sf:
                 if sf.STATUS:

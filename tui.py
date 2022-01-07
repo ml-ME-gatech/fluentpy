@@ -1,11 +1,15 @@
 #native imports
 from abc import ABC,abstractmethod
 import os
-from typing import OrderedDict, Union, List
+from typing import Hashable, OrderedDict, Union, List, ValuesView
 import os
 import subprocess
 import numpy as np 
 import sys
+from pathlib import PosixPath, PurePath,WindowsPath
+import shutil
+import re
+
 
 #package imports
 from .disk import SerializableClass
@@ -746,13 +750,13 @@ class FluentEngine(TUIBase):
         (4) cleans up the directory again
         """
 
-        self.clean()
+        self._clean()
         txt = self._format_call(save)
         cwd = os.getcwd()
         os.chdir(self.path)
         process = subprocess.call(txt)
         os.chdir(cwd)
-        self.clean()
+        self._clean()
         return process
 
 class BatchCaseReader(CaseReader):
@@ -1108,6 +1112,135 @@ class FluentCase(TUIBase):
     def case_file(self):
         return self.__case_file
 
+class RPSetVar(TUIBase):
+    """
+    Unit class for modifying Variables through the "rpsetvar" command. 
+    """
+
+    SET_VAR = r"rpsetvar'"
+    SET_FLOAT_VAR = '(' + SET_VAR + ' {} {})'
+
+    def __init__(self,name: str,
+                     value: object):
+
+        super().__init__()
+        self.name = name
+        self.value = value
+
+    def __call__(self) -> str:
+
+        if self.value is None:
+            return self.value
+        else:
+            return self.SET_FLOAT_VAR.format(self.name,str(self.value))
+
+class RPSetVarModification(TUIBase, ABC):
+
+    def __init__(self,input_dict: dict):
+
+        self._dict = dict.fromkeys(input_dict)
+        for key, value in input_dict.items():
+            self.__setitem__(key,value)
+        
+    def __getitem__(self,key: Hashable) -> object:
+
+        return self._dict[key]()
+    
+    def __setitem__(self,key: Hashable,
+                         newvalue: object) -> None:
+        
+        self._dict[key] = RPSetVar(key,newvalue)
+    
+    def __call__(self) -> str:
+
+        txt = ''
+        for key in self._dict:
+            try:
+                txt += self.__getitem__(key) + self.LINE_BREAK
+            except TypeError:
+                pass
+        
+        return txt
+    
+class TwoEquationModelConstants(RPSetVarModification):
+
+    """
+    Class for modifying the Model constants in the two equation
+    models via the rpsetvar interface. This is limited 
+    """
+
+    def __init__(self,defaults = {},
+                     **kwargs):
+
+        inputdict = dict.fromkeys(kwargs.keys())
+        for key in defaults:
+            if key not in inputdict:
+                inputdict[key] = defaults[key]
+            else:
+                inputdict[key] = kwargs[key]
+        
+        _inputdict = self.name_mapping(inputdict,self.parameter_lookup)
+        super().__init__(_inputdict)
+
+    def name_mapping(self,input_dict: dict,
+                          association : dict) -> dict:
+
+        output_dict = dict.fromkeys(association.keys())
+        for key in output_dict:
+            output_dict[key] = input_dict[association[key]]
+        
+        return output_dict
+
+class KEpsilonModelConstants(TwoEquationModelConstants):
+
+    def __init__(self,**kwargs):
+
+        DEFAULTS = {'wall_prandlt': None,
+                    'sigma_k': None,
+                    'c_epsilon_1': None,
+                    'c_epsilon_2': None,
+                    'c_mu': None,
+                    'sigma_eps': None,
+                    'energy_prandlt': None}
+
+        self.parameter_lookup = {'wallprt':'wall_prandlt',
+                                 'keprt': 'energy_prandlt',
+                                 'kesige': 'sigma_eps',
+                                 'kesigk': 'sigma_k',
+                                 'kec2': 'c_epsilon_2',
+                                 'kec1':'c_epsilon_1',
+                                 'kecmu':'c_mu'}
+                                
+        super().__init__(defaults = DEFAULTS,**kwargs)
+
+class KOmegaModelConstants(TwoEquationModelConstants):
+
+    def __init__(self,**kwargs):
+
+        DEFAULTS = {'sigma_w': None,
+                    'sigma_k': None,
+                    'beta_i': None,
+                    'beta_star_inf': None,
+                    'r_w':None,
+                    'r_k': None,
+                    'r_beta': None,
+                    'alpha_0':None,
+                    'alpha_inf': None,
+                    'alpha_star_inf': None}
+        
+        self.parameter_lookup = {'kw-sig-w': 'sigma_w',
+                                 'kw-sig-k':'sigma_k',
+                                 'kw-beta-i': 'beta_i',
+                                 'kw-beta-star-inf':'beta_star_inf',
+                                 'kw-r-w': 'r_w',
+                                 'kw-r-k ':'r_k',
+                                 'kw-r-beta':'r_beta',
+                                 'kw-alpha-0': 'alpha_0',
+                                 'kw-alpha-inf':'alpha_inf',
+                                 'kw-alpha-star-inf':'alpha_star_inf'}
+        
+        super().__init__(defaults = DEFAULTS,**kwargs)
+
 class ModelModification(ABC,TUIBase):
 
     _prefix = 'define/models/{}'
@@ -1172,7 +1305,8 @@ class ViscousModelModification(ModelModification):
                                 'kw-bsl',
                                 'kw-sst',
                                 'kw-standard',
-                                'k-kl-w']
+                                'k-kl-w',
+                                'reynolds-stress-model']
 
 
     def __init__(self,name: str):
@@ -1189,6 +1323,111 @@ class ViscousModelModification(ModelModification):
         txt = self.name + self.LINE_BREAK
         txt += 'yes' + self.LINE_BREAK
         txt += self.EXIT_CHAR + self.LINE_BREAK
+        return txt
+
+class MaterialProperty(TUIBase):
+
+    ALLOWABLE_APPROXIMATION = ['constant',
+                                'piecewise-linear',
+                                'piecewise-polynomial']
+
+    def __init__(self,name: str,
+                      value: Union[str,None],
+                      approximation: str):
+
+        self.name = name
+        self.value = value
+        self.approximation = approximation
+
+    def format_value(self):
+
+        if self.approximation == 'constant':
+            text = str(self.value) + self.LINE_BREAK
+        
+        elif self.approximation == 'piecewise-linear' or self.approximation == 'piecewise-polynomial':
+            value = np.array(self.value).squeeze()
+            if value.ndim != 2:
+                raise ValueError('must be interpretable as a 2D array')
+            if value.shape[0] < 2:
+                raise ValueError('must have greater than two points for peicwise specification')
+            if value.shape[1]!= 2:
+                raise ValueError('must be a two-D array with temperature the first column and property the second')
+            
+            text = str(value.shape[0]) + self.LINE_BREAK + ',' +self.LINE_BREAK
+            for i in range(value.shape[0]):
+                text += str(value[i,0]) + self.LINE_BREAK
+                text += str(value[i,1]) + self.LINE_BREAK
+                text += + ',' +self.LINE_BREAK
+            
+        else:
+            txt = [aa + self.LINE_BREAK for aa in self.ALLOWABLE_APPROXIMATION]
+            raise ValueError('apprxomation must be one of: {} \n not {}'.format(txt,self.approximation))
+        
+        return self.approximation + self.LINE_BREAK + text
+
+    def __call__(self):
+
+        if self.value is None:
+            return 'no' + self.LINE_BREAK 
+        else:
+            return 'yes' + self.LINE_BREAK + self.format_value()
+
+class MaterialModification(ABC,TUIBase):
+
+    _prefix = 'define/materials/change-create'
+
+    def __init__(self,name: str,
+                      **kwargs):
+
+        super().__init__()
+        self.name = name
+
+    def enter_statement(self):
+
+        return self._prefix + '/' + self.name +\
+               self.LINE_BREAK + ',' + self.LINE_BREAK
+
+    @abstractmethod
+    def format_materials(self):
+        pass 
+
+    def __call__(self):
+
+        return self.enter_statement() + self.format_materials()
+    
+class FluidMaterialModification(MaterialModification):
+
+    def __init__(self,name: str,
+                      approximation = 'constant',
+                      **kwargs):
+
+        super().__init__(name)
+
+        default_props = ['density','cp','thermal_conductivity',
+                        'viscosity','molecular_weight',
+                        'thermal_expansion_coefficient',
+                        'speed_of_sound']
+        
+        self.prop_values = OrderedDict()
+        for key in kwargs:
+            if key not in default_props:
+                raise ValueError('cannot specify property: {}'.format(key))
+
+        for key in default_props:
+            if key in kwargs:
+                value = kwargs[key]
+                if isinstance(value,MaterialProperty):
+                    self.prop_values[key] = value
+                else:
+                    self.prop_values[key] = MaterialProperty(key,value,approximation)
+            else:
+                self.prop_values[key] = MaterialProperty(key,None,approximation)
+
+    def format_materials(self):
+        txt = ''
+        for _,mp in self.prop_values.items():
+            txt += mp()
+        
         return txt
 
 class FluentCellZone(ABC,TUIBase):
@@ -1386,7 +1625,7 @@ class UDF(TUIBase):
 
         udf = UDF('test.c','myudf','mydata','heat_flux')
         print(udf)
-
+        > heat_flux
         > yes
         > yes
         > myudf
@@ -1394,26 +1633,102 @@ class UDF(TUIBase):
     
     """
 
-    _compile_prefix = 'define/user-defined'
-    def __init__(self,file_name: str,
-                      udf_name: str,
-                      data_name: str,
-                      condition_name: str,
-                      compile = False) -> None:
+    _compile_prefix = 'define/user-defined/compiled-functions/compile'
+    _load_prefix = 'define/user-defined/compiled-function/load'
 
-
-        if not os.path.exists(file_name):
-            raise FileNotFoundError('file: {} does could not be found'.format(file_name))
+    def __init__(self,file_name = None,
+                      data_name = None,
+                      condition_name = None,
+                      profile_name = 'udf',
+                      udf_lib = 'libudf',
+                      case_dir = None,
+                      compile = False,
+                      system_type = 'linux') -> None:
         
+        self.system_type = system_type
         self.file_name = file_name
-        self.udf_name = udf_name
-        self.__data_name = data_name
+        self.udf_lib = udf_lib
+        self.profile_name = profile_name
         self.condition_name = condition_name
         self.compile = compile
 
+        self.establish_os()
+        self.check_compilation(file_name)
+        if case_dir is None:
+            self.case_dir = os.getcwd()
+        else:
+            self.case_dir = case_dir
+        
+        if file_name is None and data_name is None:
+            raise ValueError('cannot specify udf from no file_name or data_name')
+            
+        if file_name is not None:
+            _data_name = self.infer_data_name_from_file(file_name)
+
+        if data_name is not None:
+            split_tuple = data_name.split('::')
+            if len(split_tuple) == 1:
+                self.__data_name = data_name
+            else:
+                self.__data_name = split_tuple[0]
+                self.udf_lib = split_tuple[1]
+        else:
+            self.__data_name = _data_name
+
+    @staticmethod
+    def infer_data_name_from_file(file_name : str):
+        """
+        if the file is available, infer the data_name input into fluent
+        from this file
+        """
+        
+        with open(file_name,'r') as file:
+            raw_text = file.read()
+        
+        define_macros = re.finditer('DEFINE_',raw_text)
+
+        for dm in define_macros:
+            raw = raw_text[dm.end():]
+            arguments = [arg.strip() for arg in 
+                        raw[raw.find('(')+1:raw.find(')')].split(',')]
+            break
+    
+        return arguments[0]
+            
+    def check_compilation(self, file_name : str):
+        """
+        of compilation is required, check to see if a file exists to
+        execute the compilation with
+        """
+
+        if self.compile and not os.path.exists(file_name):
+            raise FileNotFoundError('file: {} could not be found. Cannot\
+                     compile at runtime'.format(file_name))
+         
+    @property
+    def case_dir(self):
+        return self.__case_dir
+    
+    @case_dir.setter
+    def case_dir(self,path: Union[str,PurePath]):
+        self.__case_dir = self.Path(path)
+    
     @property
     def data_name(self):
-        return r'"' + self.__data_name + r'"'
+        return r'"' + self.__data_name + '::' +  self.udf_lib + r'"'
+
+    def establish_os(self) -> None:
+        """
+        establish the os for which to use the platform
+        dependent path for
+        """
+        os_name = sys.platform
+        if os_name == 'win32' or os_name == 'win64':
+            self.Path = WindowsPath
+        elif os_name == 'linux' or os_name == 'posix':
+            self.Path = PosixPath
+        else:
+            raise OSError('not configured to work on non-linux or windows systems')
 
     def _format_enable_udf(self):
         """
@@ -1421,24 +1736,90 @@ class UDF(TUIBase):
         """
         text = 'yes' + self.LINE_BREAK
         text += 'yes' + self.LINE_BREAK
-        text += self.udf_name + self.LINE_BREAK
+        text += self.profile_name + self.LINE_BREAK
         text += self.data_name + self.LINE_BREAK
 
         return text
 
-    def _format_compile_udf(self):
+    def _fluent_compile_sequence(self, file_name : str) -> str:
+        """
+        return a string with the compliation sequence in fluent
+        """
+        text = self._compile_prefix + self.LINE_BREAK
+        text += self.udf_lib + self.LINE_BREAK
+        text += 'yes' + self.LINE_BREAK
+        text += file_name + self.LINE_BREAK
+        text += ',' + self.LINE_BREAK + ',' + self.LINE_BREAK
+        return text
+    
+    def _fluent_load_sequence(self, file_name : str) -> str:
+        """
+        return a string with the fluent loading sequence
+        """
+        text = self._load_prefix + self.LINE_BREAK
+        text += self.udf_lib + self.LINE_BREAK
+        return text
+
+    def _format_linux_compile(self, file_name: str,
+                                    full_file_path : str):
+        
+        """
+        compile and load a udf on a linux system
+        """
+        if not os.path.exists(self.case_dir):
+            raise FileExistsError('case folder : {} does not exist'.format(self.case_dir)) 
+        
+        src_file = self.case_dir.joinpath(file_name)
+        
+        if not os.path.exists(src_file):
+            shutil.copy2(full_file_path,src_file)
+
+        return self._fluent_compile_sequence(file_name) +\
+               self._fluent_load_sequence(file_name)        
+        
+    def format_compile_udf(self):
         """
         format string sequence to compile udf if required
+        this is called in the boundary condition prior
+        to any formatting of the boundary condition 
+        specification
         """
-        return ''
+        #move file to directory with case file
+        txt = ''
+        
+        _,file_name = os.path.split(self.file_name)
+    
+        if self.system_type == 'linux':
+            txt += self._format_linux_compile(file_name,self.file_name)
+        else:
+            raise NotImplementedError('havent implemented runtime compilation for non-posix systems')
+
+        return txt
 
     def __str__(self):
         """
-        string sequence to enablle
+        string sequence to enable udf
         """
-
         return self._format_enable_udf()
 
+def udf_setter(property_setter : callable) -> callable:
+    """
+    wrapper to enable setting udf properties directly. Will infer
+    the condition_name of the udf from the property being set
+    """
+    
+    def wrapped_setter(self,udf : Union[UDF,float]):
+        if isinstance(udf, UDF):
+            if udf.condition_name is None:
+                udf.condition_name = property_setter.__name__
+            
+            self.add_udf(udf)
+            property_setter(self,-np.inf)
+        else: 
+            property_setter(self,udf)
+
+    return wrapped_setter 
+        
 def udf_property(condition_name: str) -> callable:
     """
     decorator meant to enable all conditions 
@@ -1482,28 +1863,29 @@ def udf_property(condition_name: str) -> callable:
         """
         @property
         def enabled_condition(self) -> str:
+
+            _condition_names = [condition_name,
+                                condition.__name__,
+                                condition.__name__.replace('_','-')]
+            
+            for cname in _condition_names:
+
+                try:
+                    #found a udf with matching condition_name
+                    self.decorated_list.append(condition.__name__)
+                    return condition_name + self.LINE_BREAK + str(self.udf[cname])
+                except KeyError:
+                    pass
             
             output = condition(self)
             if output is None:
                 return output
             else:
                 self.decorated_list.append(condition.__name__)
-
-                _condition_names = [condition_name,
-                                    condition.__name__,
-                                    condition.__name__.replace('_','-')]
-                
-                for cname in _condition_names:
-
-                    try:
-                        #found a udf with matching condition_name
-                        return str(self.udf[cname])
-                    except KeyError:
-                        pass
                 
                 return condition_name + self.LINE_BREAK +\
-                    'no' +self.LINE_BREAK +\
-                        str(output) + self.LINE_BREAK
+                       'no' +self.LINE_BREAK +\
+                       str(output) + self.LINE_BREAK
             
         return enabled_condition
     
@@ -1601,6 +1983,9 @@ class FluentBoundaryCondition(ABC,TUIBase):
         """
         add a new udf to the udf dictionary
         """
+        if new_udf.condition_name is None:
+            raise ValueError('The condition name cannot be none if adding udf to boundary condition')
+        
         if new_udf.condition_name not in self.udf:
             self.udf[new_udf.condition_name] = new_udf
         else:
@@ -1720,6 +2105,7 @@ class FluentBoundaryCondition(ABC,TUIBase):
                 if isinstance(attr_value,property):
                     property_list.append(attr_name)
         
+        property_list.remove('udf')
         return property_list
     
     def _assign_default_attributes(self,defaults,**kwargs) -> None:
@@ -2192,18 +2578,28 @@ class StandardKEpsilonSpecification(TwoEquationTurbulentBoundarySpecification):
     
 class StandardKOmegaSpecification(TwoEquationTurbulentBoundarySpecification):
 
+    SKO_DEFAULTS = {'specific_dissipation_rate': None}
+
     def __init__(self,*args,**kwargs):
 
-        super().__init__(*args,**kwargs)
-        self.__omega = 1
+        super().__init__(['kw-standard'],defaults = self.SKO_DEFAULTS,**kwargs)
+        for key,value in self.SKO_DEFAULTS.items():
+            self.TET_DEFAULTS[key] = value
     
-    @property
-    def omega(self):
-        return self.__omega
+    @udf_property('specific-dissipation-rate')
+    def specific_dissipation_rate(self) -> str:
+        return self.__specific_dissipation_rate
     
-    @omega.setter
-    def omega(self,o):
-        self.__omega = o      
+    @specific_dissipation_rate.setter
+    def specific_dissipation_rate(self,sdr: float):
+        self.__specific_dissipation_rate = sdr
+
+    def format_conditions(self):
+        txt = 'ke-spec' + self.LINE_BREAK
+        if self.specific_dissipation_rate is not None and self.turbulent_kinetic_energy is not None:
+            return txt + 'yes' + self.LINE_BREAK
+        else:
+            return txt + super().format_conditions()
 
 def _assign_turbulence_model(model:str,**kwargs) -> TwoEquationTurbulentBoundarySpecification:
 
@@ -2212,7 +2608,8 @@ def _assign_turbulence_model(model:str,**kwargs) -> TwoEquationTurbulentBoundary
                          'turb_length_scale',
                          'turb_viscosity_ratio',
                          'turb_hydraulic_diam',
-                         'turbulent_dissipation_rate']
+                         'turbulent_dissipation_rate',
+                         'specific_dissipation_rate']
 
     _kwargs = {key: value for key,value in kwargs.items() if key in allowable_kwargs}
 
@@ -2483,6 +2880,7 @@ class VelocityInlet(FluentFluidBoundaryCondition):
         return self.__vmag
     
     @vmag.setter
+    @udf_setter
     def vmag(self,vm: float):
         self.__vmag = vm
     
@@ -2491,6 +2889,7 @@ class VelocityInlet(FluentFluidBoundaryCondition):
         return self.__p_sup
 
     @p_sup.setter
+    @udf_setter
     def p_sup(self,p: float):
         self.__p_sup = p
     

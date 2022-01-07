@@ -234,7 +234,7 @@ class FluentPBS(SerializableClass):
     PBS_NODE_FILE = '$PBS_NODEFILE'
 
     def __init__(self,
-                 input_file: str,
+                 input_file = 'fluent.input',
                  name = None,
                  WALLTIME = None,
                  MEMORY = None,
@@ -248,6 +248,7 @@ class FluentPBS(SerializableClass):
                  pbs = DefaultPBS,
                  _cached_pbs = None,
                  account = 'GT-my14',
+                 specification = '3ddp',
                  memory_request = 'p'):
         
         if _cached_pbs is None:
@@ -272,6 +273,7 @@ class FluentPBS(SerializableClass):
         self.N_PROCESSORS = N_PROCESSORS
         self.N_NODES = N_NODES
         self.input_file = input_file
+        self.specification = specification
 
     def format_machine_file(self):
         """
@@ -302,7 +304,10 @@ class FluentPBS(SerializableClass):
         txt += self.format_load_ansys(self.version) +LINE_BREAK
         mpi = self.format_machine_file()
         cnf = self.format_cnf()
-        txt += self.format_fluent_footer(self.N_PROCESSORS,self.N_NODES,self.input_file,mpi,cnf) + LINE_BREAK
+        txt += self.format_fluent_footer(self.N_PROCESSORS,self.N_NODES,
+                                         self.input_file,mpi,cnf,
+                                         self.specification) \
+                + LINE_BREAK
 
         return  txt
     
@@ -327,12 +332,13 @@ class FluentPBS(SerializableClass):
                              nodes: str,
                              input_file:str,
                              mpi: str,
-                             cnf: str) -> str:
+                             cnf: str,
+                             specification : str) -> str:
         """
         format the fluent call in the pbs script
         """
         
-        return 'fluent 3ddp -t' + str(int(processors*nodes)) + mpi + cnf + ' -g < ' + input_file + ' > outputfile'
+        return 'fluent ' + specification + ' -t' + str(int(processors*nodes)) + mpi + cnf + ' -g < ' + input_file + ' > outputfile'
     
     def __call__(self):
         """

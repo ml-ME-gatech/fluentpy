@@ -3,29 +3,38 @@ from pandas import DataFrame,Series
 from typing import List, Type
 
 #package imports
-from ..tui import UDF, PressureOutlet,FluentFluidBoundaryCondition, MassFlowInlet,\
-                  WallBoundaryCondition, VelocityInlet, FluentBoundaryCondition
+from ..tui import UDF, PressureOutlet, MassFlowInlet,\
+                  WallBoundaryCondition, VelocityInlet, FluentBoundaryCondition,\
+                  KEpsilonModelConstants, KOmegaModelConstants,FluidMaterialModification
 
 """"
 Author: Michael Lanahan
 Date Created: 08.06.2021
-Last Edit: 01.04.2021
+Last Edit: 01.05.2021
 
 utility functions and classes for working with Fluent Batch Files
 and pace utility formatting
 """
 
 MODELS = ['energy','ke-standard','kw-standard','viscous']
-ALLOWABLE_BOUNDARY_TYPES = ['mass-flow-inlet','pressure-outlet','wall','velocity-inlet']
+ALLOWABLE_BOUNDARY_TYPES = ['mass-flow-inlet','pressure-outlet','wall',
+                            'velocity-inlet','model modification','fluid-modification']
+
 FLUID_BOUNDARY_CONDITIIONS = ['mass-flow-inlet','pressure-outlet']
 
-def split_boundary_name(string: str,
+def split_header_name(string: str,
                         delim = ':') -> tuple:
     """
-    expects a boundary condition input in the format
+    expects a boundary condition/model modification
+    input in the format
+    
     name:input:type 
+
+    or model modification in the form:
+
+    model:input
     """ 
-    return (s.strip() for s in string.split(delim))
+    return list((s.strip() for s in string.split(delim)))
 
 def sort_boundary_list(blist: list,
                        delim = ':') -> dict:
@@ -38,7 +47,13 @@ def sort_boundary_list(blist: list,
 
     log = {}
     for item in blist:
-        name,variable,btype = split_boundary_name(item)
+        split_header = split_header_name(item)
+
+        if len(split_header) == 3:
+            name,variable,btype = split_header
+        elif len(split_header) == 2:
+            name,variable = split_header
+            btype = 'model modification'
         
         if btype not in ALLOWABLE_BOUNDARY_TYPES:
             raise TypeError('boundary condiiton type specified by: {} is not allowed'.format(btype))
@@ -70,7 +85,12 @@ def partition_boundary_table(df: DataFrame,
     boundary_list = dict.fromkeys(sorted_df.keys())
     for name,svars in sorted_df.items():
         _name = name.split(delim)
-        cols = [_name[0]  + delim + c + delim + _name[1] for c in svars]
+        
+        if _name[1] == 'model modification':
+            cols = [_name[0]  + delim + c for c in svars]
+        else:
+            cols = [_name[0]  + delim + c + delim + _name[1] for c in svars]
+        
         bc_map = dict(zip(cols,sorted_df[name]))
         _df = df[cols]
         boundary_list[name] = []
@@ -108,10 +128,10 @@ def _infer_models_from_headers(columns: list) -> list:
         or 'q_dot' in column or 'ex_emiss' in column or 'caf' in column:
             models.append('energy')
         
-        if 'turbulent-dissipation-rate' or 'intensity' in column:
+        if 'turbulent_dissipation_rate' in column:
             models.append('ke-standard')
         
-        if 'specific-dissipation-rate' in column:
+        if 'specific_dissipation_rate' in column:
             models.append('kw-standard')
     
     return list(set(models))
@@ -119,50 +139,51 @@ def _infer_models_from_headers(columns: list) -> list:
 
 def _parse_udf_from_str(string : str) -> UDF:
     """
-    expects the specification of a UDF as a string
-    from a table to have the following format: 
+    Parameters
+    ----------
+    string : str
+            the string that could specify a udf.
+            expects the specification of a UDF as a string
+            from a table to have the following format: 
 
-    <file_name#condition_name#udf_name#data_name>
+            <file_name> or <file_name#compile = True>
 
-    OR
+            OR
 
-    <file_name#condition_name#udf_name#data_name#compile>
+            <data_name>
 
-    the second option allows for compilation of the UDF during runtime
+            the first option allows for compilation of the UDF during runtime.
+            the second option must be specified as <variable_name::lib_name>.
+            The file name can be an absolute or relative path to the file
 
-    example
-    <htc.c#convection_coefficient#udf#HTC::UDF>
-
-    The file name can be an absolute or relative path to the file
+    Examples
+    --------
+    these examples would produce a valid UDF object in python.
+    1. <udf/src/my_custom_profile.c>
+    2. <udf/src/my_custom_profile.c#compile = False>
+    3. <udf/src/my_custom_profile.c#compile = True>
+    4. <x_velocity::libudf>
     """
 
     string = string.strip()
     
     if string[0] == '<' and string[-1] == '>':
-        string = string[1:-1]
-        try:
-            file_name,condition_name,udf_name,data_name =\
-                tuple([sstr.strip() for sstr in string.split('#')])
-            
-            udf = UDF(file_name,udf_name,data_name,condition_name)
-            
-            return udf
-        except ValueError:
-            file_name,condition_name,udf_name,data_name,compile =\
-                tuple([sstr.strip() for sstr in string.split('#')])
-            
-            if compile.lower() == 'compile':
-                compile = True
-            else:
-                raise TypeError('{} not a valid option for compile field'.format(compile))
-            
-            udf = UDF(file_name,udf_name,data_name,condition_name)
-            udf.compile = True
-            
-            return udf
+        string = string[1:-1].strip()
 
-        except ValueError:
-            raise ValueError('UDF Specified by: {} not valid'.format(string))
+        if '::' in string:
+            return UDF(data_name= string)
+        else:
+            split_tuple = string.split('#')
+            if len(split_tuple) == 1:
+                return UDF(file_name = split_tuple[0])
+            else:
+                compile = split_tuple[1].split('=')[1].strip().lower().capitalize()
+                if compile == 'True':
+                    return UDF(file_name = split_tuple[0].strip(),
+                               compile = True)
+                else:
+                    return UDF(file_name = split_tuple[0].strip(),
+                               compile = False)
 
     else:
         raise ValueError('string does not specify a UDF')
@@ -174,12 +195,12 @@ def handle_udf_boundary_condition(cls: FluentBoundaryCondition,
                                    **kwargs
                                     ) -> FluentBoundaryCondition:
         
-    udfs = []
+    udfs = {}
     bc_kwargs = {}
     for key,value in kwargs.items():
         if isinstance(value,str):
             try:
-                udfs.append(_parse_udf_from_str(value))
+                udfs[key] = _parse_udf_from_str(value)
             except ValueError:
                 bc_kwargs[key] = float(value)
             except TypeError:
@@ -199,10 +220,20 @@ def handle_udf_boundary_condition(cls: FluentBoundaryCondition,
     except TypeError:
         boundary_condition = cls(name,models,**bc_kwargs)
     
-    for udf in udfs:
-        boundary_condition.add_udf(udf)
+    for attr,udf in udfs.items():
+        boundary_condition.__setattr__(attr,udf)
 
     return boundary_condition
+
+def handle_model_modification(cls: object,
+                              **kwargs) -> object:
+    
+    return cls(**kwargs)
+
+def handle_fluid_modification(cls: object,
+                              name: str,**kwargs) -> object:
+
+    return cls(name,**kwargs)
 
 def make_boundary_condition_from_series(btype: str,
                                         name: str,
@@ -224,10 +255,19 @@ def make_boundary_condition_from_series(btype: str,
     mapping = {'pressure-outlet':PressureOutlet,
                'mass-flow-inlet':MassFlowInlet,
                'wall':WallBoundaryCondition,
-               'velocity-inlet':VelocityInlet}
+               'velocity-inlet':VelocityInlet,
+               'ke-standard':KEpsilonModelConstants,
+               'kw-standard':KOmegaModelConstants,
+               'fluid-modification':FluidMaterialModification}
     
-    return handle_udf_boundary_condition(mapping[btype],
+    if btype != 'model modification' and btype != 'fluid-modification':
+        return handle_udf_boundary_condition(mapping[btype],
                                          name,
                                          models,
                                          turbulence_model,
                                          **bdict)
+    elif btype == 'model modification':
+        return handle_model_modification(mapping[name], **bdict)
+    
+    elif btype == 'fluid-modification':
+        return handle_fluid_modification(mapping[btype],name,**bdict)

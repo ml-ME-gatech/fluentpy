@@ -1,3 +1,9 @@
+from typing import List, Union
+from pathlib import PurePath, WindowsPath,PosixPath
+import os
+import shutil
+import sys
+
 def sort_list_of_lists_by_list_len(input_list: list) -> list:
 
     list_len = [len(inner) for inner in input_list]
@@ -77,3 +83,11 @@ def _surface_construction_arg_validator(id: list,
         _return_tuple.append(apply_permutation_to_list(rt,len_perm))
         
     return tuple(_return_tuple) 
+
+def main():
+
+    make_udf_folder_structure_linux('test_udf_arch',['xvelocity.c'],
+                                    'lnamd64',False,'2ddp')
+
+if __name__ == '__main__':
+    main()
