@@ -2229,6 +2229,7 @@ class WallBoundaryCondition(FluentSolidBoundaryCondition):
         return self.__q_dot
     
     @q_dot.setter
+    @udf_setter
     def q_dot(self,qd: float):
         self.__q_dot = qd
     
@@ -2237,6 +2238,7 @@ class WallBoundaryCondition(FluentSolidBoundaryCondition):
         return self.__heat_flux
     
     @heat_flux.setter
+    @udf_setter
     def heat_flux(self,hf: float):
         self.__heat_flux = hf
     
@@ -2245,6 +2247,7 @@ class WallBoundaryCondition(FluentSolidBoundaryCondition):
         return self.__convective_heat_transfer_coefficient
     
     @convective_heat_transfer_coefficient.setter
+    @udf_setter
     def convective_heat_transfer_coefficient(self,chtc: float):
         self.__convective_heat_transfer_coefficient = chtc
 
@@ -2253,6 +2256,7 @@ class WallBoundaryCondition(FluentSolidBoundaryCondition):
         return self.__tinf
     
     @tinf.setter
+    @udf_setter
     def tinf(self,t: float):
         self.__tinf = t
     
@@ -2261,6 +2265,7 @@ class WallBoundaryCondition(FluentSolidBoundaryCondition):
         return self.__wall_temperature
     
     @wall_temperature.setter
+    @udf_setter
     def wall_temperature(self,wt: float):
         self.__wall_temperature =wt
     
@@ -2269,6 +2274,7 @@ class WallBoundaryCondition(FluentSolidBoundaryCondition):
         return self.__caf
     
     @caf.setter
+    @udf_setter
     def caf(self,caf:float):
         self.__caf = caf
 
@@ -2277,6 +2283,7 @@ class WallBoundaryCondition(FluentSolidBoundaryCondition):
         return self.__trad
     
     @trad.setter
+    @udf_setter
     def trad(self,tr: float):
         self.__trad = tr
     
@@ -2285,6 +2292,7 @@ class WallBoundaryCondition(FluentSolidBoundaryCondition):
         return self.__ex_emiss
     
     @ex_emiss.setter
+    @udf_setter
     def ex_emiss(self,ee: float):
         self.__ex_emiss = ee
     
@@ -2508,6 +2516,7 @@ class TwoEquationTurbulentBoundarySpecification(FluentFluidBoundaryCondition):
         return self.__turbulent_kinetic_energy
     
     @turbulent_kinetic_energy.setter
+    @udf_setter
     def turbulent_kinetic_energy(self,tke) -> None:
         self.__turbulent_kinetic_energy = tke
     
@@ -2566,6 +2575,7 @@ class StandardKEpsilonSpecification(TwoEquationTurbulentBoundarySpecification):
         return self.__turbulent_dissipation_rate
 
     @turbulent_dissipation_rate.setter
+    @udf_setter
     def turbulent_dissipation_rate(self,tdr):
         self.__turbulent_dissipation_rate = tdr
     
@@ -2591,6 +2601,7 @@ class StandardKOmegaSpecification(TwoEquationTurbulentBoundarySpecification):
         return self.__specific_dissipation_rate
     
     @specific_dissipation_rate.setter
+    @udf_setter
     def specific_dissipation_rate(self,sdr: float):
         self.__specific_dissipation_rate = sdr
 
@@ -2687,14 +2698,17 @@ class MassFlowInlet(FluentFluidBoundaryCondition):
         return self.__initial_gauge_pressure
     
     @mass_flow.setter
+    @udf_setter
     def mass_flow(self,mfr):
         self.__mass_flow = mfr
     
     @mass_flux.setter
+    @udf_setter
     def mass_flux(self,mf):
         self.__mass_flux = mf
 
     @initial_gauge_pressure.setter
+    @udf_setter
     def initial_gauge_pressure(self,ip):
         self.__initial_gauge_pressure = ip
     
@@ -2783,6 +2797,7 @@ class PressureOutlet(FluentFluidBoundaryCondition):
         return self.__pressure
     
     @pressure.setter
+    @udf_setter
     def pressure(self,p):
         self.__pressure = p
 
@@ -2791,6 +2806,7 @@ class PressureOutlet(FluentFluidBoundaryCondition):
         return self.__avg_press_spec
     
     @avg_press_spec.setter
+    @udf_setter
     def avg_press_spec(self,aps: bool):
         self.__avg_press_spec = aps
     
@@ -2799,6 +2815,7 @@ class PressureOutlet(FluentFluidBoundaryCondition):
         return self.__radial
     
     @radial.setter
+    @udf_setter
     def radial(self,r: bool):
         self.__radial = r
     
