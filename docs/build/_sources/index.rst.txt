@@ -36,6 +36,35 @@ added to exisiting classes and additional classes will be added as need be.
 
 batch
 =====
+Some notes on how formulate the tables:
+
+1.  Headers
+headers should follow this format
+i.  boundary conditions & other modifications
+    name:condition:type
+
+    example:
+        mass-inlet:mass_flux:mass-flow-inlet
+
+    example:
+        helium-real:viscosity:fluid-modification
+
+2. UDF Boundary conditions 
+    the header remains the same, but the row value, instead of a numeric data type
+    should be <string> where <> alerts the parser that this should be interpreted
+    as a UDF
+
+    i. <my_udf.c> will use a udf pre-loaded designated by the source file, using the name in the source file
+    ii. <udf_name::udf_lib> will use a udf pre-loaded designated by the name and library provided
+    iii. <my_udf.c#compile = True> will use a udf, and compile and load the udf prior to loading into the boundary condition
+
+3. models
+    model:input
+
+    example:
+        kw-standard:alpha_inf
+
+4. 
 .. automodule :: fluentpy.batch.submit
     :members:
 
