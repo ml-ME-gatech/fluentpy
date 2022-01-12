@@ -204,15 +204,17 @@ def handle_udf_boundary_condition(cls: FluentBoundaryCondition,
             except ValueError:
                 bc_kwargs[key] = float(value)
             except TypeError:
-                bc_kwargs[key] = bool(value)
-            except TypeError:
+                try:
+                    bc_kwargs[key] = bool(value)
+                except TypeError:
                     raise TypeError('cannot convert value: {} from column {} to float'.format(value,key))
         else:
             try:
                 bc_kwargs[key] = float(value)
             except TypeError:
-                bc_kwargs[key] = bool(value)
-            except TypeError:
+                try:
+                    bc_kwargs[key] = bool(value)
+                except TypeError:
                     raise TypeError('cannot convert value: {} from column {} to float'.format(value,key))
     
     try:

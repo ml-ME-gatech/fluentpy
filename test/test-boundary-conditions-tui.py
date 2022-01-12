@@ -117,7 +117,18 @@ class TestWall(TestCase):
         wall = WallBoundaryCondition('heated-surf',['viscous','energy'])
         wall.convective_heat_transfer_coefficient = 10
         wall.tinf = 500
-        #print(wall.format_boundary_condition())
+        #print(wall)
+
+    def test_convection_udf(self):
+
+        wall = WallBoundaryCondition('heated-surf',['viscous','energy'])
+        wall.tinf = 500
+        udf = UDF('test-files/test/xvelocity.c',
+            case_dir = 'check_udf_case',compile = True)
+    
+        wall.convective_heat_transfer_coefficient = udf
+
+        print(wall())
 
     def test_heat_flux(self):
 
@@ -196,7 +207,7 @@ class TestUDF(TestCase):
     
     def test_vi(self):
 
-        udf = UDF('test-files/test/xvelocity.c',
+        udf = UDF(file_name = 'test-files/test/xvelocity.c',
                   case_dir = 'check_udf_case')
 
         vi = VelocityInlet('velocity_inlet',['viscous'],'kw-standard')
@@ -205,7 +216,7 @@ class TestUDF(TestCase):
 
         vi.vmag = udf
 
-        print(vi())
+        #print(vi())
     
     """
     def test_compile_udf(self):
