@@ -1,5 +1,6 @@
 #third party imports
 from io import StringIO
+from multiprocessing.sharedctypes import Value
 from typing import Iterable,Union
 import more_itertools
 import numpy as np
@@ -391,15 +392,21 @@ class SurfaceFile(FluentFile):
         if array.ndim != 2:
             raise ValueError('Array must be two-dimensional')
         
-        if array.shape[1] != 3 and array.shape[1] != 2:
-            raise ValueError('table input only supported for 2D or 3D input i.e. x,y,z')
+        if array.shape[1] != 3 and array.shape[1] != 2 and array.shape[1]/2.0 != 2.0 and array.shape[1]/2.0 != 3.0:
+            raise ValueError('table input only supported for 2D or 3D input i.e. x,y,z, listed beggining and end points i.e. (x0,x1),(y0,y1),(z0,z1)')
         
         if isinstance(array,np.ndarray):            
             
-            try:
-                df = pd.DataFrame(array,columns = ['x','y','z'])
-            except ValueError:
-                df = pd.DataFrame(array,columns = ['x','y'])
+            if array.shape[1] > 3:
+                try:
+                    df = pd.DataFrame(array,columns  = ['x0','x1','y0','y1','z0','z1'])
+                except ValueError:
+                    df = pd.DataFrame(array,columns = ['x0','x1','y0','y1'])
+            else:
+                try:
+                    df = pd.DataFrame(array,columns = ['x','y','z'])
+                except ValueError:
+                    df = pd.DataFrame(array,columns = ['x','y'])
         
         elif isinstance(array,pd.DataFrame):
 
@@ -497,7 +504,8 @@ class SurfaceFile(FluentFile):
                                            export_variables: list,
                                            prefix = None,
                                            seperator = '-',
-                                           create_surfaces = True) -> None:
+                                           create_surfaces = True,
+                                           cell_centered = True) -> None:
 
         """
         Parameters
@@ -523,7 +531,7 @@ class SurfaceFile(FluentFile):
         for each of the point surfaces
         """
         text,names = cls._create_fluent_input_from_table(df,R,prefix = prefix,seperator = seperator,file_name = file_name)
-        _txt =  cls.LINE_BREAK + cls._format_export_command(names,export_variables,file_name + cls.OUTPUT_FILE_EXT)
+        _txt =  cls.LINE_BREAK + cls._format_export_command(names,export_variables,file_name + cls.OUTPUT_FILE_EXT,cell_centered = cell_centered)
         if create_surfaces:
             text += _txt
         else:
@@ -538,7 +546,8 @@ class SurfaceFile(FluentFile):
     def _format_export_command(cls,
                               names: list,
                               field_variables: list,
-                              file_name: str) -> None:
+                              file_name: str,
+                              cell_centered = True) -> None:
 
         txt = cls.EXPORT_CMD + cls.LINE_BREAK
         txt += file_name + cls.LINE_BREAK
@@ -563,10 +572,71 @@ class SurfaceFile(FluentFile):
             
             txt += fv + cls.LINE_BREAK
         
-        txt += ',' + cls.LINE_BREAK
-        txt += 'yes' + cls.LINE_BREAK               #yes to cell-centered
+        txt += 'q' + cls.LINE_BREAK
+        if cell_centered:
+            txt += 'yes' + cls.LINE_BREAK               #yes to cell-centered
+        else:
+            txt += 'no' + cls.LINE_BREAK
 
         return txt
+
+class LineSurfaceFile(SurfaceFile):
+
+    """ 
+    LineSurfaceFile
+
+    A specific surface file format type. Creates and reads line surface files
+
+    Parameters
+    ----------
+    fname : str
+            the file namea as a string
+    """
+
+    CREATE_SL_CMD = 'line-surface'
+
+    def __init__(self,fname) -> None:
+
+        super().__init__(fname)
+
+
+    @classmethod
+    def _create_fluent_input_from_table(cls, df: Union[pd.DataFrame, np.ndarray],
+                                            R,
+                                            prefix = 'line',
+                                            seperator = '-',
+                                            file_name = None) -> None:
+        """
+        Called by write_fluent_input_from_table.
+        convert a pandas DataFrame to a series of TUI commands to create the
+        lines listed
+        """
+        cls.fname= file_name
+        df,_ = cls._parse_from_table_input(df,None)
+        txt = cls.SURFACE_CMD + cls.LINE_BREAK
+        names = []
+        for i in df.index:
+            txt += cls.CREATE_SL_CMD + cls.LINE_BREAK
+            txt += prefix + seperator + str(i) + cls.LINE_BREAK
+            names.append(prefix + seperator + str(i))
+            txt += cls._row_to_text(cls.LINE_BREAK,df.loc[i])
+        
+        txt += cls.EXIT_CMD
+
+        return txt,names
+
+    @classmethod
+    def write_fluent_input_from_table(cls, df: Union[pd.DataFrame,np.ndarray],
+                                           file_name: str,
+                                           export_variables: list,
+                                           prefix = 'line',
+                                           seperator = '-',
+                                           create_surfaces = True,
+                                           cell_centered = True) -> None:
+
+
+        return super().write_fluent_input_from_table(df,None,file_name,export_variables,
+        prefix = prefix,seperator=  seperator,create_surfaces = create_surfaces, cell_centered = cell_centered)
 
 class SphereSliceFile(SurfaceFile):
     """

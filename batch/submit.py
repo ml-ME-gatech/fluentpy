@@ -66,7 +66,20 @@ class FluentSubmission(SerializableClass,ABC):
         if self.__write_file_attributes is None:
             raise NotImplementedError('write_file_attributes cannot be None')
         
-        return self.__write_file_attributes
+        _write_attr = self.__write_file_attributes.copy()
+
+        #determine if there are any udf source files required for compilation
+        try:
+            for bc in self.fluent_journal.boundary_conditions:
+                for udf in bc.udf.values():
+                    if udf.file_name is not None:
+                        _write_attr[udf.file_name] = True
+
+        except AttributeError:
+            pass
+    
+        return _write_attr
+
     
     @write_file_attributes.setter
     def write_file_attributes(self,wfa : dict) -> None:
@@ -86,13 +99,21 @@ class FluentSubmission(SerializableClass,ABC):
         """ 
         writes the fluent journal to a folder along with any additional
         required files.
+
+        if the value of the requested key in the write file attribute is True,
+        assume that this is a file that we want to copy to the directory
         """
         
         if not os.path.isdir(folder):
             os.mkdir(folder)
         
         for attr, file_name in self.write_file_attributes.items():
-            self.__getattribute__(attr).write(os.path.join(folder,file_name))
+            if isinstance(file_name,bool) and file_name:
+                _,fname = os.path.split(attr)
+                dst_file = os.path.join(folder,fname)
+                shutil.copyfile(attr,dst_file)
+            else:
+                self.__getattribute__(attr).write(os.path.join(folder,file_name))
     
     def format_submit(self,f: str) -> list:
         """
