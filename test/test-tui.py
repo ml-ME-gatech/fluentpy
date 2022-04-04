@@ -1,6 +1,7 @@
-from fluentpy.tui import WallBoundaryCondition,UDF,MassFlowInlet,PressureOutlet,Solver,Solver_Iterator,\
+from multiprocessing.sharedctypes import Value
+from fluentpy.tui import MeshScale, WallBoundaryCondition,UDF,MassFlowInlet,PressureOutlet,Solver,Solver_Iterator,\
                                 FluentJournal,ConvergenceConditions,Discritization,NISTRealGas,ScalarRelaxation,\
-                                EquationRelaxation, VelocityInlet
+                                EquationRelaxation, VelocityInlet,MeshRotation, MeshTranslation
 from fluentpy.util import _surface_construction_arg_validator
 
 from unittest import TestCase,main
@@ -222,7 +223,7 @@ class TestSurfaceIntegrals(TestCase):
         self.assertListEqual(output[0],[['12'],['10','11']])
         self.assertListEqual(output[1],['temperature','temperature'])
         self.assertListEqual(output[2],['area-weighted-avg','area-weighted-avg'])
-"""
+
 
 class TestVelocityInlet(TestCase):
 
@@ -231,7 +232,39 @@ class TestVelocityInlet(TestCase):
         vi = VelocityInlet('velocity_inlet',['viscous'],'pressure-based','ke-standard',
                             precision_specification = '2ddp')
         print(vi())
-    
+"""
 
+
+class TestMeshRotation(TestCase):
+
+    def test_rotation_output(self):
+
+        mr = MeshRotation(170,[1,0,0],[0,1,0])
+        print(str(mr))
+
+    def test_mismatched_length(self):
+
+        with self.assertRaises(ValueError):
+            mr = MeshRotation(170,[0,0],[1,1,1])
+        
+    def test_incorrect_shape(self):
+
+        with self.assertRaises(ValueError):
+            mr = MeshRotation(170,[[180,170],[40,50],[50,80]],[1,1,1])
+
+class TestMeshTranslation(TestCase):
+
+    def test_translation_output(self):
+
+        mt = MeshTranslation([1,0,0])
+        print(str(mt))
+
+class TestMeshScale(TestCase):
+
+    def test_scale_output(self):
+
+        ms = MeshScale([1,1,1])
+        print(str(ms))
+    
 if __name__ == '__main__':
     main()

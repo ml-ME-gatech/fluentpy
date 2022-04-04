@@ -1,7 +1,6 @@
 #third party imports
 from io import StringIO
-from multiprocessing.sharedctypes import Value
-from typing import Iterable,Union
+from typing import Iterable,Union, List
 import more_itertools
 import numpy as np
 import pandas as pd
@@ -543,11 +542,25 @@ class SurfaceFile(FluentFile):
         return cls(file_name)
     
     @classmethod
+    def existing_export(cls,
+                        surface_name: str,
+                        file_name: str,
+                        export_variables: list,
+                        output_ext = '.out',
+                        cell_centered = True) -> None:
+        
+        text = cls.LINE_BREAK + cls._format_export_command(surface_name,export_variables,file_name + output_ext,cell_centered)
+        with open(file_name,'w') as file:
+            file.write(text)
+        
+        return cls(file_name)
+
+    @classmethod
     def _format_export_command(cls,
                               names: list,
                               field_variables: list,
                               file_name: str,
-                              cell_centered = True) -> None:
+                              cell_centered = True) -> str:
 
         txt = cls.EXPORT_CMD + cls.LINE_BREAK
         txt += file_name + cls.LINE_BREAK
@@ -1433,36 +1446,7 @@ class SolutionFiles(FluentFiles):
         super().__init__(flist,*args,**kwargs)
         self.component_class = SolutionFile
         self._set_component_class()
-        self.__input_parameters = dict.fromkeys(self.keys)
 
-    @property
-    def input_parameters(self):
-        return self.__input_parameters
-    
-    @input_parameters.setter
-    def input_parameters(self,ip):
-        self.__input_parameters = ip
-    
-    def read_params(self):
-        for key in self.keys:
-            with self.__getitem__(key) as ffile:
-                self.input_parameters[key] = ffile.read_params()
-        
-        return self.input_parameters
- 
-    def params_as_frame(self):
-        _f = True
-        for value in self.input_parameters.values(): 
-            if value is not None:
-                _f = False
-                break
-                
-        if _f:
-            self.read_params()
-        
-        df = pd.DataFrame.from_dict(self.input_parameters,orient = 'index')
-        df.index.name = 'File'
-        return df
 
 class SurfaceIntegralFile(FluentFile):
     """

@@ -119,10 +119,10 @@ class BatchFileSystem(ABC):
         arg_dict = {str(f.resolve()):str(f.parent.name) for files in 
                     self.report_file_dict.values() for f in files}
         
-        self.report_files = ReportFilesOut(list(arg_dict.keys()),
+        self.__report_files = ReportFilesOut(list(arg_dict.keys()),
                                           folder_names = list(arg_dict.values()))
         
-        self.report_files.load()
+        self.__report_files.load()
 
     def _make_solution_files(self):
 
@@ -135,10 +135,10 @@ class BatchFileSystem(ABC):
         arg_dict = {str(f.resolve()):str(f.parent.name) for files in 
                     self.solution_file_dict.values() for f in files}
 
-        self.solution_files = SolutionFiles(list(arg_dict.keys()),
+        self.__solution_files = SolutionFiles(list(arg_dict.keys()),
                                            folder_names = list(arg_dict.values()))
         
-        self.solution_files.load()
+        self.__solution_files.load()
     
     def _find_ext_in_submission_folders(self,ext,
                                              tag = '') -> dict:

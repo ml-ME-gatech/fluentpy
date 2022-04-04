@@ -59,8 +59,10 @@ class Material:
                 
                 self.__df = df
                 self.__txt = '\t('  + name + ' ' + mattype + '\n'
-                if chemical_formulae is not None:
-                        self.__txt += '\t(' + chemical_formulae + ' . #f)\n'
+                if chemical_formulae is None:
+                        chemical_formulae = '#f'
+                
+                self.__txt += '\t\t(chemical-formula . ' + chemical_formulae + ')\n'
                 
                 self.data_to_text()
 
@@ -116,7 +118,7 @@ class Material:
         
         def write(self,f):
                 try:
-                        with open(f,'r') as file:
+                        with open(f,'w') as file:
                                 file.write(self.__str__()) 
                 except TypeError:
                         f.write(self.__str__())
@@ -176,7 +178,7 @@ class Property:
                 return self._series_property(self.df)
         
         def to_txt(self):
-                txt = '(' + self.df.name + ' '
+                txt = '\t(' + self.df.name + ' '
                 txt += self.data_to_text()
                 return txt
 

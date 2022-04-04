@@ -1,9 +1,12 @@
 #native imports
 from abc import ABC,abstractmethod
+from multiprocessing.sharedctypes import Value
 import os
 from typing import Hashable, OrderedDict, Union, List, ValuesView
 import os
 import subprocess
+from unittest.loader import VALID_MODULE_NAME
+from unittest.mock import DEFAULT
 import numpy as np 
 import sys
 from pathlib import PosixPath, PurePath,WindowsPath
@@ -13,7 +16,7 @@ import re
 
 #package imports
 from .disk import SerializableClass
-from .util import _surface_construction_arg_validator
+from .util import _surface_construction_arg_validator,get_fluent_path
 from .fluentio import SurfaceIntegralFile
 
 __all__ = [
@@ -587,11 +590,18 @@ class CaseMeshReplaceReader(FileIO):
     _prefix = 'mesh/replace'
 
     def __init__(self,case_file: str,
-                      mesh_file: str) -> None:
+                      mesh_file: str,
+                      intermediate_modifications = []) -> None:
 
         _case_reader = CaseReader(case_file)
-        self._prefix = str(_case_reader) + self.LINE_BREAK + self._prefix
+        _prefix = str(_case_reader) + self.LINE_BREAK
+        for im in intermediate_modifications:
+            _prefix += str(im)
+        
+        self._prefix = _prefix + self._prefix
+        
         super().__init__(mesh_file)
+
     
 class CaseDataReader(CaseReader):
 
@@ -615,6 +625,20 @@ class CaseDataReader(CaseReader):
     """
     _prefix = 'file/read-case-data'
 
+class CaseAppendReader(TUIBase):
+
+    _prefix = 'mesh/modify-zones/append-mesh-data'
+    def __init__(self,case_file: str):
+
+        self.case_file = case_file
+
+    def __str__(self):
+
+        txt = self._prefix + self.LINE_BREAK
+        txt += self.case_file + self.LINE_BREAK
+        return txt
+
+
 class FluentEngine(TUIBase):
 
     """
@@ -634,7 +658,11 @@ class FluentEngine(TUIBase):
     reader : object
             keyword argument specifying the type of reader to use to read in the
             case file. Readers must have a __str__ method. - default CaseDataReader
-    
+    fluent_path : str
+            keyword argument specifying the path to the fluent executable
+    version : str
+            the version of fluent being used. may be used to switch between paths
+
     Examples
     --------
     example demonstrates how to extract a surface integral from a case file via fluent.
@@ -647,15 +675,17 @@ class FluentEngine(TUIBase):
         sif = si()
     """
 
-    POSIX_FLUENT_INIT_STATEMENT = 'fluent 3ddp -t{} < {} > {}'
-    WINDOWS_FLUENT_INIT_STATEMENT = 'fluent {} -t{} -g -i {} -o {}'
+    POSIX_FLUENT_INIT_STATEMENT = '{}/fluent {} -t{} < {} > {}'
+    WINDOWS_FLUENT_INIT_STATEMENT = '{}/fluent {} -t{} -g -i {} -o {}'
     FLUENT_INPUT_NAME = 'input.fluent'
     FLUENT_OUTPUT_NAME = 'output.fluent'
 
     def __init__(self,file: str,
                       specification = '3ddp',
                       num_processors = 1,
-                      reader = CaseDataReader):
+                      reader = CaseDataReader,
+                      version = '19.1',
+                      fluent_path = None):
         
         self.path,file_name = os.path.split(file)
         self.spec = specification
@@ -664,6 +694,8 @@ class FluentEngine(TUIBase):
         self._additional_txt = ''
         self.input_file = os.path.join(self.path,self.FLUENT_INPUT_NAME)
         self.output_file = os.path.join(self.path,self.FLUENT_OUTPUT_NAME)
+        self.__fluent_path = fluent_path
+        self.version = version
     
 
     def insert_text(self,other):
@@ -672,6 +704,14 @@ class FluentEngine(TUIBase):
     @property
     def num_processors(self):
         return str(self.__num_processors)
+
+    @property
+    def fluent_path(self):
+
+        if self.__fluent_path is None:
+            return get_fluent_path(self.version)
+        else:
+            return self.__fluent_path
 
     def _fluent_initializer(self,
                             system = None):
@@ -690,15 +730,17 @@ class FluentEngine(TUIBase):
                 system = 'posix'
             
         if system == 'windows':
-            return self.WINDOWS_FLUENT_INIT_STATEMENT.format(self.spec,
-                                                        self.num_processors,
-                                                        self.FLUENT_INPUT_NAME,
-                                                        self.FLUENT_OUTPUT_NAME) + self.EXIT_CHAR
+            return self.WINDOWS_FLUENT_INIT_STATEMENT.format(self.fluent_path,
+                                                            self.spec,
+                                                            self.num_processors,
+                                                            self.FLUENT_INPUT_NAME,
+                                                            self.FLUENT_OUTPUT_NAME) + self.EXIT_CHAR
         elif system == 'posix':
-            return self.POSIX_FLUENT_INIT_STATEMENT.format(self.spec,
-                                                        self.num_processors,
-                                                        self.FLUENT_INPUT_NAME,
-                                                        self.FLUENT_OUTPUT_NAME) + self.EXIT_CHAR
+            return self.POSIX_FLUENT_INIT_STATEMENT.format(self.fluent_path,
+                                                            self.spec,
+                                                            self.num_processors,
+                                                            self.FLUENT_INPUT_NAME,
+                                                            self.FLUENT_OUTPUT_NAME) + self.EXIT_CHAR
         else:
             raise ValueError('system must be one of 1. windows or 2. posix')
         
@@ -963,6 +1005,124 @@ class Solver(TUIBase):
         txt += str(self.usage) + self.LINE_BREAK
         return txt 
 
+
+class ReportFile(TUIBase):
+    """
+    Class for adding report files to a Fluent simulation.
+    - Both creation and deletion of a file is not permitted in a single class
+    - if a file is deleted, any supplied variables are ignored
+
+    Parameters
+    ----------
+    fname: str
+            the string of the report file name
+    variables: List[str]
+            optional keyword arguments containing a list of variables to include
+            in the report file
+    create: bool
+            optional keyword argument to create the report file
+    delete: bool
+            optional keyword argument to delete the report file
+    
+    Examples
+    --------
+
+    .. code-block:: python
+        
+        rf = ReportFile('report-file-1',variables = ['p-in','t-out'],
+                        create = False)
+        
+        print(str(rf))
+
+    """
+
+    _prefix = 'solve/report-files/'
+    _delete_prefix = 'delete'
+    _create_prefix = 'add'
+    _edit_prefix = 'edit'
+
+
+    def __init__(self,fname: str,
+                      variables = [],
+                      create = False,
+                      delete = False):
+
+        if create and delete:
+            raise ValueError('cannot both create and delete report file')
+        
+
+        self.fname,self.ext = os.path.splitext(fname)
+        self.variables = variables
+        self.create = create
+        self.delete = delete
+    
+    def add_variables(self,variables: List[str]) -> None:
+        
+        self.variables += variables
+    
+    def format_delete(self) -> str:
+
+        txt = self._prefix + self._delete_prefix + self.LINE_BREAK
+        txt += self.fname + self.LINE_BREAK
+        
+        return txt
+
+    def format_creation(self) -> str:
+        
+        txt = self._prefix + self._create_prefix + self.LINE_BREAK
+        txt += self.fname + self.LINE_BREAK
+
+        return txt
+    
+    def format_add_report_definition(self) -> str:
+
+        txt = self._prefix + self._edit_prefix + self.LINE_BREAK
+        txt += self.fname + self.LINE_BREAK
+        txt += 'report-defs' + self.LINE_BREAK
+        
+        for v in self.variables:
+            txt += v + self.LINE_BREAK
+        
+        return txt
+    
+    def format_report(self) -> str:
+
+        txt = ''
+        if self.delete:
+            txt += self.format_delete()
+            return txt
+
+        elif self.create:
+            txt += self.format_creation()
+            if self.variables:
+                txt += self.format_add_report_definition()
+
+        return txt
+
+    def __str__(self) -> str:
+
+        return self.format_report()
+
+    def __call__(self) -> str:
+
+        return self.format_report() 
+
+
+class ReportDefinitions(TUIBase):
+
+    _prefix = 'solve/report-definitions'
+    _create_prefix = ''
+    def __init__(self,name: str,
+                      delete = False):
+
+        self.name = name
+        self.delete = delete
+
+    def format_creation(self,name) -> str:
+
+        pass
+
+
 class ConvergenceConditions(TUIBase):
     """
     modify convergence conditions
@@ -1162,6 +1322,10 @@ class RPSetVarModification(TUIBase, ABC):
         
         return txt
     
+    def __str__(self) -> str:
+
+        return self.__call__()
+    
 class TwoEquationModelConstants(RPSetVarModification):
 
     """
@@ -1241,6 +1405,51 @@ class KOmegaModelConstants(TwoEquationModelConstants):
         
         super().__init__(defaults = DEFAULTS,**kwargs)
 
+class GEKOModelConstants(TwoEquationModelConstants):
+
+    def __init__(self,**kwargs):
+
+        DEFAULTS = {'c_jet_aux': None,
+                    'c_jet':None,
+                    'c_real': None,
+                    'c_mix':None,
+                    'c_nw_sub':None,
+                    'c_nw':None,
+                    'c_sep':None,
+                    'bf_tur': None}
+
+        self.parameter_lookup = {'geko-cjet-aux':'c_jet_aux',
+                                  'geko-cjet-v193':'c_jet',
+                                  'geko-creal':'c_real',
+                                  'geko-cmix':'c_mix',
+                                  'geko-cnw-sub': 'c_nw_sub',
+                                  'geko-cnw':'c_nw',
+                                  'geko-csep':'c_sep',
+                                  'geko-bf-tur':'bf_tur'}
+        
+        super().__init__(defaults= DEFAULTS,**kwargs)
+
+class ModelModificationCollector:
+
+    def __init__(self,modifications: List,
+                      rule: callable):
+
+        self.modifications = modifications
+        self.rule = rule
+
+    def apply_rules(self, modification):
+
+        txt = self.rule(modification)
+        return txt
+
+    def __str__(self) -> str:
+        
+        txt = ''
+        for modification in self.modifications:
+            txt += self.apply_rules(modification)
+
+        return txt
+
 class ModelModification(ABC,TUIBase):
 
     _prefix = 'define/models/{}'
@@ -1277,8 +1486,9 @@ class ViscousModelModification(ModelModification):
     3. 'ke-standard'
     4. 'kw-bsl'
     5. 'kw-sst'
-    6. 'kw-standard'
-    7. 'k-kl-w'
+    6. 'kw-geko' or 'geko'
+    7. 'kw-standard'
+    8. 'k-kl-w'
     
     Parameters
     ---------
@@ -1304,6 +1514,8 @@ class ViscousModelModification(ModelModification):
                                 'ke-standard',
                                 'kw-bsl',
                                 'kw-sst',
+                                'kw-geko',
+                                'geko',
                                 'kw-standard',
                                 'k-kl-w',
                                 'reynolds-stress-model']
@@ -1431,6 +1643,29 @@ class FluidMaterialModification(MaterialModification):
         return txt
 
 class FluentCellZone(ABC,TUIBase):
+    """
+    Class for modifications to a Fluent Cell Zone, either solid or
+    fluid. Offers the ability to (1) change the material, (2) add a constant source
+    (3) modify the zone type. 
+
+    Parameters
+    ----------
+    name: str
+            name of the fluent cell zone
+    boundary_type: str
+            the type of the zone to be modified i.e. solid,fluid,wall,mass inlet ect...
+
+    
+    Examples
+    --------
+
+    .. code-block:: python
+
+        fcz = FluentCellZone('my_zone','fluid')
+        fcz.modify_zone_type('solid')
+        fcz.change_material('aluminum')
+    
+    """
 
     _prefix = '/define/boundary-conditions/{}'
     def __init__(self,name: str,
@@ -1545,6 +1780,10 @@ class FluentCellZone(ABC,TUIBase):
 
         return self.format_boundary_condition()
     
+    def __str__(self) -> str:
+
+        return self.format_boundary_condition()
+    
     def format_boundary_condition(self) -> str:
 
         if self._modify_zone:
@@ -1569,6 +1808,7 @@ class FluentCellZone(ABC,TUIBase):
         txt += '0' + self.LINE_BREAK
         txt += 'no'  + self.LINE_BREAK
         txt += '1'  + self.LINE_BREAK
+        txt += 'no'  + self.LINE_BREAK
         txt += 'no'  + self.LINE_BREAK
         txt += 'no'  + self.LINE_BREAK
 
@@ -1597,6 +1837,353 @@ class SolidCellZone(FluentCellZone):
     def __init__(self,name: str) -> None:
 
         super().__init__(name,'solid')
+
+class MeshMerge(TUIBase):
+    """
+    Class for merging zones in fluent
+    
+    Parameters
+    ----------
+    zone_list: List[str]
+            a list of string names for the zones to merge
+
+    Examples
+    ---------
+    
+    .. code-block:: python
+    
+        mm = MergeMesh(['zone1','zone2','zone3'])
+
+    """
+
+    _prefix = 'mesh/modify-zones/merge-zones'
+    def __init__(self,zone_list: List[str]):
+
+        self.zone_list = zone_list
+
+    def __str__(self):
+
+        txt = self._prefix + self.LINE_BREAK
+        for zone in self.zone_list:
+            txt += zone + self.LINE_BREAK
+        
+        txt += ',' + self.LINE_BREAK
+    
+        return txt
+
+class MeshFaceFuse(TUIBase):
+    """
+    Class for fusing faces in a mesh in fluent
+
+    Parameters
+    ----------
+    face_list: List[str]
+            a list of string names of the faces to fuse
+    tolerance: float [optional]
+            an optional keyword argument to supply a tolerance for the face fusing
+    
+    Examples
+    --------
+
+    .. code-block:: python
+
+        mff = MeshFaceFuse(['myface','myface1'],tolerance = 0.000003)
+
+    """
+    _prefix = 'mesh/modify-zones/{}'
+    def __init__(self,face_list: List[str],
+                      fused_name: str,
+                      tolerance = 0.05):
+
+        self.face_list = face_list
+        self.fused_name = fused_name
+        self.tolerance = tolerance
+
+    @property
+    def tolerance_prefix(self):
+        return self._prefix.format('matching-tolerance')
+    
+    @property
+    def fuse_prefix(self):
+        return self._prefix.format('fuse-face-zones')
+    
+    def format_tolerance(self):
+
+        txt = self.tolerance_prefix + self.LINE_BREAK
+        txt += str(self.tolerance) + self.LINE_BREAK
+        return txt
+
+    def format_face_list(self):
+
+        txt = self.fuse_prefix + self.LINE_BREAK
+        for face in self.face_list:
+            txt += face + self.LINE_BREAK
+        
+        txt += ',' + self.LINE_BREAK
+        txt += self.fused_name + self.LINE_BREAK
+
+        return txt
+    
+    def __str__(self):
+
+        return self.format_tolerance() + self.format_face_list()
+
+        
+class MeshTransform(TUIBase,ABC):
+
+    _base_prefix = 'mesh/{}'
+    transform_type = None
+
+    def __init__(self):
+        pass
+
+    @property
+    def prefix(self):
+        return self._base_prefix.format(self.transform_type)
+    
+    @abstractmethod
+    def transform(self) -> str:
+        pass 
+
+    def __str__(self):
+        return self.transform()
+
+class MeshTranslation(MeshTransform):
+
+    """
+    Class for translating the mesh
+
+    Parameters
+    ----------
+    offset: np.ndarray
+            the offset by which to transform the mesh by
+
+    Examples
+    --------
+
+    .. code-block:: python
+
+        mt = MeshTranslation([1,0,0])
+    
+    """
+
+    def __init__(self,offset: np.ndarray) -> np.ndarray:
+
+        self.transform_type = 'translate'
+        offset = np.array(offset).squeeze()
+        if offset.ndim != 1:
+            raise ValueError('offset must be specified as a 1-D vector')
+        
+        if offset.shape[0] != 2 and offset.shape[0] !=3:
+            raise ValueError('offset must be either a 2 or 3D vector')
+        
+        self.offset = list(offset)
+    
+    def transform(self) -> str:
+        txt = self.prefix + self.LINE_BREAK
+        for ov in self.offset:
+            txt += str(ov) + self.LINE_BREAK
+
+        return txt
+
+class MeshScale(MeshTransform):
+    """
+    Class for scaling the mesh
+
+    Parameters
+    ---------
+    scale_factor: np.ndarray
+            the x,y,z vector intended for scaling
+    
+    Examples
+    --------
+
+    .. code-block:: python
+
+        ms = MeshScale([1,-1,1])
+    """
+
+    def __init__(self,scale_factor: np.ndarray) -> np.ndarray:
+
+        self.transform_type = 'scale'
+        scale_factor = np.array(scale_factor).squeeze()
+        if scale_factor .ndim != 1:
+            raise ValueError('scale factor must be specified as a 1-D vector')
+        
+        if scale_factor.shape[0] != 2 and scale_factor .shape[0] !=3:
+            raise ValueError('scale factor must be either a 2 or 3D vector')
+
+        self.scale_factor = list(scale_factor)
+    
+    def transform(self) -> str:
+        
+        txt = self.prefix + self.LINE_BREAK
+        for sf in self.scale_factor:
+            txt += str(sf) + self.LINE_BREAK
+        
+        return txt
+
+class MeshRotation(MeshTransform):
+    """
+    Class for rotating the mesh
+
+    Parameters
+    ----------
+    rotation_angle : float
+            the angle (in degrees) by which to rotate the meshes
+    origin : np.ndarray
+            the origin to perform the rotation around
+    axis : np.ndarray
+            the axis to perform the rotation around
+    
+    Examples
+    --------
+
+    .. code-block:: python
+
+        mr = MeshRotation(5,[0,0,0])
+
+    """
+    def __init__(self,rotation_angle: float,
+                      origin: np.ndarray,
+                      axis: np.ndarray):
+
+        """
+        include some basic parsing to ensure that the origin 
+        and axis are specified correctly as either 2 or 3 D 
+        arrays so that there is no confusion and reduce the possibility
+        for errors. Also ensure that the two arguments are the same length
+        """
+
+        self.transform_type = 'rotate'
+
+        array_args = [origin,axis]
+        array_names = ['origin','axis']
+        array_parsed = []
+        for aa,an in zip(array_args,array_names):
+            array = np.array(aa).squeeze()
+            if array.ndim != 1:
+                raise ValueError('{} must be a 1-D array'.format(an))
+            
+            if array.shape[0] != 2 and array.shape[0] != 3:
+                raise ValueError('{} must be specifided as a 2 or 3 dimensional vector'.format(an))
+        
+            array_parsed.append(list(aa))
+
+        self.origin,self.axis = array_parsed
+
+        if len(self.origin) != len(self.axis):
+            raise ValueError('origin and axis arugments must have identical length')
+        
+        self.rotation_angle = rotation_angle
+    
+    def transform(self) -> str:
+        """
+        format the arguments into string interpretable by fluent
+        """
+        
+        txt = self.prefix + self.LINE_BREAK
+        txt += str(self.rotation_angle) + self.LINE_BREAK
+        for ov in self.origin:
+            txt += str(ov) + self.LINE_BREAK
+        
+        for av in self.axis:
+            txt += str(av) + self.LINE_BREAK
+        
+        
+        return txt
+        
+
+class DeleteAllInterface(TUIBase):
+
+    """
+    Class for deleting all mesh iterfaces
+    
+    Parameters
+    ----------
+    None
+
+    Examples
+    ---------
+
+    .. code-block:: python
+        
+        dai = DeleteAllInterface()
+        str(dai)
+
+    """
+
+    _prefix = 'define/mesh-interfaces/delete-all'
+
+    def __init__(self):
+        pass
+
+    def __str__(self):
+        return self._prefix + self.LINE_BREAK + 'yes' + self.LINE_BREAK
+    
+class MeshInterface(TUIBase):
+    """
+    Class for constructing a mesh interface between two or more boundary conditions
+    or zones in a mesh
+
+    Parameters
+    ---------- 
+    zone_list : List[str]
+            a list of strings designating the zones to be combined via the mesh interface
+
+    Examples
+    --------
+    .. code-block:: python
+
+        mi = MeshInterface(['my-zone','my-zone:1'])
+        str(mi)
+
+    """
+    _prefix = 'define/mesh-interfaces/create'
+
+    def __init__(self,zone_list: Union[List[str],str],
+                      interface_prefix = 'intf',
+                      exclude = False):
+
+        self.zone_list = zone_list
+        self.interface_prefix = interface_prefix
+        self.exclude = exclude
+    
+    def _format_defined_interface(self):
+
+        txt = self._prefix + self.LINE_BREAK
+        txt += self.interface_prefix + self.LINE_BREAK
+        if self.exclude:
+            txt += 'no' + self.LINE_BREAK
+        
+        for zone in self.zone_list:
+            txt += zone + self.LINE_BREAK
+        
+        txt += ',' + self.LINE_BREAK
+        txt += 'no' + self.LINE_BREAK
+        return txt
+    
+    def _format_auto_interface(self):
+
+        txt = self._prefix + self.LINE_BREAK
+        txt += self.interface_prefix + self.LINE_BREAK
+        txt += 'yes' + self.LINE_BREAK
+        txt += 'no' + self.LINE_BREAK
+
+        return txt
+
+    
+    def __str__(self):
+
+        if isinstance(self.zone_list,list):
+            return self._format_interface()
+        
+        elif isinstance(self.zone_list,str) and self.zone_list.lower() == 'auto':
+            return self._format_auto_interface()
+        
+        else:
+            raise ValueError('cannot parse zone list to mesh interface command')
+        
 
 class UDF(TUIBase):
 
@@ -1936,7 +2523,7 @@ class FluentBoundaryCondition(ABC,TUIBase):
                                 'velocity-inlet',
                                 'turbulence_specification']
 
-    ALLOWABLE_VISCOUS_MODELS = ['ke-standard','kw-standard','ke-realizable','ke-rng']
+    ALLOWABLE_VISCOUS_MODELS = ['ke-standard','kw-standard','ke-realizable','ke-rng','geko','kw-geko']
     ALLOWABLE_MODELS = ['energy','viscous'] 
     ALLOWABLE_MODELS += ['viscous/' + vm for vm in ALLOWABLE_VISCOUS_MODELS]
     ALLOWABLE_REFERENCE_FRAME = ['absolute',
@@ -2628,6 +3215,9 @@ def _assign_turbulence_model(model:str,**kwargs) -> TwoEquationTurbulentBoundary
                         'ke-realizable':StandardKEpsilonSpecification,
                         'ke-rng': StandardKEpsilonSpecification,
                         'kw-standard':StandardKOmegaSpecification,
+                        'kw-sst':StandardKOmegaSpecification,
+                        'kw-geko':StandardKOmegaSpecification,
+                        'geko':StandardKOmegaSpecification,
                         'viscous':NoTurbulenceModel}
 
     try:
@@ -3171,7 +3761,13 @@ class FluentJournal(SerializableClass,TUIBase):
             self.write_case = True
             self.__case_writer = case_writer(output_name + '.cas')
         
-        self.__data_writer = data_writer(output_name + '.dat')
+        if data_writer is None:
+            self.write_data = False
+            self.__data_writer = None
+        else:
+            self.write_data = True
+            self.__data_writer = data_writer(output_name + '.dat')
+        
         self.__solver = solver
         self.__transcript_file = transcript_file
         self.__file_name = case_file
@@ -3291,12 +3887,14 @@ class FluentJournal(SerializableClass,TUIBase):
         txt += self._format_convergence_condition()
         txt += self._model_modification_spec()
         txt += self._boundary_conditions_spec()
-        txt += str(self.solver)
+        if self.solver is not None:
+            txt += str(self.solver)
         txt += self._post_spec()
         if self.write_case:
             txt += str(self.case_writer) + self.LINE_BREAK
         
-        txt += str(self.data_writer) + self.LINE_BREAK
+        if self.write_data:
+            txt += str(self.data_writer) + self.LINE_BREAK
         
         txt += 'exit' + self.LINE_BREAK
 

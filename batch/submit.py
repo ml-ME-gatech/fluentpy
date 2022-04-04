@@ -253,8 +253,11 @@ class FluentBatchSubmission(ABC):
     
     @property
     def case_file(self):
-        return os.path.split(self.case_file)[1]
-    
+        try:
+            return os.path.split(self.case_name)[1]
+        except TypeError:
+            return None
+        
     def __add__(self,other) -> None:
 
         if not isinstance(other,FluentBatchSubmission):
@@ -493,7 +496,11 @@ class PaceBatchSubmission(FluentBatchSubmission):
         with open(_bf,'w',newline = self.LINE_BREAK) as file:
             file.write(txt)
 
-        _,case_name = os.path.split(self.case_name)
+        try:
+            _,case_name = os.path.split(self.case_name)
+        except TypeError:
+            case_name = self.case_file
+        
         dst = os.path.join(parent,case_name)
         try:
             shutil.copy2(self.case_name,dst)

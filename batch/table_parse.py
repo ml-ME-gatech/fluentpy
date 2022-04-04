@@ -5,7 +5,8 @@ from typing import List, Type
 #package imports
 from ..tui import UDF, PressureOutlet, MassFlowInlet,\
                   WallBoundaryCondition, VelocityInlet, FluentBoundaryCondition,\
-                  KEpsilonModelConstants, KOmegaModelConstants,FluidMaterialModification
+                  KEpsilonModelConstants, KOmegaModelConstants,GEKOModelConstants,\
+                  FluidMaterialModification
 
 """"
 Author: Michael Lanahan
@@ -16,7 +17,17 @@ utility functions and classes for working with Fluent Batch Files
 and pace utility formatting
 """
 
-MODELS = ['energy','ke-standard','kw-standard','viscous']
+MODELS = [  'ke-realizable',
+            'ke-rng',
+            'ke-standard',
+            'kw-bsl',
+            'kw-sst',
+            'kw-geko',
+            'geko',
+            'kw-standard',
+            'k-kl-w',
+            'reynolds-stress-model']
+
 ALLOWABLE_BOUNDARY_TYPES = ['mass-flow-inlet','pressure-outlet','wall',
                             'velocity-inlet','model modification','fluid-modification']
 
@@ -260,6 +271,10 @@ def make_boundary_condition_from_series(btype: str,
                'velocity-inlet':VelocityInlet,
                'ke-standard':KEpsilonModelConstants,
                'kw-standard':KOmegaModelConstants,
+               'ke-realizable':KEpsilonModelConstants,
+               'kw-SST': KOmegaModelConstants,
+               'kw-geko':GEKOModelConstants,
+               'geko':GEKOModelConstants,
                'fluid-modification':FluidMaterialModification}
     
     if btype != 'model modification' and btype != 'fluid-modification':

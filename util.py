@@ -1,8 +1,37 @@
+from multiprocessing.sharedctypes import Value
 from typing import List, Union
 from pathlib import PurePath, WindowsPath,PosixPath
 import os
 import shutil
 import sys
+import json
+
+DAT_PATH = 'dat'
+def get_fluent_path(version: str) -> PurePath:
+
+    """ 
+    get the fluent path based on available versions
+
+    Parameters
+    ---------
+    version : str
+            fluent version as a string, like:
+            19.1 
+    """
+
+    path,_ = os.path.split(__file__)
+
+    file_name = os.path.join(path,DAT_PATH,'fluent-paths.json')
+
+    with open(file_name,'r') as file:
+        paths = json.load(file)
+    
+    if version not in paths:
+        string = 'allowable fluent versions:\n' + [v for v in paths].join('\n')
+        raise ValueError('fluent version {} not allowed.\n {}'.format(version,string))
+
+    return paths[version]
+
 
 def sort_list_of_lists_by_list_len(input_list: list) -> list:
 

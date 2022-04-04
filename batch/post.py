@@ -1,4 +1,6 @@
 #native imports
+from re import S
+from typing import Type
 import numpy as np
 import os
 import sys
@@ -43,10 +45,48 @@ elif os_name == 'linux' or os_name == 'posix':
 else:
     raise ValueError('Cannot determine Path structure from platform: {}'.format(os_name))
 
+def coerce_batch_indices(sl1: list,
+                         sl2: list,
+                         batch_folder1: str,
+                         batch_folder2: str) -> list:
+
+    try:
+        _sl1 = np.array(sl1,dtype = int)
+    except TypeError:
+        _sl1 = None
+    
+    try:
+        _sl2 = np.array(sl2,dtype = int)
+    except TypeError:
+        _sl2 = None
+    
+    if _sl1 or _sl2 is None:
+        bfolders1 = {batch_folder1 + '-'+ folder: os.path.join(batch_folder1,folder)\
+                     for folder in sl1}
+        bfolders2 = {batch_folder2 + '-' +folder: os.path.join(batch_folder2,folder)\
+                    for folder in sl2}
+        
+        for folder in bfolders1:
+            if folder in bfolders2:
+                raise ValueError('Cannot combine folders without overlapping names')
+        
+        return bfolders1,bfolders2
+    
+    else:
+        _sl2 += _sl1.max() + 1
+
+        bfolders1 = {str(folder): os.path.join(batch_folder1,str(folder))\
+                     for folder in _sl1}
+        bfolders2 = {str(folder): os.path.join(batch_folder2,str(folder))\
+                    for folder in _sl2}
+        
+        return bfolders1,bfolders2
+        
 def combine_batches(batch_folder1: str,
                     batch_folder2: str,
                     third_folder = None,
-                    verbose  = True) -> None:
+                    verbose  = True,
+                    append_indices = True) -> None:
     """
     utilitiy for combining batches after running them seperately
     """
@@ -58,14 +98,12 @@ def combine_batches(batch_folder1: str,
     batch1 = FluentBatchSubmission.from_batch_cache(batch_folder1)
     batch2 = FluentBatchSubmission.from_batch_cache(batch_folder2)
 
-    #make sure that there are no overlapping items here
-    bfolders1 = {folder: os.path.join(batch_folder1,folder) for folder in batch1.submission_object.keys()}
-    bfolders2 =  {folder: os.path.join(batch_folder2,folder) for folder in batch2.submission_object.keys()}
-    
-    for bf1 in bfolders1:
-        if bf1 in bfolders2:
-            raise ValueError('Cannot have overlap between folders for combining of batches')
-    
+    bfolders1,bfolders2 = coerce_batch_indices(batch1.submission_object,
+                                               batch2.submission_object,
+                                               batch_folder1,
+                                               batch_folder2)
+
+    batch2.submission_object = bfolders2.keys()                                            
     new_batch = batch1 + batch2
     new_batch.bash_submit(third_folder,purge = copy_flag)
 
@@ -75,7 +113,9 @@ def combine_batches(batch_folder1: str,
         """
         copy all of the folders to their respective locations
         """
-        submission_folders = {folder: os.path.join(third_folder,folder) for folder in batch.submission_object.keys()}
+        submission_folders = {folder: os.path.join(third_folder,folder) for\
+                              folder in batch.submission_object.keys()}
+
         for name,folder in batch_folders.items():
             if name in submission_folders:
                 for file in os.listdir(folder):
@@ -87,7 +127,7 @@ def combine_batches(batch_folder1: str,
                 _original,_ = os.path.split(folder)
                 print('copied contents of folder: {} from batch: {} to batch folder: {}'.format(name,_original,_name))
 
-        
+                                            
     if copy_flag:
         _transfer_folders(bfolders1,new_batch)
    
