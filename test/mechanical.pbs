@@ -1,0 +1,12 @@
+#PBS  -N D:\Scripting\Code\class3.wbjn
+#PBS  -A GT-my14
+#PBS  -q inferno
+#PBS  -o pace.out
+#PBS  -l walltime=12:00:00
+#PBS  -l pmem=4gb
+#PBS  -l nodes=1:ppn=8
+#PBS  -m abe
+
+cd $PBS_O_WORKDIR
+module load ansys/2019R3
+runwb2 -B -R "D:\Scripting\Code\class3.wbjn"

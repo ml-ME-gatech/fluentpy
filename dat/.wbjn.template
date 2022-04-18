@@ -1,0 +1,19 @@
+# encoding: utf-8
+# Release 19.1
+SetScriptVersion(Version="{}")
+Unarchive(
+    ArchivePath="{}",
+    ProjectPath="{}",
+    Overwrite=True)
+
+system1 = GetSystem(Name="FFF")
+solution1 = system1.GetContainer(ComponentName="Solution")
+solution1.ImportFinalData(FilePath="{}")
+
+system1 = GetSystem(Name="SYS")
+resultsComponent1 = system1.GetComponent(Name="Results")
+resultsComponent1.Update(AllDependencies=True)
+
+Save(Overwrite=True)
+
+Parameters.ExportAllDesignPointsData(FilePath="{}")

@@ -1,5 +1,5 @@
 import unittest
-from pace_fluent.pace_fluent.pbs import FluentPBS
+from fluentpy.pace_fluent.pbs import FluentPBS
 
 class TestFluentPBS(unittest.TestCase):
     
