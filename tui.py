@@ -563,6 +563,77 @@ class CaseReader(FileIO):
     
     _prefix = 'file/read-case'
 
+class BatchCaseReader(CaseReader):
+
+    """
+    Case reader for batched inputs. Assumes a file structure like: 
+
+    main folder
+    * | -> batch folder 1
+    * | -> batch folder 2
+    * .
+    * .
+    * | -> batch folder n
+
+    sample.cas``
+
+    will first change to an outer directory, read in file, and then change
+    back to the original directory
+
+    Parameters
+    ----------
+    file: str
+            the name of the .cas file as a string
+    
+    Examples
+    ---------
+    set folder to change back into on initiation
+    
+    .. code-block:: python
+        
+        bcr = BatchCaseReader('sample.cas',current_folder = 'main')
+        print(bcr)
+        > sync-chdir ..
+        > file/read-case sample.cas
+        > sync-chdir main
+    
+    set property directly 
+
+    .. code-block:: python
+
+        bcr = BatchCaseReader('sample.cas')
+        bcr.pwd = 'main'
+        print(bcr)
+
+        > sync-chdir ..
+        > file/read-case sample.cas
+        > sync-chdir main
+    """
+    
+    def __init__(self,file,
+                      current_folder = None):
+
+        super().__init__(file)
+        
+        self._prefix = 'sync-chdir ..' + self.LINE_BREAK + 'file/read-case'
+        
+        if current_folder is not None:
+            self.__pwd = current_folder
+        else:
+            self.__pwd = None
+        
+    @property
+    def _suffix(self):
+        return self.LINE_BREAK + 'sync-chdir {}'.format(self.pwd)
+        
+    @property
+    def pwd(self):
+        return self.__pwd
+
+    @pwd.setter
+    def pwd(self,pwd):
+        self.__pwd = pwd
+
 class CaseMeshReplaceReader(FileIO):
 
     """
@@ -591,18 +662,33 @@ class CaseMeshReplaceReader(FileIO):
 
     def __init__(self,case_file: str,
                       mesh_file: str,
-                      intermediate_modifications = []) -> None:
+                      intermediate_modifications = [],
+                      reader = CaseReader) -> None:
 
-        _case_reader = CaseReader(case_file)
-        _prefix = str(_case_reader) + self.LINE_BREAK
-        for im in intermediate_modifications:
-            _prefix += str(im)
-        
-        self._prefix = _prefix + self._prefix
+        self.intermediate_modifications = intermediate_modifications
+        self._case_reader = reader(case_file)
+        self.__pwd = None
         
         super().__init__(mesh_file)
 
+    @property
+    def pwd(self) -> str:
+        return self.__pwd
     
+    @pwd.setter
+    def pwd(self,pwd):
+        self.__pwd = pwd
+        self._case_reader.pwd = pwd
+
+    def __str__(self):
+        _prefix = str(self._case_reader) + self.LINE_BREAK
+        for im in self.intermediate_modifications:
+            _prefix += str(im)
+        
+        self._prefix = _prefix + self._prefix
+        return super().__str__()
+
+
 class CaseDataReader(CaseReader):
 
     """
@@ -801,74 +887,7 @@ class FluentEngine(TUIBase):
         self._clean()
         return process
 
-class BatchCaseReader(CaseReader):
 
-    """
-    Case reader for batched inputs. Assumes a file structure like: 
-
-    main folder
-    * | -> batch folder 1
-    * | -> batch folder 2
-    * .
-    * .
-    * | -> batch folder n
-
-    sample.cas``
-
-    will first change to an outer directory, read in file, and then change
-    back to the original directory
-
-    Parameters
-    ----------
-    file: str
-            the name of the .cas file as a string
-    
-    Examples
-    ---------
-    set folder to change back into on initiation
-    
-    .. code-block:: python
-        
-        bcr = BatchCaseReader('sample.cas',current_folder = 'main')
-        print(bcr)
-        > sync-chdir ..
-        > file/read-case sample.cas
-        > sync-chdir main
-    
-    set property directly 
-
-    .. code-block:: python
-
-        bcr = BatchCaseReader('sample.cas')
-        bcr.pwd = 'main'
-        print(bcr)
-
-        > sync-chdir ..
-        > file/read-case sample.cas
-        > sync-chdir main
-    """
-    
-    def __init__(self,file,
-                      current_folder = None):
-
-        super().__init__(file)
-        
-        self._prefix = 'sync-chdir ..' + self.LINE_BREAK + 'file/read-case'
-        
-        if current_folder is not None:
-            self.pwd = current_folder
-        
-    @property
-    def _suffix(self):
-        return self.LINE_BREAK + 'sync-chdir {}'.format(self.pwd)
-        
-    @property
-    def pwd(self):
-        return self.__pwd
-
-    @pwd.setter
-    def pwd(self,pwd):
-        self.__pwd = pwd
     
 class DataWriter(FileIO):
 
@@ -1416,7 +1435,10 @@ class GEKOModelConstants(TwoEquationModelConstants):
                     'c_nw_sub':None,
                     'c_nw':None,
                     'c_sep':None,
-                    'bf_tur': None}
+                    'bf_tur': None,
+                    'c_curv': None,
+                    'c_corner': None}
+
 
         self.parameter_lookup = {'geko-cjet-aux':'c_jet_aux',
                                   'geko-cjet-v193':'c_jet',
@@ -1425,7 +1447,9 @@ class GEKOModelConstants(TwoEquationModelConstants):
                                   'geko-cnw-sub': 'c_nw_sub',
                                   'geko-cnw':'c_nw',
                                   'geko-csep':'c_sep',
-                                  'geko-bf-tur':'bf_tur'}
+                                  'geko-bf-tur':'bf_tur',
+                                  'corner-flow-correction-ccorner':'c_corner',
+                                  'curvature-correction-ccurv':'c_curv'}
         
         super().__init__(defaults= DEFAULTS,**kwargs)
 

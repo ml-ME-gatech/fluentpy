@@ -1,5 +1,5 @@
 """
-Author: Michael
+Author(s): Michael Lanahan
 Date Created: 04.04.2022
 Last Edit 04.04.2022
 

@@ -3,6 +3,8 @@ from abc import ABC,abstractstaticmethod
 from datetime import timedelta
 from copy import deepcopy
 import math
+from ..pace import PaceScript
+import os
 
 #package imports
 from ..disk import SerializableClass
@@ -209,6 +211,90 @@ class DefaultPBS(PBS):
         super().__init__(name,account,'inferno',output_file,walltime,
                         memory,nodes,processors,email = email,
                         email_permissions= email_permissions,memory_request = memory_request)
+
+class PythonPBS(SerializableClass):
+
+    PBS_PDIR = '$PBS_O_WORKDIR'
+    def __init__(self,
+                 script: PaceScript,
+                 version = '2019.10',
+                 name = 'python_deployment',
+                 WALLTIME = 10,
+                 MEMORY = 1,
+                 N_NODES = 1,
+                 N_PROCESSORS = 1,
+                 pbs = DefaultPBS,
+                 account = 'GT-my14',
+                 memory_request = 'p'):
+
+        self.pbs = pbs(name,WALLTIME,MEMORY,N_NODES,N_PROCESSORS,
+                            'python_pace.out',memory_request = memory_request,
+                            account = account)
+        
+        self.script = script
+        try:
+            if not os.path.exists(self.script.target_dir):
+                os.mkdir(self.script.target_dir)
+        except TypeError:
+            pass
+        
+        self.version = version
+
+    @staticmethod
+    def format_change_dir(chdir)-> str:
+        """
+        this is important to change to the PBS dir which is an environment variable 
+        native to the bash shell on PACE
+        """
+        return 'cd ' + chdir
+    
+    def format_load_anaconda(self) -> str:
+
+        return 'module load anaconda3/{}'.format(self.version)
+
+    def format_run_script(self) -> str:
+
+        return 'python ' + self.script.script_name
+    
+    def format_call(self):
+
+        txt = self.pbs() + LINE_BREAK
+        txt += self.format_change_dir(self.PBS_PDIR) +LINE_BREAK
+        txt += self.format_load_anaconda() + LINE_BREAK
+        txt += self.script.setup() 
+        txt += self.format_run_script() + LINE_BREAK
+
+        return txt
+    
+    def __call__(self):
+        """
+        callable interface here
+        """
+        return self.format_call()
+    
+    def write(self,f):
+        """
+        write the script to a file or IOStream (whatever its called in python)
+        """
+        if self.script.target_dir is None:
+            self.script.target_dir,_ = os.path.split(f)
+
+        try:
+            with open(f,'w',newline = LINE_BREAK) as file:
+                file.write(self.format_call())
+
+        except TypeError:
+            f.write(self.format_call())
+
+    def _from_file_parser(dmdict):
+        """
+        parser from the file that allows instantation from file
+        """
+        dmdict['_cached_pbs'] = dmdict.pop('pbs')
+        dmdict.pop('class')
+        input_file = dmdict.pop('input_file')
+        dmdict['mpi_option'] = dmdict.pop('mpi_opt')
+        return [input_file],dmdict
 
 class FluentPBS(SerializableClass):
 

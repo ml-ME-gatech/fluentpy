@@ -1,6 +1,8 @@
 #native imports
-from typing import Iterable, Tuple
+from platform import python_branch
+from typing import Any, Iterable, Tuple, List
 import os
+from xml.dom.minidom import Attr
 from pandas.core.frame import DataFrame
 import numpy as np
 import shutil
@@ -13,7 +15,8 @@ import sys
 
 #package imports
 from ..disk import SerializableClass
-from .pbs import FluentPBS
+from ..pace import PaceScript
+from .pbs import FluentPBS, PythonPBS
 from ..tui import BatchCaseReader, FluentJournal
 from .table_parse import partition_boundary_table
 from .filesystem import TableFileSystem
@@ -94,6 +97,11 @@ class FluentSubmission(SerializableClass,ABC):
         """
         pass
 
+    @abstractmethod 
+    def pre_write(self,*args,**kwargs) -> Any:
+
+        pass
+
     def write(self,folder : str) -> None:
 
         """ 
@@ -107,6 +115,7 @@ class FluentSubmission(SerializableClass,ABC):
         if not os.path.isdir(folder):
             os.mkdir(folder)
         
+        self.pre_write(folder)
         for attr, file_name in self.write_file_attributes.items():
             if isinstance(file_name,bool) and file_name:
                 _,fname = os.path.split(attr)
@@ -122,7 +131,7 @@ class FluentSubmission(SerializableClass,ABC):
         
         self.write(f)
         return self.execute_command(f)
-    
+
 class PaceFluentSubmission(FluentSubmission):
     """
     The unit submission object for the computing cluster PACE @ GT
@@ -130,20 +139,46 @@ class PaceFluentSubmission(FluentSubmission):
     folder.
     """
 
+    path,_ = os.path.split(os.path.split(__file__)[0])
     PACE_PBS = 'fluent.pbs'
+    script_path = os.path.join(path,'dat','scripts')
+    DEFAULT_SCRIPT = 'single_deploy.py'
 
     def __init__(self,fluent_journal: FluentJournal,
-                      fluent_pbs: FluentPBS) -> None:
+                      fluent_pbs: FluentPBS,
+                      python_script = PaceScript,
+                      script_name = None,
+                      python_libs = [],
+                      python_envs = [],
+                      python_version = '2019.10') -> None:
 
+        if script_name is None:
+            script_name = self.DEFAULT_SCRIPT
+        
         super().__init__(fluent_journal)
-        self.write_file_attributes = {'fluent_journal':fluent_pbs.input_file,
-                                      'fluent_pbs':self.PACE_PBS}
-
         self.fluent_pbs = fluent_pbs
+        
+        script_name = os.path.join(self.script_path,script_name)
+
+        self.python_script = python_script(script_name,None,libs = python_libs,
+                                           envs = python_envs,python_version = python_version)
+
+        self.write_file_attributes = {'fluent_journal':fluent_pbs.input_file,
+                                      'fluent_pbs':self.PACE_PBS,
+                                      'python_script':self.python_script.script_name}
+        
 
     def execute_command(self, f: str) -> str:
-        return ['qsub ',self.PACE_PBS]
+        return ['python ',self.python_script.script_name]
     
+    def pre_write(self, folder: str) -> None:
+    
+        self.python_script.target_dir = folder
+        def script_modification(txt:str) -> str:
+            return txt.format(self.PACE_PBS)
+        
+        self.python_script.script_modifications = script_modification
+
     def _from_file_parser(dmdict : dict) -> Tuple:
         
         fluentpbs = dmdict['fluent_pbs']['class']
@@ -177,8 +212,10 @@ class FluentBatchSubmission(ABC):
     os_name = sys.platform
     if os_name == 'win32' or os_name == 'win64':
         BATCH_EXE_EXT = '.bat'
+        TERMINAL_TYPE = 'powershell'
     elif os_name == 'linux' or os_name == 'posix':
         BATCH_EXE_EXT = '.sh'
+        TERMINAL_TYPE = 'bash'
     else:
         raise ValueError('Cannot determine Path structure from platform: {}'.format(os_name))
     
@@ -190,18 +227,28 @@ class FluentBatchSubmission(ABC):
                       index = None,
                       prefix = '',
                       seperator = '-',
-                      case_name = None,
-                      *args,**kwargs):
+                      case_name = None):
 
         super().__init__()
         index,prefix,seperator = self._initializer_kwarg_parser(len(fluent_submission_list),
                                                                 index,prefix,seperator)
-
         self.prefix = prefix
         self.seperator = seperator
         self.case_name = case_name
         self.__submission_object = dict(zip([prefix + seperator + str(i) for i in index],
                                              fluent_submission_list))
+        
+        try:
+            name = '' if index.name is None else index.name
+        except AttributeError:
+            name = ''
+        
+        for key,value in self.__submission_object.items():
+            try:
+                value.fluent_journal.reader.pwd = name + seperator + str(key)
+            except AttributeError:
+                pass
+        
 
 
     @staticmethod
@@ -334,16 +381,25 @@ class FluentBatchSubmission(ABC):
                 pass
         
         self._populate_batch_cache_folder(parent)
+        keys = list(self.submission_object.keys())
+        python_version = self.submission_object[keys[0]].python_script.python_version
+
         
-        txt = ''
+        txt = 'module load anaconda3/' + python_version + self.LINE_BREAK
+        txt += 'conda init ' + self.TERMINAL_TYPE + self.LINE_BREAK
+        txt += 'conda activate' + self.LINE_BREAK
+        
         for folder,submission in self.submission_object.items():
             if verbose:
                 txt += 'echo "executing job located in folder: {}"'.format(folder) + self.LINE_BREAK
             
             command,file = submission.format_submit(os.path.join(parent,str(folder)))
             txt += 'cd '  + str(folder) + self.LINE_BREAK 
-            txt += ''.join([command,file,self.LINE_BREAK])
+            txt += ''.join([command,file,' &',self.LINE_BREAK])
             txt += 'cd ..' + self.LINE_BREAK
+
+        txt += 'conda deactivate' + self.LINE_BREAK
+        txt += 'module unload anaconda3/' + python_version + self.LINE_BREAK
 
         return txt
 
@@ -382,9 +438,13 @@ class FluentBatchSubmission(ABC):
                    case_name: str,
                    turbulence_model:str,
                    df:DataFrame,
-                   submission_args:list,
+                   submission_args:List,
                    prefix = '',
                    seperator = '-',
+                   script_name = None,
+                   python_libs = [],
+                   python_envs = [],
+                   python_version = '2019.10',
                    *frargs,
                    **frkwargs):
 
@@ -399,7 +459,12 @@ class FluentBatchSubmission(ABC):
         be the same for each run - again if you need these to be different you should consider building the
         batch submission differently or submitting seperate jobs
         """
-
+        
+        submission_kwargs = {'script_name': script_name,
+                             'python_libs': python_libs,
+                             'python_envs': python_envs,
+                             'python_version': python_version}
+        
         if not isinstance(submission_args,list) and not isinstance(submission_args,Tuple):
             submission_args = [submission_args]
         
@@ -412,10 +477,12 @@ class FluentBatchSubmission(ABC):
         sl,index = cls._submission_list_from_boundary_df(cls.submission_args_from_boundary_df,
                                                          cls.SUBMISSION_CLASS,
                                                          case_file, boundary_df, submission_args,
+                                                          submission_kwargs,
                                                           seperator,*frargs,**frkwargs)
         
         _cls = cls(sl,index = index,prefix = index.name,
                     case_name = case_name)
+
         _cls._df = df
 
         return _cls
@@ -426,6 +493,7 @@ class FluentBatchSubmission(ABC):
                                             case_name: str,
                                             bdf:DataFrame,
                                             submission_args: list,
+                                            submission_kwargs: dict,
                                             seperator: str,
                                             *frargs,
                                             **frkwargs) -> list:
@@ -444,13 +512,15 @@ class FluentBatchSubmission(ABC):
             
             fluent_journal.reader.pwd = name + seperator + str(index)
             fluent_journal.boundary_conditions = list(bdf.loc[index])
-            submission_args = submission_object_parser(submission_args,case_name,
-                                                        index,name,seperator,
-                                                        *frargs,**frkwargs)
+            submission_args =\
+                 submission_object_parser(submission_args,
+                                          case_name,index,name,seperator,
+                                          *frargs,**frkwargs)
 
             submit_list.append(
                                 submission_class(fluent_journal,
-                                                *submission_args)
+                                                *submission_args,
+                                                **submission_kwargs)
                                 )
         
         return submit_list,bdf.index
@@ -482,7 +552,9 @@ class PaceBatchSubmission(FluentBatchSubmission):
                          seperator = seperator,
                          case_name = case_name)
         
+        #these are fixed on PACE
         self.BATCH_EXE_FNAME = 'batch.sh'
+        self.TERMINAL_TYPE = 'bash'
     
     def generate_submission(self,parent: str,
                             purge=False, 
@@ -497,7 +569,7 @@ class PaceBatchSubmission(FluentBatchSubmission):
             file.write(txt)
 
         try:
-            _,case_name = os.path.split(self.case_name)
+            _,case_name = os.path.split(self.case_file)
         except TypeError:
             case_name = self.case_file
         
