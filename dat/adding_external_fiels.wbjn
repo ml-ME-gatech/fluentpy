@@ -1,0 +1,95 @@
+﻿# encoding: utf-8
+# 2021 R1
+SetScriptVersion(Version="21.1.216")
+system1 = GetSystem(Name="SYS 1")
+setup1 = system1.GetContainer(ComponentName="Setup")
+externalLoadData1 = setup1.GetExternalLoadData()
+externalLoadFileData1 = externalLoadData1.GetExternalLoadFileData(Name="ExternalLoadFileData")
+externalLoadFileData1.ModifyFileData(FilePath=r"E:\CO2\simulations\mechanical_template\testing_template\thimble_matpoint3")
+externalLoadFileData2 = setup1.AddDataFile(FilePath="E:/CO2/simulations/mechanical_template/testing_template/jet_matpoint")
+externalLoadFileData3 = setup1.AddDataFile(FilePath="E:/CO2/simulations/mechanical_template/testing_template/cool-surf2")
+externalLoadFileData4 = setup1.AddDataFile(FilePath="E:/CO2/simulations/mechanical_template/testing_template/cool-surf1")
+externalLoadFileDataProperty1 = externalLoadFileData2.GetDataProperty()
+externalLoadColumnData1 = externalLoadFileDataProperty1.GetColumnData(Name="ExternalLoadColumnData 5")
+externalLoadFileDataProperty1.SetColumnDataType(
+    ColumnData=externalLoadColumnData1,
+    DataType="Node ID")
+externalLoadFileDataProperty1.SetColumnDataType(
+    ColumnData=externalLoadColumnData1,
+    DataType="Element ID")
+externalLoadColumnData2 = externalLoadFileDataProperty1.GetColumnData(Name="ExternalLoadColumnData 6")
+externalLoadFileDataProperty1.SetColumnDataType(
+    ColumnData=externalLoadColumnData2,
+    DataType="X Coordinate")
+externalLoadColumnData3 = externalLoadFileDataProperty1.GetColumnData(Name="ExternalLoadColumnData 7")
+externalLoadFileDataProperty1.SetColumnDataType(
+    ColumnData=externalLoadColumnData3,
+    DataType="Y Coordinate")
+externalLoadColumnData4 = externalLoadFileDataProperty1.GetColumnData(Name="ExternalLoadColumnData 8")
+externalLoadFileDataProperty1.SetColumnDataType(
+    ColumnData=externalLoadColumnData4,
+    DataType="Z Coordinate")
+externalLoadColumnData5 = externalLoadFileDataProperty1.GetColumnData(Name="ExternalLoadColumnData 9")
+externalLoadFileDataProperty1.SetColumnDataType(
+    ColumnData=externalLoadColumnData5,
+    DataType="Temperature")
+externalLoadColumnData5.Unit = "K"
+externalLoadFileDataProperty2 = externalLoadFileData3.GetDataProperty()
+externalLoadColumnData6 = externalLoadFileDataProperty2.GetColumnData(Name="ExternalLoadColumnData 10")
+externalLoadFileDataProperty2.SetColumnDataType(
+    ColumnData=externalLoadColumnData6,
+    DataType="Element ID")
+externalLoadColumnData7 = externalLoadFileDataProperty2.GetColumnData(Name="ExternalLoadColumnData 11")
+externalLoadFileDataProperty2.SetColumnDataType(
+    ColumnData=externalLoadColumnData7,
+    DataType="X Coordinate")
+externalLoadColumnData8 = externalLoadFileDataProperty2.GetColumnData(Name="ExternalLoadColumnData 12")
+externalLoadFileDataProperty2.SetColumnDataType(
+    ColumnData=externalLoadColumnData8,
+    DataType="Y Coordinate")
+externalLoadColumnData9 = externalLoadFileDataProperty2.GetColumnData(Name="ExternalLoadColumnData 13")
+externalLoadFileDataProperty2.SetColumnDataType(
+    ColumnData=externalLoadColumnData9,
+    DataType="Z Coordinate")
+externalLoadColumnData10 = externalLoadFileDataProperty2.GetColumnData(Name="ExternalLoadColumnData 14")
+externalLoadFileDataProperty2.SetColumnDataType(
+    ColumnData=externalLoadColumnData10,
+    DataType="Pressure")
+externalLoadFileDataProperty3 = externalLoadFileData4.GetDataProperty()
+externalLoadColumnData11 = externalLoadFileDataProperty3.GetColumnData(Name="ExternalLoadColumnData 15")
+externalLoadFileDataProperty3.SetColumnDataType(
+    ColumnData=externalLoadColumnData11,
+    DataType="Element ID")
+externalLoadColumnData12 = externalLoadFileDataProperty3.GetColumnData(Name="ExternalLoadColumnData 16")
+externalLoadFileDataProperty3.SetColumnDataType(
+    ColumnData=externalLoadColumnData12,
+    DataType="X Coordinate")
+externalLoadColumnData13 = externalLoadFileDataProperty3.GetColumnData(Name="ExternalLoadColumnData 17")
+externalLoadFileDataProperty3.SetColumnDataType(
+    ColumnData=externalLoadColumnData13,
+    DataType="Y Coordinate")
+externalLoadColumnData14 = externalLoadFileDataProperty3.GetColumnData(Name="ExternalLoadColumnData 18")
+externalLoadFileDataProperty3.SetColumnDataType(
+    ColumnData=externalLoadColumnData14,
+    DataType="Z Coordinate")
+externalLoadColumnData15 = externalLoadFileDataProperty3.GetColumnData(Name="ExternalLoadColumnData 19")
+externalLoadFileDataProperty3.SetColumnDataType(
+    ColumnData=externalLoadColumnData15,
+    DataType="Pressure")
+externalLoadColumnData10.Identifier = "Pressure2"
+externalLoadColumnData5.Identifier = "Temperature2"
+setup1.RereadDataFiles()
+setupComponent1 = system1.GetComponent(Name="Setup")
+setupComponent1.Update(AllDependencies=True)
+system2 = GetSystem(Name="SYS")
+modelComponent1 = system2.GetComponent(Name="Model")
+modelComponent1.Refresh()
+setupComponent2 = system2.GetComponent(Name="Setup")
+setupComponent2.Refresh()
+setup2 = system2.GetContainer(ComponentName="Setup")
+setup2.Edit()
+Save(Overwrite=True)
+Archive(
+    FilePath="E:/CO2/simulations/mechanical_template/testing_template/pb_sim2.wbpz",
+    IncludeUserFiles=False,
+    IncludeSkippedFiles=False)

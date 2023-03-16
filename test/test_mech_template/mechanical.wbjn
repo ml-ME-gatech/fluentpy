@@ -1,0 +1,19 @@
+# encoding: utf-8
+# Release 19.1
+SetScriptVersion(Version="19.1.103")
+Unarchive(
+    ArchivePath="Testing_NoData.wbpz",
+    ProjectPath="Testing.wbpj",
+    Overwrite=True)
+
+system1 = GetSystem(Name="FFF")
+solution1 = system1.GetContainer(ComponentName="Solution")
+solution1.ImportFinalData(FilePath="result.dat")
+
+system1 = GetSystem(Name="SYS")
+resultsComponent1 = system1.GetComponent(Name="Results")
+resultsComponent1.Update(AllDependencies=True)
+
+Save(Overwrite=True)
+
+Parameters.ExportAllDesignPointsData(FilePath="mech_result.csv")

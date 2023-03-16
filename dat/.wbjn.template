@@ -1,19 +1,45 @@
 # encoding: utf-8
 # Release 19.1
+import os
+import shutil
+
+log_file = 'mechanical.log'
+
+root_path = os.getcwd()
+SetUserPathRoot(DirectoryPath = root_path)
+
 SetScriptVersion(Version="{}")
+archive_path = "{}"
+project_path = "{}"
+
 Unarchive(
-    ArchivePath="{}",
-    ProjectPath="{}",
+    ArchivePath=AbsUserPathName(archive_path),
+    ProjectPath = AbsUserPathName(project_path),
     Overwrite=True)
 
 system1 = GetSystem(Name="FFF")
 solution1 = system1.GetContainer(ComponentName="Solution")
-solution1.ImportFinalData(FilePath="{}")
+result_file = "{}"
+result_name,_ = os.path.splitext(result_file)
+
+ppath,_ = os.path.splitext(project_path)
+ppath = os.path.join(ppath + '_files',"dp0","FFF","Fluent")
+#shutil.copy2(result_name + '.cas',ppath)
+solution1.ImportFinalData(FilePath=AbsUserPathName(result_file))
 
 system1 = GetSystem(Name="SYS")
 resultsComponent1 = system1.GetComponent(Name="Results")
 resultsComponent1.Update(AllDependencies=True)
 
-Save(Overwrite=True)
+with open(log_file,'w') as file:
+    file.write('result file: ' + result_file + '\n')
+    file.write('ppath: ' + ppath + '\n')
+    file.write("root path: " + root_path + '\n')
+    file.write('result name: ' + result_name + '\n')
 
-Parameters.ExportAllDesignPointsData(FilePath="{}")
+save = "{}"
+if save.lower() == "true":
+    Save(Overwrite=True)
+
+Parameters.ExportAllDesignPointsData(FilePath=AbsUserPathName("{}"))
+

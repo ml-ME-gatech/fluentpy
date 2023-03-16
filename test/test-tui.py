@@ -1,7 +1,7 @@
 from multiprocessing.sharedctypes import Value
-from fluentpy.tui import MeshScale, WallBoundaryCondition,UDF,MassFlowInlet,PressureOutlet,Solver,Solver_Iterator,\
+from fluentpy.tui import MeshScale, TempCaseIO, WallBoundaryCondition,UDF,MassFlowInlet,PressureOutlet,Solver,Solver_Iterator,\
                                 FluentJournal,ConvergenceConditions,Discritization,NISTRealGas,ScalarRelaxation,\
-                                EquationRelaxation, VelocityInlet,MeshRotation, MeshTranslation
+                                EquationRelaxation, VelocityInlet,MeshRotation, MeshTranslation, TUIBase, SurfaceIntegralFile
 from fluentpy.util import _surface_construction_arg_validator
 
 from unittest import TestCase,main
@@ -234,7 +234,7 @@ class TestVelocityInlet(TestCase):
         print(vi())
 """
 
-
+"""
 class TestMeshRotation(TestCase):
 
     def test_rotation_output(self):
@@ -265,6 +265,24 @@ class TestMeshScale(TestCase):
 
         ms = MeshScale([1,1,1])
         print(str(ms))
+
+
+class TestTempCaseIO(TestCase):
+
+    def test_random_generation(self):
+
+        temp = TempCaseIO()
+        print(temp)
+"""
+
+class TestTuiBaseClass(TestCase):
+
+    def test_get_prefix(self):
+
+        base = TUIBase()
+        print(base.tui_prefix)
+
+
     
 if __name__ == '__main__':
     main()

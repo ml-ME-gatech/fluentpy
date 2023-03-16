@@ -103,11 +103,15 @@ class BatchFileSystem(ABC):
     def report_files(self,rf):
         self.__report_files = rf 
     
-    def map_solution_files(self):
-        self.solution_file_dict = self._find_ext_in_submission_folders(SOLUTION_EXT)
+    def map_solution_files(self, name = None):
+        tag = '' if name is None else name
+        self.solution_file_dict = self._find_ext_in_submission_folders(SOLUTION_EXT, tag = tag)
     
-    def map_report_files(self):
-        self.report_file_dict = self._find_ext_in_submission_folders(REPORT_EXT,tag = REPORT_FILE_TAG)
+    def map_report_files(self, name: str):
+        if name is None:
+            name = REPORT_FILE_TAG
+        
+        self.report_file_dict = self._find_ext_in_submission_folders(REPORT_EXT,tag = name)
 
     def _make_report_files(self):
         """

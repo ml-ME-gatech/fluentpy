@@ -1,17 +1,16 @@
 #native imports
 from abc import ABC,abstractmethod
-from multiprocessing.sharedctypes import Value
 import os
-from typing import Hashable, OrderedDict, Union, List, ValuesView
+from typing import Hashable, OrderedDict, Union, List
 import os
 import subprocess
-from unittest.loader import VALID_MODULE_NAME
-from unittest.mock import DEFAULT
 import numpy as np 
 import sys
 from pathlib import PosixPath, PurePath,WindowsPath
 import shutil
 import re
+import string
+import random 
 
 
 #package imports
@@ -70,7 +69,58 @@ class TUIBase:
                 **kwargs):
         
         self.precision_specification = precision_specification
+        self.__tui_prefix = None
+
+    @property
+    def tui_prefix(self):
+        if self.__tui_prefix is None:
+            self.__tui_prefix = '/'.join(__name__.split('.')[1:])
+
+        return self.__tui_prefix
+
+    def generate_random_file_name(self) -> str:
+
+        my_file_name = self.FILE_PREFIX + '_'
+        for _ in range(self.random_character_length):
+            my_file_name += random.choice(string.ascii_letters)
+        
+        return my_file_name + self.ext
     
+class TUIVersion(TUIBase):
+
+    """
+    Adds the ability to set the TUI version
+    
+    Parameters
+    ----------
+    version: str
+            version of the tui, a string or something that can be
+            type-cast to a string
+    
+    Examples
+    -------
+
+    .. code-block:: python
+
+        tui_version = TUIVersion('19.3.12')
+        print(tui_version)
+
+        > file/set-tui-version/19.3.12
+    
+    """
+    _prefix = 'file/set-tui-version/{}'
+
+    def __init__(self,version: str):
+
+        self.__version = version
+    
+    @property
+    def version(self) -> str:
+        return str(self.__version)
+    
+    def __str__(self):
+        return self._prefix.fromat(self.version) 
+
 class Initializer(TUIBase):
 
     """
@@ -634,6 +684,148 @@ class BatchCaseReader(CaseReader):
     def pwd(self,pwd):
         self.__pwd = pwd
 
+
+class SettingsWriter(FileIO):
+
+    """
+    representation of the write-settings command
+    
+    Parameters
+    ----------
+    file: str
+            name of the file as a string
+
+    Examples
+    --------
+    
+    .. code-block:: python 
+
+        sw = SettingsWriter('test.settings')
+        print(sw)
+        > file/write-settings test.settings
+    """
+    
+    _prefix = 'file/write-settings'
+
+    def __init__(self,file: str):
+
+        super().__init__(file)
+
+class SettingsReader(FileIO):
+
+    """
+    representation of the write-settings command
+    
+    Parameters
+    ----------
+    file: str
+            name of the file as a string
+
+    Examples
+    --------
+    
+    .. code-block:: python 
+
+        sr = SettingsReader('test.settings')
+        print(sr)
+        > file/read-settings test.settings
+    """
+    
+    _prefix = 'file/read-settings'
+
+    def __init__(self,file: str):
+
+        super().__init__(file)
+
+
+class TempCaseIO(FileIO):
+
+    """
+    for temporary reading and writing of case files
+    in fluent. Useful if a case needs to be re-read for changes
+    and modifications to take effect
+    
+    Parameters
+    ----------
+    tui_commands: List
+            a list of tui commands that can be specified in between the read/write
+            of the temporary case file
+    file: str | None
+            the file to write the temporary file to, if None, a random file name will be
+            generated like: "temp_asdofoijasfd.....ext"
+            where ext is the extension specified, and the number of characters after "temp_"
+            is determined by the "random_character_length" 
+    ext: str
+            file extension to specify
+    random_character_length: int
+            the number of random characters to specify
+
+    Examples
+    --------
+    
+    .. code-block:: python 
+
+        tempfile = TempCaseIO()
+        print(tempfile)
+        > file/write-case temp_JyeVlcoYcLzGlERv.cas
+        > file/read-case temp_JyeVlcoYcLzGlERv.cas 
+        > !rm temp_gesXDLqhLXDnafTx.cas
+    """
+
+    FILE_PREFIX = 'temp'
+    def __init__(self,tui_commands = [],
+                      tui_pre_commands = [],
+                      tui_post_commands = [],
+                      file = None,
+                      ext = '.cas',
+                      random_character_length = 16,
+                      delete = True):
+
+        self.ext = ext
+        self.random_character_length = random_character_length
+        self.tui_commands = tui_commands
+        self.tui_pre_commands = tui_pre_commands
+        self.tui_post_commands = tui_post_commands
+        self.delete = delete
+        if file is None:
+            file = self.generate_random_file_name()
+        
+        super().__init__(file)
+    
+    def stringify_tui_commands(self, cmds: List[str]) -> str:
+        text = ''
+        for command in cmds:
+            try:
+                text += str(command) + self.LINE_BREAK
+            except (AttributeError,TypeError):
+                text += command()
+        
+        if text != '':
+            if text[-1] == self.LINE_BREAK:
+                return text
+            else:
+                return text + self.LINE_BREAK
+        else:
+            return text 
+    
+    def __str__(self):
+
+        writer = CaseWriter(self.file)
+        reader = CaseReader(self.file)
+
+        if self.delete:
+            end_text = '!rm ' + self.file + self.LINE_BREAK
+        else:
+            end_text = ''
+        
+        return self.stringify_tui_commands(self.tui_pre_commands) +\
+               str(writer) + self.LINE_BREAK +\
+               self.stringify_tui_commands(self.tui_commands) +\
+               str(reader) + \
+               self.stringify_tui_commands(self.tui_post_commands) + \
+               self.LINE_BREAK + end_text
+
+
 class CaseMeshReplaceReader(FileIO):
 
     """
@@ -1141,7 +1333,32 @@ class ReportDefinitions(TUIBase):
 
         pass
 
+class LoadCustomFieldFunction(TUIBase):
 
+    _prefix = 'define/custom-field-functions/load'
+
+    def __init__(self,file_name: str):
+
+        self.file_name = file_name
+    
+    def __str__(self) -> str:
+
+        return self._prefix + '/' + self.file_name
+
+class SetReferenceValue(TUIBase):
+
+    _prefix = 'report/reference-values/{}'
+
+    def __init__(self,name: str,
+                      value: float):
+
+        self.name = name
+        self.value = value
+    
+    def __str__(self) -> str:
+
+        return self._prefix.format(self.name) + ' ' + str(self.value)
+    
 class ConvergenceConditions(TUIBase):
     """
     modify convergence conditions
@@ -1396,6 +1613,22 @@ class KEpsilonModelConstants(TwoEquationModelConstants):
                                 
         super().__init__(defaults = DEFAULTS,**kwargs)
 
+class KEpsilonRNGModelConstants(TwoEquationModelConstants):
+
+    def __init__(self,**kwargs):
+
+        DEFAULTS = {'wall_prandlt': None,
+                    'c_epsilon_1': None,
+                    'c_epsilon_2': None,
+                    'c_mu': None}
+
+        self.parameter_lookup = {'wallprt':'wall_prandlt',
+                                 'rng-kec2': 'c_epsilon_2',
+                                 'rng-kec1':'c_epsilon_1',
+                                 'rng-kecmu':'c_mu'}
+                                
+        super().__init__(defaults = DEFAULTS,**kwargs)
+
 class KOmegaModelConstants(TwoEquationModelConstants):
 
     def __init__(self,**kwargs):
@@ -1452,6 +1685,87 @@ class GEKOModelConstants(TwoEquationModelConstants):
                                   'curvature-correction-ccurv':'c_curv'}
         
         super().__init__(defaults= DEFAULTS,**kwargs)
+
+class KOmega_BSLModelConstants(TwoEquationModelConstants):
+
+    def __init__(self,**kwargs):
+
+        DEFAULTS = {'beta_i2': None,
+                    'beta_i1':None,
+                    'sigma_w2': None,
+                    'sigma_w1': None,
+                    'sigma_k1': None,
+                    'sigma_k2': None,
+                    'beta_star_inf': None,
+                    'alpha_inf': None,
+                    'alpha_star_inf': None,
+                    'sigma_wall': None,
+                    'sigma_ke': None}
+
+        self.parameter_lookup = {'bsl-beta-i2':'beta_i2',
+                                 'bsl-beta-i1':'beta_i1',
+                                 'bsl-sig-w2':'sigma_w2',
+                                 'bsl-sig-w1':'sigma_w1',
+                                 'bsl-sig-k1':'sigma_k1',
+                                 'bsl-sig-k2':'sigma_k2',
+                                 'kw-beta-star-inf':'beta_star_inf',
+                                 'kw-alpha-inf':'alpha_inf',
+                                 'kw-alpha-star-inf':'alpha_star_inf',
+                                 'wallprt':'sigma_wall',
+                                 'keprt':'sigma_ke'}
+        
+        super().__init__(defaults= DEFAULTS,**kwargs)
+    
+class KOmega_SSTModelConstants(TwoEquationModelConstants): 
+
+    def __init__(self,**kwargs):
+
+        DEFAULTS = {'c_corner': None,
+                    'c_curv': None,
+                    'beta_i2': None,
+                    'beta_i1': None,
+                    'a1': None,
+                    'sigma_w2':None,
+                    'sigma_w1': None,
+                    'sigma_k1': None,
+                    'sigma_k2': None,
+                    'beta_star_inf':None,
+                    'alpha_inf':None,
+                    'alpha_star_inf':None,
+                    'sigma_wall': None,
+                    'sigma_ke': None}
+
+        self.parameter_lookup = {'corner-flow-correction-ccorner':'c_corner',
+                                 'curvature-correction-ccurv':'c_curv',
+                                 'sst-beta-i2':'beta_i2',
+                                 'sst-beta-i1':'beta_i1',
+                                 'sst-a1':'a1',
+                                 'sst-sig-w2':'sigma_w2',
+                                 'sst-sig-w1':'sigma_w1',
+                                 'sst-sig-k1':'sigma_k1',
+                                 'sst-sig-k2':'sigma_k2',
+                                 'kw-beta-star-inf':'beta_star_inf',
+                                 'kw-alpha-inf':'alpha_inf',
+                                 'kw-alpha-star-inf':'alpha_star_inf',
+                                 'wallprt':'sigma_wall',
+                                 'keprt':'sigma_ke'}
+        
+        super().__init__(defaults= DEFAULTS,**kwargs)
+
+class KOmegaLowReCorrection(TwoEquationModelConstants):
+
+    def __init__(self,**kwargs):
+
+        DEFAULTS = {'r_w': None,
+                    'r_k': None,
+                    'r_beta': None}
+
+        self.parameter_lookup = {'kw-r-w': 'r_w',
+                                 'kw-r-k':'r_k',
+                                 'kw-r-beta':'r_beta'}
+        
+        super().__init__(defaults = DEFAULTS,**kwargs)
+    
 
 class ModelModificationCollector:
 
@@ -2010,6 +2324,20 @@ class MeshTranslation(MeshTransform):
 
         return txt
 
+class WarningResponse(TUIBase):
+
+    def __init__(self,response = None):
+
+        self.response = response
+        
+    
+    def __str__(self):
+
+        if self.response is None:
+            return ''
+        else:
+            return self.response + self.LINE_BREAK
+
 class MeshScale(MeshTransform):
     """
     Class for scaling the mesh
@@ -2027,7 +2355,8 @@ class MeshScale(MeshTransform):
         ms = MeshScale([1,-1,1])
     """
 
-    def __init__(self,scale_factor: np.ndarray) -> np.ndarray:
+    def __init__(self,scale_factor: np.ndarray,
+                      warning_response = None) -> np.ndarray:
 
         self.transform_type = 'scale'
         scale_factor = np.array(scale_factor).squeeze()
@@ -2038,6 +2367,7 @@ class MeshScale(MeshTransform):
             raise ValueError('scale factor must be either a 2 or 3D vector')
 
         self.scale_factor = list(scale_factor)
+        self.warning_response = WarningResponse(response = warning_response)
     
     def transform(self) -> str:
         
@@ -2045,6 +2375,8 @@ class MeshScale(MeshTransform):
         for sf in self.scale_factor:
             txt += str(sf) + self.LINE_BREAK
         
+        txt += str(self.warning_response)
+
         return txt
 
 class MeshRotation(MeshTransform):
@@ -2246,22 +2578,32 @@ class UDF(TUIBase):
 
     _compile_prefix = 'define/user-defined/compiled-functions/compile'
     _load_prefix = 'define/user-defined/compiled-function/load'
+    _unload_prefix = 'define/user-defined/compiled-function/unload'
 
     def __init__(self,file_name = None,
                       data_name = None,
                       condition_name = None,
                       profile_name = 'udf',
-                      udf_lib = 'libudf',
+                      udf_lib = 'random',
                       case_dir = None,
                       compile = False,
                       system_type = 'linux') -> None:
         
         self.system_type = system_type
         self.file_name = file_name
-        self.udf_lib = udf_lib
+
+        if udf_lib.lower() == 'random':
+            self.FILE_PREFIX = 'udflib'
+            self.random_character_length = 5
+            self.ext = ''
+            self.udf_lib = self.generate_random_file_name()
+        else:
+            self.udf_lib = udf_lib
+        
         self.profile_name = profile_name
         self.condition_name = condition_name
         self.compile = compile
+        self._compile_call = self.compile
 
         self.establish_os()
         self.check_compilation(file_name)
@@ -2315,6 +2657,8 @@ class UDF(TUIBase):
         if self.compile and not os.path.exists(file_name):
             raise FileNotFoundError('file: {} could not be found. Cannot\
                      compile at runtime'.format(file_name))
+        
+        self._compile_call = True
          
     @property
     def case_dir(self):
@@ -2356,7 +2700,8 @@ class UDF(TUIBase):
         """
         return a string with the compliation sequence in fluent
         """
-        text = self._compile_prefix + self.LINE_BREAK
+        text = self._unload_prefix + self.LINE_BREAK + ',' +  self.LINE_BREAK
+        text += self._compile_prefix + self.LINE_BREAK
         text += self.udf_lib + self.LINE_BREAK
         text += 'yes' + self.LINE_BREAK
         text += file_name + self.LINE_BREAK
@@ -2547,7 +2892,7 @@ class FluentBoundaryCondition(ABC,TUIBase):
                                 'velocity-inlet',
                                 'turbulence_specification']
 
-    ALLOWABLE_VISCOUS_MODELS = ['ke-standard','kw-standard','ke-realizable','ke-rng','geko','kw-geko']
+    ALLOWABLE_VISCOUS_MODELS = ['ke-standard','kw-standard','ke-realizable','ke-rng','geko','kw-geko','laminar']
     ALLOWABLE_MODELS = ['energy','viscous'] 
     ALLOWABLE_MODELS += ['viscous/' + vm for vm in ALLOWABLE_VISCOUS_MODELS]
     ALLOWABLE_REFERENCE_FRAME = ['absolute',
@@ -2627,9 +2972,10 @@ class FluentBoundaryCondition(ABC,TUIBase):
                 #assign values of -1 to all properties with udf
                 if fmt_property in self.udf:
                     self.__setattr__(property_name,-np.inf)
-                    if self.udf[fmt_property].compile:
+                    if self.udf[fmt_property].compile and self.udf[fmt_property]._compile_call:
                         _compile_text += self.udf[fmt_property].format_compile_udf()
-                    
+                        self.udf[fmt_property]._compile_call = False
+
                     break
 
         return _compile_text
@@ -2973,7 +3319,7 @@ class FluentFluidBoundaryCondition(FluentBoundaryCondition):
         the mass flow is normal to the boundary.
     """ 
 
-    FLUID_DEFAULTS = {'temperature': 300,
+    FLUID_DEFAULTS = {'temperature': None,
                       'direction_vector': None,
                       'frame_of_reference':'absolute'}
 
@@ -3240,9 +3586,11 @@ def _assign_turbulence_model(model:str,**kwargs) -> TwoEquationTurbulentBoundary
                         'ke-rng': StandardKEpsilonSpecification,
                         'kw-standard':StandardKOmegaSpecification,
                         'kw-sst':StandardKOmegaSpecification,
+                        'kw-bsl': StandardKOmegaSpecification,
                         'kw-geko':StandardKOmegaSpecification,
                         'geko':StandardKOmegaSpecification,
-                        'viscous':NoTurbulenceModel}
+                        'viscous':NoTurbulenceModel,
+                        'laminar': NoTurbulenceModel}
 
     try:
         return class_assignment[model](**_kwargs)
@@ -3758,6 +4106,10 @@ class FluentJournal(SerializableClass,TUIBase):
             a list of boundary conditions, each of which must be callable and return a string
     """
     
+    def __new__(cls,*args,**kwargs):
+
+        return super(FluentJournal,cls).__new__(cls)
+
     def __init__(self,case_file: str,
                       output_name = 'result',
                       transcript_file = 'solution.trn',
@@ -3768,7 +4120,9 @@ class FluentJournal(SerializableClass,TUIBase):
                       post = [],
                       convergence_condition = None,
                       model_modifications = [],
-                      boundary_conditions = []):
+                      boundary_conditions = [],
+                      pre_solution = [],
+                      **kwargs):
 
         self.__case = FluentCase(case_file)
         
@@ -3778,14 +4132,14 @@ class FluentJournal(SerializableClass,TUIBase):
             self.__reader = reader
         
         #potentially immense storage savings here if we do not write every single case
-        if case_writer is None:
+        if case_writer is None or isinstance(case_writer,type(None)):
             self.write_case = False
             self.__case_writer = None
         else:
             self.write_case = True
             self.__case_writer = case_writer(output_name + '.cas')
         
-        if data_writer is None:
+        if data_writer is None or isinstance(case_writer,type(None)):
             self.write_data = False
             self.__data_writer = None
         else:
@@ -3799,6 +4153,7 @@ class FluentJournal(SerializableClass,TUIBase):
         self.__convergence_condition = convergence_condition
         self.__post = post
         self.model_modifications = model_modifications
+        self.pre_solution = pre_solution
 
     @property
     def case(self):
@@ -3863,6 +4218,16 @@ class FluentJournal(SerializableClass,TUIBase):
         
         return txt
 
+    def _pre_solution_spec(self):
+        """ 
+        must have a str method
+        """
+        text = self.LINE_BREAK + ';Pre Solution' + self.LINE_BREAK + self.LINE_BREAK
+        for ps in self.pre_solution:
+            text += str(ps)
+        
+        return text
+    
     def _boundary_conditions_spec(self):
         """
         boundary conditions must be callable 
@@ -3886,7 +4251,7 @@ class FluentJournal(SerializableClass,TUIBase):
     def _post_spec(self):
         """
         everything from post must have a call method which returns a string.
-        post methods should have an engine property, which should be set to None
+        post methods may have an engine property, which should be set to None
         so that another instance of fluent is not started.
         """
         txt = self.LINE_BREAK + ';Post Processing' + self.LINE_BREAK + self.LINE_BREAK
@@ -3911,6 +4276,7 @@ class FluentJournal(SerializableClass,TUIBase):
         txt += self._format_convergence_condition()
         txt += self._model_modification_spec()
         txt += self._boundary_conditions_spec()
+        txt += self._pre_solution_spec()
         if self.solver is not None:
             txt += str(self.solver)
         txt += self._post_spec()
@@ -3933,9 +4299,12 @@ class FluentJournal(SerializableClass,TUIBase):
             with open(f,'w',newline = self.LINE_BREAK) as file:
                 file.write(self._format_fluent_file())
 
-        except TypeError:
-            f.write(self._format_fluent_file())
-    
+        except TypeError as te:
+            try:
+                f.write(self._format_fluent_file())
+            except AttributeError as ae:
+                raise ValueError('Failed to write file for following reasons: \nTypeError:{} \nAttributeError: {}\nInput that caused error: {}'.format(str(te),str(ae),f))
+        
     def _from_file_parser(dmdict):
         """
         allows for the parsing of the class from a file

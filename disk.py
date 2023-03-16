@@ -126,7 +126,7 @@ def _class_method_file_loader(file_name,_name_):
                 dmdict = dill.load(file)
         else:
             dmdict = dill.load(file_name)
-    
+
         _cls = str(dmdict['class']).split('.')[-1][0:-2]
         if _cls != _name_:
             raise TypeError("{} does not contain a {} class".format(file_name,_cls))

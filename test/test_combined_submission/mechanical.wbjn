@@ -1,0 +1,26 @@
+# encoding: utf-8
+# Release 19.1
+import os
+
+root_path = os.getcwd()
+SetUserPathRoot(DirectoryPath = root_path)
+
+SetScriptVersion(Version="19.1.103")
+Unarchive(
+    ArchivePath=AbsUserPathName("Testing_NoData.wbpz"),
+    ProjectPath=AbsUserPathName("mech_result.wbjn"),
+    Overwrite=True)
+
+system1 = GetSystem(Name="FFF")
+solution1 = system1.GetContainer(ComponentName="Solution")
+solution1.ImportFinalData(FilePath=AbsUserPathName("result.dat"))
+
+system1 = GetSystem(Name="SYS")
+resultsComponent1 = system1.GetComponent(Name="Results")
+resultsComponent1.Update(AllDependencies=True)
+
+Parameters.ExportAllDesignPointsData(FilePath=AbsUserPathName("mech_result.csv"))
+
+save = "true"
+if save.lower() == "true":
+    Save(Overwrite=True)

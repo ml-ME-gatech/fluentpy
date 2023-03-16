@@ -393,6 +393,7 @@ def make_residual_plot(batch_folder: str,
                         shared_y = False,
                         ax = None,
                         yscale = 'log',
+                        solution_file = None,
                         *plot_args,
                         **plot_kwargs):
 
@@ -406,7 +407,7 @@ def make_residual_plot(batch_folder: str,
         fig,ax = plt.subplots(figsize = fig_size)
     
     fs = filesys(batch_folder)
-    fs.map_solution_files()
+    fs.map_solution_files(name = solution_file)
     df = fs.solution_files.get_variable(residual_name)
     _make_iterative_plot(df,residual_name,ax,
                          shared_x = shared_x,

@@ -1,5 +1,6 @@
 #third party imports
 from io import StringIO
+from posixpath import splitext
 from typing import Iterable,Union, List
 import more_itertools
 import numpy as np
@@ -12,6 +13,9 @@ from more_itertools import peekable
 from pandas.errors import ParserError
 from pathlib import WindowsPath,PosixPath
 import sys
+import os
+
+from sqlalchemy import column
 
 #package imports
 from ._file_scan import _get_text_between_phrase_lines
@@ -66,8 +70,11 @@ class FluentFile(ABC):
         confused about which fname to use
         """
         instance = super(FluentFile,cls).__new__(cls)
-        instance.fname = args[0]
-
+        try:
+            instance.fname = args[0]
+        except IndexError:
+            pass
+    
         return instance
 
     def __init__(self,fname: str,               #full path to folder name
@@ -99,7 +106,7 @@ class FluentFile(ABC):
                     
     #"official" string representation of an object
     def __repr__(self):
-        return "File: {} \nCase: {}".format(self.fname,self.caseName)
+        return "File: {}".format(self.fname)
 
     #"informal" string represetnation
     def __str__(self):
@@ -312,10 +319,19 @@ class SurfaceFile(FluentFile):
     READ_JOURNAL_CMD = 'file/read-journal'
     OUTPUT_FILE_EXT = '.so'
 
-    def __init__(self,fname) -> None:
+    def __init__(self,fname: str, output_ext = '.out') -> None:
 
         super().__init__(fname)
+        self.output_ext = output_ext
+        self.text = ''
 
+    @property
+    def output_file(self) -> str:
+        if '.' in self.output_ext:
+            return self.fname + self.output_ext
+        else:
+            return self.fname + '.' + self.output_ext
+        
     def readdf(self,**kwargs) -> pd.DataFrame:
         """
 
@@ -541,19 +557,31 @@ class SurfaceFile(FluentFile):
         
         return cls(file_name)
     
+    def write(self,f:str) -> None:
+
+        with open(os.path.join(f,self.fname),'w') as file:
+            file.write(self.text)
+        
     @classmethod
     def existing_export(cls,
                         surface_name: str,
                         file_name: str,
                         export_variables: list,
                         output_ext = '.out',
-                        cell_centered = True) -> None:
+                        cell_centered = True,
+                        write = True) -> None:
         
-        text = cls.LINE_BREAK + cls._format_export_command(surface_name,export_variables,file_name + output_ext,cell_centered)
-        with open(file_name,'w') as file:
-            file.write(text)
+        text = cls.LINE_BREAK + cls._format_export_command(surface_name,export_variables,
+                                                          file_name + output_ext,cell_centered)
         
-        return cls(file_name)
+        
+        if write:
+            with open(file_name,'w') as file:
+                file.write(text)
+        
+        _cls = cls(file_name,output_ext = output_ext)
+        _cls.text = text
+        return _cls
 
     @classmethod
     def _format_export_command(cls,
@@ -1420,7 +1448,104 @@ class SolutionFile(FluentFile):
             self.STATUS = False
 
         return self.STATUS
+
+class DesignPointExportFile(FluentFile):
+
+    """
+    Class for reading in the file data from an exported design point
+    reads in multiple design points if provided through the "readdf()" method
+    names the parameters according to the definitioins in the header
+    information
+
+    Parameters
+    ----------
+    file: str
+        the file to read
+
+    Examples
+    ---------
+    
+    .. code-block:: python
+
+        my_file = 'design_point_export.csv'
+        with DesignPointExportFile(my_file) as dpfile:
+            df = dpfile.readdf()
         
+        print(df)
+
+    """
+    
+    PARAMETER_DICT_START = 'The parameters defined in the project are:'
+
+    DATA_START = 'Name'
+    DATA_END = ''
+
+    def __init__(self,file: str):
+        
+        self.param_dict = None
+        super().__init__(file)
+    
+    def parse_parameter_dict_text(self) -> str:
+        """
+        has a mappping between the data column names and the 
+        parameter numbers in some header information
+
+        get that here so we can replace it in the dataframe of informatoin
+        for more interpretable ouput
+        """
+        self.file.seek(0)
+        self.param_dict = {}
+        text = self.file.read()
+        location = text.find(self.PARAMETER_DICT_START)
+        start_location = len(self.PARAMETER_DICT_START) + location + 2
+        txt = text[start_location:]
+        end_location = txt.find(self.LINE_BREAK)
+        txt = txt[:end_location]
+
+        string_params = txt.split(',')
+
+             
+        for string_param in string_params:
+            if string_param.strip() == '':
+                pass
+            else: 
+                splitted = string_param.split('-')
+                key = splitted[0]
+                value = '-'.join(splitted[1:])
+                self.param_dict[key.strip()] = value.strip()
+        
+        return text
+
+    def readdf(self,**kwargs):
+        
+        """
+        read the data frame, the defaults here
+        are passed to pandas.read_csv(StringIO(text),**kwargs)
+        as the default output format. These may be overwritten at
+        the users risk~C
+        """
+        defaults = {'sep':',', 'header':0,'index_col':0}
+
+        for key,value in defaults.items():
+            if key not in kwargs:
+                kwargs[key] = value
+        
+        if self.param_dict is None:
+            text = self.parse_parameter_dict_text()
+        else:
+            self.file.seek(0)
+            text = self.file.read()
+        
+        location = text.find(self.DATA_START)
+        txt = text[location:]
+
+        _df = pd.read_csv(StringIO(txt),**kwargs)
+        self.df = pd.DataFrame(columns = list(self.param_dict.values()))
+        for key,value in self.param_dict.items():
+            self.df[value] = _df[key].copy()
+        
+        return self.df
+
 class ReportFilesOut(FluentFiles):
 
     def __init__(self,flist: list,
@@ -1483,7 +1608,12 @@ class SurfaceIntegralFile(FluentFile):
         #this first line here reads the header information on the file
         try:
             self.attributes['type'] =  lines[2].strip()
-            self.attributes['name'],self.attributes['unit'] = self._space_delimited_line_split(lines[3])
+            try:
+                self.attributes['name'],self.attributes['unit'] = self._space_delimited_line_split(lines[3])
+            except ValueError:
+                self.attributes['name'] = self._space_delimited_line_split(lines[3])[0]
+                self.attributes['unit']= None
+
             for i in range(5,len(lines)):
                 try:
                     boundary,value = self._space_delimited_line_split(lines[i])

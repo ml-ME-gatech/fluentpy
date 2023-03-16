@@ -3,6 +3,8 @@ import os
 import subprocess
 import time
 
+backend = '<backend>'
+
 def wait_for_job(jobid: str) -> None:
 
     status = ''
@@ -15,8 +17,7 @@ def wait_for_job(jobid: str) -> None:
             if status is None:
                 status = ''
                 
-def submit_job(file: str,
-               backend: str) -> str:
+def submit_job(file: str) -> str:
 
     #run the .pbs script in question in question
     text = backend + ' ' + file
@@ -25,14 +26,11 @@ def submit_job(file: str,
     return jobid
 
 def main():
-    file1 = '<file1>'
-    file2 = '<file2>'
-    backend = '<backend>'
-    jobid = submit_job(file1,backend)
 
-    wait_for_job(jobid)
-    submit_job(file2)
+    files = '<file_list>'
+    for file in files:
+        jobid = submit_job(file)
+        wait_for_job(jobid)
 
 if __name__ == '__main__':
     main()
-

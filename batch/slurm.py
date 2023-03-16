@@ -3,59 +3,52 @@ from abc import ABC,abstractstaticmethod
 from datetime import timedelta
 from copy import deepcopy
 import math
-from ..pace import PaceScript
 import os
+from ..pace import PaceScript
+from ..disk import SerializableClass
 
 #package imports
-from ..disk import SerializableClass
 
 """
 Author: Michael Lanahan
-Date Created: 08.01.2021
-Last Edit: 01.03.2021
+Date Created: 11.10.2022
+Last Edit: 11.10.2022
 
 scripts for working with fluent using the PACE computational cluster at GT
 """
 
-LINE_BREAK = '\n'
-
-class PBS:
+class Slurm:
 
     """
-    Abstract base class for the pbs header. Provides a base initialization method that formats the various
-    initializer arguments into the required form for the pbs script. The formatting is done 
+    base class for the slurm header. Provides a base initialization method that formats the various
+    initializer arguments into the required form for the slurm script. The formatting is done 
     in the property methods and is formatted into a script by the method "format_pbs_header()"
     this formatted text is then called like-so: 
 
-    pbs = PBS(*args,**kwargs)
-    text = pbs()
+    slurm = Slurm(*args,**kwargs)
+    text = slurm()
 
-    where the variable "text" now contains the text in a pbs script
-
-    note that the key word argument "memory_request" has options 'p' and 't'
-    where 'p' is per core and 't' is total memory
-
-    Example PBS script
-    https://docs.pace.gatech.edu/software/PBS_script_guide/
+    Example Slurm script
+    https://docs.pace.gatech.edu/phoenix_cluster/slurm_guide_phnx/
     
-    #PBS -N <job-name>                  -> name that shows up on the queue
-    #PBS -A [Account]                   -> Account - the account that is required to run the jobs - who to charge
-    #PBS -l nodes=1:ppn=8: cores24      -> resource-list; number of nodes and processers per node, specify number of cores
-    #PBS -l pmem=8gb                    -> memory allocated PER CORE
-    #PBS -l mem = 2gb                   -> total memory allocated over all nodes
-    #PBS -l walltime=2:00:00            -> projected walltime - hard stop here
-    #PBS -q inferno                     -> which que to submit too
-    #PBS -j oe                          -> combines output and error into one file
-    #PBS -o fluent.out                  -> names output files
-    #PBS -m <a,b,e>                     -> will send job satus
-                                        -> a - if job aborted; b- when job begins; e - when job ends
+    #!/bin/bash
+    #SBATCH -JSlurmPythonExample                    # Job name
+    #SBATCH --account=gts-gburdell3                 # charge account
+    #SBATCH -N1 --ntasks-per-node=4                 # Number of nodes and cores per node required
+    #SBATCH --mem-per-cpu=1G                        # Memory per core
+    #SBATCH -t15                                    # Duration of the job (Ex: 15 mins)
+    #SBATCH -qinferno                               # QOS Name
+    #SBATCH -oReport-%j.out                         # Combined output and error messages file
+    #SBATCH --mail-type=BEGIN,END,FAIL              # Mail preferences
+    #SBATCH --mail-user=gburdell3@gatech.edu        # E-mail address for notifications
 
-    cd $PBS_O_WORKDIR                               -> change to working directroy - where script is submited from
+    cd $SLURM_SUBMIT_DIR                            -> change to working directroy - where script is submited from
     module load ansys/<version.number>              -> load ansys, with version number in <int>.<int> i.e. 19.12
     fluent -t8 -g <inputfile> outputfile            -> run fluent command with input file and output file
     """
     
-    line_leader = '#PBS '
+    LINE_BREAK = '\n'
+    line_leader = '#SBATCH '
     def __init__(self, name: str,
                        account: str,
                        queue: str,
@@ -86,11 +79,11 @@ class PBS:
 
     @property
     def name(self):
-        return '-N ' + self.__name 
+        return '-J' + self.__name 
     
     @property
     def account(self):
-        return '-A ' + self.__account
+        return '--account=' + self.__account
     
     @property
     def queue(self):
@@ -98,7 +91,7 @@ class PBS:
     
     @property
     def output_file(self):
-        return '-o ' + self.__output_file
+        return '-o{}-%j.out'.format(self.__output_file)
     
     @staticmethod
     def wall_time_formatter(td: timedelta) -> str:
@@ -139,34 +132,28 @@ class PBS:
     @property
     def walltime(self):
         td = timedelta(seconds = self.__walltime)
-        return '-l walltime=' + self.wall_time_formatter(td)
+        return '-t' + self.wall_time_formatter(td)
     
     @property
     def memory(self):
-        msg = '-l {}mem=' + str(self.__memory) + 'gb'
+
         if self.memory_request == 'p':
-            return msg.format('p')
+            return  '--mem-per-cpu={}G'.format(self.__memory)
         else:
-            return msg.format('')
+            raise NotImplementedError("haven't implemented total memory request for Slurm Scirpts")
     
     
     @property
     def processesors_nodes(self):
-        return '-l nodes=' + str(self.__nodes) + ':ppn=' + str(self.__processors)
+        return '-N' + str(self.__nodes) + ' --ntasks-per-node=' + str(self.__processors)
     
     @property
     def email(self):
         if self.__email is None:
             return self.__email
         else:
-            return '-M '+  self.__email
+            return '--mail-user='+  self.__email
     
-    @property
-    def email_permissions(self):
-        if self.__email_permissions is None:
-            return self.__email_permissions
-        else:
-            return '-m ' + self.__email_permissions
 
     @name.setter
     def name(self,n):
@@ -174,12 +161,12 @@ class PBS:
     
     def format_pbs_header(self):
 
-        txt = ''
+        txt = '#!/bin/bash' + self.LINE_BREAK
         for item in [self.name,self.account,self.queue,self.output_file,self.walltime,
-                     self.memory,self.processesors_nodes,self.email,self.email_permissions]:
+                     self.memory,self.processesors_nodes,self.email]:
         
             if item is not None:
-                txt += self.line_leader + ' ' + item + LINE_BREAK
+                txt += self.line_leader + ' ' + item + self.LINE_BREAK
         
         return txt
 
@@ -189,7 +176,7 @@ class PBS:
     def __call__(self):
         return self.format_pbs_header()
 
-class DefaultPBS(PBS):
+class DefaultSlurm(Slurm):
 
     """
     a default pbs script. The account and queue are now hardcoded into the initializer
@@ -203,18 +190,20 @@ class DefaultPBS(PBS):
                        processors: int,
                        output_file = 'fluent.out',
                        email = None,
-                       email_permissions = 'abe',
+                       email_permissions = None,
                        memory_request = 'p',
-                       account = 'GT-my14'):
+                       account = 'gts-my14'):
 
 
         super().__init__(name,account,'inferno',output_file,walltime,
                         memory,nodes,processors,email = email,
                         email_permissions= email_permissions,memory_request = memory_request)
 
-class PythonPBS(SerializableClass):
 
-    PBS_PDIR = '$PBS_O_WORKDIR'
+class PythonSlurm(SerializableClass):
+
+    SLURM_PDIR = '$SLURM_SUBMIT_DIR'
+
     def __init__(self,
                  script: PaceScript,
                  version = '2019.10',
@@ -223,11 +212,11 @@ class PythonPBS(SerializableClass):
                  MEMORY = 1,
                  N_NODES = 1,
                  N_PROCESSORS = 1,
-                 pbs = DefaultPBS,
-                 account = 'GT-my14',
+                 slurm = DefaultSlurm,
+                 account = 'gts-my14',
                  memory_request = 'p'):
 
-        self.pbs = pbs(name,WALLTIME,MEMORY,N_NODES,N_PROCESSORS,
+        self.slurm = slurm(name,WALLTIME,MEMORY,N_NODES,N_PROCESSORS,
                             'python_pace.out',memory_request = memory_request,
                             account = account)
         
@@ -258,11 +247,11 @@ class PythonPBS(SerializableClass):
     
     def format_call(self):
 
-        txt = self.pbs() + LINE_BREAK
-        txt += self.format_change_dir(self.PBS_PDIR) +LINE_BREAK
-        txt += self.format_load_anaconda() + LINE_BREAK
+        txt = self.slurm() + self.LINE_BREAK
+        txt += self.format_change_dir(self.SLURM_PDIR) +self.LINE_BREAK
+        txt += self.format_load_anaconda() + self.LINE_BREAK
         txt += self.script.setup() 
-        txt += self.format_run_script() + LINE_BREAK
+        txt += self.format_run_script() + self.LINE_BREAK
 
         return txt
     
@@ -272,16 +261,15 @@ class PythonPBS(SerializableClass):
         """
         return self.format_call()
     
-    def write(self,f = None):
+    def write(self,f):
         """
         write the script to a file or IOStream (whatever its called in python)
         """
-        
         if self.script.target_dir is None:
             self.script.target_dir,_ = os.path.split(f)
 
         try:
-            with open(f,'w',newline = LINE_BREAK) as file:
+            with open(f,'w',newline = self.LINE_BREAK) as file:
                 file.write(self.format_call())
 
         except TypeError:
@@ -296,3 +284,11 @@ class PythonPBS(SerializableClass):
         input_file = dmdict.pop('input_file')
         dmdict['mpi_option'] = dmdict.pop('mpi_opt')
         return [input_file],dmdict
+
+def main():
+
+    slurm = DefaultSlurm('test',1500,8,1,8)
+    print(slurm())
+
+if __name__ == '__main__':
+    main()

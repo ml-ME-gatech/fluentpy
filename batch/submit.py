@@ -1,8 +1,6 @@
 #native imports
-from platform import python_branch
-from typing import Any, Iterable, Tuple, List
+from typing import Any, Iterable, Tuple, List, Union
 import os
-from xml.dom.minidom import Attr
 from pandas.core.frame import DataFrame
 import numpy as np
 import shutil
@@ -12,14 +10,17 @@ import pandas as pd
 import json
 from abc import ABC, abstractmethod, abstractstaticmethod
 import sys
+import warnings
 
 #package imports
 from ..disk import SerializableClass
 from ..pace import PaceScript
-from .pbs import FluentPBS, PythonPBS
+from .pbs import PBS
+from .fluent import FluentPBS
 from ..tui import BatchCaseReader, FluentJournal
 from .table_parse import partition_boundary_table
 from .filesystem import TableFileSystem
+from .batch_util import _parse_pykwargs
 
 """ 
 Author: Michael Lanahan
@@ -83,7 +84,6 @@ class FluentSubmission(SerializableClass,ABC):
     
         return _write_attr
 
-    
     @write_file_attributes.setter
     def write_file_attributes(self,wfa : dict) -> None:
         self.__write_file_attributes = wfa
@@ -122,8 +122,11 @@ class FluentSubmission(SerializableClass,ABC):
                 dst_file = os.path.join(folder,fname)
                 shutil.copyfile(attr,dst_file)
             else:
-                self.__getattribute__(attr).write(os.path.join(folder,file_name))
-    
+                try:
+                    self.__getattribute__(attr).write(os.path.join(folder,file_name))
+                except TypeError:
+                    self.__getattribute__(attr).write(folder)
+
     def format_submit(self,f: str) -> list:
         """
         format the submission at the command line in pace
@@ -150,7 +153,9 @@ class PaceFluentSubmission(FluentSubmission):
                       script_name = None,
                       python_libs = [],
                       python_envs = [],
-                      python_version = '2019.10') -> None:
+                      python_version = '2021.05',
+                      submit_command = 'sbatch',
+                      **kwargs) -> None:
 
         if script_name is None:
             script_name = self.DEFAULT_SCRIPT
@@ -159,7 +164,7 @@ class PaceFluentSubmission(FluentSubmission):
         self.fluent_pbs = fluent_pbs
         
         script_name = os.path.join(self.script_path,script_name)
-
+        self.submit_command = submit_command
         self.python_script = python_script(script_name,None,libs = python_libs,
                                            envs = python_envs,python_version = python_version)
 
@@ -175,7 +180,9 @@ class PaceFluentSubmission(FluentSubmission):
     
         self.python_script.target_dir = folder
         def script_modification(txt:str) -> str:
-            return txt.format(self.PACE_PBS)
+            text = txt.replace('<file_name>',self.PACE_PBS)
+            text = text.replace('<backend>',self.submit_command)
+            return text
         
         self.python_script.script_modifications = script_modification
 
@@ -213,43 +220,55 @@ class FluentBatchSubmission(ABC):
     if os_name == 'win32' or os_name == 'win64':
         BATCH_EXE_EXT = '.bat'
         TERMINAL_TYPE = 'powershell'
+        _PATH = WindowsPath
     elif os_name == 'linux' or os_name == 'posix':
         BATCH_EXE_EXT = '.sh'
         TERMINAL_TYPE = 'bash'
+        _PATH = PosixPath
     else:
         raise ValueError('Cannot determine Path structure from platform: {}'.format(os_name))
     
     BATCH_EXE_FNAME = 'batch' + BATCH_EXE_EXT
-
+    path,_ = os.path.split(os.path.split(__file__)[0])
+    script_path = os.path.join(path,'dat','scripts')
+    BATCH_MONITER_FILE = os.path.join(script_path,'batch_deploy.py')
+    POST_SCRIPT_FILE = os.path.join(script_path,'post_batch.py')
     _df = None
 
     def __init__(self,fluent_submission_list: list,
                       index = None,
                       prefix = '',
                       seperator = '-',
-                      case_name = None):
+                      case_file = None,
+                      move_batch_files = [],
+                      submit_command = 'sbatch',
+                      check_time = 120,
+                      num_resubmit = 5):
 
         super().__init__()
         index,prefix,seperator = self._initializer_kwarg_parser(len(fluent_submission_list),
                                                                 index,prefix,seperator)
+        
+
         self.prefix = prefix
         self.seperator = seperator
-        self.case_name = case_name
+        if case_file is not None:
+            self.case_file = self._PATH(case_file)
+        
         self.__submission_object = dict(zip([prefix + seperator + str(i) for i in index],
                                              fluent_submission_list))
         
-        try:
-            name = '' if index.name is None else index.name
-        except AttributeError:
-            name = ''
-        
+        self.move_batch_files = move_batch_files
+        self.check_time = check_time
+        self.num_resubmit = num_resubmit
+        self.batch_moniter_file = None
+        self.submit_command = submit_command
         for key,value in self.__submission_object.items():
             try:
-                value.fluent_journal.reader.pwd = name + seperator + str(key)
+                value.fluent_journal.reader.pwd = key
             except AttributeError:
                 pass
         
-
 
     @staticmethod
     def _initializer_kwarg_parser(n: int,
@@ -297,13 +316,6 @@ class FluentBatchSubmission(ABC):
     @submission_object.setter
     def submission_object(self,so):
         self.__submission_object = so
-    
-    @property
-    def case_file(self):
-        try:
-            return os.path.split(self.case_name)[1]
-        except TypeError:
-            return None
         
     def __add__(self,other) -> None:
 
@@ -347,9 +359,48 @@ class FluentBatchSubmission(ABC):
                                 prefix = self.prefix,
                                 seperator = self.seperator)
     
+    def _setup_batch_moniter_file(self,parent: str) -> None:
+
+        def script_modification(txt:str) -> str:
+            text = txt.replace('<submit_file>',self.PACE_PBS)
+            text = text.replace('<solution_file_name>','solution.trn')
+            text = text.replace('<check_time>',str(self.check_time))
+            text = text.replace('<num_resubmit>', str(self.num_resubmit))
+            text = text.replace('<backend>',self.submit_command)
+
+            return text
+
+        self.batch_moniter_file = PaceScript(self.BATCH_MONITER_FILE,
+                                             parent,
+                                             script_modifications= script_modification,
+                                             libs = [os.path.join(self.path,'pace.py')])
+    
+    def _setup_post_file(self,parent: str) -> None:
+
+        def script_modification(txt: str) -> str:
+            text = txt.replace('<submit_file>',self.PACE_PBS)
+            text = text.replace('<solution_file_name>','solution.trn')
+            text = text.replace('<backend>',self.submit_command)
+
+            return text
+        
+        self.post_script_file = PaceScript(self.POST_SCRIPT_FILE,
+                                            parent,
+                                            script_modifications=script_modification)
+    
+    def move_fluent_post_files(self,folder: str,
+                                    submission: FluentSubmission):
+
+        for p in submission.fluent_journal.post:
+            try:
+                p.write(folder)
+            except AttributeError:
+                pass
+
     def make_batch_submission(self,parent: str,
                                    verbose = True,
-                                   purge = False):
+                                   purge = False,
+                                   overwrite = False):
         
         """
         Formatting the submission
@@ -369,6 +420,8 @@ class FluentBatchSubmission(ABC):
                 populating with current batch information
         """
         
+        
+
         if not os.path.isdir(parent):
             os.mkdir(parent)
         else:
@@ -380,6 +433,24 @@ class FluentBatchSubmission(ABC):
             except FileExistsError:
                 pass
         
+        for file in set(self.move_batch_files):
+            if file is not None:
+                try:
+                    shutil.copy2(file,parent)
+                except shutil.Error as fe:
+                    if overwrite:
+                        os.remove(parent,os.path.split(file)[0])
+                        shutil.copy2(file,parent)
+                    else:
+                        raise FileExistsError(fe)
+        
+        #write some scripts to the folder that help with monitering
+        #and an additonal post re-run script
+        self._setup_batch_moniter_file(parent)
+        self._setup_post_file(parent)
+        self.batch_moniter_file.write(parent)
+        self.post_script_file.write(parent)
+
         self._populate_batch_cache_folder(parent)
         keys = list(self.submission_object.keys())
         python_version = self.submission_object[keys[0]].python_script.python_version
@@ -394,10 +465,12 @@ class FluentBatchSubmission(ABC):
                 txt += 'echo "executing job located in folder: {}"'.format(folder) + self.LINE_BREAK
             
             command,file = submission.format_submit(os.path.join(parent,str(folder)))
+            self.move_fluent_post_files(os.path.join(parent,str(folder)),submission)
             txt += 'cd '  + str(folder) + self.LINE_BREAK 
             txt += ''.join([command,file,' &',self.LINE_BREAK])
             txt += 'cd ..' + self.LINE_BREAK
 
+        txt += 'python ' + self.batch_moniter_file.script_name + ' &' + self.LINE_BREAK
         txt += 'conda deactivate' + self.LINE_BREAK
         txt += 'module unload anaconda3/' + python_version + self.LINE_BREAK
 
@@ -435,7 +508,7 @@ class FluentBatchSubmission(ABC):
 
     @classmethod
     def from_frame(cls,
-                   case_name: str,
+                   case_file: str,
                    turbulence_model:str,
                    df:DataFrame,
                    submission_args:List,
@@ -445,6 +518,7 @@ class FluentBatchSubmission(ABC):
                    python_libs = [],
                    python_envs = [],
                    python_version = '2019.10',
+                   submit_command = 'sbatch',
                    *frargs,
                    **frkwargs):
 
@@ -472,16 +546,16 @@ class FluentBatchSubmission(ABC):
                                                           df.index,prefix,seperator)
 
         boundary_df = partition_boundary_table(df,turbulence_model)
-        _,case_file = os.path.split(case_name)
+        _,case_name = os.path.split(case_file)
         
         sl,index = cls._submission_list_from_boundary_df(cls.submission_args_from_boundary_df,
                                                          cls.SUBMISSION_CLASS,
-                                                         case_file, boundary_df, submission_args,
+                                                         case_name, boundary_df, submission_args,
                                                           submission_kwargs,
                                                           seperator,*frargs,**frkwargs)
         
         _cls = cls(sl,index = index,prefix = index.name,
-                    case_name = case_name)
+                    case_file = case_file,submit_command = submit_command)
 
         _cls._df = df
 
@@ -544,13 +618,15 @@ class PaceBatchSubmission(FluentBatchSubmission):
                       index = None,
                       prefix = '',
                       seperator = '-',
-                      case_name = None):
+                      case_file = None,
+                      submit_command = 'sbatch'):
 
         super().__init__(fluent_submission_list,
                          index = index,
                          prefix = prefix,
                          seperator = seperator,
-                         case_name = case_name)
+                         case_file= case_file,
+                         submit_command = submit_command)
         
         #these are fixed on PACE
         self.BATCH_EXE_FNAME = 'batch.sh'
@@ -558,27 +634,21 @@ class PaceBatchSubmission(FluentBatchSubmission):
     
     def generate_submission(self,parent: str,
                             purge=False, 
-                            verbose=True) -> None:
+                            verbose=True,
+                            overwrite = False) -> None:
+        
+        self.move_batch_files.append(self.case_file)
 
         _bf = os.path.join(parent,self.BATCH_EXE_FNAME)
         txt = self.make_batch_submission(parent,
                                         verbose = verbose, 
-                                        purge = purge)
+                                        purge = purge,
+                                        overwrite = overwrite)
 
         with open(_bf,'w',newline = self.LINE_BREAK) as file:
             file.write(txt)
 
-        try:
-            _,case_name = os.path.split(self.case_file)
-        except TypeError:
-            case_name = self.case_file
-        
-        dst = os.path.join(parent,case_name)
-        try:
-            shutil.copy2(self.case_name,dst)
-        except shutil.Error:
-            pass
-    
+
     @staticmethod
     def submission_args_from_boundary_df(submission_args: list,
                                          case_name : str,
@@ -589,9 +659,8 @@ class PaceBatchSubmission(FluentBatchSubmission):
                                          **frkwargs) -> Tuple:
         
         _pbs = submission_args[0].copy()
-        _pbs.pbs.name = name + seperator + str(index)
+        _pbs.script_header.name = name + seperator + str(index)
         return (_pbs,)
-
 
 class BatchCache:
     
@@ -622,7 +691,11 @@ class BatchCache:
         with open(sf,'w') as sf_file:
             for folder,submission in submission_object.items():
                 submission_cache_file = os.path.join(self.batch_cache,folder)
-                submission.serialize(submission_cache_file)
+                try:
+                    submission.serialize(submission_cache_file)
+                except TypeError as t:
+                    warnings.warn(str(t))
+                
                 sf_file.write(folder + self.LINE_BREAK)
     
     def cache_df(self, df: pd.DataFrame) -> None:
@@ -647,13 +720,14 @@ class BatchCache:
         """
         cache everything associated with the batch for rebuild
         """
+        
         self.cache_submission_object(submission_object)
         if df is not None:
             self.cache_df(df)
         
         self.cache_batch_formatting(fmtkwargs)
 
-    def read_submission_object_cache(self) -> dict:
+    def read_submission_object_cache(self, so_class: FluentSubmission) -> dict:
         """
         read in the submission object cache
         """
@@ -666,7 +740,7 @@ class BatchCache:
         submission_object = dict.fromkeys(folders)
         for folder in folders:
             submission_file_name = os.path.join(self.batch_cache,folder)
-            submission_object[folder] = FluentSubmission.from_file(submission_file_name)
+            submission_object[folder] = so_class.from_file(submission_file_name)
         
         return submission_object
     
@@ -745,52 +819,6 @@ class BatchSubmissionSummary:
                     data[j,i] = True
         
         return pd.DataFrame(data,index = index,columns = self.COLUMNS)
-    
-    def remake_batch(self,new_batch_folder: str,
-                          missing_criterion: list,
-                          **batch_kwargs) -> None:
-
-        """ 
-        allows the user to remake a batch based on some missing criterion specificed 
-        by COLUMNS
-        """
-        
-        for mc in missing_criterion:
-            if mc not in self.COLUMNS:
-                raise ValueError('can only remake batch based on missing criterion in: {}'.format(self.COLUMNS))
-        
-        summary = self.make_summary()
-        
-        try:
-            _summary = summary[missing_criterion]
-            exclude_series = _summary.all(axis = 1)
-            cached_batch = FluentBatchSubmission.from_batch_cache(self._folder)
-            for index in exclude_series.index:
-                if exclude_series.loc[index]:
-                    cached_batch.submission_object.pop(index.name)
-            
-            for folder,submission in cached_batch.submission_object.items():
-                submission.fluent_journal.reader.pwd = folder
-            
-            if cached_batch._df is not None:
-                new_index = []
-                dtype = cached_batch._df.index.dtype
-                try:
-                    name_length = len(cached_batch._df.index.name)
-                except TypeError:
-                    name_length = 0
-                
-                for index in exclude_series.index:
-                    new_index.append((index.name[name_length:]))
-                
-                new_index = np.array(new_index,dtype = dtype)
-
-                _exclude_series = pd.Series(exclude_series.to_numpy(),index = new_index)
-                cached_batch._df = cached_batch._df[~_exclude_series]
-            
-            cached_batch.bash_submit(new_batch_folder,**batch_kwargs)
-        except FileNotFoundError:
-                raise FileNotFoundError('cannot find batch cache in batch folder')
 
 class FileSystemTree:
 
@@ -919,4 +947,4 @@ def _safety_delete(root: str,
                 ext = os.path.splitext(file)[1]
                 if file not in keep_files and ext not in keep_exts:
                     os.remove(file)
-        
+

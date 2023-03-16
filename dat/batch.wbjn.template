@@ -1,0 +1,29 @@
+# encoding: utf-8
+# Release 19.1
+import os
+
+folder_path = os.getcwd()
+root_path,folder_name = os.path.split(folder_path)
+
+SetScriptVersion(Version="{}")
+SetUserPathRoot(root_path)
+
+Unarchive(
+    ArchivePath= AbsUserPathName("{}"),
+    ProjectPath= AbsUserPathName(os.path.join(folder_name,"{}")),
+    Overwrite=True)
+
+system1 = GetSystem(Name="FFF")
+solution1 = system1.GetContainer(ComponentName="Solution")
+solution1.ImportFinalData(FilePath= os.path.join(folder_name,"{}"))
+
+system1 = GetSystem(Name="SYS")
+resultsComponent1 = system1.GetComponent(Name="Results")
+resultsComponent1.Update(AllDependencies=True)
+
+save = "{}"
+if save.lower() == "true":
+    Save(Overwrite=True)
+
+Parameters.ExportAllDesignPointsData(FilePath=os.path.join(folder_name,"{}"))
+

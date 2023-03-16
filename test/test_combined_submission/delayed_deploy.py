@@ -15,20 +15,18 @@ def wait_for_job(jobid: str) -> None:
             if status is None:
                 status = ''
                 
-def submit_job(file: str,
-               backend: str) -> str:
+def submit_job(file: str) -> str:
 
     #run the .pbs script in question in question
-    text = backend + ' ' + file
+    text = 'qsub ' + file
     output = subprocess.run(text,shell= True,capture_output= True,text= True)
     jobid = output.stdout.split('.')[0]
     return jobid
 
 def main():
-    file1 = '<file1>'
-    file2 = '<file2>'
-    backend = '<backend>'
-    jobid = submit_job(file1,backend)
+    file1 = 'fluent.pbs'
+    file2 = 'mechanical.pbs'
+    jobid = submit_job(file1)
 
     wait_for_job(jobid)
     submit_job(file2)

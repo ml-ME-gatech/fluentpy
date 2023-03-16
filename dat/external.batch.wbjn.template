@@ -1,0 +1,216 @@
+# encoding: utf-8
+# Release 19.1
+import os
+import logging
+
+MAX_NUMBER_FILES = 1000
+EXTERNAL_DATA_FILE = 'ExternalLoadFileData'
+
+#get the current working directory
+folder_path = os.getcwd()
+root_path,folder_name = os.path.split(folder_path)
+
+#Commence logging
+log_file = str(__file__) + '.logfile'
+
+#check to see if there is already a log file of the same name
+files = os.listdir(folder_path)
+removed_file = False
+
+if log_file in files:
+    os.remove(log_file)
+    removed_file = True
+
+logging.basicConfig(filename = log_file,
+                    encoding = 'utf-8',
+                    level = logging.DEBUG,
+                    format = '%(asctime)s : %(levelname)s : %(message)s')
+
+if removed_file:
+    logging.warning('removed existing log file')
+
+#print in all variables up here
+required_kwargs = ['version',
+                   'archive_path',
+                   'project_path', 
+                   'export_file',
+                   'save',
+                   'data_file_names']
+#<SET_KWARGS>
+
+vars_so_far = vars()
+for name in required_kwargs:
+    if name not in vars_so_far:
+        logging.error('Required variable: ' + name +  " not supplied")
+
+#check to see if the files are actually in the directory as advertized
+for file in data_file_names:
+    if file not in files:
+        logging.error('specified file: {}  not found in directory'.format(file))
+
+def custom_splitter(file_or_full_path,
+                    return_char = '/'):
+    """
+    motivated by the fact that for some reason on PACE the os.path.split
+    module is NOT functioning correctly 
+    """
+
+    file_or_full_path = file_or_full_path.strip()
+    if ':' in file_or_full_path:
+        directory_path,full_path = file_or_full_path.split(':')
+    else:
+        directory_path = ''
+        full_path = file_or_full_path
+    
+    chunks = []
+    split_path = full_path.split('/')
+    for sp in split_path:
+        for c in sp.split("\\"):
+            for e in c.split('\\\\'):
+                if e != '':
+                    chunks.append(e)
+    
+    if directory_path is not None:
+        chunks.insert(0,directory_path + ':')
+    
+    if len(chunks) == 1:
+        return None,chunks[0]
+    else:
+        return return_char.join(chunks[0:-1]),chunks[-1]
+
+def get_matching_external_datafiles(external_load_data):
+    """ 
+    function that iterates through an "ExternalLoadData" object and finds
+    all of the files associated with it. Matches the file names here
+    to the file names in data_file_names
+
+    Logs INFO if matching is found between data_file_names and the 
+         discovered file names
+    Logs WARNING if a new data file name could not be found to replace the old
+          this could be intentional, or it could not
+    Logs ERROR if a old file name could be found that matches one of the new file
+          names and hence will not be used, this is probably not intentional
+          and should be logged as an error
+    """
+    matching = dict()
+    logging.info('finding matching input data files to exisiting data files...')
+    old_data_files = []
+    for i in range(MAX_NUMBER_FILES):
+        try:
+            if i == 0:
+                name = EXTERNAL_DATA_FILE
+            else:
+                name = str(EXTERNAL_DATA_FILE) + ' ' + str(i)
+
+            external_load_file_data = external_load_data.GetExternalLoadFileData(Name = name)
+
+            location = external_load_file_data.File.Location
+            _,file_name = custom_splitter(location)
+            old_data_files.append(file_name)
+
+            if file_name in data_file_names:
+                matching[name] = data_file_names[file_name]
+                logging.info('found matching data file: ' + data_file_names[file_name])
+            else:
+                logging.warning('Could not find new data file to replace file with filename:' +file_name \
+                                + ' - using old data file')
+        except:
+            logging.info('determined ' + str(i) + ' files to be replaced')
+            break
+    
+    for dfn in data_file_names:
+        if dfn not in old_data_files:
+            logging.error('Could not find file to replace with new data file: ' + dfn)
+    
+    return matching
+
+
+def update_external_data_files(external_load_data,matching):
+    """
+    Updates the file names in the ExternalLoadFileData
+    to match the newly supplied file names based on a matching dictionary
+    """
+    logging.info('replacing existing data files with matching input data filess...')
+    
+    for name,file in matching.items():
+        logging.info('replacing:' + name + ' with file:' + file)
+        external_load_file_data = external_load_data.GetExternalLoadFileData(Name = name)
+        external_load_file_data.ModifyFileData(FilePath= AbsUserPathName(os.path.join(folder_name,file)))
+    
+#Set the root path
+logging.info('setting root path: ' + root_path)
+logging.info('folder name: ' + folder_name)
+
+SetUserPathRoot(DirectoryPath = root_path)
+
+#Set the version of the script
+logging.info('setting script version: ' + version)
+SetScriptVersion(Version=version)
+
+#Set the arhive & project paths
+logging.info('archive_path: ' + archive_path)
+logging.info("project_path: " + project_path)
+
+#Unarchive the Project
+logging.info("unarchiving Project...")
+Unarchive(
+    ArchivePath=AbsUserPathName(archive_path),
+    ProjectPath = AbsUserPathName(os.path.join(folder_name,project_path)),
+    Overwrite=True)
+
+#Print some information about the system - can be helpful
+#to debug if something goes wrong
+logging.info('-----------------------------------------------------------')
+logging.info('Workbench System Information:')
+for i,system in enumerate(GetAllSystems()):
+	text = str(i) + '. ' + system.DisplayText + ':' + system.Name
+	logging.info(text)
+	for j,component in enumerate(system.Components):
+		text = '\t' + str(i) + '-' + str(j) + '. ' + component.DisplayText + ':' + component.Name
+		logging.info(text)
+
+logging.info('-----------------------------------------------------------')
+
+#Update the external data file names
+logging.info("getting external data container with name 'SYS 1'")
+system1 = GetSystem(Name="SYS 1")
+setup1 = system1.GetContainer(ComponentName="Setup")
+externalLoadData1 = setup1.GetExternalLoadData()
+matching = get_matching_external_datafiles(externalLoadData1)
+update_external_data_files(externalLoadData1,matching)
+
+logging.info("Re-reading data files")
+try:
+    setup1.RereadDataFiles()
+except:
+    logging.error('Could not find files likely because they no longer exist or have been moved')
+    raise ValueError('failed')
+
+#update the external data in workbench
+logging.info("updating external load 'Setup'")
+setupComponent1 = system1.GetComponent(Name="Setup")
+setupComponent1.Update(AllDependencies=True)
+
+#Update The Mechanical System Components
+logging.info("getting mechanical system with name 'SYS'")
+mechanical_system = GetSystem(Name="SYS")
+logging.info("updating mechanical system dependencies...")
+for name in ["Setup","Solution","Results"]:
+    mechanical_component = mechanical_system.GetComponent(Name= name)
+    mechanical_component.Refresh()
+    mechanical_component.Update(AllDependencies = True)
+    mechanical_component.Refresh()
+    logging.info('updated mechanical component: ' + name)
+
+#Save the project if specified
+if save:
+    logging.info('saving project...')
+    Save(Overwrite=True)
+else:
+    logging.info("project not saved")
+
+#Save the results to a .csv file and exit
+logging.info("saving design point data to file: " + export_file)
+Parameters.ExportAllDesignPointsData(FilePath=AbsUserPathName(os.path.join(folder_name,export_file)))
+logging.info("script successfully executed")
+

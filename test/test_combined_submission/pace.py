@@ -206,12 +206,7 @@ class PaceScript:
     
     def write(self,f: str):
 
-        td,head =  os.path.split(f)
-        if td == '':
-            self.target_dir = f
-        else:
-            self.target_dir,_ = os.path.split(f) 
-        
+        self.target_dir,_ = os.path.split(f) 
         self.setup()
         
 
@@ -296,18 +291,6 @@ class SquentialJobs(QueuedJobs):
         
         self.submit_job()
         
-
-def get_job_name(jobid: str) -> Union[str,None]:
-    """
-    simplified function for getting the name of a job
-    submitted on PACE
-    """
-    pc = CheckJob(jobid)
-    json_data = pc()
-    try:
-        return json_data['AName']
-    except KeyError:
-        return None
 
 
 def get_job_status(jobid: str) -> Union[str,None]:

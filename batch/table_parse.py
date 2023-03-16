@@ -1,12 +1,14 @@
 #native imports
+from multiprocessing.sharedctypes import Value
 from pandas import DataFrame,Series
 from typing import List, Type
 
 #package imports
-from ..tui import UDF, PressureOutlet, MassFlowInlet,\
+from ..tui import UDF, KEpsilonRNGModelConstants, PressureOutlet, MassFlowInlet,\
                   WallBoundaryCondition, VelocityInlet, FluentBoundaryCondition,\
                   KEpsilonModelConstants, KOmegaModelConstants,GEKOModelConstants,\
-                  FluidMaterialModification
+                  FluidMaterialModification, KOmega_SSTModelConstants, NoTurbulenceModel,\
+                  KEpsilonRNGModelConstants, KOmega_BSLModelConstants,KOmegaLowReCorrection
 
 """"
 Author: Michael Lanahan
@@ -26,7 +28,8 @@ MODELS = [  'ke-realizable',
             'geko',
             'kw-standard',
             'k-kl-w',
-            'reynolds-stress-model']
+            'reynolds-stress-model',
+            'laminar']
 
 ALLOWABLE_BOUNDARY_TYPES = ['mass-flow-inlet','pressure-outlet','wall',
                             'velocity-inlet','model modification','fluid-modification']
@@ -66,8 +69,11 @@ def sort_boundary_list(blist: list,
             name,variable = split_header
             btype = 'model modification'
         
-        if btype not in ALLOWABLE_BOUNDARY_TYPES:
-            raise TypeError('boundary condiiton type specified by: {} is not allowed'.format(btype))
+        try:
+            if btype not in ALLOWABLE_BOUNDARY_TYPES:
+                raise TypeError('boundary condition type specified by: {} is not allowed'.format(btype))
+        except UnboundLocalError as ule:
+            raise ValueError('improper columns specification:"{}" - leading to: {}'.format(item,str(ule)))
         
         name = name + delim + btype
         try:
@@ -272,10 +278,16 @@ def make_boundary_condition_from_series(btype: str,
                'ke-standard':KEpsilonModelConstants,
                'kw-standard':KOmegaModelConstants,
                'ke-realizable':KEpsilonModelConstants,
-               'kw-SST': KOmegaModelConstants,
+               'ke-rng': KEpsilonRNGModelConstants,
+               'kw-SST': KOmega_SSTModelConstants,
+               'kw-sst': KOmega_SSTModelConstants,
+               'kw-BSL': KOmega_BSLModelConstants,
+               'kw-bsl': KOmega_BSLModelConstants,
+               'kw-low-re': KOmegaLowReCorrection,
                'kw-geko':GEKOModelConstants,
                'geko':GEKOModelConstants,
-               'fluid-modification':FluidMaterialModification}
+               'fluid-modification':FluidMaterialModification,
+               'laminar': NoTurbulenceModel}
     
     if btype != 'model modification' and btype != 'fluid-modification':
         return handle_udf_boundary_condition(mapping[btype],
