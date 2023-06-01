@@ -2,7 +2,7 @@
 from multiprocessing.sharedctypes import Value
 from pandas import DataFrame,Series
 from typing import List, Type
-
+import numpy as np 
 #package imports
 from ..tui import UDF, KEpsilonRNGModelConstants, PressureOutlet, MassFlowInlet,\
                   WallBoundaryCondition, VelocityInlet, FluentBoundaryCondition,\
@@ -225,6 +225,8 @@ def handle_udf_boundary_condition(cls: FluentBoundaryCondition,
                     bc_kwargs[key] = bool(value)
                 except TypeError:
                     raise TypeError('cannot convert value: {} from column {} to float'.format(value,key))
+        elif isinstance(value,list):
+            bc_kwargs[key] = value
         else:
             try:
                 bc_kwargs[key] = float(value)

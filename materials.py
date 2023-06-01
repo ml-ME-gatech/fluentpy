@@ -1,9 +1,7 @@
-from multiprocessing.sharedctypes import Value
-from tkinter.tix import MAX
 import pandas as pd
-from typing import Union
 from numpy.polynomial.polynomial import Polynomial
 import numpy as np
+from typing import Union
 import os
 
 """
@@ -109,15 +107,17 @@ class Material:
         def txt(self,text):
                 self.__txt = text
 
-        def add_property(self,data: pd.Series,interpolation_type = None) -> None:
+        def add_property(self,data: pd.Series,
+                              interpolation_type = None,
+                              name = None) -> None:
             
             if interpolation_type is None:
                     interpolation_type = self.interpolation_type
         
-            self.txt += '\t'+ str(Property(data,interpolation_type= interpolation_type)) + ')\n'
+            self.txt += '\t'+ str(Property(data,interpolation_type= interpolation_type,
+                                           name = name)) + ')\n'
 
         def data_to_text(self):
-            
             for name in self.df.columns:
                 self.add_property(self.df[name],self.interpolation_type[name])
 
@@ -170,8 +170,12 @@ class Property:
 
         Parameters:
         -----------
-        df: pd.Series - a Series object containing the data for the Property
-        interpolation_type: str - a string specifying the type of interpolation to use on the data
+        df: Union[pd.Series, Polynomial]
+                a Series object containing the data for the Property
+        interpolation_type: str
+                a string specifying the type of interpolation to use on the data, 
+                ignored if df is a Polynomial or is a one element series
+                        
 
         Methods:
         -----------
@@ -179,51 +183,59 @@ class Property:
         """
 
 
-        def __init__(self,df: pd.Series,
-                           interpolation_type = DEFAULT_INTERPOLATION):
+        def __init__(self,data: Union[pd.Series,Polynomial],
+                           interpolation_type = DEFAULT_INTERPOLATION,
+                           name = None):
 
-                self.__df = df
-                self.__interpolation_type = interpolation_type
+                self.data = data
+                self.interpolation_type = interpolation_type
+                if isinstance(data,pd.Series):
+                        if self.data.shape[0] == 1:
+                                self.interpolation_type = 'constant'
+                elif isinstance(data,Polynomial):
+                       self.interpolation_type = 'polynomial'
+                
+                self.name = name
+                
 
-        @property
-        def df(self):
-                return self.__df
 
-        @property
-        def interpolation_type(self):
-                return self.__interpolation_type
-
-        def _txt_constant_property(self,prop_name: str,
-                                        constant: float) -> str:
-
+        def _txt_constant_property(self,constant: float) -> str:
             return  '(constant . ' + str(constant) + ')'
         
         def _to_polynomial(self) -> str:
-
-                if isinstance(self.df,Polynomial):
-                        return str(FluentPolynomial(np.fliplr(self.df.coeff)))
+                """
+                fluent actually wants the coefficients in the same order 
+                that numpy.polynomial.Polynomial stores them
+                """
+                if isinstance(self.data,Polynomial):
+                        return str(FluentPolynomial(self.data.coef))
                 else:
-                        return str(FluentPolynomial(self.df.to_numpy()))
+                        return str(FluentPolynomial(self.data.to_numpy()[::-1]))
 
         def _series_property(self) -> str:
 
             txt = '('+ self.interpolation_type + ' '
-            for i in range(self.df.shape[0]):
-                    txt += '(' + str(self.df.index[i]) + ' . ' + str(self.df.iloc[i]) + ')' + ' '
+            for i in range(self.data.shape[0]):
+                    txt += '(' + str(self.data.index[i]) + ' . ' + str(self.data.iloc[i]) + ')' + ' '
 
             txt = txt[0:-1]
             txt += ')'
             return txt
 
         def _piecewise_polynomial(self):
-            if self.df.shape[0] == 1:
-                return self._txt_constant_property(self.df.name,self.df.iloc[0])
-            
+            if self.data.shape[0] == 1:
+                return self._txt_constant_property(self.data.iloc[0])
             else:
                 return self._series_property()
         
         def to_txt(self):
-                txt = '\t(' + self.df.name + ' '
+                try:
+                        txt = '\t(' + self.data.name + ' '
+                except AttributeError as ae:
+                        try: 
+                                txt = '\t(' + self.name + ' '
+                        except TypeError as te:
+                                raise AttributeError(str(ae) + '\n' + str(te))
                 
                 if self.interpolation_type == DEFAULT_INTERPOLATION or self.interpolation_type == 'constant':
                         txt += self._piecewise_polynomial()

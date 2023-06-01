@@ -637,7 +637,10 @@ class PaceBatchSubmission(FluentBatchSubmission):
                             verbose=True,
                             overwrite = False) -> None:
         
-        self.move_batch_files.append(self.case_file)
+        try:
+            self.move_batch_files.append(self.case_file)
+        except AttributeError as ae:
+            warnings.warn(str(ae))
 
         _bf = os.path.join(parent,self.BATCH_EXE_FNAME)
         txt = self.make_batch_submission(parent,

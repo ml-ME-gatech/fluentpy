@@ -324,6 +324,8 @@ class SurfaceFile(FluentFile):
         super().__init__(fname)
         self.output_ext = output_ext
         self.text = ''
+        self.__surface_iter = -1
+        self._surface_list = None
 
     @property
     def output_file(self) -> str:
@@ -382,14 +384,14 @@ class SurfaceFile(FluentFile):
             self.readdf()
         
         idxs = np.where(self.df.index == 1)[0]
-        surface_list = []
+        self._surface_list = []
         try:
             for i in range(idxs.shape[0]-1):
-                surface_list.append(self.df.iloc[idxs[i]:idxs[i+1]])
+                self._surface_list.append(self.df.iloc[idxs[i]:idxs[i+1]])
         
-            surface_list.append(self.df.iloc[idxs[-1]:])
+            self._surface_list.append(self.df.iloc[idxs[-1]:])
         
-            return surface_list
+            return self._surface_list
         except IndexError as ie:
             raise TypeError('Index error likely caused because the dataframe \
                 was not read correctly: \n {} \n {} '.format(self.df,str(ie)))
@@ -476,6 +478,23 @@ class SurfaceFile(FluentFile):
     
     def __call__(self):
         return self.format_text()
+    
+    def __iter__(self):
+        return self
+
+    def __next__(self) -> pd.DataFrame:
+
+        if self._surface_list is None:
+            self.get_surface_list()
+        
+        self.__surface_iter +=1 
+        if self.__surface_iter < len(self._surface_list):
+            return self._surface_list[self.__surface_iter]
+        
+        self.__surface_iter = -1
+        
+        raise StopIteration
+        
     
     @staticmethod
     def _row_to_text(line_break: str,
@@ -1607,14 +1626,14 @@ class SurfaceIntegralFile(FluentFile):
         """
         #this first line here reads the header information on the file
         try:
-            self.attributes['type'] =  lines[2].strip()
+            self.attributes['type'] =  lines[1].strip()
             try:
-                self.attributes['name'],self.attributes['unit'] = self._space_delimited_line_split(lines[3])
+                self.attributes['name'],self.attributes['unit'] = self._space_delimited_line_split(lines[2])
             except ValueError:
-                self.attributes['name'] = self._space_delimited_line_split(lines[3])[0]
+                self.attributes['name'] = self._space_delimited_line_split(lines[2])[0]
                 self.attributes['unit']= None
 
-            for i in range(5,len(lines)):
+            for i in range(4,len(lines)):
                 try:
                     boundary,value = self._space_delimited_line_split(lines[i])
                     if boundary == 'Net':

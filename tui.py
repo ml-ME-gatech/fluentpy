@@ -11,7 +11,7 @@ import shutil
 import re
 import string
 import random 
-
+import warnings
 
 #package imports
 from .disk import SerializableClass
@@ -1507,6 +1507,7 @@ class FluentCase(TUIBase):
     @property
     def case_file(self):
         return self.__case_file
+    
 
 class RPSetVar(TUIBase):
     """
@@ -3842,7 +3843,8 @@ class VelocityInlet(FluentFluidBoundaryCondition):
                 'velocity_spec':'magnitude, normal to boundary'}
 
     VELOCITY_SPEC = ['magnitude and direction',
-                     'magnitude, normal to boundary']
+                     'magnitude, normal to boundary',
+                     'components']
 
 
     def __init__(self,name: str,
@@ -3853,6 +3855,18 @@ class VelocityInlet(FluentFluidBoundaryCondition):
         
         super().__init__(name,'velocity-inlet',models,turbulence_model,
                          defaults = self.DEFAULTS,**kwargs)
+    
+    @udf_property('direction-0')
+    def direction_0(self):
+        return self.__direction_0
+
+    @udf_property('direction-1')
+    def direction_1(self):
+        return self.__direction_1
+
+    @udf_property('direction-2')
+    def direction_2(self):
+        return self.__direction_2 
     
     @udf_property('vmag')
     def vmag(self):
@@ -3872,6 +3886,21 @@ class VelocityInlet(FluentFluidBoundaryCondition):
     def p_sup(self,p: float):
         self.__p_sup = p
     
+    @direction_0.setter
+    @udf_setter
+    def direction_0(self,d0: float):
+        self.__direction_0 = d0
+
+    @direction_1.setter
+    @udf_setter
+    def direction_1(self,d1: float):
+        self.__direction_1 = d1
+
+    @direction_2.setter
+    @udf_setter
+    def direction_2(self,d2: float):
+        self.__direction_2 = d2
+
     def format_velocity_spec(self):
 
         if self.velocity_spec not in self.VELOCITY_SPEC:
@@ -3879,7 +3908,7 @@ class VelocityInlet(FluentFluidBoundaryCondition):
             raise ValueError('velocity must be specified by one \
                               of: {} \n not {}'.format(text_list,self.velocity_spec))
         
-        if self.direction_vector is not None:
+        if self.direction_vector is not None and self.velocity_spec != 'components':
             self.velocity_spec = 'magnitude and direction'
 
         text = 'velocity-spec' + self.LINE_BREAK
@@ -4038,6 +4067,10 @@ class SurfaceIntegrals(TUIBase):
         
         return txt
 
+    def __str__(self) -> str:
+
+        return self._format_text()
+
     def __call__(self,
                  return_engine = False):
 
@@ -4122,6 +4155,8 @@ class FluentJournal(SerializableClass,TUIBase):
                       model_modifications = [],
                       boundary_conditions = [],
                       pre_solution = [],
+                      attached_files = [],
+                      exit = True,
                       **kwargs):
 
         self.__case = FluentCase(case_file)
@@ -4139,7 +4174,7 @@ class FluentJournal(SerializableClass,TUIBase):
             self.write_case = True
             self.__case_writer = case_writer(output_name + '.cas')
         
-        if data_writer is None or isinstance(case_writer,type(None)):
+        if data_writer is None or isinstance(data_writer,type(None)):
             self.write_data = False
             self.__data_writer = None
         else:
@@ -4154,6 +4189,8 @@ class FluentJournal(SerializableClass,TUIBase):
         self.__post = post
         self.model_modifications = model_modifications
         self.pre_solution = pre_solution
+        self.attached_files = attached_files
+        self.exit = exit
 
     @property
     def case(self):
@@ -4270,9 +4307,17 @@ class FluentJournal(SerializableClass,TUIBase):
         format the fluent input file
         """
         
-        txt = 'file/start-transcript ' + self.transcript_file + self.LINE_BREAK     
+        try:
+            txt = 'file/start-transcript ' + self.transcript_file + self.LINE_BREAK     
+        except TypeError as te:
+            warnings.warn(str(te))
+            txt = ''
         
-        txt +=  str(self.reader) + self.LINE_BREAK
+        try:
+            txt +=  str(self.reader) + self.LINE_BREAK
+        except TypeError as te:
+            warnings.warn(str(te))
+        
         txt += self._format_convergence_condition()
         txt += self._model_modification_spec()
         txt += self._boundary_conditions_spec()
@@ -4286,14 +4331,23 @@ class FluentJournal(SerializableClass,TUIBase):
         if self.write_data:
             txt += str(self.data_writer) + self.LINE_BREAK
         
-        txt += 'exit' + self.LINE_BREAK
+        if self.exit:
+            txt += 'exit' + self.LINE_BREAK
 
         return txt
 
     def __call__(self):
         return self._format_fluent_file()
 
+    def _write_attached_files(self,f: Union[WindowsPath,str]) -> None:
+
+        folder = WindowsPath(f).parent
+        for file in self.attached_files:
+            shutil.copy2(file,folder)
+        
     def write(self,f) -> None:
+
+        self._write_attached_files(f)
 
         try:
             with open(f,'w',newline = self.LINE_BREAK) as file:
