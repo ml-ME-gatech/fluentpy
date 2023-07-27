@@ -807,6 +807,45 @@ class SphereSliceFile(SurfaceFile):
         return super().write_fluent_input_from_table(df,R,file_name,export_variables,
                prefix = prefix,seperator=  seperator,create_surfaces = create_surfaces)
 
+class ProfileFile(SurfaceFile):
+
+    EXPORT_CMD = 'file/write-profile'
+    def __init__(self,*args,**kwargs):
+
+        super().__init__(*args,**kwargs)
+       
+    @classmethod
+    def _format_export_command(cls,
+                              names: list,
+                              field_variables: list,
+                              file_name: str,
+                              cell_centered = True) -> str:
+
+        txt = cls.EXPORT_CMD + cls.LINE_BREAK
+        txt += file_name + cls.LINE_BREAK
+        #format surfaces for output
+        for name in names:
+            txt += name + cls.LINE_BREAK
+        
+        txt += ',' + cls.LINE_BREAK                  #end of names
+        #format variables for output
+        if isinstance(field_variables,str):
+            field_variables = [field_variables]
+        elif isinstance(field_variables,list):
+            pass
+        else:
+            raise ValueError('field variables must be designated by strings or list of strings')
+
+        for fv in field_variables:
+            if not isinstance(fv,str):
+                raise ValueError('field variables must be designated by strings')
+            
+            txt += fv + cls.LINE_BREAK
+        
+        txt += 'q' + cls.LINE_BREAK
+
+        return txt
+
 class SurfacePointFile(SurfaceFile):
 
     """

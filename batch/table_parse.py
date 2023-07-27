@@ -153,6 +153,8 @@ def _infer_models_from_headers(columns: list) -> list:
     
     return list(set(models))
 
+def _parse_profile_from_str(string: str) -> UDF:
+    raise NotImplementedError("you haven't implemented this yet") 
 
 def _parse_udf_from_str(string : str) -> UDF:
     """

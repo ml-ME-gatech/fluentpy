@@ -1080,7 +1080,31 @@ class FluentEngine(TUIBase):
         return process
 
 
+class ProfileReader(FileIO):
+
+    """
+    representation of the read-profile command
     
+    Parameters
+    ----------
+    file : str
+            string of the file name to read
+
+    Examples
+    --------
+
+    .. code-block:: python
+
+        pr = ProfileReader('mydata.prof')
+        print(pr)
+        > file/read-profile mydata.prof
+    """
+
+    _prefix = 'file/read-profile'
+    def __init__(self,file: str):
+
+        super().__init__(file)
+
 class DataWriter(FileIO):
 
     """
@@ -1163,6 +1187,37 @@ class Solver_Iterator(TUIBase):
     def __str__(self):
         return self._prefix + ' ' + str(self.niter)
 
+class TransientSolver_Iterator(TUIBase):
+
+    """
+    base representation of the transient solver iterator
+    
+    Parameters
+    ----------
+    niter : int 
+            number of iterations to iterate for - default 200
+    
+    Examples
+    ----------
+
+    .. code-block:: python
+    
+        si = Solver_Iterator(niter = 500)
+        print(si)
+        > solve/dual-time-iterate 500
+    """
+
+    _prefix = 'solve/dual-time-iterate'
+    def __init__(self,nsteps = 200,
+                      max_iter = 20):
+        self.nsteps = nsteps
+        self.max_iter = max_iter
+    
+    
+    def __str__(self):
+        return self._prefix + ' ' + str(self.nsteps) + self.LINE_BREAK + \
+               str(self.max_iter)
+    
 class Solver(TUIBase):
 
     """
@@ -1193,10 +1248,12 @@ class Solver(TUIBase):
     
     def __init__(self,
                  initializer = Initializer(),
-                 solver_iterator = Solver_Iterator()):
+                 solver_iterator = Solver_Iterator(),
+                 print_usage = True):
 
         self.__initializer = initializer
         self.__solver_iterator = solver_iterator
+        self.print_usage = print_usage
 
     @property
     def initializer(self):
@@ -1208,12 +1265,14 @@ class Solver(TUIBase):
 
     @property
     def usage(self):
-        return 'parallel timer usage'
+        return 'parallel timer usage' if self.print_usage else None
 
     def __str__(self):
-        txt = str(self.initializer) + self.LINE_BREAK
+        txt = str(self.initializer) + self.LINE_BREAK if self.initializer is not None else ''
         txt += str(self.solver_iterator) + self.LINE_BREAK
-        txt += str(self.usage) + self.LINE_BREAK
+        if self.usage is not None:
+            txt += str(self.usage) + self.LINE_BREAK
+        
         return txt 
 
 
@@ -2588,7 +2647,8 @@ class UDF(TUIBase):
                       udf_lib = 'random',
                       case_dir = None,
                       compile = False,
-                      system_type = 'linux') -> None:
+                      system_type = 'linux',
+                      is_profile = False) -> None:
         
         self.system_type = system_type
         self.file_name = file_name
@@ -2620,14 +2680,22 @@ class UDF(TUIBase):
             _data_name = self.infer_data_name_from_file(file_name)
 
         if data_name is not None:
-            split_tuple = data_name.split('::')
-            if len(split_tuple) == 1:
+            if is_profile:
                 self.__data_name = data_name
             else:
-                self.__data_name = split_tuple[0]
-                self.udf_lib = split_tuple[1]
+                split_tuple = data_name.split('::')
+                if len(split_tuple) == 1:
+                    self.__data_name = data_name
+                else:
+                    self.__data_name = split_tuple[0]
+                    self.udf_lib = split_tuple[1]
         else:
+            if is_profile: 
+                raise ValueError('data name cannot be done if profile is specified by file')
+            
             self.__data_name = _data_name
+        
+        self.is_profile = is_profile
 
     @staticmethod
     def infer_data_name_from_file(file_name : str):
@@ -2671,7 +2739,10 @@ class UDF(TUIBase):
     
     @property
     def data_name(self):
-        return r'"' + self.__data_name + '::' +  self.udf_lib + r'"'
+        if self.is_profile:
+            return self.data_name
+        else:
+            return r'"' + self.__data_name + '::' +  self.udf_lib + r'"'
 
     def establish_os(self) -> None:
         """
@@ -2691,7 +2762,8 @@ class UDF(TUIBase):
         string sequence to enable using udf
         """
         text = 'yes' + self.LINE_BREAK
-        text += 'yes' + self.LINE_BREAK
+        text += 'no' if self.is_profile else 'yes' 
+        text += self.LINE_BREAK
         text += self.profile_name + self.LINE_BREAK
         text += self.data_name + self.LINE_BREAK
 
@@ -4156,7 +4228,7 @@ class FluentJournal(SerializableClass,TUIBase):
                       boundary_conditions = [],
                       pre_solution = [],
                       attached_files = [],
-                      exit = True,
+                      exit_sim = True,
                       **kwargs):
 
         self.__case = FluentCase(case_file)
@@ -4190,7 +4262,7 @@ class FluentJournal(SerializableClass,TUIBase):
         self.model_modifications = model_modifications
         self.pre_solution = pre_solution
         self.attached_files = attached_files
-        self.exit = exit
+        self.__exit = exit_sim
 
     @property
     def case(self):
@@ -4244,7 +4316,14 @@ class FluentJournal(SerializableClass,TUIBase):
     def boundary_conditions(self,bc):
         self.__boundary_conditions = bc
     
-
+    @property
+    def exit(self):
+        if not self.__exit:
+            return self.__exit
+        else:
+            return 'exit' + self.LINE_BREAK + 'ok' if not self.write_case \
+                 or not self.write_data else 'exit'
+    
     def _model_modification_spec(self):
         """
         must have a str method
@@ -4307,10 +4386,13 @@ class FluentJournal(SerializableClass,TUIBase):
         format the fluent input file
         """
         
-        try:
-            txt = 'file/start-transcript ' + self.transcript_file + self.LINE_BREAK     
-        except TypeError as te:
-            warnings.warn(str(te))
+        if self.transcript_file is not None:
+            try:
+                txt = 'file/start-transcript ' + self.transcript_file + self.LINE_BREAK     
+            except TypeError as te:
+                warnings.warn(str(te))
+                txt = ''
+        else:
             txt = ''
         
         try:
@@ -4332,7 +4414,7 @@ class FluentJournal(SerializableClass,TUIBase):
             txt += str(self.data_writer) + self.LINE_BREAK
         
         if self.exit:
-            txt += 'exit' + self.LINE_BREAK
+            txt += self.exit
 
         return txt
 
