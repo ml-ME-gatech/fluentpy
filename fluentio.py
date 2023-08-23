@@ -14,7 +14,7 @@ from pandas.errors import ParserError
 from pathlib import WindowsPath,PosixPath
 import sys
 import os
-
+import warnings
 from sqlalchemy import column
 
 #package imports
@@ -1314,6 +1314,7 @@ class SolutionFile(FluentFile):
     _PARAM_PHRASE = r'WB->Fluent:Parameter name:'
     _SOL_START_PHRASE = r'  iter  '
     _SOL_END_PHRASE = r'Writing "| gzip -2cf >'
+    
     _ITERATE_PHRASES = ['> solve/iterate',
                        'solve/iterate',
                        '> iterate',
@@ -1406,18 +1407,18 @@ class SolutionFile(FluentFile):
         except StopIteration:
             raise AttributeError('no columns found in file - ensure that the file with name: {} is a solution file'.format(self.fname))
 
+        chunks = []
         while True:
             try:
                 eol1.peek()
                 eol2.peek()
-                ct = self._parse_solution_text(solution_text,eol1,eol2)
-                cleaned_text += ct
+                chunks.append(self._parse_solution_text(solution_text,eol1,eol2))
             except StopIteration:
                 break
         
-        return cleaned_text,columns
+        return chunks,columns
 
-    def readdf(self) -> pd.DataFrame:
+    def readdf(self,error_on_parser = False) -> pd.DataFrame:
         """
         main reading of data frame occurs here which goes through four main phases: 
         1. the text containing the residual information is located
@@ -1434,10 +1435,22 @@ class SolutionFile(FluentFile):
                 is missing from any column, this is filled with nan.
         """
         
-        cleaned_text,columns = self._get_data()
-        array = pd.read_csv(StringIO(cleaned_text), sep = '\s+',
+        cleaned_chunks,columns = self._get_data()
+        data = []
+        for chunk in cleaned_chunks:
+            try:
+                data.append(
+                    pd.read_csv(StringIO(chunk), sep = '\s+',
                           dtype = float, header = None).to_numpy()
+                )
+            except (ValueError,pd.errors.EmptyDataError) as pd_error:
+                if error_on_parser:
+                    raise ValueError(str(pd_error))
+                else:
+                    warnings.warn(str(pd_error))
         
+        array = np.concatenate(data,axis =0)
+
         #the index will be the first column of the array
         index_dat = array[:,0].astype(int)
 
