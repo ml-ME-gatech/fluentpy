@@ -539,7 +539,8 @@ class SurfaceFile(FluentFile):
                                            prefix = None,
                                            seperator = '-',
                                            create_surfaces = True,
-                                           cell_centered = True) -> None:
+                                           cell_centered = True,
+                                           write = True) -> None:
 
         """
         Parameters
@@ -571,10 +572,15 @@ class SurfaceFile(FluentFile):
         else:
             text = _txt
         
-        with open(file_name,'w') as file:
-            file.write(text)
-        
-        return cls(file_name)
+        if write:
+            with open(file_name,'w') as file:
+                file.write(text)
+            return cls(file_name)
+        else:
+            cls_ = cls(file_name)
+            cls_.text = text
+            return cls_
+            
     
     def write(self,f:str) -> None:
 
@@ -802,10 +808,11 @@ class SphereSliceFile(SurfaceFile):
                                            export_variables,
                                            prefix = 'sphere',
                                            seperator = '-',
-                                           create_surfaces = True) -> None:
+                                           create_surfaces = True,
+                                           write = True) -> None:
 
         return super().write_fluent_input_from_table(df,R,file_name,export_variables,
-               prefix = prefix,seperator=  seperator,create_surfaces = create_surfaces)
+               prefix = prefix,seperator=  seperator,create_surfaces = create_surfaces,write = write)
 
 class ProfileFile(SurfaceFile):
 
@@ -1315,12 +1322,13 @@ class SolutionFile(FluentFile):
     _SOL_START_PHRASE = r'  iter  '
     _SOL_END_PHRASE = r'Writing "| gzip -2cf >'
     
-    _ITERATE_PHRASES = ['> solve/iterate',
+    _ITERATE_PHRASES = set(['> solve/iterate',
                        'solve/iterate',
                        '> iterate',
-                       'iterate']
-    _SKIP_CHARS = ['\n','!']
-    _END_CHARS = ['>']
+                       'iterate'])
+    
+    _SKIP_CHARS = set(['\n','!'])
+    _END_CHARS = set(['>'])
     
     def __init__(self,fname):
 
@@ -1393,7 +1401,6 @@ class SolutionFile(FluentFile):
         iteratively retrieve data, examining all of the iteration
         blocks found in the file
         """
-        cleaned_text = ''
         columns = []
         solution_text = _get_text_between_phrase_lines(self.file,
                                                         [self._SOL_START_PHRASE ,self._SOL_END_PHRASE],
@@ -1520,6 +1527,89 @@ class SolutionFile(FluentFile):
 
         return self.STATUS
 
+class TransientSolutionFile(SolutionFile): 
+
+    _ITERATE_PHRASES = set(['> solve/dual-time-iterate',
+                            'solve/dual-time-iterate'])
+    
+
+    def __init__(self,fname):
+
+        super().__init__(fname)
+
+    def _parse_solution_text(self,solution_text: str,
+                                  eol1: Iterable,
+                                  eol2: Iterable):
+        
+        """
+        parse the solution folder file in post into a pandas dataframe with the
+        columns being the various values tracked over the course of the solver
+        and the rows the iterations.
+
+        ** This function is pretty slow, considering that every line must be iterated
+        over in python, and each character of each line must be examined in python. However,
+        SolutionFiles tend to be on the order of 1e3-1e4 lines and kb of data, so this is probably
+        not a performance bottleneck. In the future, it could be useful to write this parsing procedure 
+        in cython but this is not a priority at the moment 12.28.2021. 
+        """
+
+        if not solution_text:
+            return ''
+        
+        else:
+            cleanedText = ''
+            for e2,e1 in zip(eol2,eol1):
+                line = solution_text[e2.start():e1.start()+1].strip() +'\n'
+                try:
+                    #check to see if we should consider this line
+                    if line[0] in self._SKIP_CHARS or 'Solution' in line or 'Flow time' in line or 'more time steps' in line:
+                        continue
+                    else:
+                        try:
+                            int(line[0])
+
+                            #ugly block here deals with annoying time/iter format
+                            #data at the last column
+                            _temp_end = line.find(':')
+                            _i = 1
+                            while line[_temp_end - _i] != ' ':
+                                _i +=1
+                            line = line[0:_temp_end-_i] + '\n'
+                            
+                            #add okay line to the cleaned text
+                            cleanedText += line
+                        except ValueError:
+                            continue
+                except IndexError:
+                    continue
+        
+        return cleanedText
+
+    def _get_data(self):
+        """
+        iteratively retrieve data, examining all of the iteration
+        blocks found in the file
+        """
+        columns = []
+        solution_text = self.file.read()
+        eol = itertools.tee(re.finditer('solve/dual-time-iterate',solution_text))
+        eol1 = peekable(eol[0])
+        eol2 = peekable(eol[1])
+        try:
+            columns = re.split('\s+',solution_text[0:next(eol1).start()].strip())[0:-1]
+        except StopIteration:
+            raise AttributeError('no columns found in file - ensure that the file with name: {} is a solution file'.format(self.fname))
+
+        chunks = []
+        while True:
+            try:
+                eol1.peek()
+                eol2.peek()
+                chunks.append(self._parse_solution_text(solution_text,eol1,eol2))
+            except StopIteration:
+                break
+        
+        return chunks,columns
 class DesignPointExportFile(FluentFile):
 
     """
