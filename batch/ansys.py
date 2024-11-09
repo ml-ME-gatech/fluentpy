@@ -71,7 +71,7 @@ class MechanicalSlurm(MechanicalScript):
     
 class APDL_Script(FluentScript):
     
-    def __init__(self, *args, input_file = 'apdl.dat',
+    def __init__(self, *args, input_file = 'ansys.input',
                        **kwargs):
         
         super().__init__(*args,input_file,**kwargs)
@@ -81,6 +81,7 @@ class APDL_Script(FluentScript):
         format the whole script here
         """
         txt = self.script_header() + LINE_BREAK
+        txt += self.config + LINE_BREAK
         txt += self.format_change_dir(self.PDIR) +LINE_BREAK
         txt += self.format_load_ansys(self.version) +LINE_BREAK
         txt += self.format_apdl_footer(self.input_file) \
@@ -92,7 +93,7 @@ class APDL_Script(FluentScript):
         """
         format the mechanical call in the pbs script
         """
-        return 'ansys222 -b -i "' + input_file + '"'
+        return 'ansys231 -s noread -smp -np $SLURM_NTASKS -b  < ' + input_file + ' > apdl.out 2>&1'
 
 class APDL_PBS(APDL_Script):
 

@@ -8,7 +8,8 @@ from ..tui import UDF, KEpsilonRNGModelConstants, PressureOutlet, MassFlowInlet,
                   WallBoundaryCondition, VelocityInlet, FluentBoundaryCondition,\
                   KEpsilonModelConstants, KOmegaModelConstants,GEKOModelConstants,\
                   FluidMaterialModification, KOmega_SSTModelConstants, NoTurbulenceModel,\
-                  KEpsilonRNGModelConstants, KOmega_BSLModelConstants,KOmegaLowReCorrection
+                  KEpsilonRNGModelConstants, KOmega_BSLModelConstants,KOmegaLowReCorrection,\
+                  ConstantSource,RPSetVar
 
 """"
 Author: Michael Lanahan
@@ -291,7 +292,9 @@ def make_boundary_condition_from_series(btype: str,
                'kw-geko':GEKOModelConstants,
                'geko':GEKOModelConstants,
                'fluid-modification':FluidMaterialModification,
-               'laminar': NoTurbulenceModel}
+               'laminar': NoTurbulenceModel,
+               'source': ConstantSource,
+               'rp_var': RPSetVar}
     
     if btype != 'model modification' and btype != 'fluid-modification':
         return handle_udf_boundary_condition(mapping[btype],

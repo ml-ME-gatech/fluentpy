@@ -24,7 +24,8 @@ class FluentScript(SerializableClass):
     """
     
     LINE_BREAK = '\n'
-
+    
+    
     def __init__(self,
                  input_file = 'fluent.input',
                  name = None,
@@ -33,7 +34,7 @@ class FluentScript(SerializableClass):
                  N_NODES = 1,
                  N_PROCESSORS = 1,
                  output_file = 'pace.out',
-                 version = '2021R2',
+                 version = '2023R1',
                  email = None,
                  email_permissions = 'abe',
                  mpi_option = 'intel',
@@ -41,7 +42,8 @@ class FluentScript(SerializableClass):
                  _cached_header = None,
                  account = 'gts-my14',
                  specification = '3ddp',
-                 memory_request = 'p'):
+                 memory_request = 'p',
+                 config = []):
         
         if _cached_header is None:
             if WALLTIME is None:
@@ -66,7 +68,19 @@ class FluentScript(SerializableClass):
         self.N_NODES = N_NODES
         self.input_file = input_file
         self.specification = specification
+        self._config = config
 
+
+    def add_config(self,*args):
+        """
+        add configuration to the script
+        """
+        self._config.extend(args)
+    
+    @property
+    def config(self):
+        return '\n'.join(self._config) + '\n' if self._config else ''
+    
     def format_machine_file(self):
         """
         sets the MPI option correctly for pace
@@ -85,14 +99,16 @@ class FluentScript(SerializableClass):
         """
         this is required for the process affinity to work on pace
         """
-        return ' -cnf=' + self.NODE_FILE + ' '
+        return ' -cnf=$FLUENTNODES '
 
     def format_call(self):
         """
         format the whole script here
         """
         txt = self.script_header() + self.LINE_BREAK
+        txt += self.config
         txt += self.format_change_dir(self.PDIR) +self.LINE_BREAK
+        txt += self.LINE_BREAK + self.LINE_BREAK + self.script_header.added_text + self.LINE_BREAK + self.LINE_BREAK
         txt += self.format_load_ansys(self.version) +self.LINE_BREAK
         mpi = self.format_machine_file()
         cnf = self.format_cnf()
@@ -130,7 +146,7 @@ class FluentScript(SerializableClass):
         format the fluent call in the pbs script
         """
         
-        return 'fluent ' + specification + ' -t' + str(int(processors*nodes)) + mpi + cnf + ' -g < ' + input_file + ' > outputfile'
+        return 'fluent ' + specification + ' -t$SLURM_NTASKS '  + '-scheduler_tight_coupling -pinfiniband'+ mpi + cnf + ' -g < ' + input_file + ' > outputfile'
     
     def __call__(self):
         """

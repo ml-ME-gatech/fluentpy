@@ -85,7 +85,24 @@ class TUIBase:
             my_file_name += random.choice(string.ascii_letters)
         
         return my_file_name + self.ext
-    
+
+def boolean_property(cls_property: callable) -> callable:
+    """
+    Convinience function for turning boolean properties into 
+    yes/no answers for the TUI interface
+    """
+    @property
+    def wrapped_property(self):
+
+        tui_name = cls_property.__name__.replace('_','-')
+        tui_syntax = tui_name + self.LINE_BREAK + '{}' + self.LINE_BREAK
+        if cls_property(self):
+            return tui_syntax.format('yes')
+        else:
+            return tui_syntax.format('no')
+
+    return wrapped_property
+
 class TUIVersion(TUIBase):
 
     """
@@ -212,7 +229,7 @@ class Relaxation(ABC,TUIBase):
             txt += str(variable) + self.LINE_BREAK
             txt += str(value) + self.LINE_BREAK
         
-        txt += self.EXIT_CHAR + self.EXIT_CHAR + self.EXIT_CHAR
+        txt += self.EXIT_CHAR 
         return txt
     
     def __str__(self):
@@ -259,7 +276,7 @@ class ScalarRelaxation(Relaxation):
     
     """
     
-    ALLOWABLE_VARIABLE_RELAXATION = ['body-force','epsilon','temperature','density', 'k', 'turb-viscosity']
+    ALLOWABLE_VARIABLE_RELAXATION = {'body-force','epsilon','temperature','density', 'k', 'turb-viscosity','omega'}
     _prefix = 'solve/set/under-relaxation'
 
     def __init__(self,variable: str,
@@ -317,7 +334,8 @@ class EquationRelaxation(Relaxation):
     _prefix = 'solve/set/p-v-controls'
 
     def __init__(self,variable: str,
-                      value: float):
+                      value: float,
+                      set_courant = True):
 
         super().__init__(variable,value)
 
@@ -328,6 +346,8 @@ class EquationRelaxation(Relaxation):
             if key not in self.var_value_dict:
                 self.var_value_dict[key] = value
 
+        if not set_courant and 'courant number' in self.ALLOWABLE_RELAXATION:
+            self.ALLOWABLE_RELAXATION.pop('courant number')
         #this needs to be in the correct order
         self.var_value_dict = OrderedDict((k,self.var_value_dict[k]) for 
                                             k in self.ALLOWABLE_RELAXATION.keys())
@@ -353,6 +373,107 @@ class EquationRelaxation(Relaxation):
         txt += self.EXIT_CHAR + self.EXIT_CHAR + self.EXIT_CHAR 
         return txt
         
+class PseudoTimeMethodRelaxation(ScalarRelaxation):
+
+    _prefix = 'solve/set/pseudo-time-method/relaxation-factors'
+
+
+class SetEquation(TUIBase):
+
+    _prefix = 'solve/set/equations'
+
+    def __init__(self,equation: str):
+        self.solve = True
+        self.equation = equation
+    
+    def __str__(self) -> str:
+        return self._prefix + f'/{self.equation} ' + ('yes' if self.solve else 'no')  + self.LINE_BREAK
+
+
+class PressureVelocityCoupling(TUIBase):
+
+    _map = {'simple':20, 
+            'simplec':21,
+            'piso':22,
+            'coupled':24,
+            'fractional-step':25}
+
+    _prefix = 'solve/set/pv-coupling'
+    def __init__(self,value: str = 'standard'):
+        self.value = value
+    
+    def __str__(self) -> str:
+        try:
+            return self._prefix + self.LINE_BREAK + str(self._map[self.value]) + self.LINE_BREAK
+        except KeyError:
+            raise ValueError('Pressure velocity coupling must be one of: {}'.format(self._map.keys()))
+        
+class NoniterativeTimeAdvancement(TUIBase):
+
+    """
+    class for setting the non-iterative time advancement in fluent
+
+    Parameters
+    ----------
+    value : str
+            the value of the time advancement. must be one of 'first-order' or 'second-order'
+
+    Examples
+    --------
+
+    .. code-block:: python
+
+        nita = NoniterativeTimeAdvancement('first-order')
+        print(nita)
+        > solve/set/non-iterative-time-advancement first-order
+    """
+
+    _prefix = 'define/models/noniterative-time-advance'
+
+    def __init__(self,value: bool = True):
+
+        self._value = value
+    
+    @property
+    def value(self):
+        return 'yes' if self._value else 'no'
+    
+    def off(self):
+        self._value = False
+    
+    def on(self):
+        self._value = True 
+
+    def __bool__(self):
+        return self._value
+    
+    def __str__(self) -> str:
+        return self._prefix + self.LINE_BREAK+  self.value + self.LINE_BREAK
+    
+    
+class EquationSetter(TUIBase):
+
+    def __init__(self,equations: List[str]):
+        self.equations = {e: SetEquation(e) for e in equations}
+    
+    def __setitem__(self,key: str, value: bool):
+        self.equations[key].solve = value
+    
+    def __getitem__(self,key: str) ->SetEquation:
+        return self.equations[key]
+
+    def solve_all(self):
+        for e in self.equations.values():
+            e.solve =True
+        
+    def solve_none(self):
+        for e in self.equations.values():
+            e.solve = False
+
+    def __str__(self) -> str:
+        return ''.join(str(e) for e in self.equations.values())
+
+
 class NISTRealGas(TUIBase):
 
     """
@@ -2174,17 +2295,17 @@ class FluentCellZone(ABC,TUIBase):
         return txt
 
 
-    def __call__(self) -> str:
+    def __call__(self, modify_zone = False) -> str:
 
-        return self.format_boundary_condition()
+        return self.format_boundary_condition(modify_zone = modify_zone)
     
-    def __str__(self) -> str:
+    def __str__(self,modify_zone = False) -> str:
 
-        return self.format_boundary_condition()
+        return self.format_boundary_condition(modify_zone = modify_zone)
     
-    def format_boundary_condition(self) -> str:
+    def format_boundary_condition(self,modify_zone = False) -> str:
 
-        if self._modify_zone:
+        if self._modify_zone or modify_zone:
             txt = self._format_modify_zone()
         else:
             txt = ''
@@ -2212,6 +2333,44 @@ class FluentCellZone(ABC,TUIBase):
 
         return txt
 
+class ConstantSource(TUIBase):
+
+    _prefix = 'define/boundary-conditions/set/'
+    def __init__(self,name: str,
+                      zone_type: str,
+                      sources: Union[float,List[float]] = None):
+
+
+        self.name = name
+        self.zone_type = zone_type
+        self.sources = sources
+
+    def format_sources(self):
+
+        if not self.sources:
+            return ''
+    
+        sources = self.sources if isinstance(self.sources,list) else [self.sources]
+        text = str(len(sources)) + '\n'
+        for i in range(len(sources)):
+            text += 'yes\n'
+            text += str(sources[i]) + '\n'
+        
+        return text
+
+    def __str__(self) -> str:
+
+        text = self._prefix + self.zone_type + '\n(' + self.name + ')\n'
+        text += 'sources\nyes\n'
+        text += 'source-terms\n'
+        text += self.format_sources()
+        text += 'q\n'
+        return text
+
+
+
+
+    
 class SolidCellZone(FluentCellZone):
 
     """
@@ -2920,22 +3079,7 @@ def udf_property(condition_name: str) -> callable:
     
     return udf_enabled_condition
 
-def boolean_property(cls_property: callable) -> callable:
-    """
-    Convinience function for turning boolean properties into 
-    yes/no answers for the TUI interface
-    """
-    @property
-    def wrapped_property(self):
 
-        tui_name = cls_property.__name__.replace('_','-')
-        tui_syntax = tui_name + self.LINE_BREAK + '{}' + self.LINE_BREAK
-        if cls_property(self):
-            return tui_syntax.format('yes')
-        else:
-            return tui_syntax.format('no')
-
-    return wrapped_property
 
 class FluentBoundaryCondition(ABC,TUIBase):
     """

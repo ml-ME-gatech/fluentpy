@@ -42,6 +42,15 @@ class Slurm:
     #SBATCH --mail-type=BEGIN,END,FAIL              # Mail preferences
     #SBATCH --mail-user=gburdell3@gatech.edu        # E-mail address for notifications
 
+    export FLUENT_SSH=blaunch			#change remote node launcher in fluent
+    export SCHEDULER_RSH=1				#enable remote sceudling
+    export I_MPI_HYDRA_BOOTSTRAP="slurm"		#set scheduler for MPI
+    export I_MPI_HYDRA_IFACE="ib0"			#notify MPI that infiniband connections are available
+
+    scontrol show hostnames				#get the nodes we've requested from the scheduler
+    FLUENTNODES="$(scontrol show hostnames)"
+    FLUENTNODES=$(echo $FLUENTNODES | tr ' ' ',')
+
     cd $SLURM_SUBMIT_DIR                            -> change to working directroy - where script is submited from
     module load ansys/<version.number>              -> load ansys, with version number in <int>.<int> i.e. 19.12
     fluent -t8 -g <inputfile> outputfile            -> run fluent command with input file and output file
@@ -49,6 +58,14 @@ class Slurm:
     
     LINE_BREAK = '\n'
     line_leader = '#SBATCH '
+    added_text = """export FLUENT_SSH=blaunch			#change remote node launcher in fluent
+export SCHEDULER_RSH=1				#enable remote sceudling
+export I_MPI_HYDRA_BOOTSTRAP="slurm"		#set scheduler for MPI
+export I_MPI_HYDRA_IFACE="ib0"			#notify MPI that infiniband connections are available
+
+scontrol show hostnames				#get the nodes we've requested from the scheduler
+FLUENTNODES="$(scontrol show hostnames)"
+FLUENTNODES=$(echo $FLUENTNODES | tr ' ' ',')"""
     def __init__(self, name: str,
                        account: str,
                        queue: str,
@@ -93,6 +110,7 @@ class Slurm:
     def output_file(self):
         return '-o{}-%j.out'.format(self.__output_file)
     
+
     @staticmethod
     def wall_time_formatter(td: timedelta) -> str:
         """
